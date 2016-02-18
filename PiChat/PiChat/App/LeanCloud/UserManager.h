@@ -8,7 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "User.h"
+#import "GlobalConstant.h"
 
 @interface UserManager : NSObject
-
+@property (strong,nonatomic) User *currentUser;
+//
++(instancetype)sharedUserManager;
+//
++(void)signUpWithUserName:(NSString*)email pwd:(NSString*)pwd callback:(BooleanResultBlock)callback;
+//
++(void)logInWithUserName:(NSString*)email pwd:(NSString*)pwd callback:(BooleanResultBlock)callback;
 @end

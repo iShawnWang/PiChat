@@ -12,6 +12,6 @@
 @implementation RegexUtil
 +(BOOL)isEmail:(NSString*)str{
     NSRange range= [str rangeOfString:EmailRegex options:NSRegularExpressionSearch];
-    return range.location==NSNotFound;
+    return range.location!=NSNotFound;
 }
 @end

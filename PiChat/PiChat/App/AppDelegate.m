@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "LeanCloudManager.h"
+#import "StoryBoardHelper.h"
+#import "UserManager.h"
 
 @interface AppDelegate ()
 
@@ -18,6 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [LeanCloudManager setupApplication:launchOptions];
+    [self setupRootController];
     return YES;
 }
 
@@ -41,6 +44,20 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Private
+-(void)setupRootController{
+    self.window=[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    UIViewController *rootVC;
+    if([UserManager sharedUserManager].currentUser){
+        rootVC=[StoryBoardHelper mainTabViewController];
+    }else{
+        rootVC=[StoryBoardHelper loginViewController];
+    }
+    self.window.rootViewController=rootVC;
+    [self.window makeKeyAndVisible];
 }
 
 @end

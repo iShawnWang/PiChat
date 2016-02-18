@@ -7,8 +7,13 @@
 //
 
 #import "RegisterViewController.h"
+#import "UserManager.h"
+#import "CommenUtil.h"
 
 @interface RegisterViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *pwdTextField;
+@property (weak, nonatomic) IBOutlet UIButton *registerBtn;
 
 @end
 
@@ -16,22 +21,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)register:(id)sender {
+    NSString *userName=[self.userNameTextField.text trim];
+    NSString *pwd=[self.pwdTextField.text trim];
+    if([RegexUtil isEmail:userName]){
+        [UserManager signUpWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                [StoryBoardHelper switchToMainTabVC];
+            }
+        }];
+    }else{
+        //错误提示
+    }
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

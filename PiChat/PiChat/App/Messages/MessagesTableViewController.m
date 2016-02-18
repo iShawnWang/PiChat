@@ -14,6 +14,16 @@
 
 @implementation MessagesTableViewController
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.tabBarItem.title=@"消息";
+        self.tabBarItem.image=[UIImage imageNamed:@"menu"];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

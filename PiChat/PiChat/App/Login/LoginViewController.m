@@ -7,8 +7,13 @@
 //
 
 #import "LoginViewController.h"
+#import "UserManager.h"
+#import "CommenUtil.h"
 
 @interface LoginViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *pwdTextField;
+@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 
 @end
 
@@ -18,17 +23,26 @@
     [super viewDidLoad];
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    UITabBarController *mainTab=[[UITabBarController alloc]init];
-    UIStoryboard *aboutMeSB=[UIStoryboard storyboardWithName:@"AboutMe" bundle:nil];
-    UIStoryboard *contactSB=[UIStoryboard storyboardWithName:@"Contact" bundle:nil];
-    UIStoryboard *messagesSB=[UIStoryboard storyboardWithName:@"Messages" bundle:nil];
-    UIStoryboard *momentsSB=[UIStoryboard storyboardWithName:@"Moments" bundle:nil];
-    mainTab.viewControllers=@[messagesSB.instantiateInitialViewController,
-                              contactSB.instantiateInitialViewController,
-                              momentsSB.instantiateInitialViewController,
-                              aboutMeSB.instantiateInitialViewController];
-    [UIApplication sharedApplication].keyWindow.rootViewController=mainTab;
+#pragma mark -
+- (IBAction)logIn:(id)sender {
+    NSString *userName=[self.userNameTextField.text trim];
+    NSString *pwd=[self.pwdTextField.text trim];
+    if([RegexUtil isEmail:userName]){
+        [UserManager logInWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                [StoryBoardHelper switchToMainTabVC];
+            }
+        }];
+    }else{
+        //错误提示
+    }
+}
+
+- (IBAction)register:(id)sender {
+    UIViewController *vc= [StoryBoardHelper inititialVC:@"RegisterViewController" fromSB:kLoginSB];
+    [self presentViewController:vc animated:YES completion:^{
+        
+    }];
 }
 
 @end

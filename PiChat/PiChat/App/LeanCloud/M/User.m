@@ -7,6 +7,7 @@
 //
 
 #import "User.h"
+#import "CommenUtil.h"
 
 @interface User ()
 
@@ -23,24 +24,9 @@
     return @"_User";
 }
 
-
--(BOOL)signUp:(NSError *__autoreleasing *)error{
-    NSException *e =[NSException exceptionWithName:NSGenericException reason:@"use -signUpInBackgroundWithBlock:(AVBooleanResultBlock)block instead" userInfo:nil];
-    @throw e;
-}
-
 -(void)signUpInBackgroundWithBlock:(AVBooleanResultBlock)block{
-    self.clientID=[User uuid];
+    self.clientID=[CommenUtil uuid];
     [super signUpInBackgroundWithBlock:block];
 }
 
-#pragma mark - Private
-+(NSString*) uuid {
-    CFUUIDRef puuid = CFUUIDCreate( nil );
-    CFStringRef uuidString = CFUUIDCreateString( nil, puuid );
-    NSString * result = CFBridgingRelease(CFStringCreateCopy( NULL, uuidString));
-    CFRelease(puuid);
-    CFRelease(uuidString);
-    return result;
-}
 @end

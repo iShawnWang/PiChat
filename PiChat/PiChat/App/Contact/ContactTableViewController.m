@@ -14,6 +14,16 @@
 
 @implementation ContactTableViewController
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.tabBarItem.title=@"联系人";
+        self.tabBarItem.image=[UIImage imageNamed:@"menu"];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
