@@ -1,15 +1,14 @@
 //
-//  ViewController.h
+//  UserManager.h
 //  PiChat
 //
 //  Created by pi on 16/2/18.
 //  Copyright © 2016年 pi. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "User.h"
 
-@interface ViewController : UIViewController
-
+@interface UserManager : NSObject
 
 @end
-
