@@ -9,6 +9,10 @@
 #ifndef GlobalConstant_h
 #define GlobalConstant_h
 
+@class JSQMessage;
+@class UIImage;
+typedef void(^JsqMsgBlock)(JSQMessage* msg);
+typedef void (^VoidBlock)();
 typedef void (^BooleanResultBlock)(BOOL succeeded, NSError *error);
 typedef void (^IntegerResultBlock)(NSInteger number, NSError *error);
 typedef void (^ArrayResultBlock)(NSArray *objects, NSError *error);

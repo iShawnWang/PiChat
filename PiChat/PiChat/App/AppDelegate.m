@@ -10,6 +10,7 @@
 #import "LeanCloudManager.h"
 #import "StoryBoardHelper.h"
 #import "UserManager.h"
+#import "ConversationManager.h"
 
 @interface AppDelegate ()
 
@@ -53,6 +54,9 @@
     UIViewController *rootVC;
     if([UserManager sharedUserManager].currentUser){
         rootVC=[StoryBoardHelper mainTabViewController];
+        [[ConversationManager sharedConversationManager]setupConversationClientWithCallback:^(BOOL succeeded, NSError *error) {
+            
+        }];
     }else{
         rootVC=[StoryBoardHelper loginViewController];
     }

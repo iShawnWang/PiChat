@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0B213A1C774A9B00F257E4 /* AddFriendsTableController.m */; };
+		0E0B21411C7764D500F257E4 /* PrivateChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0B21401C7764D500F257E4 /* PrivateChatController.m */; };
+		0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0B21431C77651700F257E4 /* MediaViewerController.m */; };
+		0E0B214A1C77691200F257E4 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21461C77691200F257E4 /* avatar.png */; };
+		0E0B214B1C77691200F257E4 /* chatToAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21471C77691200F257E4 /* chatToAvatar.png */; };
+		0E0B214C1C77691200F257E4 /* goldengate.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21481C77691200F257E4 /* goldengate.png */; };
+		0E0B214D1C77691200F257E4 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21491C77691200F257E4 /* video.mp4 */; };
 		0E4F34411C75F79B006A9BAA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34361C75F79B006A9BAA /* AppDelegate.m */; };
 		0E4F34451C75F7C1006A9BAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34441C75F7C1006A9BAA /* main.m */; };
 		0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F344A1C75F82E006A9BAA /* LoginViewController.m */; };
@@ -29,6 +36,9 @@
 		0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34811C76371A006A9BAA /* MainTabBarController.m */; };
 		0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34841C763778006A9BAA /* StoryBoardHelper.m */; };
 		0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34871C763BEC006A9BAA /* CommenUtil.m */; };
+		0EADC1AD1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AC1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m */; };
+		0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */; };
+		0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1B31C78B27E0001C1D8 /* ImageCache.m */; };
 		0EED52FE1C75CD82000437BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED52FC1C75CD82000437BD /* Main.storyboard */; };
 		0EED53001C75CD82000437BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EED52FF1C75CD82000437BD /* Assets.xcassets */; };
 		0EED53031C75CD82000437BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED53011C75CD82000437BD /* LaunchScreen.storyboard */; };
@@ -55,6 +65,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E0B21391C774A9A00F257E4 /* AddFriendsTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsTableController.h; sourceTree = "<group>"; };
+		0E0B213A1C774A9B00F257E4 /* AddFriendsTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsTableController.m; sourceTree = "<group>"; };
+		0E0B213F1C7764D500F257E4 /* PrivateChatController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateChatController.h; sourceTree = "<group>"; };
+		0E0B21401C7764D500F257E4 /* PrivateChatController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateChatController.m; sourceTree = "<group>"; };
+		0E0B21421C77651700F257E4 /* MediaViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaViewerController.h; sourceTree = "<group>"; };
+		0E0B21431C77651700F257E4 /* MediaViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaViewerController.m; sourceTree = "<group>"; };
+		0E0B21461C77691200F257E4 /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
+		0E0B21471C77691200F257E4 /* chatToAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatToAvatar.png; sourceTree = "<group>"; };
+		0E0B21481C77691200F257E4 /* goldengate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goldengate.png; sourceTree = "<group>"; };
+		0E0B21491C77691200F257E4 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
 		0E4F34351C75F79B006A9BAA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0E4F34361C75F79B006A9BAA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0E4F34441C75F7C1006A9BAA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -94,6 +114,12 @@
 		0E4F34861C763BEC006A9BAA /* CommenUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommenUtil.h; sourceTree = "<group>"; };
 		0E4F34871C763BEC006A9BAA /* CommenUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommenUtil.m; sourceTree = "<group>"; };
 		0E4F34891C763D81006A9BAA /* GlobalConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstant.h; sourceTree = "<group>"; };
+		0EADC1AB1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVIMTypedMessage+ToJsqMessage.h"; sourceTree = "<group>"; };
+		0EADC1AC1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVIMTypedMessage+ToJsqMessage.m"; sourceTree = "<group>"; };
+		0EADC1AE1C789B950001C1D8 /* BubbleImgFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleImgFactory.h; sourceTree = "<group>"; };
+		0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleImgFactory.m; sourceTree = "<group>"; };
+		0EADC1B21C78B27E0001C1D8 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
+		0EADC1B31C78B27E0001C1D8 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
 		0EED52F01C75CD82000437BD /* PiChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EED52FD1C75CD82000437BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0EED52FF1C75CD82000437BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -136,17 +162,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E0B213E1C7764D500F257E4 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				0E0B21421C77651700F257E4 /* MediaViewerController.h */,
+				0E0B21431C77651700F257E4 /* MediaViewerController.m */,
+				0E0B213F1C7764D500F257E4 /* PrivateChatController.h */,
+				0E0B21401C7764D500F257E4 /* PrivateChatController.m */,
+				0EADC1AE1C789B950001C1D8 /* BubbleImgFactory.h */,
+				0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		0E0B21451C77691200F257E4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0E0B21461C77691200F257E4 /* avatar.png */,
+				0E0B21471C77691200F257E4 /* chatToAvatar.png */,
+				0E0B21481C77691200F257E4 /* goldengate.png */,
+				0E0B21491C77691200F257E4 /* video.mp4 */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		0E4F34331C75F79B006A9BAA /* App */ = {
 			isa = PBXGroup;
 			children = (
 				0E4F34351C75F79B006A9BAA /* AppDelegate.h */,
 				0E4F34361C75F79B006A9BAA /* AppDelegate.m */,
+				0EADC1B11C78B26F0001C1D8 /* Cache */,
 				0E4F347F1C763700006A9BAA /* MainNav */,
 				0E4F34481C75F81B006A9BAA /* Login */,
 				0E4F34341C75F79B006A9BAA /* AboutMe */,
 				0E4F34371C75F79B006A9BAA /* Contact */,
 				0E4F34381C75F79B006A9BAA /* DB */,
 				0E4F34391C75F79B006A9BAA /* LeanCloud */,
+				0E0B213E1C7764D500F257E4 /* Chat */,
 				0E4F343B1C75F79B006A9BAA /* Messages */,
 				0E4F343C1C75F79B006A9BAA /* Moments */,
 				0E4F343D1C75F79B006A9BAA /* Util */,
@@ -172,6 +224,8 @@
 				0E4F34611C76018E006A9BAA /* Contact.storyboard */,
 				0E4F346A1C76023F006A9BAA /* ContactTableViewController.h */,
 				0E4F346B1C76023F006A9BAA /* ContactTableViewController.m */,
+				0E0B21391C774A9A00F257E4 /* AddFriendsTableController.h */,
+				0E0B213A1C774A9B00F257E4 /* AddFriendsTableController.m */,
 			);
 			path = Contact;
 			sourceTree = "<group>";
@@ -228,6 +282,8 @@
 				0E4F34841C763778006A9BAA /* StoryBoardHelper.m */,
 				0E4F34861C763BEC006A9BAA /* CommenUtil.h */,
 				0E4F34871C763BEC006A9BAA /* CommenUtil.m */,
+				0EADC1AB1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.h */,
+				0EADC1AC1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -270,6 +326,15 @@
 			path = MainNav;
 			sourceTree = "<group>";
 		};
+		0EADC1B11C78B26F0001C1D8 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				0EADC1B21C78B27E0001C1D8 /* ImageCache.h */,
+				0EADC1B31C78B27E0001C1D8 /* ImageCache.m */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
 		0EED52E71C75CD82000437BD = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +362,7 @@
 			children = (
 				0E4F34331C75F79B006A9BAA /* App */,
 				0EED52F31C75CD82000437BD /* Supporting Files */,
+				0E0B21451C77691200F257E4 /* Resources */,
 			);
 			path = PiChat;
 			sourceTree = "<group>";
@@ -456,10 +522,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E0B214A1C77691200F257E4 /* avatar.png in Resources */,
+				0E0B214B1C77691200F257E4 /* chatToAvatar.png in Resources */,
 				0E4F347E1C7636DE006A9BAA /* Login.storyboard in Resources */,
 				0E4F34621C76018E006A9BAA /* Contact.storyboard in Resources */,
 				0EED53031C75CD82000437BD /* LaunchScreen.storyboard in Resources */,
+				0E0B214C1C77691200F257E4 /* goldengate.png in Resources */,
 				0E4F34601C760186006A9BAA /* AboutMe.storyboard in Resources */,
+				0E0B214D1C77691200F257E4 /* video.mp4 in Resources */,
 				0E4F34661C76019C006A9BAA /* Moments.storyboard in Resources */,
 				0E4F34641C760195006A9BAA /* Messages.storyboard in Resources */,
 				0EED53001C75CD82000437BD /* Assets.xcassets in Resources */,
@@ -541,17 +611,23 @@
 				0E4F345B1C760096006A9BAA /* UserManager.m in Sources */,
 				0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */,
 				0E4F34511C75F86B006A9BAA /* LeanCloudManager.m in Sources */,
+				0E0B21411C7764D500F257E4 /* PrivateChatController.m in Sources */,
+				0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */,
 				0E4F346C1C76023F006A9BAA /* ContactTableViewController.m in Sources */,
 				0E4F34691C76022E006A9BAA /* MeViewController.m in Sources */,
 				0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */,
 				0E4F34751C7602D7006A9BAA /* RegexUtil.m in Sources */,
 				0E4F34551C75F9D6006A9BAA /* User.m in Sources */,
+				0EADC1AD1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m in Sources */,
 				0E4F346F1C760248006A9BAA /* MessagesTableViewController.m in Sources */,
 				0E4F34451C75F7C1006A9BAA /* main.m in Sources */,
 				0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */,
 				0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */,
 				0E4F344E1C75F836006A9BAA /* RegisterViewController.m in Sources */,
+				0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */,
+				0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */,
 				0E4F34791C76310C006A9BAA /* ConversationManager.m in Sources */,
+				0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */,
 				0E4F345E1C76009D006A9BAA /* ChatManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

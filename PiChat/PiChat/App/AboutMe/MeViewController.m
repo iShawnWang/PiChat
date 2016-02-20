@@ -7,9 +7,11 @@
 //
 
 #import "MeViewController.h"
+#import "UserManager.h"
 
 @interface MeViewController ()
 
+@property (weak, nonatomic) IBOutlet UIButton *logOutBtn;
 @end
 
 @implementation MeViewController
@@ -22,6 +24,9 @@
         self.tabBarItem.image=[UIImage imageNamed:@"menu"];
     }
     return self;
+}
+- (IBAction)logOut:(id)sender {
+    [UserManager logOut];
 }
 
 @end

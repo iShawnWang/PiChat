@@ -20,6 +20,7 @@
     if (self) {
         self.tabBarItem.title=@"消息";
         self.tabBarItem.image=[UIImage imageNamed:@"menu"];
+        self.hidesBottomBarWhenPushed=NO;
     }
     return self;
 }

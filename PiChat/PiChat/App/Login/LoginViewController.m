@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "UserManager.h"
 #import "CommenUtil.h"
+#import "ConversationManager.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
@@ -30,7 +31,9 @@
     if([RegexUtil isEmail:userName]){
         [UserManager logInWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
             if(succeeded){
-                [StoryBoardHelper switchToMainTabVC];
+                [[ConversationManager sharedConversationManager]setupConversationClientWithCallback:^(BOOL succeeded, NSError *error) {
+                    [StoryBoardHelper switchToMainTabVC];
+                }];
             }
         }];
     }else{

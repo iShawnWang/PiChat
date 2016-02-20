@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <AVOSCloud.h>
+#import "GlobalConstant.h"
 
 @interface User:AVUser<AVSubclassing>
 //chat
-@property (copy,nonatomic) NSString *clientID;
+@property (copy,nonatomic) NSString *clientID; //唯一的 uuid,作为 Leancloud 聊天的唯一 ID
 @property (copy,nonatomic) NSString *avatarPath;
 @property (copy,nonatomic) NSString *displayName;
-//firend
-@property (strong,nonatomic) AVRelation *friends;
+//
+-(void)updateUserWithCallback:(BooleanResultBlock)callback;
 @end

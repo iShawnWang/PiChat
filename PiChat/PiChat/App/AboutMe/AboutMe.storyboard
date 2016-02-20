@@ -16,9 +16,25 @@
                     <view key="view" contentMode="scaleToFill" id="YDM-kH-Jpq">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r4d-uD-DT8">
+                                <rect key="frame" x="285" y="285" width="30" height="30"/>
+                                <state key="normal" title="注销"/>
+                                <connections>
+                                    <action selector="logOut:" destination="uPz-4l-lcg" eventType="touchUpInside" id="r3H-Tc-NXa"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="r4d-uD-DT8" firstAttribute="centerX" secondItem="YDM-kH-Jpq" secondAttribute="centerX" id="Ttz-3y-jS5"/>
+                            <constraint firstItem="r4d-uD-DT8" firstAttribute="centerY" secondItem="YDM-kH-Jpq" secondAttribute="centerY" id="YKW-FK-VkY"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Cy0-xe-4Dm"/>
+                    <connections>
+                        <outlet property="logOutBtn" destination="r4d-uD-DT8" id="LdF-1U-Y8T"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dnO-Bi-I9v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
