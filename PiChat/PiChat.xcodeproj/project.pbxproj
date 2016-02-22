@@ -36,6 +36,9 @@
 		0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34811C76371A006A9BAA /* MainTabBarController.m */; };
 		0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34841C763778006A9BAA /* StoryBoardHelper.m */; };
 		0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34871C763BEC006A9BAA /* CommenUtil.m */; };
+		0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */; };
+		0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */; };
+		0E8F09211C7B10500067A7EC /* MediaProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F09201C7B10500067A7EC /* MediaProgressCell.m */; };
 		0EADC1AD1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AC1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m */; };
 		0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */; };
 		0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1B31C78B27E0001C1D8 /* ImageCache.m */; };
@@ -114,6 +117,12 @@
 		0E4F34861C763BEC006A9BAA /* CommenUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommenUtil.h; sourceTree = "<group>"; };
 		0E4F34871C763BEC006A9BAA /* CommenUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommenUtil.m; sourceTree = "<group>"; };
 		0E4F34891C763D81006A9BAA /* GlobalConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstant.h; sourceTree = "<group>"; };
+		0E8F09191C7AE9D10067A7EC /* MediaPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPicker.h; sourceTree = "<group>"; };
+		0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPicker.m; sourceTree = "<group>"; };
+		0E8F091C1C7B0B6F0067A7EC /* FileUpLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUpLoader.h; sourceTree = "<group>"; };
+		0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUpLoader.m; sourceTree = "<group>"; };
+		0E8F091F1C7B10500067A7EC /* MediaProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaProgressCell.h; sourceTree = "<group>"; };
+		0E8F09201C7B10500067A7EC /* MediaProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaProgressCell.m; sourceTree = "<group>"; };
 		0EADC1AB1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVIMTypedMessage+ToJsqMessage.h"; sourceTree = "<group>"; };
 		0EADC1AC1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVIMTypedMessage+ToJsqMessage.m"; sourceTree = "<group>"; };
 		0EADC1AE1C789B950001C1D8 /* BubbleImgFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleImgFactory.h; sourceTree = "<group>"; };
@@ -171,6 +180,8 @@
 				0E0B21401C7764D500F257E4 /* PrivateChatController.m */,
 				0EADC1AE1C789B950001C1D8 /* BubbleImgFactory.h */,
 				0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */,
+				0E8F091F1C7B10500067A7EC /* MediaProgressCell.h */,
+				0E8F09201C7B10500067A7EC /* MediaProgressCell.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -249,6 +260,8 @@
 				0E4F345D1C76009D006A9BAA /* ChatManager.m */,
 				0E4F34771C76310C006A9BAA /* ConversationManager.h */,
 				0E4F34781C76310C006A9BAA /* ConversationManager.m */,
+				0E8F091C1C7B0B6F0067A7EC /* FileUpLoader.h */,
+				0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */,
 			);
 			path = LeanCloud;
 			sourceTree = "<group>";
@@ -284,6 +297,8 @@
 				0E4F34871C763BEC006A9BAA /* CommenUtil.m */,
 				0EADC1AB1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.h */,
 				0EADC1AC1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m */,
+				0E8F09191C7AE9D10067A7EC /* MediaPicker.h */,
+				0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -613,6 +628,7 @@
 				0E4F34511C75F86B006A9BAA /* LeanCloudManager.m in Sources */,
 				0E0B21411C7764D500F257E4 /* PrivateChatController.m in Sources */,
 				0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */,
+				0E8F09211C7B10500067A7EC /* MediaProgressCell.m in Sources */,
 				0E4F346C1C76023F006A9BAA /* ContactTableViewController.m in Sources */,
 				0E4F34691C76022E006A9BAA /* MeViewController.m in Sources */,
 				0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */,
@@ -621,6 +637,7 @@
 				0EADC1AD1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m in Sources */,
 				0E4F346F1C760248006A9BAA /* MessagesTableViewController.m in Sources */,
 				0E4F34451C75F7C1006A9BAA /* main.m in Sources */,
+				0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */,
 				0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */,
 				0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */,
 				0E4F344E1C75F836006A9BAA /* RegisterViewController.m in Sources */,
@@ -628,6 +645,7 @@
 				0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */,
 				0E4F34791C76310C006A9BAA /* ConversationManager.m in Sources */,
 				0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */,
+				0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */,
 				0E4F345E1C76009D006A9BAA /* ChatManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

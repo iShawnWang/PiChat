@@ -32,7 +32,7 @@
         switch (msgType) {
             case kAVIMMessageMediaTypeText: {
                 AVIMTextMessage *receiveTextMessage = (AVIMTextMessage *)self;
-                message=[[JSQMessage alloc] initWithSenderId:self.clientId senderDisplayName:senderDisplayName date:timestamp text:receiveTextMessage.text];
+                message=[[JSQMessage alloc] initWithSenderId:senderId senderDisplayName:senderDisplayName date:timestamp text:receiveTextMessage.text];
                 
                 break;
             }

@@ -13,6 +13,9 @@
 #import "AVIMTypedMessage+ToJsqMessage.h"
 #import "BubbleImgFactory.h"
 #import "UserManager.h"
+#import "MediaPicker.h"
+#import "CommenUtil.h"
+#import "FileUpLoader.h"
 
 @import CoreImage;
 
@@ -21,6 +24,8 @@
 @property (strong,nonatomic) BubbleImgFactory *bubbleImgFactory;
 @property (strong,nonatomic) AVIMConversation *conversation;
 @property (strong,nonatomic) ConversationManager *manager;
+@property (strong,nonatomic) MediaPicker *mediaPicker;
+@property (strong,nonatomic) FileUpLoader *fileUpLoader;
 @end
 
 @implementation PrivateChatController
@@ -40,9 +45,26 @@
     return _msgs;
 }
 
+-(MediaPicker *)mediaPicker{
+    if(!_mediaPicker){
+        _mediaPicker=[MediaPicker new];
+    }
+    return _mediaPicker;
+}
+
+-(FileUpLoader *)fileUpLoader{
+    if(!_fileUpLoader){
+        _fileUpLoader=[FileUpLoader sharedFileUpLoader];
+    }
+    return _fileUpLoader;
+}
+
 -(void)viewDidLoad{
     [super viewDidLoad];
     
+    //
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(testNotification:) name:kUploadMediaComplete object:nil];
+    //
     self.bubbleImgFactory=[BubbleImgFactory sharedBubbleImgFactory];
     //
     self.collectionView.showsVerticalScrollIndicator=NO;
@@ -137,43 +159,61 @@
     if (buttonIndex == actionSheet.cancelButtonIndex) {
         return;
     }
-    AVIMTypedMessage *msg;
     switch (buttonIndex) {
         case 0://照片
-            msg=[self sendPhoto];
+            [self sendPhoto];
             break;
         case 1://位置
-            msg=[self sendLocation];
+            [self sendLocation];
             break;
         case 2://视频
-            msg=[self sendVideo];
+            [self sendVideo];
             break;
         default:
             break;
     }
-    [self sendMessage:msg];
     
 }
 
--(AVIMImageMessage*)sendPhoto{
-    NSString *path= [[NSBundle mainBundle]pathForResource:@"goldengate" ofType:@"png"];
-    AVFile *photo=[AVFile fileWithName:@"goldengate.png" contentsAtPath:path];
-    AVIMImageMessage *imgMsg=[AVIMImageMessage messageWithText:@"photp" file:photo attributes:nil];
-    return imgMsg;
+-(void)sendPhoto{
+//    [self.mediaPicker showImagePickerIn:self withCallback:^(NSURL *url, NSError *error) {
+//        AVIMImageMessage *imgMsg=[AVIMImageMessage messageWithText:@"图片上传中......" file:nil attributes:nil];
+//        [self addTypedMessage:imgMsg];
+//        [self.fileUpLoader uploadMediaAtUrl:url ];
+//    }];
 }
 
--(AVIMVideoMessage*)sendVideo{
-    NSString *path= [[NSBundle mainBundle]pathForResource:@"video" ofType:@"mp4"];
-    AVFile *video=[AVFile fileWithName:@"video.mp4" contentsAtPath:path];
-    AVIMVideoMessage *videoMsg=[AVIMVideoMessage messageWithText:@"video" file:video attributes:nil];
-    return videoMsg;
+-(void)sendVideo{
+    [self.mediaPicker showVideoPickerIn:self withCallback:^(NSURL *url, NSError *error) {
+        User *currentUser=[UserManager sharedUserManager].currentUser;
+        JSQVideoMediaItem *videoItem=[[JSQVideoMediaItem alloc]initWithMaskAsOutgoing:YES];
+        JSQMessage *msg=[JSQMessage messageWithSenderId:currentUser.clientID displayName:currentUser.displayName media:videoItem];
+        [self addMediaMsgPlaceHolderJSQMessage:msg];
+        
+        [self.fileUpLoader uploadVideoAtUrl:url forIndexPath:[NSIndexPath indexPathForItem:self.msgs.count-1 inSection:0] ];
+    }];
 }
 
--(AVIMLocationMessage*)sendLocation{
+
+
+-(void)testNotification:(NSNotification*)noti{
+    NSLog(@"%@",noti);
+    NSIndexPath *indexPath= noti.userInfo[kUpdateIndexPath];
+    AVFile *file= noti.userInfo[kUploadedFile];
+    User *u= [UserManager sharedUserManager].currentUser;
+    JSQVideoMediaItem *item=[[JSQVideoMediaItem alloc]initWithFileURL:[NSURL URLWithString:file.url] isReadyToPlay:YES];
+    JSQMessage *msg=[JSQMessage messageWithSenderId:u.clientID displayName:u.displayName media:item];
+    self.msgs[indexPath.item]=msg;
+    [self.collectionView reloadData];
+}
+
+
+-(void)sendLocation{
     CLLocation *ferryBuildingInSF = [[CLLocation alloc] initWithLatitude:37.795313 longitude:-122.393757];
     AVIMLocationMessage *locationMsg=[AVIMLocationMessage messageWithText:@"location" latitude:ferryBuildingInSF.coordinate.latitude longitude:ferryBuildingInSF.coordinate.longitude attributes:nil];
-    return locationMsg;
+    [self sendMessage:locationMsg];
 }
+
 
 -(void)sendMessage:(AVIMTypedMessage*)msg{
     [self.conversation sendMessage:msg callback:^(BOOL succeeded, NSError *error) {
@@ -181,8 +221,21 @@
     }];
 }
 
+-(void)sendMessage:(AVIMTypedMessage*)msg addToLocal:(BOOL)addToLocal{
+    [self.conversation sendMessage:msg callback:^(BOOL succeeded, NSError *error) {
+        if(addToLocal){
+            [self addTypedMessage:msg];
+        }
+    }];
+}
+
+-(void)addMediaMsgPlaceHolderJSQMessage:(JSQMessage*)msg{
+    [self.msgs addObject:msg];
+    [self.collectionView reloadData];
+}
+
 -(void)addTypedMessage:(AVIMTypedMessage*)msgToAdd {
-    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+//    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
     [msgToAdd toJsqMessageWithCallback:^(JSQMessage *msg) {
         [self.msgs addObject:msg];
         //TODO 只刷新一个 cell 用 nsoperation Queue 保证 message 按顺序添加...

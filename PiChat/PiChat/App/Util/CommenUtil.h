@@ -12,6 +12,25 @@
 
 @interface CommenUtil : NSObject
 +(NSString*) uuid;
+/**
+ *  同步,阻塞线程
+ *
+ *  @param file
+ *
+ *  @return 
+ */
++(NSString*)saveFileToDocument:(NSURL*)file;
+
+/**
+ *  同步,阻塞线程
+ *
+ *  @param file
+ *
+ *  @return
+ */
++(NSString*)saveFileToDocument:(NSURL *)file fileName:(NSString*)fileName;
+
++(NSString*)saveDataToDocument:(NSData *)data fileName:(NSString*)fileName;
 @end
 
 #pragma mark - NSString
