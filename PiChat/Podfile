@@ -11,6 +11,7 @@ pod 'AVOSCloudIM'
 pod 'LeanCloudFeedback'
 pod 'JSQMessagesViewController'
 pod 'MWPhotoBrowser'
+pod 'MBProgressHUD'
 end
 
 target 'PiChatTests' do

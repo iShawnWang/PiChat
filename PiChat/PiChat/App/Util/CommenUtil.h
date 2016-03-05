@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RegexUtil.h"
 #import "StoryBoardHelper.h"
+#import "MBProgressHUD+Addition.h"
 
 @interface CommenUtil : NSObject
 +(NSString*) uuid;

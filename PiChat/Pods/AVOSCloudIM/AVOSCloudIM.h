@@ -29,6 +29,8 @@
 #import "AVIMSignature.h"
 #import "AVIMUserOptions.h"
 
+@class AVInstallation;
+
 @interface AVOSCloudIM : NSObject
 
 /**
@@ -50,5 +52,14 @@
  * This method should be called in -[UIApplication application:didRegisterForRemoteNotificationsWithDeviceToken:].
  */
 + (void)handleRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
+
+
+/**
+ * Handle device token registered from APNs.
+ * @param deviceToken Device token issued by APNs.
+ * @param block       Constructing block of [AVInstallation currentInstallation].
+ * This method should be called in -[UIApplication application:didRegisterForRemoteNotificationsWithDeviceToken:].
+ */
++ (void)handleRemoteNotificationsWithDeviceToken:(NSData *)deviceToken constructingInstallationWithBlock:(void (^)(AVInstallation *currentInstallation))block;
 
 @end

@@ -13,6 +13,7 @@
 #import <JSQMessagesAvatarImageFactory.h>
 #import <JSQMessagesCollectionViewFlowLayout.h>
 #import "ImageCache.h"
+#import "Followee.h"
 
 @implementation UserManager
 +(instancetype)sharedUserManager{
@@ -37,6 +38,7 @@
     User *u= [User user];
     u.username=email;
     u.password=pwd;
+    u.fetchWhenSave=YES;
     [u signUpInBackgroundWithBlock:callback];
 }
 
@@ -73,8 +75,10 @@
 +(void)fetchFriendsWithCallback:(ArrayResultBlock)callback {
     User *user = [User currentUser];
     AVQuery *q = [user followeeQuery];
-    q.cachePolicy = kAVCachePolicyCacheThenNetwork;
-    [q findObjectsInBackgroundWithBlock:callback];
+    q.cachePolicy = kAVCachePolicyNetworkElseCache;
+    [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        callback([Followee followeeArrayToUserArray:objects] ,error);
+    }];
 }
 
 #pragma mark - Avatar

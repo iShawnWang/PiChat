@@ -26,7 +26,6 @@
 }
 
 -(void)signUpInBackgroundWithBlock:(AVBooleanResultBlock)block{
-    self.clientID=[CommenUtil uuid];
     self.displayName=self.username;
     self.email=self.username;
     [super signUpInBackgroundWithBlock:block];

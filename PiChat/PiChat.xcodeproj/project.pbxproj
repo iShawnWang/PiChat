@@ -42,11 +42,13 @@
 		0EADC1AD1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AC1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m */; };
 		0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */; };
 		0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1B31C78B27E0001C1D8 /* ImageCache.m */; };
+		0ED39FF21C8B489B00894D4B /* Followee.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED39FF11C8B489B00894D4B /* Followee.m */; };
 		0EED52FE1C75CD82000437BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED52FC1C75CD82000437BD /* Main.storyboard */; };
 		0EED53001C75CD82000437BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EED52FF1C75CD82000437BD /* Assets.xcassets */; };
 		0EED53031C75CD82000437BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED53011C75CD82000437BD /* LaunchScreen.storyboard */; };
 		0EED530E1C75CD82000437BD /* PiChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED530D1C75CD82000437BD /* PiChatTests.m */; };
 		0EED53191C75CD82000437BD /* PiChatUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED53181C75CD82000437BD /* PiChatUITests.m */; };
+		0EFDBA211C896AAE002685FE /* MBProgressHUD+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */; };
 		A1C49579061CF5790206FC28 /* libPods-PiChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F1213A3616F8FD53E22CBE /* libPods-PiChat.a */; };
 /* End PBXBuildFile section */
 
@@ -129,6 +131,8 @@
 		0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleImgFactory.m; sourceTree = "<group>"; };
 		0EADC1B21C78B27E0001C1D8 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
 		0EADC1B31C78B27E0001C1D8 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
+		0ED39FF01C8B489B00894D4B /* Followee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Followee.h; sourceTree = "<group>"; };
+		0ED39FF11C8B489B00894D4B /* Followee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Followee.m; sourceTree = "<group>"; };
 		0EED52F01C75CD82000437BD /* PiChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EED52FD1C75CD82000437BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0EED52FF1C75CD82000437BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -140,6 +144,8 @@
 		0EED53141C75CD82000437BD /* PiChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PiChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EED53181C75CD82000437BD /* PiChatUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PiChatUITests.m; sourceTree = "<group>"; };
 		0EED531A1C75CD82000437BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0EFDBA1F1C896AAE002685FE /* MBProgressHUD+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Addition.h"; sourceTree = "<group>"; };
+		0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Addition.m"; sourceTree = "<group>"; };
 		15C71593C91B28C6CB6A60EB /* Pods-PiChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiChat/Pods-PiChat.debug.xcconfig"; sourceTree = "<group>"; };
 		661C3153225C7E070CA78B40 /* Pods-PiChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-PiChat/Pods-PiChat.release.xcconfig"; sourceTree = "<group>"; };
 		B8F1213A3616F8FD53E22CBE /* libPods-PiChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PiChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -299,6 +305,8 @@
 				0EADC1AC1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m */,
 				0E8F09191C7AE9D10067A7EC /* MediaPicker.h */,
 				0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */,
+				0EFDBA1F1C896AAE002685FE /* MBProgressHUD+Addition.h */,
+				0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -327,6 +335,8 @@
 			children = (
 				0E4F34531C75F9D6006A9BAA /* User.h */,
 				0E4F34541C75F9D6006A9BAA /* User.m */,
+				0ED39FF01C8B489B00894D4B /* Followee.h */,
+				0ED39FF11C8B489B00894D4B /* Followee.m */,
 			);
 			path = M;
 			sourceTree = "<group>";
@@ -627,6 +637,7 @@
 				0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */,
 				0E4F34511C75F86B006A9BAA /* LeanCloudManager.m in Sources */,
 				0E0B21411C7764D500F257E4 /* PrivateChatController.m in Sources */,
+				0ED39FF21C8B489B00894D4B /* Followee.m in Sources */,
 				0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */,
 				0E8F09211C7B10500067A7EC /* MediaProgressCell.m in Sources */,
 				0E4F346C1C76023F006A9BAA /* ContactTableViewController.m in Sources */,
@@ -638,6 +649,7 @@
 				0E4F346F1C760248006A9BAA /* MessagesTableViewController.m in Sources */,
 				0E4F34451C75F7C1006A9BAA /* main.m in Sources */,
 				0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */,
+				0EFDBA211C896AAE002685FE /* MBProgressHUD+Addition.m in Sources */,
 				0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */,
 				0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */,
 				0E4F344E1C75F836006A9BAA /* RegisterViewController.m in Sources */,

@@ -43,7 +43,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     User *u=self.friends[indexPath.row];
     [UserManager addFriend:u callback:^(BOOL succeeded, NSError *error) {
-        NSLog(@"%@",@"添加好友成功");
+        [MBProgressHUD showMsg:@"添加好友成功" forSeconds:1.5];
     }];
 }
 
