@@ -56,18 +56,24 @@
 #pragma mark - UIImagePickerControllerDelegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     [self.presentingVC dismissViewControllerAnimated:self.picker completion:nil];
-    //
-    NSString *mediaType= info[UIImagePickerControllerMediaType];
-    NSURL *url;
-    if([mediaType isEqualToString:(NSString*)kUTTypeImage]){
-        //先把图片存到 Document 目录...返回在 document 目录中的 url
-        UIImage *img= info[UIImagePickerControllerOriginalImage];
-        NSString *path= [CommenUtil saveDataToDocument:UIImagePNGRepresentation(img) fileName:[CommenUtil uuid]];
-        url= [NSURL URLWithString:path];
-    }else if([mediaType isEqualToString:(NSString*)kUTTypeMovie]){
-        url=info[UIImagePickerControllerMediaURL];
-    }
-    self.urlCallback(url,nil);
+    
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *mediaType= info[UIImagePickerControllerMediaType];
+        NSURL *url;
+        if([mediaType isEqualToString:(NSString*)kUTTypeImage]){
+            //先把图片存到 Document 目录...返回在 document 目录中的 url
+            UIImage *img= info[UIImagePickerControllerOriginalImage];
+            NSString *path= [CommenUtil saveDataToDocument:UIImagePNGRepresentation(img) fileName:[CommenUtil uuid]];
+            url= [NSURL URLWithString:path];
+        }else if([mediaType isEqualToString:(NSString*)kUTTypeMovie]){
+            url=info[UIImagePickerControllerMediaURL];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.urlCallback(url,nil);
+        });
+    });
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{

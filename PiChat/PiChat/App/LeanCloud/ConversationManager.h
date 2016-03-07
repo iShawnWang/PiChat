@@ -12,9 +12,6 @@
 #import <AVOSCloudIM.h>
 #import "User.h"
 
-#define kDidReceiveTypedMessageNotification @"didReceiveTypedMessageNotification"
-#define kTypedMessage @"kTypedMessage"
-
 @class AVIMClient;
 @interface ConversationManager : NSObject
 @property (strong,nonatomic) User *currentUser;

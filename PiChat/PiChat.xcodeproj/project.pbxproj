@@ -38,7 +38,6 @@
 		0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34871C763BEC006A9BAA /* CommenUtil.m */; };
 		0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */; };
 		0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */; };
-		0E8F09211C7B10500067A7EC /* MediaProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F09201C7B10500067A7EC /* MediaProgressCell.m */; };
 		0EADC1AD1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AC1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m */; };
 		0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */; };
 		0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1B31C78B27E0001C1D8 /* ImageCache.m */; };
@@ -48,6 +47,8 @@
 		0EED53031C75CD82000437BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED53011C75CD82000437BD /* LaunchScreen.storyboard */; };
 		0EED530E1C75CD82000437BD /* PiChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED530D1C75CD82000437BD /* PiChatTests.m */; };
 		0EED53191C75CD82000437BD /* PiChatUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED53181C75CD82000437BD /* PiChatUITests.m */; };
+		0EF669151C8DAE8B00B4D2C6 /* LocationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF669141C8DAE8B00B4D2C6 /* LocationHelper.m */; };
+		0EF669191C8DCCD600B4D2C6 /* LocationViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF669181C8DCCD600B4D2C6 /* LocationViewerController.m */; };
 		0EFDBA211C896AAE002685FE /* MBProgressHUD+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */; };
 		A1C49579061CF5790206FC28 /* libPods-PiChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F1213A3616F8FD53E22CBE /* libPods-PiChat.a */; };
 /* End PBXBuildFile section */
@@ -123,8 +124,6 @@
 		0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPicker.m; sourceTree = "<group>"; };
 		0E8F091C1C7B0B6F0067A7EC /* FileUpLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUpLoader.h; sourceTree = "<group>"; };
 		0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUpLoader.m; sourceTree = "<group>"; };
-		0E8F091F1C7B10500067A7EC /* MediaProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaProgressCell.h; sourceTree = "<group>"; };
-		0E8F09201C7B10500067A7EC /* MediaProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaProgressCell.m; sourceTree = "<group>"; };
 		0EADC1AB1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVIMTypedMessage+ToJsqMessage.h"; sourceTree = "<group>"; };
 		0EADC1AC1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVIMTypedMessage+ToJsqMessage.m"; sourceTree = "<group>"; };
 		0EADC1AE1C789B950001C1D8 /* BubbleImgFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleImgFactory.h; sourceTree = "<group>"; };
@@ -144,6 +143,10 @@
 		0EED53141C75CD82000437BD /* PiChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PiChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EED53181C75CD82000437BD /* PiChatUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PiChatUITests.m; sourceTree = "<group>"; };
 		0EED531A1C75CD82000437BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0EF669131C8DAE8B00B4D2C6 /* LocationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationHelper.h; sourceTree = "<group>"; };
+		0EF669141C8DAE8B00B4D2C6 /* LocationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationHelper.m; sourceTree = "<group>"; };
+		0EF669171C8DCCD600B4D2C6 /* LocationViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewerController.h; sourceTree = "<group>"; };
+		0EF669181C8DCCD600B4D2C6 /* LocationViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewerController.m; sourceTree = "<group>"; };
 		0EFDBA1F1C896AAE002685FE /* MBProgressHUD+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Addition.h"; sourceTree = "<group>"; };
 		0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Addition.m"; sourceTree = "<group>"; };
 		15C71593C91B28C6CB6A60EB /* Pods-PiChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiChat/Pods-PiChat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -186,8 +189,8 @@
 				0E0B21401C7764D500F257E4 /* PrivateChatController.m */,
 				0EADC1AE1C789B950001C1D8 /* BubbleImgFactory.h */,
 				0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */,
-				0E8F091F1C7B10500067A7EC /* MediaProgressCell.h */,
-				0E8F09201C7B10500067A7EC /* MediaProgressCell.m */,
+				0EF669171C8DCCD600B4D2C6 /* LocationViewerController.h */,
+				0EF669181C8DCCD600B4D2C6 /* LocationViewerController.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -307,6 +310,8 @@
 				0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */,
 				0EFDBA1F1C896AAE002685FE /* MBProgressHUD+Addition.h */,
 				0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */,
+				0EF669131C8DAE8B00B4D2C6 /* LocationHelper.h */,
+				0EF669141C8DAE8B00B4D2C6 /* LocationHelper.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -639,11 +644,11 @@
 				0E0B21411C7764D500F257E4 /* PrivateChatController.m in Sources */,
 				0ED39FF21C8B489B00894D4B /* Followee.m in Sources */,
 				0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */,
-				0E8F09211C7B10500067A7EC /* MediaProgressCell.m in Sources */,
 				0E4F346C1C76023F006A9BAA /* ContactTableViewController.m in Sources */,
 				0E4F34691C76022E006A9BAA /* MeViewController.m in Sources */,
 				0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */,
 				0E4F34751C7602D7006A9BAA /* RegexUtil.m in Sources */,
+				0EF669151C8DAE8B00B4D2C6 /* LocationHelper.m in Sources */,
 				0E4F34551C75F9D6006A9BAA /* User.m in Sources */,
 				0EADC1AD1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m in Sources */,
 				0E4F346F1C760248006A9BAA /* MessagesTableViewController.m in Sources */,
@@ -654,6 +659,7 @@
 				0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */,
 				0E4F344E1C75F836006A9BAA /* RegisterViewController.m in Sources */,
 				0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */,
+				0EF669191C8DCCD600B4D2C6 /* LocationViewerController.m in Sources */,
 				0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */,
 				0E4F34791C76310C006A9BAA /* ConversationManager.m in Sources */,
 				0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */,

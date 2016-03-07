@@ -33,25 +33,50 @@
 }
 
 -(void)uploadImage:(UIImage*)img {
-    AVFile *f=[AVFile fileWithData:UIImagePNGRepresentation(img)];
-    [self.uploadingFile addObject:f];
-    [f saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        //TODO Notification download
+    AVFile *photo=[AVFile fileWithData:UIImagePNGRepresentation(img)];
+    [self.uploadingFile addObject:photo];
+    [photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+            [self postUploadMediaCompleteNotification:photo type:kUploadedMediaTypePhoto];
+        }else{
+            [self postUploadMediaFailedNotification:error];
+        }
+        [self.uploadingFile removeObject:photo];
     } progressBlock:^(NSInteger percentDone) {
-        //TODO Notification progress
+        [self postUploadMediaProgressNotification:percentDone];
     }];
 }
 
--(void)uploadVideoAtUrl:(NSURL*)url forIndexPath:(NSIndexPath*)indexPath{
+-(void)uploadVideoAtUrl:(NSURL*)url {
     [CommenUtil saveFileToDocument:url];
     AVFile *video=[AVFile fileWithData :[NSData dataWithContentsOfURL:url]];
     [self.uploadingFile addObject:video];
     [video saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        NSDictionary *userInfo=@{kUploadedFile:video,kUpdateIndexPath:indexPath};
-        [[NSNotificationCenter defaultCenter]postNotificationName:kUploadMediaComplete object:video userInfo:userInfo];
+        if(succeeded){
+            [self postUploadMediaCompleteNotification:video type:kUploadedMediaTypeVideo];
+        }else{
+            [self postUploadMediaFailedNotification:error];
+        }
         [self.uploadingFile removeObject:video];
     } progressBlock:^(NSInteger percentDone) {
-        
+        [self postUploadMediaProgressNotification:percentDone];
     }];
 }
+
+-(void)postUploadMediaCompleteNotification:(AVFile*)media type:(NSString*)mediaType{
+    NSDictionary *userInfo=@{kUploadState:@(UploadStateComplete),kUploadedFile:media,kUploadedMediaType:mediaType};
+    [[NSNotificationCenter defaultCenter]postNotificationName:kUploadMediaNotification object:self userInfo:userInfo];
+    [self.uploadingFile removeObject:media];
+}
+
+-(void)postUploadMediaProgressNotification:(NSInteger)percentDone{
+    NSDictionary *userInfo=@{kUploadState:@(UploadStateProgress),kUploadingProgress:@(percentDone/100.0)};
+    [[NSNotificationCenter defaultCenter]postNotificationName:kUploadMediaNotification object:self userInfo:userInfo];
+}
+
+-(void)postUploadMediaFailedNotification:(NSError *)error{
+    NSDictionary *userInfo=@{kUploadState:@(UploadStateFailed),kUploadingError:error};
+    [[NSNotificationCenter defaultCenter]postNotificationName:kUploadMediaNotification object:self userInfo:userInfo];
+}
+
 @end

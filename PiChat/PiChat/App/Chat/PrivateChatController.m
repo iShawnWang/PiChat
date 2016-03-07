@@ -16,6 +16,7 @@
 #import "MediaPicker.h"
 #import "CommenUtil.h"
 #import "FileUpLoader.h"
+#import "LocationHelper.h"
 
 @import CoreImage;
 
@@ -35,6 +36,7 @@
     self = [super init];
     if (self) {
         self.hidesBottomBarWhenPushed=YES;
+        self.currentUser=[UserManager sharedUserManager].currentUser;
     }
     return self;
 }
@@ -62,9 +64,6 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     
-    //
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(testNotification:) name:kUploadMediaComplete object:nil];
-    //
     self.bubbleImgFactory=[BubbleImgFactory sharedBubbleImgFactory];
     //
     self.collectionView.showsVerticalScrollIndicator=NO;
@@ -83,11 +82,16 @@
     }];
     //
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didReceiveTyperMessage:) name:kDidReceiveTypedMessageNotification object:nil];
+    //
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadingMediaNotification:) name:kUploadMediaNotification object:nil];
+    //
+    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(updateLocationCellNotification:) name:kLocationCellNeedUpdate object:nil];
 }
 
 -(void)didReceiveTyperMessage:(NSNotification*)notification{
     AVIMTypedMessage *typedMsg= notification.userInfo[kTypedMessage];
     [self addTypedMessage:typedMsg];
+    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
 }
 
 #pragma mark - JSQMessagesCollectionViewDataSource
@@ -133,6 +137,8 @@
     }else if([media isMemberOfClass:[JSQVideoMediaItem class]]){
         NSURL *videoUrl= ((JSQVideoMediaItem*)media).fileURL;
         [MediaViewerController showIn:self withVideoUrl:videoUrl];
+    }else if([media isMemberOfClass:[JSQLocationMediaItem class]]){
+        [MediaViewerController showIn:self withLocation:((JSQLocationMediaItem*)msg.media).location];
     }
 }
 
@@ -141,6 +147,7 @@
 -(void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)senderDisplayName date:(NSDate *)date{
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     AVIMTypedMessage *msg=[AVIMTextMessage messageWithText:text attributes:nil];
+    self.inputToolbar.contentView.textView.text=@"";
     [self sendMessage:msg];
 }
 
@@ -175,48 +182,74 @@
     
 }
 
+#pragma mark - Send Messages
+
+-(void)uploadingMediaNotification:(NSNotification*)noti{
+    UploadState uploadState= [noti.userInfo[kUploadState] integerValue];
+    switch (uploadState) {
+        case UploadStateComplete:{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            AVFile *media=noti.userInfo[kUploadedFile];
+            NSString *mediaType= noti.userInfo[kUploadedMediaType];
+            AVIMTypedMessage *msg;
+            if([mediaType isEqualToString:kUploadedMediaTypePhoto]){
+                msg=[AVIMImageMessage messageWithText:@"" file:media attributes:nil];
+            }else if([mediaType isEqualToString:kUploadedMediaTypeVideo]){
+                msg=[AVIMVideoMessage messageWithText:@"" file:media attributes:nil];
+            }
+            
+            [self sendMessage:msg];
+        }
+        break;
+        case UploadStateProgress:{
+            NSNumber *progress= noti.userInfo[kUploadingProgress];
+            [MBProgressHUD HUDForView:self.view].progress=[progress floatValue];
+        }
+        break;
+        case UploadStateFailed:{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            NSError *error=noti.userInfo[kUploadingError];
+            NSLog(@"上传失败 : %@",error);
+        }
+        break;
+    }
+}
+
 -(void)sendPhoto{
-//    [self.mediaPicker showImagePickerIn:self withCallback:^(NSURL *url, NSError *error) {
-//        AVIMImageMessage *imgMsg=[AVIMImageMessage messageWithText:@"图片上传中......" file:nil attributes:nil];
-//        [self addTypedMessage:imgMsg];
-//        [self.fileUpLoader uploadMediaAtUrl:url ];
-//    }];
+    [self.mediaPicker showImagePickerIn:self withCallback:^(NSURL *url, NSError *error) {
+        [self.fileUpLoader uploadImage:[UIImage imageWithContentsOfFile:url.path]];
+        [MBProgressHUD showProgressInView:self.view];
+    }];
 }
 
 -(void)sendVideo{
     [self.mediaPicker showVideoPickerIn:self withCallback:^(NSURL *url, NSError *error) {
-        User *currentUser=[UserManager sharedUserManager].currentUser;
-        JSQVideoMediaItem *videoItem=[[JSQVideoMediaItem alloc]initWithMaskAsOutgoing:YES];
-        JSQMessage *msg=[JSQMessage messageWithSenderId:currentUser.clientID displayName:currentUser.displayName media:videoItem];
-        [self addMediaMsgPlaceHolderJSQMessage:msg];
-        
-        [self.fileUpLoader uploadVideoAtUrl:url forIndexPath:[NSIndexPath indexPathForItem:self.msgs.count-1 inSection:0] ];
+        [self.fileUpLoader uploadVideoAtUrl:url ];
+        [MBProgressHUD showProgressInView:self.view];
     }];
 }
 
-
-
--(void)testNotification:(NSNotification*)noti{
-    NSLog(@"%@",noti);
-    NSIndexPath *indexPath= noti.userInfo[kUpdateIndexPath];
-    AVFile *file= noti.userInfo[kUploadedFile];
-    User *u= [UserManager sharedUserManager].currentUser;
-    JSQVideoMediaItem *item=[[JSQVideoMediaItem alloc]initWithFileURL:[NSURL URLWithString:file.url] isReadyToPlay:YES];
-    JSQMessage *msg=[JSQMessage messageWithSenderId:u.clientID displayName:u.displayName media:item];
-    self.msgs[indexPath.item]=msg;
-    [self.collectionView reloadData];
-}
-
-
 -(void)sendLocation{
-    CLLocation *ferryBuildingInSF = [[CLLocation alloc] initWithLatitude:37.795313 longitude:-122.393757];
-    AVIMLocationMessage *locationMsg=[AVIMLocationMessage messageWithText:@"location" latitude:ferryBuildingInSF.coordinate.latitude longitude:ferryBuildingInSF.coordinate.longitude attributes:nil];
-    [self sendMessage:locationMsg];
+    [[LocationHelper sharedLocationHelper]getCurrentLocation:^(CLLocation *location, NSError *error) {
+        AVIMLocationMessage *locationMsg=[AVIMLocationMessage messageWithText:@"" latitude:location.coordinate.latitude longitude:location.coordinate.longitude attributes:nil];
+        [self sendMessage:locationMsg];
+        NSLog(@"发送位置 : %@",location);
+    }];
 }
 
+-(void)updateLocationCellNotification:(NSNotification*)noti{
+    for(int i=0;i<self.msgs.count;i++){
+        JSQMessage *msg=self.msgs[i];
+        if([msg.media isKindOfClass:[JSQLocationMediaItem class]]){
+            NSIndexPath *indexPath=[NSIndexPath indexPathForItem:i inSection:0];
+            [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+        }
+    }
+}
 
 -(void)sendMessage:(AVIMTypedMessage*)msg{
     [self.conversation sendMessage:msg callback:^(BOOL succeeded, NSError *error) {
+        [JSQSystemSoundPlayer jsq_playMessageSentSound];
         [self addTypedMessage:msg];
     }];
 }
@@ -229,13 +262,7 @@
     }];
 }
 
--(void)addMediaMsgPlaceHolderJSQMessage:(JSQMessage*)msg{
-    [self.msgs addObject:msg];
-    [self.collectionView reloadData];
-}
-
 -(void)addTypedMessage:(AVIMTypedMessage*)msgToAdd {
-//    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
     [msgToAdd toJsqMessageWithCallback:^(JSQMessage *msg) {
         [self.msgs addObject:msg];
         //TODO 只刷新一个 cell 用 nsoperation Queue 保证 message 按顺序添加...

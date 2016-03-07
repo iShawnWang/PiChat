@@ -11,5 +11,6 @@
 
 @interface FileUpLoader : NSObject
 +(instancetype)sharedFileUpLoader;
--(void)uploadVideoAtUrl:(NSURL*)url forIndexPath:(NSIndexPath*)indexPath;
+-(void)uploadVideoAtUrl:(NSURL*)url;
+-(void)uploadImage:(UIImage*)img;
 @end

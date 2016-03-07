@@ -58,6 +58,15 @@ static MBProgressHUD *hud;
     [hud show:YES];
 }
 
++(void)showProgressInView:(UIView *)v{
+    hud=[[MBProgressHUD alloc]initWithView:v];
+    hud.mode=MBProgressHUDModeDeterminateHorizontalBar;
+    [v addSubview:hud];
+    hud.removeFromSuperViewOnHide=YES;
+    hud.dimBackground=YES;
+    [hud show:YES];
+}
+
 +(void)hide{
     [self hideAfter:0];
 }

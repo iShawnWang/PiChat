@@ -61,7 +61,9 @@
                 AVIMLocationMessage *locationMessage=(AVIMLocationMessage*)self;
                 CLLocation *location = [[CLLocation alloc] initWithLatitude:locationMessage.location.latitude longitude:locationMessage.location.longitude];
                 JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] init];
-                [locationItem setLocation:location];
+                [locationItem setLocation:location withCompletionHandler:^{
+                    [[NSNotificationCenter defaultCenter]postNotificationName:kLocationCellNeedUpdate object:self];
+                }];
                 locationItem.appliesMediaViewMaskAsOutgoing=outgoing;
                 message=[[JSQMessage alloc] initWithSenderId:senderId senderDisplayName:senderDisplayName date:timestamp media:locationItem];
             }

@@ -8,6 +8,7 @@
 
 #import "MediaViewerController.h"
 #import <MWPhotoBrowser.h>
+#import "LocationViewerController.h"
 
 @implementation MediaViewerController
 
@@ -25,6 +26,14 @@
     photoBrowser.autoPlayOnAppear=YES;
     if(controller.navigationController){
         [controller.navigationController pushViewController:photoBrowser animated:YES];
+    }
+}
+
++(void)showIn:(UIViewController *)controller withLocation:(CLLocation *)location{
+    LocationViewerController *locationVC=[[LocationViewerController alloc]init];
+    locationVC.location=location;
+    if(controller.navigationController){
+        [controller.navigationController pushViewController:locationVC animated:YES];
     }
 }
 @end

@@ -11,6 +11,7 @@
 
 @class JSQMessage;
 @class UIImage;
+@class CLLocation;
 typedef void(^JsqMsgBlock)(JSQMessage* msg);
 typedef void (^VoidBlock)();
 typedef void (^BooleanResultBlock)(BOOL succeeded, NSError *error);
@@ -22,11 +23,35 @@ typedef void (^ImageResultBlock)(UIImage *image, NSError *error);
 typedef void (^UrlResultBlock)(NSURL *url, NSError *error);
 typedef void (^StringResultBlock)(NSString *string, NSError *error);
 typedef void (^IdResultBlock)(id object, NSError *error);
+typedef void (^LocationResultBlock)(CLLocation *location, NSError *error);
 
 
+
+static NSString *const kDidReceiveTypedMessageNotification =@"didReceiveTypedMessageNotification";
+static NSString *const kTypedMessage =@"kTypedMessage";
 
 #pragma mark - 
-static NSString *const kUploadMediaComplete=@"kUploadMediaComplete";
+static NSString *const kUploadMediaNotification=@"kUploadMediaNotification";
+
+
+static NSString *const kUploadState=@"kUploadState";
+
+typedef enum : NSUInteger {
+    UploadStateComplete,
+    UploadStateProgress,
+    UploadStateFailed,
+} UploadState;
+
 static NSString *const kUploadedFile=@"kUploadedFile";
-static NSString *const kUpdateIndexPath=@"kUpdateIndexPath";
+static NSString *const kUploadingProgress=@"kUploadingProgress";
+static NSString *const kUploadingError=@"kUploadingError";
+
+static NSString *const kUploadedMediaType=@"kUploadedMediaType";
+static NSString *const kUploadedMediaTypePhoto=@"kUploadedMediaTypePhoto";
+static NSString *const kUploadedMediaTypeVideo=@"kUploadedMediaTypeVideo";
+//static NSString *const kUploadedMediaType=@"kUploadedMediaType";
+
+
+//给 JSQLocationCell 设置位置是异步的,它会先创建 MapView 然后截取 snapShot ,需要 用Notification刷新 Cell
+static NSString *const kLocationCellNeedUpdate=@"kLocationCellNeedUpdate";
 #endif /* GlobalConstant_h */

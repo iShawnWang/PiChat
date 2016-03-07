@@ -11,4 +11,5 @@
 @class User;
 @interface PrivateChatController : JSQMessagesViewController
 @property (strong,nonatomic) User *chatToUser;
+@property (strong,nonatomic) User *currentUser;
 @end
