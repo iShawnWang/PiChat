@@ -15,8 +15,14 @@
 +(NSMutableArray *)followeeArrayToUserArray:(NSArray *)followeeArray{
     NSMutableArray *array=[NSMutableArray array];
     for (AVObject *followee in followeeArray) {
-        NSDictionary *dict= [followee valueForKey:@"localData"];
-        User *u=dict[@"followee"];
+        User *u;
+        if([followee isKindOfClass:[AVUser class]]){
+            u=(User*)followee;
+        }else{
+            NSDictionary *dict= [followee valueForKey:@"localData"];
+            u=dict[@"followee"];
+        }
+        
         [array addObject:u];
     }
     return array;

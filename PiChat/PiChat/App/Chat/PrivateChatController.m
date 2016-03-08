@@ -17,6 +17,9 @@
 #import "CommenUtil.h"
 #import "FileUpLoader.h"
 #import "LocationHelper.h"
+#import "AudioRecorderController.h"
+#import "InputContentView.h"
+#import <Masonry.h>
 
 @import CoreImage;
 
@@ -27,6 +30,7 @@
 @property (strong,nonatomic) ConversationManager *manager;
 @property (strong,nonatomic) MediaPicker *mediaPicker;
 @property (strong,nonatomic) FileUpLoader *fileUpLoader;
+@property (strong,nonatomic) AudioRecorderController *recorder;
 @end
 
 @implementation PrivateChatController
@@ -61,9 +65,26 @@
     return _fileUpLoader;
 }
 
+-(AudioRecorderController *)recorder{
+    if(!_recorder){
+        _recorder=[[AudioRecorderController alloc]init];
+    }
+    return _recorder;
+}
+
 -(void)viewDidLoad{
     [super viewDidLoad];
-    
+    //自定义下面的输入 inputToolBar
+    [((InputContentView*)self.inputToolbar.contentView) decorateView];
+    InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
+    inputView.recordBlock=^(BOOL isRecord){
+        if(isRecord){
+            [self.recorder startRecord];
+        }else{
+            [self.recorder endRecord];
+        }
+    };
+    //
     self.bubbleImgFactory=[BubbleImgFactory sharedBubbleImgFactory];
     //
     self.collectionView.showsVerticalScrollIndicator=NO;
@@ -157,7 +178,7 @@
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                          destructiveButtonTitle:nil
-                                              otherButtonTitles:@"Send photo", @"Send location", @"Send video", nil];
+                                              otherButtonTitles:@"Send photo", @"Send location", @"Send video",nil];
     
     [sheet showFromToolbar:self.inputToolbar];
 }
@@ -175,6 +196,7 @@
             break;
         case 2://视频
             [self sendVideo];
+            break;
             break;
         default:
             break;

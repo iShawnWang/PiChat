@@ -14,6 +14,11 @@
 		0E0B214B1C77691200F257E4 /* chatToAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21471C77691200F257E4 /* chatToAvatar.png */; };
 		0E0B214C1C77691200F257E4 /* goldengate.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21481C77691200F257E4 /* goldengate.png */; };
 		0E0B214D1C77691200F257E4 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21491C77691200F257E4 /* video.mp4 */; };
+		0E391A261C8EB3F3000066C8 /* BasicPinAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A251C8EB3F3000066C8 /* BasicPinAnnotation.m */; };
+		0E391A2A1C8EBD7D000066C8 /* AudioRecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A291C8EBD7D000066C8 /* AudioRecorderController.m */; };
+		0E391A2D1C8F170F000066C8 /* InputContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A2C1C8F170F000066C8 /* InputContentView.m */; };
+		0E391A301C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A2F1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m */; };
+		0E391A321C8F1B83000066C8 /* InputContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E391A311C8F1B83000066C8 /* InputContentView.xib */; };
 		0E4F34411C75F79B006A9BAA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34361C75F79B006A9BAA /* AppDelegate.m */; };
 		0E4F34451C75F7C1006A9BAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34441C75F7C1006A9BAA /* main.m */; };
 		0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F344A1C75F82E006A9BAA /* LoginViewController.m */; };
@@ -81,6 +86,15 @@
 		0E0B21471C77691200F257E4 /* chatToAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatToAvatar.png; sourceTree = "<group>"; };
 		0E0B21481C77691200F257E4 /* goldengate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goldengate.png; sourceTree = "<group>"; };
 		0E0B21491C77691200F257E4 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
+		0E391A241C8EB3F3000066C8 /* BasicPinAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicPinAnnotation.h; sourceTree = "<group>"; };
+		0E391A251C8EB3F3000066C8 /* BasicPinAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicPinAnnotation.m; sourceTree = "<group>"; };
+		0E391A281C8EBD7D000066C8 /* AudioRecorderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioRecorderController.h; sourceTree = "<group>"; };
+		0E391A291C8EBD7D000066C8 /* AudioRecorderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecorderController.m; sourceTree = "<group>"; };
+		0E391A2B1C8F170F000066C8 /* InputContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputContentView.h; sourceTree = "<group>"; };
+		0E391A2C1C8F170F000066C8 /* InputContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputContentView.m; sourceTree = "<group>"; };
+		0E391A2E1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQMessagesInputToolbar+DecorateInputView.h"; sourceTree = "<group>"; };
+		0E391A2F1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQMessagesInputToolbar+DecorateInputView.m"; sourceTree = "<group>"; };
+		0E391A311C8F1B83000066C8 /* InputContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputContentView.xib; sourceTree = "<group>"; };
 		0E4F34351C75F79B006A9BAA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0E4F34361C75F79B006A9BAA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0E4F34441C75F7C1006A9BAA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -191,6 +205,15 @@
 				0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */,
 				0EF669171C8DCCD600B4D2C6 /* LocationViewerController.h */,
 				0EF669181C8DCCD600B4D2C6 /* LocationViewerController.m */,
+				0E391A241C8EB3F3000066C8 /* BasicPinAnnotation.h */,
+				0E391A251C8EB3F3000066C8 /* BasicPinAnnotation.m */,
+				0E391A281C8EBD7D000066C8 /* AudioRecorderController.h */,
+				0E391A291C8EBD7D000066C8 /* AudioRecorderController.m */,
+				0E391A2B1C8F170F000066C8 /* InputContentView.h */,
+				0E391A2C1C8F170F000066C8 /* InputContentView.m */,
+				0E391A2E1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.h */,
+				0E391A2F1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m */,
+				0E391A311C8F1B83000066C8 /* InputContentView.xib */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -563,6 +586,7 @@
 				0E4F34661C76019C006A9BAA /* Moments.storyboard in Resources */,
 				0E4F34641C760195006A9BAA /* Messages.storyboard in Resources */,
 				0EED53001C75CD82000437BD /* Assets.xcassets in Resources */,
+				0E391A321C8F1B83000066C8 /* InputContentView.xib in Resources */,
 				0EED52FE1C75CD82000437BD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -643,7 +667,9 @@
 				0E4F34511C75F86B006A9BAA /* LeanCloudManager.m in Sources */,
 				0E0B21411C7764D500F257E4 /* PrivateChatController.m in Sources */,
 				0ED39FF21C8B489B00894D4B /* Followee.m in Sources */,
+				0E391A261C8EB3F3000066C8 /* BasicPinAnnotation.m in Sources */,
 				0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */,
+				0E391A2A1C8EBD7D000066C8 /* AudioRecorderController.m in Sources */,
 				0E4F346C1C76023F006A9BAA /* ContactTableViewController.m in Sources */,
 				0E4F34691C76022E006A9BAA /* MeViewController.m in Sources */,
 				0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */,
@@ -653,6 +679,7 @@
 				0EADC1AD1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m in Sources */,
 				0E4F346F1C760248006A9BAA /* MessagesTableViewController.m in Sources */,
 				0E4F34451C75F7C1006A9BAA /* main.m in Sources */,
+				0E391A2D1C8F170F000066C8 /* InputContentView.m in Sources */,
 				0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */,
 				0EFDBA211C896AAE002685FE /* MBProgressHUD+Addition.m in Sources */,
 				0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */,
@@ -665,6 +692,7 @@
 				0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */,
 				0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */,
 				0E4F345E1C76009D006A9BAA /* ChatManager.m in Sources */,
+				0E391A301C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

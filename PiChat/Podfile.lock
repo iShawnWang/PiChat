@@ -1,14 +1,14 @@
 PODS:
-  - AVOSCloud (3.2.6)
-  - AVOSCloudIM (3.2.6):
+  - AVOSCloud (3.2.7)
+  - AVOSCloudIM (3.2.7):
     - AVOSCloud
   - DACircularProgress (2.3.1)
-  - GJAlertController (1.0.0)
   - JSQMessagesViewController (7.2.0):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
   - LeanCloudFeedback (0.1.1):
     - AVOSCloud
+  - Masonry (0.6.4)
   - MBProgressHUD (0.9.2)
   - MWPhotoBrowser (2.1.1):
     - DACircularProgress (~> 2.3)
@@ -21,20 +21,20 @@ PODS:
 DEPENDENCIES:
   - AVOSCloud
   - AVOSCloudIM
-  - GJAlertController
   - JSQMessagesViewController
   - LeanCloudFeedback
+  - Masonry
   - MBProgressHUD
   - MWPhotoBrowser
 
 SPEC CHECKSUMS:
-  AVOSCloud: 08ba88573fca8559dfc658942b391c4568fabfc0
-  AVOSCloudIM: 9b23286bf2a86b8a7440c70762990dcb15092d52
+  AVOSCloud: 957d1508104d7c8ed501df9d9b734d7a98c2e047
+  AVOSCloudIM: ec08eaec4d27d732e3be93eadeb3bcf1355b5dcf
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
-  GJAlertController: 71a7f2072451bc37b780d78379c9ee4b6f357dd2
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   LeanCloudFeedback: 686305ea196931c7eae49800c384e42d78408482
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MWPhotoBrowser: ba0d0c09ffda3a7ea10093518738c502c1c7141c
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461

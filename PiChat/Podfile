@@ -12,6 +12,7 @@ pod 'LeanCloudFeedback'
 pod 'JSQMessagesViewController'
 pod 'MWPhotoBrowser'
 pod 'MBProgressHUD'
+pod 'Masonry'
 end
 
 target 'PiChatTests' do

@@ -79,6 +79,41 @@
             </objects>
             <point key="canvasLocation" x="1744" y="452"/>
         </scene>
+        <!--Audio Recorder Controller-->
+        <scene sceneID="jhz-qJ-2nr">
+            <objects>
+                <viewController storyboardIdentifier="AudioRecorderController" id="Ge6-sv-gls" customClass="AudioRecorderController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="83s-eG-npd"/>
+                        <viewControllerLayoutGuide type="bottom" id="3cC-Za-wEW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hRH-8T-XQK">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6On-ea-1AN">
+                                <rect key="frame" x="277" y="285" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="endRecord:" destination="Ge6-sv-gls" eventType="touchUpInside" id="7bd-N7-nxY"/>
+                                    <action selector="startRecord:" destination="Ge6-sv-gls" eventType="touchDown" id="ttx-iv-usQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6On-ea-1AN" firstAttribute="centerY" secondItem="hRH-8T-XQK" secondAttribute="centerY" id="1yU-FN-nuo"/>
+                            <constraint firstItem="6On-ea-1AN" firstAttribute="centerX" secondItem="hRH-8T-XQK" secondAttribute="centerX" id="u6p-2b-aUc"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="btn" destination="6On-ea-1AN" id="ZN3-eb-ldR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IZl-P8-WV7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1516" y="1141"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="VfE-6m-4k1">
             <objects>
