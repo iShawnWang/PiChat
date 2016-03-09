@@ -33,6 +33,15 @@
 +(NSString*)saveFileToDocument:(NSURL*)file{
     return [self saveFileToDocument:file fileName:[file lastPathComponent]];
 }
+
++(UIImage*)textToImage:(NSString*)text size:(CGSize)size{
+    UIGraphicsBeginImageContext(size);
+    CGContextRef context= UIGraphicsGetCurrentContext();
+    [text drawInRect:CGRectMake(0, 0, size.width, size.height) withAttributes:nil];
+    UIImage *img= UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
 @end
 
 

@@ -12,8 +12,6 @@
 		0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0B21431C77651700F257E4 /* MediaViewerController.m */; };
 		0E0B214A1C77691200F257E4 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21461C77691200F257E4 /* avatar.png */; };
 		0E0B214B1C77691200F257E4 /* chatToAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21471C77691200F257E4 /* chatToAvatar.png */; };
-		0E0B214C1C77691200F257E4 /* goldengate.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21481C77691200F257E4 /* goldengate.png */; };
-		0E0B214D1C77691200F257E4 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21491C77691200F257E4 /* video.mp4 */; };
 		0E391A261C8EB3F3000066C8 /* BasicPinAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A251C8EB3F3000066C8 /* BasicPinAnnotation.m */; };
 		0E391A2A1C8EBD7D000066C8 /* AudioRecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A291C8EBD7D000066C8 /* AudioRecorderController.m */; };
 		0E391A2D1C8F170F000066C8 /* InputContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A2C1C8F170F000066C8 /* InputContentView.m */; };
@@ -47,6 +45,11 @@
 		0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */; };
 		0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1B31C78B27E0001C1D8 /* ImageCache.m */; };
 		0ED39FF21C8B489B00894D4B /* Followee.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED39FF11C8B489B00894D4B /* Followee.m */; };
+		0EE2C4A51C907EE900A7DEE0 /* AGEmojiKeyBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A11C907EE800A7DEE0 /* AGEmojiKeyBoardView.m */; };
+		0EE2C4A61C907EE900A7DEE0 /* AGEmojiPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A31C907EE900A7DEE0 /* AGEmojiPageView.m */; };
+		0EE2C4A71C907EE900A7DEE0 /* EmojisList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A41C907EE900A7DEE0 /* EmojisList.plist */; };
+		0EE2C4AA1C908C9C00A7DEE0 /* InputAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A91C908C9C00A7DEE0 /* InputAttachmentView.m */; };
+		0EE2C4AD1C908CC600A7DEE0 /* InputAttachmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EE2C4AC1C908CC600A7DEE0 /* InputAttachmentView.xib */; };
 		0EED52FE1C75CD82000437BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED52FC1C75CD82000437BD /* Main.storyboard */; };
 		0EED53001C75CD82000437BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EED52FF1C75CD82000437BD /* Assets.xcassets */; };
 		0EED53031C75CD82000437BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED53011C75CD82000437BD /* LaunchScreen.storyboard */; };
@@ -84,8 +87,6 @@
 		0E0B21431C77651700F257E4 /* MediaViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaViewerController.m; sourceTree = "<group>"; };
 		0E0B21461C77691200F257E4 /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
 		0E0B21471C77691200F257E4 /* chatToAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatToAvatar.png; sourceTree = "<group>"; };
-		0E0B21481C77691200F257E4 /* goldengate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goldengate.png; sourceTree = "<group>"; };
-		0E0B21491C77691200F257E4 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
 		0E391A241C8EB3F3000066C8 /* BasicPinAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicPinAnnotation.h; sourceTree = "<group>"; };
 		0E391A251C8EB3F3000066C8 /* BasicPinAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicPinAnnotation.m; sourceTree = "<group>"; };
 		0E391A281C8EBD7D000066C8 /* AudioRecorderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioRecorderController.h; sourceTree = "<group>"; };
@@ -146,6 +147,14 @@
 		0EADC1B31C78B27E0001C1D8 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
 		0ED39FF01C8B489B00894D4B /* Followee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Followee.h; sourceTree = "<group>"; };
 		0ED39FF11C8B489B00894D4B /* Followee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Followee.m; sourceTree = "<group>"; };
+		0EE2C4A01C907EE800A7DEE0 /* AGEmojiKeyBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGEmojiKeyBoardView.h; sourceTree = "<group>"; };
+		0EE2C4A11C907EE800A7DEE0 /* AGEmojiKeyBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGEmojiKeyBoardView.m; sourceTree = "<group>"; };
+		0EE2C4A21C907EE900A7DEE0 /* AGEmojiPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGEmojiPageView.h; sourceTree = "<group>"; };
+		0EE2C4A31C907EE900A7DEE0 /* AGEmojiPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGEmojiPageView.m; sourceTree = "<group>"; };
+		0EE2C4A41C907EE900A7DEE0 /* EmojisList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmojisList.plist; sourceTree = "<group>"; };
+		0EE2C4A81C908C9C00A7DEE0 /* InputAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputAttachmentView.h; sourceTree = "<group>"; };
+		0EE2C4A91C908C9C00A7DEE0 /* InputAttachmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputAttachmentView.m; sourceTree = "<group>"; };
+		0EE2C4AC1C908CC600A7DEE0 /* InputAttachmentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputAttachmentView.xib; sourceTree = "<group>"; };
 		0EED52F01C75CD82000437BD /* PiChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EED52FD1C75CD82000437BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0EED52FF1C75CD82000437BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -209,11 +218,7 @@
 				0E391A251C8EB3F3000066C8 /* BasicPinAnnotation.m */,
 				0E391A281C8EBD7D000066C8 /* AudioRecorderController.h */,
 				0E391A291C8EBD7D000066C8 /* AudioRecorderController.m */,
-				0E391A2B1C8F170F000066C8 /* InputContentView.h */,
-				0E391A2C1C8F170F000066C8 /* InputContentView.m */,
-				0E391A2E1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.h */,
-				0E391A2F1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m */,
-				0E391A311C8F1B83000066C8 /* InputContentView.xib */,
+				0EE2C4AB1C908CAB00A7DEE0 /* Input Keyboard */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -223,8 +228,6 @@
 			children = (
 				0E0B21461C77691200F257E4 /* avatar.png */,
 				0E0B21471C77691200F257E4 /* chatToAvatar.png */,
-				0E0B21481C77691200F257E4 /* goldengate.png */,
-				0E0B21491C77691200F257E4 /* video.mp4 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -245,7 +248,7 @@
 				0E4F343B1C75F79B006A9BAA /* Messages */,
 				0E4F343C1C75F79B006A9BAA /* Moments */,
 				0E4F343D1C75F79B006A9BAA /* Util */,
-				0E4F343E1C75F79B006A9BAA /* Vendor */,
+				0EE2C49E1C907EE800A7DEE0 /* Vendor */,
 				0E4F34891C763D81006A9BAA /* GlobalConstant.h */,
 			);
 			path = App;
@@ -339,13 +342,6 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
-		0E4F343E1C75F79B006A9BAA /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Vendor;
-			sourceTree = "<group>";
-		};
 		0E4F34481C75F81B006A9BAA /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +382,41 @@
 				0EADC1B31C78B27E0001C1D8 /* ImageCache.m */,
 			);
 			path = Cache;
+			sourceTree = "<group>";
+		};
+		0EE2C49E1C907EE800A7DEE0 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				0EE2C49F1C907EE800A7DEE0 /* AGEmojiKeyboard */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		0EE2C49F1C907EE800A7DEE0 /* AGEmojiKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				0EE2C4A01C907EE800A7DEE0 /* AGEmojiKeyBoardView.h */,
+				0EE2C4A11C907EE800A7DEE0 /* AGEmojiKeyBoardView.m */,
+				0EE2C4A21C907EE900A7DEE0 /* AGEmojiPageView.h */,
+				0EE2C4A31C907EE900A7DEE0 /* AGEmojiPageView.m */,
+				0EE2C4A41C907EE900A7DEE0 /* EmojisList.plist */,
+			);
+			path = AGEmojiKeyboard;
+			sourceTree = "<group>";
+		};
+		0EE2C4AB1C908CAB00A7DEE0 /* Input Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				0E391A2B1C8F170F000066C8 /* InputContentView.h */,
+				0E391A2C1C8F170F000066C8 /* InputContentView.m */,
+				0E391A2E1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.h */,
+				0E391A2F1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m */,
+				0E391A311C8F1B83000066C8 /* InputContentView.xib */,
+				0EE2C4A81C908C9C00A7DEE0 /* InputAttachmentView.h */,
+				0EE2C4A91C908C9C00A7DEE0 /* InputAttachmentView.m */,
+				0EE2C4AC1C908CC600A7DEE0 /* InputAttachmentView.xib */,
+			);
+			name = "Input Keyboard";
 			sourceTree = "<group>";
 		};
 		0EED52E71C75CD82000437BD = {
@@ -576,13 +607,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E0B214A1C77691200F257E4 /* avatar.png in Resources */,
+				0EE2C4A71C907EE900A7DEE0 /* EmojisList.plist in Resources */,
 				0E0B214B1C77691200F257E4 /* chatToAvatar.png in Resources */,
 				0E4F347E1C7636DE006A9BAA /* Login.storyboard in Resources */,
 				0E4F34621C76018E006A9BAA /* Contact.storyboard in Resources */,
 				0EED53031C75CD82000437BD /* LaunchScreen.storyboard in Resources */,
-				0E0B214C1C77691200F257E4 /* goldengate.png in Resources */,
+				0EE2C4AD1C908CC600A7DEE0 /* InputAttachmentView.xib in Resources */,
 				0E4F34601C760186006A9BAA /* AboutMe.storyboard in Resources */,
-				0E0B214D1C77691200F257E4 /* video.mp4 in Resources */,
 				0E4F34661C76019C006A9BAA /* Moments.storyboard in Resources */,
 				0E4F34641C760195006A9BAA /* Messages.storyboard in Resources */,
 				0EED53001C75CD82000437BD /* Assets.xcassets in Resources */,
@@ -660,6 +691,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EE2C4A51C907EE900A7DEE0 /* AGEmojiKeyBoardView.m in Sources */,
 				0E4F34721C76027A006A9BAA /* MomentsViewController.m in Sources */,
 				0E4F34411C75F79B006A9BAA /* AppDelegate.m in Sources */,
 				0E4F345B1C760096006A9BAA /* UserManager.m in Sources */,
@@ -687,8 +719,10 @@
 				0E4F344E1C75F836006A9BAA /* RegisterViewController.m in Sources */,
 				0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */,
 				0EF669191C8DCCD600B4D2C6 /* LocationViewerController.m in Sources */,
+				0EE2C4AA1C908C9C00A7DEE0 /* InputAttachmentView.m in Sources */,
 				0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */,
 				0E4F34791C76310C006A9BAA /* ConversationManager.m in Sources */,
+				0EE2C4A61C907EE900A7DEE0 /* AGEmojiPageView.m in Sources */,
 				0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */,
 				0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */,
 				0E4F345E1C76009D006A9BAA /* ChatManager.m in Sources */,

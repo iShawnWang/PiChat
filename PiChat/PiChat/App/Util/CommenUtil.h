@@ -32,6 +32,8 @@
 +(NSString*)saveFileToDocument:(NSURL *)file fileName:(NSString*)fileName;
 
 +(NSString*)saveDataToDocument:(NSData *)data fileName:(NSString*)fileName;
+
++(UIImage*)textToImage:(NSString*)text size:(CGSize)size;
 @end
 
 #pragma mark - NSString

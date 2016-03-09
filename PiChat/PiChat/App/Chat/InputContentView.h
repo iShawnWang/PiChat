@@ -8,10 +8,15 @@
 
 #import <JSQMessagesViewController/JSQMessagesViewController.h>
 #import "GlobalConstant.h"
+#import "InputAttachmentView.h"
+@class InputAttachmentView;
 
 typedef void (^RecordBlock)(BOOL startRecord);
 
 @interface InputContentView : JSQMessagesToolbarContentView
 @property (copy,nonatomic) RecordBlock recordBlock;
+@property (strong,nonatomic) InputAttachmentView *inputAttachmentView;
 -(void)decorateView;
+-(void)toggleAttachmentKeyBoard;
+-(void)toggleEmojiKeyBoard;
 @end

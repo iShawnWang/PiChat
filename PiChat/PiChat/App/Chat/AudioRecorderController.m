@@ -8,13 +8,14 @@
 
 #import "AudioRecorderController.h"
 #import "CommenUtil.h"
-#import "GlobalConstant.h"
+
 @import AVFoundation;
+
+
 
 @interface AudioRecorderController ()<AVAudioRecorderDelegate>
 @property (strong,nonatomic) AVAudioRecorder *recorder;
 @property (strong,nonatomic) AVAudioPlayer *player;
-@property (copy,nonatomic) UrlResultBlock callback;
 @end
 
 @implementation AudioRecorderController
@@ -46,10 +47,10 @@
     if(success){
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
-        self.callback(recorder.url,nil);
+        [self.delegate audioRecorder:self didEndRecord:recorder.url];
         [self.player play];
     }else{
-        self.callback(nil,nil);
+        [self.delegate audioRecorder:self didEndRecord:nil];
     }
 }
 

@@ -23,7 +23,7 @@
 
 @import CoreImage;
 
-@interface PrivateChatController ()<AVIMClientDelegate,UIActionSheetDelegate>
+@interface PrivateChatController ()<AVIMClientDelegate,UIActionSheetDelegate,AudioRecorderDelegate,InputAttachmentViewDelegate>
 @property (strong,nonatomic) NSMutableArray *msgs;
 @property (strong,nonatomic) BubbleImgFactory *bubbleImgFactory;
 @property (strong,nonatomic) AVIMConversation *conversation;
@@ -75,8 +75,9 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     //自定义下面的输入 inputToolBar
-    [((InputContentView*)self.inputToolbar.contentView) decorateView];
     InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
+    [inputView decorateView];
+    inputView.inputAttachmentView.delegate=self;
     inputView.recordBlock=^(BOOL isRecord){
         if(isRecord){
             [self.recorder startRecord];
@@ -84,6 +85,8 @@
             [self.recorder endRecord];
         }
     };
+    //
+    self.recorder.delegate=self;
     //
     self.bubbleImgFactory=[BubbleImgFactory sharedBubbleImgFactory];
     //
@@ -174,13 +177,15 @@
 
 - (void)didPressAccessoryButton:(UIButton *)sender
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Media messages"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:@"Send photo", @"Send location", @"Send video",nil];
-    
-    [sheet showFromToolbar:self.inputToolbar];
+//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Media messages"
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"Cancel"
+//                                         destructiveButtonTitle:nil
+//                                              otherButtonTitles:@"Send photo", @"Send location", @"Send video",nil];
+//    
+//    [sheet showFromToolbar:self.inputToolbar];
+    InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
+    [inputView toggleAttachmentKeyBoard];
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -295,4 +300,21 @@
     }];
 }
 
+#pragma mark - AudioRecorderDelegate
+
+-(void)audioRecorder:(AudioRecorderController *)recorder didEndRecord:(NSURL *)audio{
+    //TODO 录音结束后 sendAudio
+}
+
+#pragma mark - InputAttachmentViewDelegate
+-(void)inputAttachmentView:(InputAttachmentView *)v didClickInputView:(InputType)type{
+    //TODO 发送位置等信息
+    switch (type) {
+        case InputTypeEmoji:{
+            InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
+            [inputView toggleEmojiKeyBoard];
+        }
+        break;
+    }
+}
 @end

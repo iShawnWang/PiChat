@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputAttachmentView">
+            <rect key="frame" x="0.0" y="0.0" width="419" height="216"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA9-JG-dOT">
+                    <rect key="frame" x="20" y="20" width="89" height="39"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <state key="normal" title="表情"/>
+                    <connections>
+                        <action selector="emoji:" destination="iN0-l3-epB" eventType="touchUpInside" id="2Pg-Z4-0rM"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m2L-eT-c5a">
+                    <rect key="frame" x="117" y="20" width="89" height="39"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <state key="normal" title="图片"/>
+                    <connections>
+                        <action selector="image:" destination="iN0-l3-epB" eventType="touchUpInside" id="Ope-kC-Gh1"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oHj-I3-uxc">
+                    <rect key="frame" x="214" y="20" width="88" height="39"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <state key="normal" title="视频"/>
+                    <connections>
+                        <action selector="video:" destination="iN0-l3-epB" eventType="touchUpInside" id="hMG-Cs-v7d"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ff6-Yp-VU8">
+                    <rect key="frame" x="310" y="20" width="89" height="39"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <state key="normal" title="位置"/>
+                    <connections>
+                        <action selector="location:" destination="iN0-l3-epB" eventType="touchUpInside" id="eJf-Y4-3FQ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hy3-7T-aCj">
+                    <rect key="frame" x="20" y="79" width="89" height="39"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <state key="normal" title="666"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Hy3-7T-aCj" firstAttribute="top" secondItem="RA9-JG-dOT" secondAttribute="bottom" constant="20" id="7Hz-PE-uIA"/>
+                <constraint firstItem="Hy3-7T-aCj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="8ND-gG-GpT"/>
+                <constraint firstItem="ff6-Yp-VU8" firstAttribute="leading" secondItem="oHj-I3-uxc" secondAttribute="trailing" constant="8" id="Aj2-F1-Rz5"/>
+                <constraint firstItem="RA9-JG-dOT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="BVp-ot-y28"/>
+                <constraint firstItem="ff6-Yp-VU8" firstAttribute="width" secondItem="RA9-JG-dOT" secondAttribute="width" id="IwX-mL-4sL"/>
+                <constraint firstItem="oHj-I3-uxc" firstAttribute="leading" secondItem="m2L-eT-c5a" secondAttribute="trailing" constant="8" id="OJM-UI-9aQ"/>
+                <constraint firstItem="m2L-eT-c5a" firstAttribute="top" secondItem="RA9-JG-dOT" secondAttribute="top" id="RBa-hh-eZ7"/>
+                <constraint firstItem="RA9-JG-dOT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="TI9-R4-SMl"/>
+                <constraint firstItem="oHj-I3-uxc" firstAttribute="top" secondItem="RA9-JG-dOT" secondAttribute="top" id="Z8x-wI-w3c"/>
+                <constraint firstItem="oHj-I3-uxc" firstAttribute="width" secondItem="RA9-JG-dOT" secondAttribute="width" id="ZP6-DX-JX0"/>
+                <constraint firstItem="m2L-eT-c5a" firstAttribute="width" secondItem="RA9-JG-dOT" secondAttribute="width" id="cLU-yl-UnA"/>
+                <constraint firstAttribute="trailing" secondItem="ff6-Yp-VU8" secondAttribute="trailing" constant="20" id="fX7-eS-Wih"/>
+                <constraint firstItem="ff6-Yp-VU8" firstAttribute="top" secondItem="RA9-JG-dOT" secondAttribute="top" id="qSB-03-QPe"/>
+                <constraint firstItem="m2L-eT-c5a" firstAttribute="leading" secondItem="RA9-JG-dOT" secondAttribute="trailing" constant="8" id="rX6-W9-rMj"/>
+                <constraint firstItem="Hy3-7T-aCj" firstAttribute="width" secondItem="RA9-JG-dOT" secondAttribute="width" id="xb3-OV-hZm"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="415.5" y="261"/>
+        </view>
+    </objects>
+</document>
