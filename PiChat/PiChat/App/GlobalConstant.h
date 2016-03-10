@@ -9,6 +9,7 @@
 #ifndef GlobalConstant_h
 #define GlobalConstant_h
 
+
 @class JSQMessage;
 @class UIImage;
 @class CLLocation;
@@ -24,8 +25,6 @@ typedef void (^UrlResultBlock)(NSURL *url, NSError *error);
 typedef void (^StringResultBlock)(NSString *string, NSError *error);
 typedef void (^IdResultBlock)(id object, NSError *error);
 typedef void (^LocationResultBlock)(CLLocation *location, NSError *error);
-
-
 
 static NSString *const kDidReceiveTypedMessageNotification =@"didReceiveTypedMessageNotification";
 static NSString *const kTypedMessage =@"kTypedMessage";
@@ -46,11 +45,14 @@ static NSString *const kUploadedFile=@"kUploadedFile";
 static NSString *const kUploadingProgress=@"kUploadingProgress";
 static NSString *const kUploadingError=@"kUploadingError";
 
-static NSString *const kUploadedMediaType=@"kUploadedMediaType";
-static NSString *const kUploadedMediaTypePhoto=@"kUploadedMediaTypePhoto";
-static NSString *const kUploadedMediaTypeVideo=@"kUploadedMediaTypeVideo";
-//static NSString *const kUploadedMediaType=@"kUploadedMediaType";
+typedef enum : NSUInteger {
+    UploadedMediaTypePhoto,
+    UploadedMediaTypeVideo,
+    UploadedMediaTypeAduio,
+    UploadedMediaTypeFile,
+} UploadedMediaType;
 
+static NSString *const kUploadedMediaType=@"kUploadedMediaType";
 
 //给 JSQLocationCell 设置位置是异步的,它会先创建 MapView 然后截取 snapShot ,需要 用Notification刷新 Cell
 static NSString *const kLocationCellNeedUpdate=@"kLocationCellNeedUpdate";

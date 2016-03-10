@@ -16,14 +16,14 @@
 #import "MediaPicker.h"
 #import "CommenUtil.h"
 #import "FileUpLoader.h"
-#import "LocationHelper.h"
 #import "AudioRecorderController.h"
 #import "InputContentView.h"
 #import <Masonry.h>
+#import "LocationViewerController.h"
 
 @import CoreImage;
 
-@interface PrivateChatController ()<AVIMClientDelegate,UIActionSheetDelegate,AudioRecorderDelegate,InputAttachmentViewDelegate>
+@interface PrivateChatController ()<AVIMClientDelegate,UIActionSheetDelegate,AudioRecorderDelegate,InputAttachmentViewDelegate,LocationViewerDelegate>
 @property (strong,nonatomic) NSMutableArray *msgs;
 @property (strong,nonatomic) BubbleImgFactory *bubbleImgFactory;
 @property (strong,nonatomic) AVIMConversation *conversation;
@@ -98,10 +98,15 @@
     [self.manager chatToUser:self.chatToUser callback:^(AVIMConversation *conversation, NSError *error) {
         self.conversation=conversation;
         [self.manager fetchConversationMessages:conversation callback:^(NSArray *objects, NSError *error) {
-            [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [self addTypedMessage:obj];
-            }];
-            [self.collectionView reloadData];
+            //异步解析 typed messages
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [self addTypedMessage:obj];
+                }];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.collectionView reloadData];
+                });
+            });
         }];
     }];
     //
@@ -177,37 +182,11 @@
 
 - (void)didPressAccessoryButton:(UIButton *)sender
 {
-//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Media messages"
-//                                                       delegate:self
-//                                              cancelButtonTitle:@"Cancel"
-//                                         destructiveButtonTitle:nil
-//                                              otherButtonTitles:@"Send photo", @"Send location", @"Send video",nil];
-//    
-//    [sheet showFromToolbar:self.inputToolbar];
     InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
     [inputView toggleAttachmentKeyBoard];
 }
 
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == actionSheet.cancelButtonIndex) {
-        return;
-    }
-    switch (buttonIndex) {
-        case 0://照片
-            [self sendPhoto];
-            break;
-        case 1://位置
-            [self sendLocation];
-            break;
-        case 2://视频
-            [self sendVideo];
-            break;
-            break;
-        default:
-            break;
-    }
-    
-}
+
 
 #pragma mark - Send Messages
 
@@ -217,12 +196,22 @@
         case UploadStateComplete:{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             AVFile *media=noti.userInfo[kUploadedFile];
-            NSString *mediaType= noti.userInfo[kUploadedMediaType];
+            UploadedMediaType mediaType= [noti.userInfo[kUploadedMediaType] integerValue];
             AVIMTypedMessage *msg;
-            if([mediaType isEqualToString:kUploadedMediaTypePhoto]){
-                msg=[AVIMImageMessage messageWithText:@"" file:media attributes:nil];
-            }else if([mediaType isEqualToString:kUploadedMediaTypeVideo]){
-                msg=[AVIMVideoMessage messageWithText:@"" file:media attributes:nil];
+            switch (mediaType) {
+                case UploadedMediaTypeVideo:
+                    msg=[AVIMVideoMessage messageWithText:@"" file:media attributes:nil];
+                    break;
+                case UploadedMediaTypeAduio:
+                    msg=[AVIMAudioMessage messageWithText:@"" file:media attributes:nil];
+                    break;
+                case UploadedMediaTypePhoto:
+                    msg=[AVIMImageMessage messageWithText:@"" file:media attributes:nil];
+                    break;
+                case UploadedMediaTypeFile:
+                    
+                    break;
+
             }
             
             [self sendMessage:msg];
@@ -251,19 +240,23 @@
 
 -(void)sendVideo{
     [self.mediaPicker showVideoPickerIn:self withCallback:^(NSURL *url, NSError *error) {
-        [self.fileUpLoader uploadVideoAtUrl:url ];
+        [self.fileUpLoader uploadFileAtUrl:url];
         [MBProgressHUD showProgressInView:self.view];
     }];
 }
 
 -(void)sendLocation{
-    [[LocationHelper sharedLocationHelper]getCurrentLocation:^(CLLocation *location, NSError *error) {
-        AVIMLocationMessage *locationMsg=[AVIMLocationMessage messageWithText:@"" latitude:location.coordinate.latitude longitude:location.coordinate.longitude attributes:nil];
-        [self sendMessage:locationMsg];
-        NSLog(@"发送位置 : %@",location);
-    }];
+    LocationViewerController *locationViewer=[[LocationViewerController alloc]init];
+    locationViewer.action=LocationViewerActionPickLocation;
+    locationViewer.delegate=self;
+    [self presentViewController:locationViewer animated:YES completion:nil];
 }
 
+/**
+ *  location cell 需要创建 mapview 然后截图,是异步的,要刷新一下 ~
+ *
+ *  @param noti
+ */
 -(void)updateLocationCellNotification:(NSNotification*)noti{
     for(int i=0;i<self.msgs.count;i++){
         JSQMessage *msg=self.msgs[i];
@@ -290,20 +283,37 @@
 }
 
 -(void)addTypedMessage:(AVIMTypedMessage*)msgToAdd {
+    //同步方法,阻塞,为了保证消息顺序不乱
     [msgToAdd toJsqMessageWithCallback:^(JSQMessage *msg) {
         [self.msgs addObject:msg];
-        //TODO 只刷新一个 cell 用 nsoperation Queue 保证 message 按顺序添加...
-//        NSIndexPath *path=[NSIndexPath indexPathForItem:self.msgs.count-1 inSection:0];
-//        [self.collectionView insertItemsAtIndexPaths:@[path]];
-        [self.collectionView reloadData];
-        [self finishReceivingMessageAnimated:YES];
+        
+        if([NSThread isMainThread]){
+            [self.collectionView reloadData];
+            [self finishReceivingMessageAnimated:YES];
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.collectionView reloadData];
+                [self finishReceivingMessageAnimated:YES];
+            });
+        }
     }];
 }
 
 #pragma mark - AudioRecorderDelegate
 
 -(void)audioRecorder:(AudioRecorderController *)recorder didEndRecord:(NSURL *)audio{
-    //TODO 录音结束后 sendAudio
+    if(audio){
+        [MBProgressHUD showProgressInView:self.view];
+        NSString *cachePath= [CommenUtil saveFileToCache:audio];
+        [self.fileUpLoader uploadAudioAtUrl:[NSURL URLWithString:cachePath]];
+    }
+}
+
+#pragma mark - LocationViewerDelegate
+-(void)locationViewerController:(LocationViewerController *)viewer didPickLocation:(CLLocation *)location{
+    //发送我的位置信息
+    AVIMLocationMessage *locationMsg=[AVIMLocationMessage messageWithText:@"" latitude:location.coordinate.latitude longitude:location.coordinate.longitude attributes:nil];
+    [self sendMessage:locationMsg];
 }
 
 #pragma mark - InputAttachmentViewDelegate
@@ -314,7 +324,19 @@
             InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
             [inputView toggleEmojiKeyBoard];
         }
-        break;
+            break;
+        case InputTypeVideo:{
+            [self sendVideo];
+        }
+            break;
+        case InputTypeImage:{
+            [self sendPhoto];
+        }
+            break;
+        case InputTypeLocation:{
+            [self sendLocation];
+        }
+            break;
     }
 }
 @end

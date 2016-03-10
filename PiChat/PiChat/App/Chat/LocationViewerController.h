@@ -7,8 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+@class LocationViewerController;
+@class CLLocation;
+
+typedef enum : NSUInteger {
+    LocationViewerActionView,
+    LocationViewerActionPickLocation
+} LocationViewerAction;
+
+@protocol LocationViewerDelegate <NSObject>
+-(void)locationViewerController:(LocationViewerController*)viewer didPickLocation:(CLLocation*)location;
+@end
 
 @class CLLocation;
 @interface LocationViewerController : UIViewController
 @property (strong,nonatomic) CLLocation *location;
+@property (assign,nonatomic) LocationViewerAction action;
+@property(nonatomic,weak) IBOutlet id<LocationViewerDelegate> delegate;
 @end

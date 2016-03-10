@@ -38,8 +38,9 @@
 
 -(UIButton *)recordBtn{
     if(!_recordBtn){
-        _recordBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        _recordBtn.titleLabel.text=@"按住说话";
+        _recordBtn=[[UIButton alloc]init];
+        [_recordBtn setTitle:@"按住说话" forState: UIControlStateNormal];
+        [_recordBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [_recordBtn addTarget:self action:@selector(startRecord) forControlEvents:UIControlEventTouchDown];
         [_recordBtn addTarget:self action:@selector(endRecord) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -121,8 +122,10 @@
 
 -(void)emojiKeyBoardViewDidPressBackSpace:(AGEmojiKeyboardView *)emojiKeyBoardView{
     //TODO 删除需要按2次才能删除表情,表情不是 attributeString, 是2个字符大小的文字 !~
-    NSRange lastStrRange=NSMakeRange(self.textView.text.length-1, 1);
-    self.textView.text=[self.textView.text stringByReplacingCharactersInRange:lastStrRange withString:@""];
+    if(self.textView.text.length>0){
+        NSRange lastStrRange=NSMakeRange(self.textView.text.length-1, 1);
+        self.textView.text=[self.textView.text stringByReplacingCharactersInRange:lastStrRange withString:@""];
+    }
 }
 
 -(AGEmojiKeyboardViewCategoryImage)defaultCategoryForEmojiKeyboardView:(AGEmojiKeyboardView *)emojiKeyboardView{
@@ -132,11 +135,11 @@
 #pragma mark -
 -(UIImage *)emojiKeyboardView:(AGEmojiKeyboardView *)emojiKeyboardView imageForSelectedCategory:(AGEmojiKeyboardViewCategoryImage)category{
     //TODO text 改文字
-    return [self textToImage:@"1111"];
+    return [UIImage new];
 }
 
 -(UIImage *)emojiKeyboardView:(AGEmojiKeyboardView *)emojiKeyboardView imageForNonSelectedCategory:(AGEmojiKeyboardViewCategoryImage)category{
-    return [self textToImage:@"0000"];
+    return [UIImage new];
 }
 
 -(UIImage *)backSpaceButtonImageForEmojiKeyboardView:(AGEmojiKeyboardView *)emojiKeyboardView{

@@ -9,8 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "GlobalConstant.h"
 
+@class AVFile;
+
 @interface FileUpLoader : NSObject
 +(instancetype)sharedFileUpLoader;
--(void)uploadVideoAtUrl:(NSURL*)url;
 -(void)uploadImage:(UIImage*)img;
+
+-(void)uploadVideoAtUrl:(NSURL *)url;
+
+-(void)uploadFileAtUrl:(NSURL *)url;
+
+-(void)uploadAudioAtUrl:(NSURL*)url;
+
+-(void)uploadTypedFileAtUrl:(NSURL *)url type:(UploadedMediaType)type;
+
+-(void)uploadAVFileAtUrl:(AVFile*)file type:(UploadedMediaType)type;
 @end

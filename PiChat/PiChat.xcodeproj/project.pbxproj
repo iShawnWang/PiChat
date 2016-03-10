@@ -55,7 +55,6 @@
 		0EED53031C75CD82000437BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED53011C75CD82000437BD /* LaunchScreen.storyboard */; };
 		0EED530E1C75CD82000437BD /* PiChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED530D1C75CD82000437BD /* PiChatTests.m */; };
 		0EED53191C75CD82000437BD /* PiChatUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED53181C75CD82000437BD /* PiChatUITests.m */; };
-		0EF669151C8DAE8B00B4D2C6 /* LocationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF669141C8DAE8B00B4D2C6 /* LocationHelper.m */; };
 		0EF669191C8DCCD600B4D2C6 /* LocationViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF669181C8DCCD600B4D2C6 /* LocationViewerController.m */; };
 		0EFDBA211C896AAE002685FE /* MBProgressHUD+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */; };
 		A1C49579061CF5790206FC28 /* libPods-PiChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F1213A3616F8FD53E22CBE /* libPods-PiChat.a */; };
@@ -166,8 +165,6 @@
 		0EED53141C75CD82000437BD /* PiChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PiChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EED53181C75CD82000437BD /* PiChatUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PiChatUITests.m; sourceTree = "<group>"; };
 		0EED531A1C75CD82000437BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0EF669131C8DAE8B00B4D2C6 /* LocationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationHelper.h; sourceTree = "<group>"; };
-		0EF669141C8DAE8B00B4D2C6 /* LocationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationHelper.m; sourceTree = "<group>"; };
 		0EF669171C8DCCD600B4D2C6 /* LocationViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewerController.h; sourceTree = "<group>"; };
 		0EF669181C8DCCD600B4D2C6 /* LocationViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewerController.m; sourceTree = "<group>"; };
 		0EFDBA1F1C896AAE002685FE /* MBProgressHUD+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Addition.h"; sourceTree = "<group>"; };
@@ -336,8 +333,6 @@
 				0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */,
 				0EFDBA1F1C896AAE002685FE /* MBProgressHUD+Addition.h */,
 				0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */,
-				0EF669131C8DAE8B00B4D2C6 /* LocationHelper.h */,
-				0EF669141C8DAE8B00B4D2C6 /* LocationHelper.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -706,7 +701,6 @@
 				0E4F34691C76022E006A9BAA /* MeViewController.m in Sources */,
 				0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */,
 				0E4F34751C7602D7006A9BAA /* RegexUtil.m in Sources */,
-				0EF669151C8DAE8B00B4D2C6 /* LocationHelper.m in Sources */,
 				0E4F34551C75F9D6006A9BAA /* User.m in Sources */,
 				0EADC1AD1C78964A0001C1D8 /* AVIMTypedMessage+ToJsqMessage.m in Sources */,
 				0E4F346F1C760248006A9BAA /* MessagesTableViewController.m in Sources */,

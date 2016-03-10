@@ -32,6 +32,7 @@
 +(void)showIn:(UIViewController *)controller withLocation:(CLLocation *)location{
     LocationViewerController *locationVC=[[LocationViewerController alloc]init];
     locationVC.location=location;
+    locationVC.action=LocationViewerActionView;
     if(controller.navigationController){
         [controller.navigationController pushViewController:locationVC animated:YES];
     }
