@@ -40,7 +40,8 @@
 
 //
 +(NSString*)saveDataToCache:(NSData *)data fileName:(NSString*)fileName{
-    return [self saveData:data toDirectory:NSTemporaryDirectory() fileName:fileName];
+    NSString *cachePath= [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)firstObject];
+    return [self saveData:data toDirectory:cachePath fileName:fileName];
 }
 
 +(NSString*)saveDataToDocument:(NSData *)data fileName:(NSString*)fileName{

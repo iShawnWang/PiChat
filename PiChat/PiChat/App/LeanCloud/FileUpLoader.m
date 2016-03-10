@@ -51,8 +51,8 @@
 }
 
 -(void)uploadTypedFileAtUrl:(NSURL *)url type:(UploadedMediaType)type{
-    NSString *cachePath= [CommenUtil saveFileToCache:url];
-    AVFile *file=[AVFile fileWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:cachePath]]];
+    NSData *data= [NSData dataWithContentsOfURL:url];
+    AVFile *file=[AVFile fileWithData:[NSData dataWithContentsOfURL:url]];
     [self uploadAVFileAtUrl:file type:type];
 }
 

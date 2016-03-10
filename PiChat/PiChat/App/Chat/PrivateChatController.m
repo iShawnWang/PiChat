@@ -203,13 +203,12 @@
                     msg=[AVIMVideoMessage messageWithText:@"" file:media attributes:nil];
                     break;
                 case UploadedMediaTypeAduio:
-                    msg=[AVIMAudioMessage messageWithText:@"" file:media attributes:nil];
+                    msg=[AVIMAudioMessage messageWithText:@"asd" file:media attributes:nil];
                     break;
                 case UploadedMediaTypePhoto:
                     msg=[AVIMImageMessage messageWithText:@"" file:media attributes:nil];
                     break;
                 case UploadedMediaTypeFile:
-                    
                     break;
 
             }
@@ -300,12 +299,11 @@
 }
 
 #pragma mark - AudioRecorderDelegate
-
 -(void)audioRecorder:(AudioRecorderController *)recorder didEndRecord:(NSURL *)audio{
     if(audio){
-        [MBProgressHUD showProgressInView:self.view];
-        NSString *cachePath= [CommenUtil saveFileToCache:audio];
-        [self.fileUpLoader uploadAudioAtUrl:[NSURL URLWithString:cachePath]];
+//        NSString *cachePath= [CommenUtil saveFileToCache:audio];
+//        [self.fileUpLoader uploadAudioAtUrl:[NSURL URLWithString:cachePath]];
+        [self.fileUpLoader uploadAudioAtUrl:audio];
     }
 }
 

@@ -12,6 +12,7 @@
 #import "UserManager.h"
 #import <AVOSCloudIM.h>
 #import <JSQMessagesViewController/JSQMessages.h>
+#import "JSQAudioMediaItem.h"
 
 @implementation AVIMTypedMessage (ToJsqMessage)
 
@@ -48,11 +49,13 @@
             break;
         }
         case kAVIMMessageMediaTypeVideo:{
-            AVIMVideoMessage* receiveVideoMessage=(AVIMVideoMessage*)self;
-            NSString* format=receiveVideoMessage.format;
-            NSError* error;
-            NSString* path=[self fetchDataOfMessageFile:self.file fileName:[NSString stringWithFormat:@"%@.%@",self.messageId,format] error:&error];
-            NSURL *videoURL = [NSURL fileURLWithPath:path];
+            AVIMVideoMessage* videoMessage=(AVIMVideoMessage*)self;
+            NSString *cachePath= [self fileCacheUrlForFileName:[NSString stringWithFormat:@"%@.%@",self.messageId,videoMessage.format]];
+            if(![[NSFileManager defaultManager]fileExistsAtPath:cachePath]){
+                [self fetchDataOfMessageFile:videoMessage.file toDirctory:cachePath error:nil];
+            }
+            
+            NSURL *videoURL = [NSURL fileURLWithPath:cachePath];
             JSQVideoMediaItem *videoItem = [[JSQVideoMediaItem alloc] initWithFileURL:videoURL isReadyToPlay:YES];
             videoItem.appliesMediaViewMaskAsOutgoing=outgoing;
             message = [[JSQMessage alloc] initWithSenderId:senderId senderDisplayName:senderDisplayName date:timestamp media:videoItem];
@@ -68,20 +71,33 @@
             locationItem.appliesMediaViewMaskAsOutgoing=outgoing;
             message=[[JSQMessage alloc] initWithSenderId:senderId senderDisplayName:senderDisplayName date:timestamp media:locationItem];
         }
-        default:
+        case kAVIMMessageMediaTypeAudio:{
+            AVIMAudioMessage *audioMsg=(AVIMAudioMessage*)self;
+            NSString *cachePath= [self fileCacheUrlForFileName:[NSString stringWithFormat:@"%@.%@",self.messageId,audioMsg.format]];
+            if(![[NSFileManager defaultManager]fileExistsAtPath:cachePath]){
+                [self fetchDataOfMessageFile:audioMsg.file toDirctory:cachePath error:nil];
+            }
+           
+            JSQAudioMediaItem *audioItem=[[JSQAudioMediaItem alloc]initWithURL:[NSURL URLWithString:cachePath] isReadyToPlay:YES];
+            message=[JSQMessage messageWithSenderId:senderId displayName:senderDisplayName media:audioItem];
+            
+        }
             break;
     }
     
     callback(message);
 }
 
+-(NSString*)fileCacheUrlForFileName:(NSString *)fileName{
+    return [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingString:fileName];
+}
+
 //把接收到的 媒体文件存到 Document 目录
--(NSString*)fetchDataOfMessageFile:(AVFile*)file fileName:(NSString*)fileName error:(NSError**)error{
-    NSString* path=[[NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingString:fileName];
+-(NSString*)fetchDataOfMessageFile:(AVFile*)file toDirctory:(NSString*)cachePath error:(NSError**)error{
     NSData* data=[file getData:error];
-    if(*error==nil){
-        [data writeToFile:path atomically:YES];
+    if(error==nil){
+        [data writeToFile:cachePath atomically:YES];
     }
-    return path;
+    return cachePath;
 }
 @end
