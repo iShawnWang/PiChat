@@ -12,12 +12,12 @@
 
 + (UIImage *)jsq_defaultPlayImage
 {
-    return [UIImage jsq_bubbleImageFromBundleWithName:@"play"];
+    return [UIImage imageNamed:@"play"];
 }
 
 + (UIImage *)jsq_defaultPauseImage
 {
-    return [UIImage jsq_bubbleImageFromBundleWithName:@"pause"];
+    return [UIImage imageNamed:@"pause"];
 }
 
 @end

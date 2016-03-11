@@ -20,6 +20,7 @@
 #import "InputContentView.h"
 #import <Masonry.h>
 #import "LocationViewerController.h"
+#import "RecordIndocator.h"
 
 @import CoreImage;
 
@@ -31,6 +32,7 @@
 @property (strong,nonatomic) MediaPicker *mediaPicker;
 @property (strong,nonatomic) FileUpLoader *fileUpLoader;
 @property (strong,nonatomic) AudioRecorderController *recorder;
+@property (strong,nonatomic) RecordIndocator *indocator;
 @end
 
 @implementation PrivateChatController
@@ -72,6 +74,21 @@
     return _recorder;
 }
 
+-(RecordIndocator *)indocator{
+    if(!_indocator){
+        _indocator=[[RecordIndocator alloc]init];
+        [self.view addSubview:_indocator];
+        _indocator.hidden=YES;
+        [_indocator mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.centerY.equalTo(self.view);
+            make.width.equalTo(self.view).multipliedBy(0.2);
+            make.height.equalTo(self.view).multipliedBy(0.2);
+        }];
+    }
+    return _indocator;
+}
+
 -(void)viewDidLoad{
     [super viewDidLoad];
     //自定义下面的输入 inputToolBar
@@ -81,7 +98,9 @@
     inputView.recordBlock=^(BOOL isRecord){
         if(isRecord){
             [self.recorder startRecord];
+            self.indocator.hidden=NO;
         }else{
+            self.indocator.hidden=YES;
             [self.recorder endRecord];
         }
     };
@@ -305,6 +324,10 @@
 //        [self.fileUpLoader uploadAudioAtUrl:[NSURL URLWithString:cachePath]];
         [self.fileUpLoader uploadAudioAtUrl:audio];
     }
+}
+
+-(void)audioRecorder:(AudioRecorderController *)recorder updateSoundLevel:(CGFloat)level{
+    [self.indocator updateSoundLevel:level];
 }
 
 #pragma mark - LocationViewerDelegate

@@ -13,7 +13,7 @@
 @protocol AudioRecorderDelegate <NSObject>
 
 -(void)audioRecorder:(AudioRecorderController*)recorder didEndRecord:(NSURL*)audio;
-
+-(void)audioRecorder:(AudioRecorderController *)recorder updateSoundLevel:(CGFloat)level;
 @end
 
 @interface AudioRecorderController : NSObject

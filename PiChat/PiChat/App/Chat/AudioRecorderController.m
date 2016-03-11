@@ -14,6 +14,7 @@
 @interface AudioRecorderController ()<AVAudioRecorderDelegate>
 @property (strong,nonatomic) AVAudioRecorder *recorder;
 @property (strong,nonatomic) AVAudioPlayer *player;
+@property (strong,nonatomic) NSTimer *timer;
 @end
 
 @implementation AudioRecorderController
@@ -26,6 +27,7 @@
         [dic setObject:@(8) forKey:AVLinearPCMBitDepthKey];             //每个采样点位数，分为8，16，24，32
         [dic setObject:@(YES) forKey:AVLinearPCMIsFloatKey];
         _recorder=[[AVAudioRecorder alloc]initWithURL:[self cacheFilePathUrl] settings:dic error:nil];
+        _recorder.meteringEnabled=YES;
         _recorder.delegate=self;
     }
     return _recorder;
@@ -36,6 +38,12 @@
         _player=[[AVAudioPlayer alloc]initWithContentsOfURL:[self cacheFilePathUrl] error:nil];
     }
     return _player;
+}
+-(NSTimer *)timer{
+    if(!_timer){
+        _timer=[NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(updateMetersView:) userInfo:nil repeats:YES];
+    }
+    return _timer;
 }
 
 -(NSURL*)cacheFilePathUrl{
@@ -58,6 +66,14 @@
     }
 }
 
+
+-(void)updateMetersView:(NSTimer*)timer{
+    [self.recorder updateMeters];
+    CGFloat power= [self.recorder averagePowerForChannel:0];
+    [self.delegate audioRecorder:self updateSoundLevel:power];
+}
+
+
 #pragma mark - Record
 
 - (void)startRecord {
@@ -69,10 +85,12 @@
         NSLog(@"%@",error);
         return;
     }
+    self.timer.fireDate=[NSDate distantPast];
     [self.recorder record];
 }
 
 - (void)endRecord {
+    self.timer.fireDate=[NSDate distantFuture];
     [self.recorder stop];
 }
 
