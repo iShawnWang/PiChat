@@ -7,12 +7,13 @@
 //
 
 #import "AVIMTypedMessage+ToJsqMessage.h"
-#import "GlobalConstant.h"
 #import <AVOSCloud.h>
 #import "UserManager.h"
 #import <AVOSCloudIM.h>
 #import <JSQMessagesViewController/JSQMessages.h>
 #import "JSQAudioMediaItem.h"
+#import "JSQMessage+MessageID.h"
+
 
 @implementation AVIMTypedMessage (ToJsqMessage)
 
@@ -50,7 +51,8 @@
         }
         case kAVIMMessageMediaTypeVideo:{
             AVIMVideoMessage* videoMessage=(AVIMVideoMessage*)self;
-            NSString *cachePath= [self fileCacheUrlForFileName:[NSString stringWithFormat:@"%@.%@",self.messageId,videoMessage.format]];
+            NSString *videoFormat=videoMessage.attributes[kVideoFormat];
+            NSString *cachePath= [self fileCacheUrlForFileName:[NSString stringWithFormat:@"%@.%@",self.messageId,videoFormat]];
             if(![[NSFileManager defaultManager]fileExistsAtPath:cachePath]){
                 [self fetchDataOfMessageFile:videoMessage.file toDirctory:cachePath error:nil];
             }
@@ -84,17 +86,18 @@
         }
             break;
     }
-    
+    message.timeStamp=self.sendTimestamp;
+    message.messageID=self.messageId;
     callback(message);
 }
 
 -(NSString*)fileCacheUrlForFileName:(NSString *)fileName{
-    return [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingString:fileName];
+    return [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:fileName];
 }
 
-//把接收到的 媒体文件存到 Document 目录
+//把接收到的 媒体文件存到文件夹中
 -(NSString*)fetchDataOfMessageFile:(AVFile*)file toDirctory:(NSString*)cachePath error:(NSError**)error{
-    NSData* data=[file getData:error];
+    NSData  *data=[file getData:error];
     if(error==nil){
         [data writeToFile:cachePath atomically:YES];
     }

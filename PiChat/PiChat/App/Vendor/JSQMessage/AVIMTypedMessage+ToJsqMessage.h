@@ -9,6 +9,8 @@
 #import "AVIMTypedMessage.h"
 #import "GlobalConstant.h"
 
+static NSString *const kVideoFormat=@"kVideoFormat";
+
 @interface AVIMTypedMessage (ToJsqMessage)
 -(void)toJsqMessageWithCallback:(JsqMsgBlock)callback;
 @end

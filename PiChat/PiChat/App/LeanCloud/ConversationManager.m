@@ -160,6 +160,17 @@
     [conversation queryMessagesBeforeId:beforeID timestamp:0 limit:20 callback:callback];
 }
 
+/**
+ *  查询对话消息记录 ,历史消息 按时间戳
+ *
+ *  @param conversation
+ *  @param
+ *  @param callback
+ */
+-(void)fetchMessages:(AVIMConversation*)conversation beforeTime:(int64_t)beforeTimeStamp callback:(AVIMArrayResultBlock)callback{
+    [conversation queryMessagesBeforeId:nil timestamp:beforeTimeStamp limit:20 callback:callback];
+}
+
 
 #pragma mark - AVIMClientDelegate
 

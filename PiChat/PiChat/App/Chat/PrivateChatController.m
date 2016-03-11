@@ -21,6 +21,8 @@
 #import <Masonry.h>
 #import "LocationViewerController.h"
 #import "RecordIndocator.h"
+#import "JSQMessage+MessageID.h"
+
 
 @import CoreImage;
 
@@ -33,6 +35,7 @@
 @property (strong,nonatomic) FileUpLoader *fileUpLoader;
 @property (strong,nonatomic) AudioRecorderController *recorder;
 @property (strong,nonatomic) RecordIndocator *indocator;
+@property (strong,nonatomic) UIRefreshControl *refreshControl;
 @end
 
 @implementation PrivateChatController
@@ -89,8 +92,19 @@
     return _indocator;
 }
 
+-(UIRefreshControl *)refreshControl{
+    if(!_refreshControl){
+        _refreshControl=[[UIRefreshControl alloc]init];
+        [_refreshControl addTarget:self action:@selector(loadHistoryMsg:) forControlEvents:UIControlEventValueChanged];
+    }
+    return _refreshControl;
+}
+
 -(void)viewDidLoad{
     [super viewDidLoad];
+    
+    //下拉刷新
+    [self.collectionView addSubview:self.refreshControl];
     //自定义下面的输入 inputToolBar
     InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
     [inputView decorateView];
@@ -122,9 +136,6 @@
                 [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     [self addTypedMessage:obj];
                 }];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.collectionView reloadData];
-                });
             });
         }];
     }];
@@ -135,6 +146,8 @@
     //
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(updateLocationCellNotification:) name:kLocationCellNeedUpdate object:nil];
 }
+
+#pragma mark - 收到新消息
 
 -(void)didReceiveTyperMessage:(NSNotification*)notification{
     AVIMTypedMessage *typedMsg= notification.userInfo[kTypedMessage];
@@ -170,12 +183,17 @@
     return kJSQMessagesCollectionViewCellLabelHeightDefault;
 }
 
-//
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     return cell;
 }
 
+/**
+ *  点击 cell
+ *
+ *  @param collectionView
+ *  @param indexPath      
+ */
 -(void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessage *msg= self.msgs[indexPath.item];
     id<JSQMessageMediaData> media= msg.media;
@@ -207,7 +225,7 @@
 
 
 
-#pragma mark - Send Messages
+#pragma mark - 更新上传媒体文件进度,上传完成发送消息
 
 -(void)uploadingMediaNotification:(NSNotification*)noti{
     UploadState uploadState= [noti.userInfo[kUploadState] integerValue];
@@ -219,10 +237,10 @@
             AVIMTypedMessage *msg;
             switch (mediaType) {
                 case UploadedMediaTypeVideo:
-                    msg=[AVIMVideoMessage messageWithText:@"" file:media attributes:nil];
+                    msg=[AVIMVideoMessage messageWithText:@"" file:media attributes:@{kVideoFormat:media.url.pathExtension}];
                     break;
                 case UploadedMediaTypeAduio:
-                    msg=[AVIMAudioMessage messageWithText:@"asd" file:media attributes:nil];
+                    msg=[AVIMAudioMessage messageWithText:@"" file:media attributes:nil];
                     break;
                 case UploadedMediaTypePhoto:
                     msg=[AVIMImageMessage messageWithText:@"" file:media attributes:nil];
@@ -249,6 +267,8 @@
     }
 }
 
+#pragma mark - 发送消息
+
 -(void)sendPhoto{
     [self.mediaPicker showImagePickerIn:self withCallback:^(NSURL *url, NSError *error) {
         [self.fileUpLoader uploadImage:[UIImage imageWithContentsOfFile:url.path]];
@@ -258,7 +278,7 @@
 
 -(void)sendVideo{
     [self.mediaPicker showVideoPickerIn:self withCallback:^(NSURL *url, NSError *error) {
-        [self.fileUpLoader uploadFileAtUrl:url];
+        [self.fileUpLoader uploadVideoAtUrl:url];
         [MBProgressHUD showProgressInView:self.view];
     }];
 }
@@ -292,36 +312,69 @@
     }];
 }
 
--(void)sendMessage:(AVIMTypedMessage*)msg addToLocal:(BOOL)addToLocal{
-    [self.conversation sendMessage:msg callback:^(BOOL succeeded, NSError *error) {
-        if(addToLocal){
-            [self addTypedMessage:msg];
-        }
-    }];
-}
+#pragma mark - 将 AVIMTypedMessage 转为 JSQMessage 加到聊天列表中,刷新 view
 
 -(void)addTypedMessage:(AVIMTypedMessage*)msgToAdd {
+    [self addTypedMessage:msgToAdd toArrayHead:NO reloadData:YES];
+}
+
+-(void)addTypedMessage:(AVIMTypedMessage*)msgToAdd toArrayHead:(BOOL)toArrayHead reloadData:(BOOL)reloadData{
     //同步方法,阻塞,为了保证消息顺序不乱
     [msgToAdd toJsqMessageWithCallback:^(JSQMessage *msg) {
-        [self.msgs addObject:msg];
+        if(toArrayHead){
+            [self.msgs insertObject:msg atIndex:0];
+        }else{
+            [self.msgs addObject:msg];
+        }
+        
+        if(!reloadData) return;
         
         if([NSThread isMainThread]){
-            [self.collectionView reloadData];
             [self finishReceivingMessageAnimated:YES];
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.collectionView reloadData];
                 [self finishReceivingMessageAnimated:YES];
             });
         }
     }];
 }
 
+#pragma mark - 下拉刷新 加载更多数据 
+-(void)loadHistoryMsg:(UIRefreshControl*)refreshControl{
+    JSQMessage *msg=[self.msgs firstObject];
+    [self.manager fetchMessages:self.conversation beforeTime:msg.timeStamp callback:^(NSArray *objects, NSError *error) {
+        //异步解析 typed messages
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSArray *historyMessages=[objects reverseObjectEnumerator].allObjects; //反转数组;
+            [historyMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self addTypedMessage:obj toArrayHead:YES reloadData:NO];
+            }];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.refreshControl endRefreshing];
+                [self finishReceivingMessageAnimated:YES];
+            });
+        });
+    }];
+    
+    //TODO SDK Bug 用上面的时间戳方法 OK
+//    [self.manager fetchMessages:self.conversation before:msg.messageID callback:^(NSArray *objects, NSError *error) {
+//        //异步解析 typed messages
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                [self addTypedMessage:obj toArrayHead:YES reloadData:NO];
+//            }];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self.refreshControl endRefreshing];
+//                [self finishReceivingMessageAnimated:YES];
+//            });
+//        });
+//    }];
+}
+
 #pragma mark - AudioRecorderDelegate
 -(void)audioRecorder:(AudioRecorderController *)recorder didEndRecord:(NSURL *)audio{
     if(audio){
-//        NSString *cachePath= [CommenUtil saveFileToCache:audio];
-//        [self.fileUpLoader uploadAudioAtUrl:[NSURL URLWithString:cachePath]];
         [self.fileUpLoader uploadAudioAtUrl:audio];
     }
 }

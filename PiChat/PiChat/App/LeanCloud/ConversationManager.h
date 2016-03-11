@@ -23,4 +23,5 @@
 -(void)chatToUser:(User*)u callback:(AVIMConversationResultBlock)callback;
 -(void)fetchConversationMessages:(AVIMConversation*)conversation callback:(AVIMArrayResultBlock)callback;
 -(void)fetchMessages:(AVIMConversation*)conversation before:(NSString*)beforeID callback:(AVIMArrayResultBlock)callback;
+-(void)fetchMessages:(AVIMConversation*)conversation beforeTime:(int64_t)beforeTimeStamp callback:(AVIMArrayResultBlock)callback;
 @end

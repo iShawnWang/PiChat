@@ -26,12 +26,13 @@ typedef void (^StringResultBlock)(NSString *string, NSError *error);
 typedef void (^IdResultBlock)(id object, NSError *error);
 typedef void (^LocationResultBlock)(CLLocation *location, NSError *error);
 
+
+#pragma mark - 收到消息通知
 static NSString *const kDidReceiveTypedMessageNotification =@"didReceiveTypedMessageNotification";
 static NSString *const kTypedMessage =@"kTypedMessage";
 
-#pragma mark - 
+#pragma mark - 上传媒体文件通知
 static NSString *const kUploadMediaNotification=@"kUploadMediaNotification";
-
 
 static NSString *const kUploadState=@"kUploadState";
 
@@ -56,4 +57,7 @@ static NSString *const kUploadedMediaType=@"kUploadedMediaType";
 
 //给 JSQLocationCell 设置位置是异步的,它会先创建 MapView 然后截取 snapShot ,需要 用Notification刷新 Cell
 static NSString *const kLocationCellNeedUpdate=@"kLocationCellNeedUpdate";
+
+#pragma mark - 
+
 #endif /* GlobalConstant_h */

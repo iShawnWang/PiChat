@@ -47,6 +47,7 @@
 		0ED19F031C91DA0F00EF7472 /* UIImage+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F011C91DA0F00EF7472 /* UIImage+JSQMessages.m */; };
 		0ED19F061C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F051C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m */; };
 		0ED39FF21C8B489B00894D4B /* Followee.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED39FF11C8B489B00894D4B /* Followee.m */; };
+		0ED6EE9E1C934E0A00DCC2DD /* JSQMessage+MessageID.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED6EE9D1C934E0A00DCC2DD /* JSQMessage+MessageID.m */; };
 		0EE2C4A51C907EE900A7DEE0 /* AGEmojiKeyBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A11C907EE800A7DEE0 /* AGEmojiKeyBoardView.m */; };
 		0EE2C4A61C907EE900A7DEE0 /* AGEmojiPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A31C907EE900A7DEE0 /* AGEmojiPageView.m */; };
 		0EE2C4A71C907EE900A7DEE0 /* EmojisList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A41C907EE900A7DEE0 /* EmojisList.plist */; };
@@ -153,6 +154,8 @@
 		0ED19F051C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVIMTypedMessage+ToJsqMessage.m"; sourceTree = "<group>"; };
 		0ED39FF01C8B489B00894D4B /* Followee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Followee.h; sourceTree = "<group>"; };
 		0ED39FF11C8B489B00894D4B /* Followee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Followee.m; sourceTree = "<group>"; };
+		0ED6EE9C1C934E0A00DCC2DD /* JSQMessage+MessageID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQMessage+MessageID.h"; sourceTree = "<group>"; };
+		0ED6EE9D1C934E0A00DCC2DD /* JSQMessage+MessageID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQMessage+MessageID.m"; sourceTree = "<group>"; };
 		0EE2C4A01C907EE800A7DEE0 /* AGEmojiKeyBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGEmojiKeyBoardView.h; sourceTree = "<group>"; };
 		0EE2C4A11C907EE800A7DEE0 /* AGEmojiKeyBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGEmojiKeyBoardView.m; sourceTree = "<group>"; };
 		0EE2C4A21C907EE900A7DEE0 /* AGEmojiPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGEmojiPageView.h; sourceTree = "<group>"; };
@@ -397,6 +400,8 @@
 				0ED19F011C91DA0F00EF7472 /* UIImage+JSQMessages.m */,
 				0EF643EB1C92918B0000A4CA /* RecordIndocator.h */,
 				0EF643EC1C92918B0000A4CA /* RecordIndocator.m */,
+				0ED6EE9C1C934E0A00DCC2DD /* JSQMessage+MessageID.h */,
+				0ED6EE9D1C934E0A00DCC2DD /* JSQMessage+MessageID.m */,
 			);
 			path = JSQMessage;
 			sourceTree = "<group>";
@@ -742,6 +747,7 @@
 				0EE2C4AA1C908C9C00A7DEE0 /* InputAttachmentView.m in Sources */,
 				0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */,
 				0E4F34791C76310C006A9BAA /* ConversationManager.m in Sources */,
+				0ED6EE9E1C934E0A00DCC2DD /* JSQMessage+MessageID.m in Sources */,
 				0EE2C4A61C907EE900A7DEE0 /* AGEmojiPageView.m in Sources */,
 				0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */,
 				0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */,

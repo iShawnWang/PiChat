@@ -51,8 +51,11 @@
 }
 
 -(void)uploadTypedFileAtUrl:(NSURL *)url type:(UploadedMediaType)type{
-    NSData *data= [NSData dataWithContentsOfURL:url];
-    AVFile *file=[AVFile fileWithData:[NSData dataWithContentsOfURL:url]];
+    NSString *fileName=[url lastPathComponent];
+    if([fileName hasPrefix:@"trim."]){
+        fileName=[fileName stringByReplacingOccurrencesOfString:@"trim." withString:@""];
+    }
+    AVFile *file=[AVFile fileWithName:fileName data:[NSData dataWithContentsOfURL:url]];
     [self uploadAVFileAtUrl:file type:type];
 }
 
