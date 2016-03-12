@@ -50,19 +50,39 @@
     }];
     
     if(self.action == LocationViewerActionPickLocation){
-        UIButton *btn=[[UIButton alloc]init];
-        [btn setTitle:@"发送当前位置" forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        btn.titleLabel.font=[UIFont systemFontOfSize:20];
-        [btn addTarget:self action:@selector(didPickLocation) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:btn];
-        
-        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.equalTo(self.view.mas_leading).offset(-8);
-            make.trailing.equalTo(self.view.mas_trailing).offset(-8);
-            make.bottom.equalTo(self.view.mas_bottom).offset(-12);
-        }];
+        [self addPickCancelBtn];
     }
+}
+
+-(void)addPickCancelBtn{
+    //发送位置 Btn
+    UIButton *pickBtn=[[UIButton alloc]init];
+    [pickBtn setTitle:@"发送当前位置" forState:UIControlStateNormal];
+    [pickBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    pickBtn.titleLabel.font=[UIFont systemFontOfSize:20];
+    [pickBtn addTarget:self action:@selector(didPickLocation) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:pickBtn];
+    
+    [pickBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.equalTo(self.view.mas_trailing).offset(-8);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-12);
+    }];
+    
+    // 取消 Btn
+    UIButton *cancelBtn=[[UIButton alloc]init];
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    cancelBtn.titleLabel.font=[UIFont systemFontOfSize:20];
+    [cancelBtn addTarget:self action:@selector(cancelPickLocation) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:cancelBtn];
+    
+    [cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading).offset(-8);
+        make.trailing.equalTo(pickBtn.mas_leading).offset(-8);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-12);
+        make.width.equalTo(pickBtn);
+    }];
+
 }
 
 -(void)didPickLocation{
@@ -71,6 +91,10 @@
     }
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     [self.delegate locationViewerController:self didPickLocation:self.location];
+}
+
+-(void)cancelPickLocation{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
