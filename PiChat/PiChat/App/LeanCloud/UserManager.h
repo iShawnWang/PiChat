@@ -23,6 +23,7 @@
 +(void)logOut;
 //联系人
 + (void)findUsersByPartname:(NSString *)partName withBlock:(AVArrayResultBlock)block;
++(void)findUserByClientID:(NSString*)clientID callback:(UserResultBlock)callback;
 +(void)addFriend:(User*)user callback:(BooleanResultBlock)callback;
 +(void)removeFriend:(User*)user callback:(BooleanResultBlock)callback;
 +(void)fetchFriendsWithCallback:(ArrayResultBlock)callback;

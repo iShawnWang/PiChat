@@ -39,7 +39,9 @@
     u.username=email;
     u.password=pwd;
     u.fetchWhenSave=YES;
-    [u signUpInBackgroundWithBlock:callback];
+    [u signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        callback(succeeded,error);
+    }];
 }
 
 #pragma mark - Register
@@ -62,6 +64,14 @@
     [q whereKey:@"objectId" notEqualTo:[User currentUser].objectId];
     [q orderByDescending:@"updatedAt"];
     [q findObjectsInBackgroundWithBlock:block];
+}
+
++(void)findUserByClientID:(NSString*)clientID callback:(UserResultBlock)callback{
+    AVQuery *q=[User query];
+    [q whereKey:@"objectId" equalTo:clientID];
+    [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        callback([objects firstObject],error);
+    }];
 }
 
 +(void)addFriend:(User*)user callback:(BooleanResultBlock)callback{

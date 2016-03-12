@@ -24,4 +24,5 @@
 -(void)uploadTypedFileAtUrl:(NSURL *)url type:(UploadedMediaType)type;
 
 -(void)uploadAVFileAtUrl:(AVFile*)file type:(UploadedMediaType)type;
+
 @end

@@ -13,6 +13,8 @@
 @class JSQMessage;
 @class UIImage;
 @class CLLocation;
+@class User;
+@class AVFile;
 typedef void(^JsqMsgBlock)(JSQMessage* msg);
 typedef void (^VoidBlock)();
 typedef void (^BooleanResultBlock)(BOOL succeeded, NSError *error);
@@ -25,6 +27,8 @@ typedef void (^UrlResultBlock)(NSURL *url, NSError *error);
 typedef void (^StringResultBlock)(NSString *string, NSError *error);
 typedef void (^IdResultBlock)(id object, NSError *error);
 typedef void (^LocationResultBlock)(CLLocation *location, NSError *error);
+typedef void (^UserResultBlock)(User *user, NSError *error);
+typedef void (^FileResultBlock)(AVFile * file, NSError *error);
 
 
 #pragma mark - 收到消息通知

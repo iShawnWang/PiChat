@@ -9,7 +9,7 @@
 #import "ConversationManager.h"
 
 @interface ConversationManager  ()<AVIMClientDelegate>
-
+@property (copy,nonatomic) NSOperationQueue *netQueue;
 @end
 
 @implementation ConversationManager
@@ -25,8 +25,22 @@
 
 -(void)setupConversationClientWithCallback:(BooleanResultBlock)callback{
     self.client=[[AVIMClient alloc]initWithClientId:self.currentUser.clientID];
-    [self.client openWithCallback:callback];
+    [self.client openWithCallback:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+            self.netQueue.suspended=NO;
+        }
+        callback(succeeded,error);
+    }];
     self.client.delegate=self;
+}
+
+-(NSOperationQueue *)netQueue{
+    if(!_netQueue){
+        _netQueue=[[NSOperationQueue alloc]init];
+        _netQueue.maxConcurrentOperationCount=4;
+        _netQueue.suspended=YES;
+    }
+    return _netQueue;
 }
 
 -(User *)currentUser{
@@ -49,16 +63,21 @@
  *  @param callback
  */
 -(void)findOrCreatePrivateConversationWithClentID:(NSString*)clientID callback:(AVIMConversationResultBlock)callback{
-    NSArray *clientIDs=@[self.client.clientId,clientID];
-    [self findPrivateConversationWith2ClientIDs:clientIDs callback:^(AVIMConversation *conversation, NSError *error) {
-        if(conversation){//找到对话
-            callback(conversation,error);
-        }else if(error){//找对话出错
-            callback(conversation,error);
-        }else{//创建对话
-            [self createPrivateConversationWith2ClientIDs:clientIDs callback:callback];
-        }
-    }];
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        
+        NSArray *clientIDs=@[self.client.clientId,clientID];
+        [self findPrivateConversationWith2ClientIDs:clientIDs callback:^(AVIMConversation *conversation, NSError *error) {
+            if(conversation){//找到对话
+                callback(conversation,error);
+            }else if(error){//找对话出错
+                callback(conversation,error);
+            }else{//创建对话
+                [self createPrivateConversationWith2ClientIDs:clientIDs callback:callback];
+            }
+        }];
+        
+    }]];
+    
 }
 
 /**
@@ -68,13 +87,19 @@
  *  @param callback
  */
 -(void)findPrivateConversationWith2ClientIDs:(NSArray*)clientIDs callback:(AVIMConversationResultBlock)callback{
-    AVIMConversationQuery *query = [self conversationQuery];
-    [query whereKey:@"m" containsAllObjectsInArray:clientIDs];
-    [query whereKey:@"m" sizeEqualTo:2];
-    query.cachePolicy=kAVIMCachePolicyNetworkOnly;
-    [query findConversationsWithCallback:^(NSArray *objects, NSError *error) {
-        callback([objects firstObject],error);
-    }];
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        
+        AVIMConversationQuery *query = [self conversationQuery];
+        [query whereKey:@"m" containsAllObjectsInArray:clientIDs];
+        [query whereKey:@"m" sizeEqualTo:2];
+        query.cachePolicy=kAVIMCachePolicyNetworkOnly;
+        [query findConversationsWithCallback:^(NSArray *objects, NSError *error) {
+            callback([objects firstObject],error);
+        }];
+        
+    }]];
+    
+    
 }
 
 /**
@@ -84,7 +109,11 @@
  *  @param callback
  */
 -(void)createPrivateConversationWith2ClientIDs:(NSArray*)clientIDs callback:(AVIMConversationResultBlock)callback{
-    [self.client createConversationWithName:@"" clientIds:clientIDs callback:callback];
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        
+        [self.client createConversationWithName:@"" clientIds:clientIDs callback:callback];
+        
+    }]];
 }
 
 /**
@@ -94,7 +123,13 @@
  *  @param callback
  */
 -(void)findConversationByConversationID:(NSString*)conversationID callback:(AVIMConversationResultBlock)callback{
-    [[self conversationQuery]getConversationById:conversationID callback:callback];
+    
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        
+        [[self conversationQuery]getConversationById:conversationID callback:callback];
+        
+    }]];
+    
 }
 
 /**
@@ -104,15 +139,19 @@
  *  @param callback
  */
 -(void)joinConversationByConversationID:(NSString*)conversationID callback:(AVIMConversationResultBlock)callback{
-    [self findConversationByConversationID:conversationID callback:^(AVIMConversation *conversation, NSError *error) {
-        if(!conversation){
-            callback(conversation,error);
-            return;
-        }
-        [conversation joinWithCallback:^(BOOL succeeded, NSError *error) {
-            callback(conversation,error);
+    
+    
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [self findConversationByConversationID:conversationID callback:^(AVIMConversation *conversation, NSError *error) {
+            if(!conversation){
+                callback(conversation,error);
+                return;
+            }
+            [conversation joinWithCallback:^(BOOL succeeded, NSError *error) {
+                callback(conversation,error);
+            }];
         }];
-    }];
+    }]];
 }
 
 /**
@@ -122,7 +161,10 @@
  *  @param callback
  */
 -(void)joinConversation:(AVIMConversation*)conversation callback:(BooleanResultBlock)callback{
-    [conversation joinWithCallback:callback];
+    
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [conversation joinWithCallback:callback];
+    }]];
 }
 
 /**
@@ -131,12 +173,14 @@
  *  @param u
  *  @param callback
  */
--(void)chatToUser:(User*)u callback:(AVIMConversationResultBlock)callback{
-    [self findOrCreatePrivateConversationWithClentID:u.clientID callback:^(AVIMConversation *conversation, NSError *error) {
-        [self joinConversation:conversation callback:^(BOOL succeeded, NSError *error) {
-            callback(succeeded ? conversation : nil,error);
+-(void)chatToUser:(NSString*)clientID callback:(AVIMConversationResultBlock)callback{
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [self findOrCreatePrivateConversationWithClentID:clientID callback:^(AVIMConversation *conversation, NSError *error) {
+            [self joinConversation:conversation callback:^(BOOL succeeded, NSError *error) {
+                callback(succeeded ? conversation : nil,error);
+            }];
         }];
-    }];
+    }]];
 }
 
 /**
@@ -146,7 +190,9 @@
  *  @param callback
  */
 -(void)fetchConversationMessages:(AVIMConversation*)conversation callback:(AVIMArrayResultBlock)callback{
-    [conversation queryMessagesWithLimit:10 callback:callback];
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [conversation queryMessagesWithLimit:10 callback:callback];
+    }]];
 }
 
 /**
@@ -157,7 +203,9 @@
  *  @param callback
  */
 -(void)fetchMessages:(AVIMConversation*)conversation before:(NSString*)beforeID callback:(AVIMArrayResultBlock)callback{
-    [conversation queryMessagesBeforeId:beforeID timestamp:0 limit:20 callback:callback];
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [conversation queryMessagesBeforeId:beforeID timestamp:0 limit:20 callback:callback];
+    }]];
 }
 
 /**
@@ -168,7 +216,25 @@
  *  @param callback
  */
 -(void)fetchMessages:(AVIMConversation*)conversation beforeTime:(int64_t)beforeTimeStamp callback:(AVIMArrayResultBlock)callback{
-    [conversation queryMessagesBeforeId:nil timestamp:beforeTimeStamp limit:20 callback:callback];
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [conversation queryMessagesBeforeId:nil timestamp:beforeTimeStamp limit:20 callback:callback];
+    }]];
+}
+
+/**
+ *  查询最近的会话,
+ *
+ *  @param conversation
+ *  @param callback
+ */
+-(void)fetchReventConversations:(ArrayResultBlock)callback{
+    [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        AVIMConversationQuery *query= [self.client conversationQuery];
+        [query whereKey:kAVIMKeyMember containsString:self.client.clientId];
+        [query orderByDescending:@"updatedAt"];
+        query.limit=20;
+        [query findConversationsWithCallback:callback];
+    }]];
 }
 
 

@@ -28,6 +28,7 @@
 @import CoreImage;
 
 @interface PrivateChatController ()<AVIMClientDelegate,UIActionSheetDelegate,AudioRecorderDelegate,InputAttachmentViewDelegate,LocationViewerDelegate>
+//@property (strong,nonatomic) User *chatToUser;
 @property (strong,nonatomic) NSMutableArray *msgs;
 @property (strong,nonatomic) BubbleImgFactory *bubbleImgFactory;
 @property (strong,nonatomic) AVIMConversation *conversation;
@@ -129,7 +130,7 @@
     self.senderId=self.manager.currentUser.clientID;
     self.senderDisplayName=self.manager.currentUser.displayName;
     //开始对话
-    [self.manager chatToUser:self.chatToUser callback:^(AVIMConversation *conversation, NSError *error) {
+    [self.manager chatToUser:self.chatToUserID callback:^(AVIMConversation *conversation, NSError *error) {
         self.conversation=conversation;
         [self.manager fetchConversationMessages:conversation callback:^(NSArray *objects, NSError *error) {
             //异步解析 typed messages

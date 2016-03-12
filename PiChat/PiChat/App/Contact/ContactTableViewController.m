@@ -50,7 +50,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     User *u=self.contacts[indexPath.row];
     PrivateChatController *chatVC= [PrivateChatController new];
-    chatVC.chatToUser=u;
+    chatVC.chatToUserID=u.clientID;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 @end

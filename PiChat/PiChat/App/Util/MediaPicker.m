@@ -65,7 +65,7 @@
             //先把图片存到 Document 目录...返回在 document 目录中的 url
             UIImage *img= info[UIImagePickerControllerOriginalImage];
             NSString *path= [CommenUtil saveDataToDocument:UIImagePNGRepresentation(img) fileName:[CommenUtil uuid]];
-            url= [NSURL URLWithString:path];
+            url= [NSURL fileURLWithPath:path];
         }else if([mediaType isEqualToString:(NSString*)kUTTypeMovie]){
             url=info[UIImagePickerControllerMediaURL];
         }

@@ -13,6 +13,7 @@ pod 'JSQMessagesViewController'
 pod 'MWPhotoBrowser'
 pod 'MBProgressHUD'
 pod 'Masonry'
+pod 'GJAlertController'
 end
 
 target 'PiChatTests' do

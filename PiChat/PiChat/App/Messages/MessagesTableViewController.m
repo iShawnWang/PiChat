@@ -7,9 +7,18 @@
 //
 
 #import "MessagesTableViewController.h"
+#import "ConversationManager.h"
+#import <UIImageView+WebCache.h>
+#import <AVOSCloudIM.h>
+#import "User.h"
+#import "UserManager.h"
+#import "PrivateChatController.h"
+
+NSString *const kCellID=@"converstaionCell";
 
 @interface MessagesTableViewController ()
-
+@property (strong,nonatomic) ConversationManager *manager;
+@property (strong,nonatomic) NSMutableArray *recentConversations;
 @end
 
 @implementation MessagesTableViewController
@@ -21,89 +30,53 @@
         self.tabBarItem.title=@"消息";
         self.tabBarItem.image=[UIImage imageNamed:@"menu"];
         self.hidesBottomBarWhenPushed=NO;
+        self.manager=[ConversationManager sharedConversationManager];
     }
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+-(NSMutableArray *)recentConversations{
+    if(!_recentConversations){
+        _recentConversations=[NSMutableArray array];
+    }
+    return _recentConversations;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewDidLoad{
+    [self.manager fetchReventConversations:^(NSArray *objects, NSError *error) {
+        [self.recentConversations addObjectsFromArray:objects];
+        [self.tableView reloadData];
+    }];
 }
 
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return self.recentConversations.count;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:kCellID];
+    AVIMConversation *conversation= self.recentConversations[indexPath.row];
+    if(conversation.transient){//群聊
+        
+    }else{//单聊
+        [UserManager findUserByClientID:[conversation chatToUserId] callback:^(User *user, NSError *error) {
+            cell.textLabel.text=user.displayName;
+            cell.detailTextLabel.text=@"";
+            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:user.avatarPath]];
+        }];
+    }
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    PrivateChatController *chatVC= [[PrivateChatController alloc]init];
+    AVIMConversation *conversation=self.recentConversations[indexPath.row];
+    if(conversation.transient){
+        
+    }else{
+        chatVC.chatToUserID=[conversation chatToUserId];
+        [self.navigationController pushViewController:chatVC animated:YES];
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

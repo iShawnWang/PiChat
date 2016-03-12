@@ -16,5 +16,5 @@
 @property (copy,nonatomic) NSString *avatarPath;
 @property (copy,nonatomic) NSString *displayName;
 //
--(void)updateUserWithCallback:(BooleanResultBlock)callback;
+-(void)updateUserWithCallback:(UserResultBlock)callback;
 @end

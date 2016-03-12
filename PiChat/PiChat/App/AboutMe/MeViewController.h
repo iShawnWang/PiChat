@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class User;
 
-@interface MeViewController : UIViewController
-
+@interface MeViewController : UITableViewController
+@property (strong,nonatomic) User *user;
 @end

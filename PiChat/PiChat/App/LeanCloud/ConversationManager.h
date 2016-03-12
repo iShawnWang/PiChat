@@ -11,6 +11,7 @@
 #import <AVOSCloud.h>
 #import <AVOSCloudIM.h>
 #import "User.h"
+#import "AVIMConversation+Addition.h"
 
 @class AVIMClient;
 @interface ConversationManager : NSObject
@@ -20,8 +21,9 @@
 +(instancetype)sharedConversationManager;
 -(void)setupConversationClientWithCallback:(BooleanResultBlock)callback;
 //对话
--(void)chatToUser:(User*)u callback:(AVIMConversationResultBlock)callback;
+-(void)chatToUser:(NSString*)clientID callback:(AVIMConversationResultBlock)callback;
 -(void)fetchConversationMessages:(AVIMConversation*)conversation callback:(AVIMArrayResultBlock)callback;
 -(void)fetchMessages:(AVIMConversation*)conversation before:(NSString*)beforeID callback:(AVIMArrayResultBlock)callback;
 -(void)fetchMessages:(AVIMConversation*)conversation beforeTime:(int64_t)beforeTimeStamp callback:(AVIMArrayResultBlock)callback;
+-(void)fetchReventConversations:(ArrayResultBlock)callback;
 @end
