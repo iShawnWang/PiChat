@@ -22,6 +22,7 @@
 #import "LocationViewerController.h"
 #import "RecordIndocator.h"
 #import "JSQMessage+MessageID.h"
+#import "JSQVideoMediaItem+Thumbnail.h"
 
 
 @import CoreImage;

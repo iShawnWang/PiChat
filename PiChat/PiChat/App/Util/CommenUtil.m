@@ -7,6 +7,7 @@
 //
 
 #import "CommenUtil.h"
+@import AVFoundation;
 
 @implementation CommenUtil
 +(NSString*) uuid {
@@ -63,6 +64,24 @@
     UIGraphicsEndImageContext();
     return img;
 }
+
+#pragma mark - 视频缩略图
++ (UIImage *)thumbnailFromVideoAtURL:(NSURL *)contentURL {
+    UIImage *theImage = nil;
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:contentURL options:nil];
+    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    generator.appliesPreferredTrackTransform = YES;
+    NSError *err = NULL;
+    CMTime time = CMTimeMake(5,60);
+    CGImageRef imgRef = [generator copyCGImageAtTime:time actualTime:NULL error:&err];
+    
+    theImage = [[UIImage alloc] initWithCGImage:imgRef];
+    
+    CGImageRelease(imgRef);
+    
+    return theImage;
+}
+
 
 #pragma mark - 
 +(void)showSettingAlertIn:(UIViewController*)vc{

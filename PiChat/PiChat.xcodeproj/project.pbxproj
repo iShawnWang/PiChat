@@ -39,6 +39,8 @@
 		0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34811C76371A006A9BAA /* MainTabBarController.m */; };
 		0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34841C763778006A9BAA /* StoryBoardHelper.m */; };
 		0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34871C763BEC006A9BAA /* CommenUtil.m */; };
+		0E79393C1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E79393B1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m */; };
+		0E79393F1C94246E00618BAD /* UIImage+ScaleSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E79393E1C94246E00618BAD /* UIImage+ScaleSize.m */; };
 		0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */; };
 		0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */; };
 		0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */; };
@@ -138,6 +140,10 @@
 		0E4F34861C763BEC006A9BAA /* CommenUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommenUtil.h; sourceTree = "<group>"; };
 		0E4F34871C763BEC006A9BAA /* CommenUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommenUtil.m; sourceTree = "<group>"; };
 		0E4F34891C763D81006A9BAA /* GlobalConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstant.h; sourceTree = "<group>"; };
+		0E79393A1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQVideoMediaItem+Thumbnail.h"; sourceTree = "<group>"; };
+		0E79393B1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQVideoMediaItem+Thumbnail.m"; sourceTree = "<group>"; };
+		0E79393D1C94246E00618BAD /* UIImage+ScaleSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ScaleSize.h"; sourceTree = "<group>"; };
+		0E79393E1C94246E00618BAD /* UIImage+ScaleSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ScaleSize.m"; sourceTree = "<group>"; };
 		0E8F09191C7AE9D10067A7EC /* MediaPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPicker.h; sourceTree = "<group>"; };
 		0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPicker.m; sourceTree = "<group>"; };
 		0E8F091C1C7B0B6F0067A7EC /* FileUpLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUpLoader.h; sourceTree = "<group>"; };
@@ -343,6 +349,8 @@
 				0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */,
 				0EFDBA1F1C896AAE002685FE /* MBProgressHUD+Addition.h */,
 				0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */,
+				0E79393D1C94246E00618BAD /* UIImage+ScaleSize.h */,
+				0E79393E1C94246E00618BAD /* UIImage+ScaleSize.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -402,6 +410,8 @@
 				0EF643EC1C92918B0000A4CA /* RecordIndocator.m */,
 				0ED6EE9C1C934E0A00DCC2DD /* JSQMessage+MessageID.h */,
 				0ED6EE9D1C934E0A00DCC2DD /* JSQMessage+MessageID.m */,
+				0E79393A1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.h */,
+				0E79393B1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m */,
 			);
 			path = JSQMessage;
 			sourceTree = "<group>";
@@ -721,6 +731,7 @@
 				0E4F345B1C760096006A9BAA /* UserManager.m in Sources */,
 				0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */,
 				0E4F34511C75F86B006A9BAA /* LeanCloudManager.m in Sources */,
+				0E79393F1C94246E00618BAD /* UIImage+ScaleSize.m in Sources */,
 				0E0B21411C7764D500F257E4 /* PrivateChatController.m in Sources */,
 				0ED39FF21C8B489B00894D4B /* Followee.m in Sources */,
 				0E391A261C8EB3F3000066C8 /* BasicPinAnnotation.m in Sources */,
@@ -749,6 +760,7 @@
 				0E4F34791C76310C006A9BAA /* ConversationManager.m in Sources */,
 				0ED6EE9E1C934E0A00DCC2DD /* JSQMessage+MessageID.m in Sources */,
 				0EE2C4A61C907EE900A7DEE0 /* AGEmojiPageView.m in Sources */,
+				0E79393C1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m in Sources */,
 				0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */,
 				0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */,
 				0E4F345E1C76009D006A9BAA /* ChatManager.m in Sources */,

@@ -7,12 +7,14 @@
 //
 
 #import "AVIMTypedMessage+ToJsqMessage.h"
+#import <JSQMessages.h>
 #import <AVOSCloud.h>
 #import "UserManager.h"
 #import <AVOSCloudIM.h>
-#import <JSQMessagesViewController/JSQMessages.h>
 #import "JSQAudioMediaItem.h"
 #import "JSQMessage+MessageID.h"
+#import "CommenUtil.h"
+#import "JSQVideoMediaItem+Thumbnail.h"
 
 
 @implementation AVIMTypedMessage (ToJsqMessage)
@@ -90,6 +92,31 @@
     message.messageID=self.messageId;
     callback(message);
 }
+
+
+//-(void)decorateVideoItemThumbnail:(JSQVideoMediaItem*)videoItem thubmnailImg:(UIImage*)thumbnailImg{
+//    UIImageView *cachedVideoImageView= [videoItem valueForKey:@"cachedVideoImageView"];
+//    CGSize thumbnailSize= cachedVideoImageView.frame.size;
+//    UIImageView *newThumbnailView;
+//    
+//    UIImage *playIcon = [[UIImage jsq_defaultPlayImage] jsq_imageMaskedWithColor:[UIColor lightGrayColor]];
+//    UIImageView * iconView = [[UIImageView alloc] initWithImage:playIcon];
+//    iconView.backgroundColor = [UIColor clearColor];
+//    iconView.frame = CGRectMake(0.0f, 0.0f, thumbnailSize.width, thumbnailSize.height);
+//    iconView.contentMode = UIViewContentModeCenter;
+//    iconView.clipsToBounds = YES;
+//    
+//    newThumbnailView = [[UIImageView alloc] initWithImage:thumbnailImg];
+//    [newThumbnailView addSubview:iconView];
+//    
+//    newThumbnailView.backgroundColor = [UIColor blackColor];
+//    newThumbnailView.frame = CGRectMake(0.0f, 0.0f, thumbnailSize.width, thumbnailSize.height);
+//    newThumbnailView.contentMode = UIViewContentModeCenter;
+//    newThumbnailView.clipsToBounds = YES;
+//    [JSQMessagesMediaViewBubbleImageMasker applyBubbleImageMaskToMediaView:newThumbnailView isOutgoing:videoItem.appliesMediaViewMaskAsOutgoing];
+//    
+//    [videoItem setValue:newThumbnailView forKey:@"cachedVideoImageView"];
+//}
 
 -(NSString*)fileCacheUrlForFileName:(NSString *)fileName{
     return [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:fileName];

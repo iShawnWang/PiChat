@@ -29,6 +29,10 @@
 +(NSString*)saveDataToCache:(NSData *)data fileName:(NSString*)fileName;
 
 +(NSString*)saveData:(NSData*)data toDirectory:(NSString*)directory fileName:(NSString*)fileName;
+
+#pragma mark - 视频缩略图
++ (UIImage *)thumbnailFromVideoAtURL:(NSURL *)contentURL ;
+
 #pragma mark -
 
 +(UIImage*)textToImage:(NSString*)text size:(CGSize)size;
