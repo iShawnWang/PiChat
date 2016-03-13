@@ -31,12 +31,6 @@
     [super signUpInBackgroundWithBlock:block];
 }
 
-//同时下载头像图片并缓存(内存,磁盘)起来..
--(void)setAvatarPath:(NSString *)avatarPath{
-    [self setObject:avatarPath forKey:@"avatarPath"];
-    [[ImageCache sharedImageCache]downloadAndCacheImageInBackGround:avatarPath];
-}
-
 /**
  *  ObjectID 作为 clientID 反正唯一就行...
  *
@@ -49,8 +43,13 @@
 -(void)updateUserWithCallback:(UserResultBlock)callback{
     self.fetchWhenSave=YES;
     [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self postUserUpdateNotification];
         callback([User currentUser],error);
     }];
+}
+
+-(void)postUserUpdateNotification{
+    [[NSNotificationCenter defaultCenter]postNotificationName:kUserUpdateNotification object:self userInfo:@{kUpdatedUser:self}];
 }
 
 @end

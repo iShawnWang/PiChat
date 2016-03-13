@@ -17,16 +17,20 @@
 //
 +(instancetype)sharedUserManager;
 //注册
-+(void)signUpWithUserName:(NSString*)email pwd:(NSString*)pwd callback:(BooleanResultBlock)callback;
+-(void)signUpWithUserName:(NSString*)email pwd:(NSString*)pwd callback:(BooleanResultBlock)callback;
 //登录
-+(void)logInWithUserName:(NSString*)email pwd:(NSString*)pwd callback:(BooleanResultBlock)callback;
+-(void)logInWithUserName:(NSString*)email pwd:(NSString*)pwd callback:(BooleanResultBlock)callback;
 +(void)logOut;
 //联系人
-+ (void)findUsersByPartname:(NSString *)partName withBlock:(AVArrayResultBlock)block;
-+(void)findUserByClientID:(NSString*)clientID callback:(UserResultBlock)callback;
-+(void)addFriend:(User*)user callback:(BooleanResultBlock)callback;
-+(void)removeFriend:(User*)user callback:(BooleanResultBlock)callback;
-+(void)fetchFriendsWithCallback:(ArrayResultBlock)callback;
+-(User *)findUserFromCacheElseNetworkByClientID:(NSString*)clientID;
+-(User*)findUserFromCacheByClientID:(NSString*)clientID;
+-(void)findUserFromNetworkByClientID:(NSString *)clientID callback:(UserResultBlock)callback;
+-(void)findUserByClientID:(NSString*)clientID callback:(UserResultBlock)callback;
+-(void)findUsersByPartname:(NSString *)partName withBlock:(AVArrayResultBlock)block;
+//
+-(void)addFriend:(User*)user callback:(BooleanResultBlock)callback;
+-(void)removeFriend:(User*)user callback:(BooleanResultBlock)callback;
+-(void)fetchFriendsWithCallback:(ArrayResultBlock)callback;
 
 //用户头像图片
 /**
@@ -36,5 +40,5 @@
  *
  *  @return
  */
-+(JSQMessagesAvatarImage *)avatarForClientID:(NSString *)clientID;
+-(JSQMessagesAvatarImage *)avatarForClientID:(NSString *)clientID;
 @end

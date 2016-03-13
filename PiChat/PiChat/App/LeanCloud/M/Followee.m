@@ -12,6 +12,13 @@
 #import "User.h"
 
 @implementation Followee
+/**
+ *  SDK Bug 偶尔返回的不是 User 对象,而是 _Followee 对象 ,需要这个方法保证返回值正确
+ *
+ *  @param followeeArray
+ *
+ *  @return
+ */
 +(NSMutableArray *)followeeArrayToUserArray:(NSArray *)followeeArray{
     NSMutableArray *array=[NSMutableArray array];
     for (AVObject *followee in followeeArray) {

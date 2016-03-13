@@ -8,6 +8,7 @@
 
 #import "ImageCache.h"
 #import <SDWebImageManager.h>
+#import "GlobalConstant.h"
 
 @interface ImageCache ()
 @property (strong,nonatomic) SDWebImageManager *manager;
@@ -29,30 +30,33 @@
     return _manager;
 }
 
--(void)downloadAndCacheImageInBackGround:(NSString*)urlStr{
-    [self.manager downloadImageWithURL:[NSURL URLWithString:urlStr] options:SDWebImageContinueInBackground progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-        
-    }];
-}
-
 /**
- *  同步(阻塞) 在当前线程中 返回缓存的图片
+ *  不会阻塞,先查询硬盘内存缓存,如果存在图片直接返回,否则开始下载,返回 [UIImage new];
  *
- *  @param urlStr
+ *  @param urlStr 
  *
  *  @return
  */
--(UIImage*)imageFromCacheForUrl:(NSString*)urlStr{
-    UIImage *img;
-    NSString *cacheKey=[self.manager cacheKeyForURL:[NSURL URLWithString:urlStr]];
-    
-    //从内存缓存中查找图片,没有就从硬盘缓存中找..
-    img=[self.manager.imageCache imageFromDiskCacheForKey:cacheKey];
-    
-    if(!img){//在没有就下载,
-        [self downloadAndCacheImageInBackGround:urlStr];
+-(UIImage*)findOrFetchImageFormUrl:(NSString*)urlStr{
+    __block UIImage *img;
+    SDImageCache *cache=self.manager.imageCache;
+    img=[cache imageFromDiskCacheForKey:[self.manager cacheKeyForURL:[NSURL URLWithString:urlStr]]];
+    if(img){ //缓存中有图片就返回
+        return img;
     }
-    //立即返回 nil,不等下载完
-    return img;
+    //否则开始异步下载图片,马上返回一个空白图片 - [UIImage new]
+    [self.manager downloadImageWithURL:[NSURL URLWithString:urlStr] options:SDWebImageContinueInBackground progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        [self postDownloadImageCompleteNotification:image url:imageURL];
+    }];
+    return [UIImage new];
 }
+
+-(void)postDownloadImageCompleteNotification:(UIImage*)img url:(NSURL*)url{
+    if(img && url){
+        [[NSNotificationCenter defaultCenter]postNotificationName:kDownloadImageCompleteNotification object:self userInfo:@{kDownloadedImage:img,kDownloadedImageUrl:url}];
+    }
+}
+
 @end

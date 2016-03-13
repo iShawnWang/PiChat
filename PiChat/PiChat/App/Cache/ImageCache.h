@@ -11,6 +11,5 @@
 
 @interface ImageCache : NSObject
 +(instancetype)sharedImageCache;
--(void)downloadAndCacheImageInBackGround:(NSString*)urlStr;
--(UIImage*)imageFromCacheForUrl:(NSString*)urlStr;
+-(UIImage*)findOrFetchImageFormUrl:(NSString*)urlStr;
 @end

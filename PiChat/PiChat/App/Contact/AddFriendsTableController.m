@@ -13,16 +13,23 @@
 @interface AddFriendsTableController ()<UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong,nonatomic) NSArray *friends;
+@property (strong,nonatomic) UserManager *userManager;
 @end
 
 @implementation AddFriendsTableController
 
 
 #pragma mark - Getter Setter
+-(UserManager *)userManager{
+    if(!_userManager){
+        _userManager=[UserManager sharedUserManager];
+    }
+    return _userManager;
+}
 
 #pragma mark - Private
 -(void)searchFriends:(NSString *)name{
-    [UserManager findUsersByPartname:[name trim] withBlock:^(NSArray *objects, NSError *error) {
+    [self.userManager findUsersByPartname:[name trim] withBlock:^(NSArray *objects, NSError *error) {
         self.friends=objects;
         [self.tableView reloadData];
     }];
@@ -42,7 +49,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     User *u=self.friends[indexPath.row];
-    [UserManager addFriend:u callback:^(BOOL succeeded, NSError *error) {
+    [self.userManager addFriend:u callback:^(BOOL succeeded, NSError *error) {
         [MBProgressHUD showMsg:@"添加好友成功" forSeconds:1.5];
     }];
 }

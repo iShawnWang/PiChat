@@ -28,7 +28,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [UserManager fetchFriendsWithCallback:^(NSArray *objects, NSError *error) {
+    [[UserManager sharedUserManager] fetchFriendsWithCallback:^(NSArray *objects, NSError *error) {
         self.contacts=objects;
         [self.tableView reloadData];
     }];

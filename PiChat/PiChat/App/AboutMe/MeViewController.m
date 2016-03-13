@@ -13,11 +13,13 @@
 #import "MediaPicker.h"
 #import "FileUpLoader.h"
 #import "MBProgressHUD+Addition.h"
+#import "ImageCache.h"
 
 @interface MeViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (strong,nonatomic) MediaPicker *avatarPicker;
+@property (strong,nonatomic) ImageCache *imageCache;
 @end
 
 @implementation MeViewController
@@ -27,25 +29,39 @@
     if (self) {
         self.tabBarItem.title=@"我";
         self.tabBarItem.image=[UIImage imageNamed:@"menu"];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadingMediaNotification:) name:kUploadMediaNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadImageNotification:) name:kDownloadImageCompleteNotification object:nil];
     }
     return self;
 }
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+#pragma mark - Getter Setter
 -(MediaPicker *)avatarPicker{
     if(!_avatarPicker){
         _avatarPicker=[[MediaPicker alloc]init];
     }
     return _avatarPicker;
 }
+-(ImageCache *)imageCache{
+    if(!_imageCache){
+        _imageCache=[ImageCache sharedImageCache];
+    }
+    return _imageCache;
+}
 
+#pragma mark - Life Cycle
 -(void)viewDidLoad{
     if(!self.user){
         self.user=[User currentUser];
     }
     self.userNameLabel.text=self.user.displayName;
     if(self.user.avatarPath){
-        [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:self.user.avatarPath]];
+        [self.avatarImageView setImage:[self.imageCache findOrFetchImageFormUrl:self.user.avatarPath]];
     }
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadingMediaNotification:) name:kUploadMediaNotification object:nil];
 }
 
 - (IBAction)changeUserName:(id)sender {
@@ -71,6 +87,8 @@
         [[FileUpLoader sharedFileUpLoader]uploadFileAtUrl:url];
     }];
 }
+
+#pragma mark - 上传头像图片 通知
 -(void)uploadingMediaNotification:(NSNotification*)noti{
     UploadState uploadState= [noti.userInfo[kUploadState] integerValue];
     switch (uploadState) {
@@ -79,7 +97,7 @@
             AVFile *file=noti.userInfo[kUploadedFile];
             self.user.avatarPath=file.url;
             [self.user updateUserWithCallback:^(User *user, NSError *error) {
-                [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:user.avatarPath]];
+                self.avatarImageView.image= [self.imageCache findOrFetchImageFormUrl:user.avatarPath];
                 self.user=[User currentUser];
             }];
             
@@ -99,16 +117,21 @@
     }
 }
 
+#pragma mark - 下载头像 通知,更新此界面头像
+-(void)downloadImageNotification:(NSNotification*)noti{
+    UIImage *img= noti.userInfo[kDownloadedImage];
+    NSURL *url= noti.userInfo[kDownloadedImageUrl];
+    if([url.absoluteString isEqualToString:self.user.avatarPath]){
+        self.avatarImageView.image=img;
+    }
+}
+
 #pragma mark - Table Delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell= [tableView cellForRowAtIndexPath:indexPath];
     if ([cell.reuseIdentifier isEqualToString:@"logOut"]) {
         [UserManager logOut];
     }
-}
-
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 @end

@@ -27,7 +27,7 @@
     NSString *userName=[self.userNameTextField.text trim];
     NSString *pwd=[self.pwdTextField.text trim];
     if([RegexUtil isEmail:userName]){
-        [UserManager signUpWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
+        [[UserManager sharedUserManager] signUpWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
             if(succeeded){
                 [[ConversationManager sharedConversationManager]setupConversationClientWithCallback:^(BOOL succeeded, NSError *error) {
                     [StoryBoardHelper switchToMainTabVC];

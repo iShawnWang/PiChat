@@ -46,6 +46,7 @@
 		0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */; };
 		0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */; };
 		0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1B31C78B27E0001C1D8 /* ImageCache.m */; };
+		0ECB44481C95A2DA00F300A4 /* PiAutoPurgeCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECB44471C95A2DA00F300A4 /* PiAutoPurgeCache.m */; };
 		0ED19F021C91DA0F00EF7472 /* JSQAudioMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19EFF1C91DA0F00EF7472 /* JSQAudioMediaItem.m */; };
 		0ED19F031C91DA0F00EF7472 /* UIImage+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F011C91DA0F00EF7472 /* UIImage+JSQMessages.m */; };
 		0ED19F061C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F051C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m */; };
@@ -155,6 +156,8 @@
 		0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleImgFactory.m; sourceTree = "<group>"; };
 		0EADC1B21C78B27E0001C1D8 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
 		0EADC1B31C78B27E0001C1D8 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
+		0ECB44461C95A2DA00F300A4 /* PiAutoPurgeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PiAutoPurgeCache.h; sourceTree = "<group>"; };
+		0ECB44471C95A2DA00F300A4 /* PiAutoPurgeCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PiAutoPurgeCache.m; sourceTree = "<group>"; };
 		0ED19EFE1C91DA0F00EF7472 /* JSQAudioMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQAudioMediaItem.h; sourceTree = "<group>"; };
 		0ED19EFF1C91DA0F00EF7472 /* JSQAudioMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQAudioMediaItem.m; sourceTree = "<group>"; };
 		0ED19F001C91DA0F00EF7472 /* UIImage+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JSQMessages.h"; sourceTree = "<group>"; };
@@ -317,6 +320,8 @@
 				0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */,
 				0E7939411C9463B700618BAD /* AVIMConversation+Addition.h */,
 				0E7939421C9463B700618BAD /* AVIMConversation+Addition.m */,
+				0ECB44461C95A2DA00F300A4 /* PiAutoPurgeCache.h */,
+				0ECB44471C95A2DA00F300A4 /* PiAutoPurgeCache.m */,
 			);
 			path = LeanCloud;
 			sourceTree = "<group>";
@@ -759,6 +764,7 @@
 				0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */,
 				0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */,
 				0E4F344E1C75F836006A9BAA /* RegisterViewController.m in Sources */,
+				0ECB44481C95A2DA00F300A4 /* PiAutoPurgeCache.m in Sources */,
 				0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */,
 				0EF669191C8DCCD600B4D2C6 /* LocationViewerController.m in Sources */,
 				0EE2C4AA1C908C9C00A7DEE0 /* InputAttachmentView.m in Sources */,

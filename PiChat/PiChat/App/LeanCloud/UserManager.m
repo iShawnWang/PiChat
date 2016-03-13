@@ -14,6 +14,12 @@
 #import <JSQMessagesCollectionViewFlowLayout.h>
 #import "ImageCache.h"
 #import "Followee.h"
+#import "PiAutoPurgeCache.h"
+
+
+@interface UserManager ()
+@property (strong,nonatomic) PiAutoPurgeCache *userCache;
+@end
 
 @implementation UserManager
 +(instancetype)sharedUserManager{
@@ -24,29 +30,49 @@
     });
     return userManager;
 }
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
+    }
+    return self;
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
 #pragma mark - Getter Setter
 -(User*)currentUser{
-    if(!_currentUser){
-        _currentUser=[User currentUser];
-    }
-    return _currentUser;
+    return [User currentUser];
 }
 
-#pragma mark - Login 
-+(void)signUpWithUserName:(NSString *)email pwd:(NSString *)pwd callback:(BooleanResultBlock)callback{
+-(PiAutoPurgeCache*)userCache{
+    if(!_userCache){
+        _userCache=[PiAutoPurgeCache new];
+    }
+    return _userCache;
+}
+
+#pragma mark - Register 
+-(void)signUpWithUserName:(NSString *)email pwd:(NSString *)pwd callback:(BooleanResultBlock)callback{
     User *u= [User user];
     u.username=email;
     u.password=pwd;
+    u.avatarPath=@"http://7xqpoa.com1.z0.glb.clouddn.com/_doggy.jpg";
     u.fetchWhenSave=YES;
+    
     [u signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self.userCache setObject:u forKey:u.objectId];
         callback(succeeded,error);
     }];
 }
 
-#pragma mark - Register
-+(void)logInWithUserName:(NSString*)email pwd:(NSString*)pwd callback:(BooleanResultBlock)callback{
+#pragma mark - Login
+-(void)logInWithUserName:(NSString*)email pwd:(NSString*)pwd callback:(BooleanResultBlock)callback{
     [User logInWithUsernameInBackground:email password:pwd block:^(AVUser *user, NSError *error) {
+        [self.userCache setObject:user forKey:user.objectId];
         callback([User currentUser],error); //currentUser 不为空 ,登录成功 Yes
     }];
 }
@@ -57,7 +83,7 @@
 }
 
 #pragma mark - Friends
-+ (void)findUsersByPartname:(NSString *)partName withBlock:(AVArrayResultBlock)block {
+- (void)findUsersByPartname:(NSString *)partName withBlock:(AVArrayResultBlock)block {
     AVQuery *q = [User query];
     [q setCachePolicy:kAVCachePolicyNetworkOnly];
     [q whereKey:@"username" containsString:partName];
@@ -66,26 +92,85 @@
     [q findObjectsInBackgroundWithBlock:block];
 }
 
-+(void)findUserByClientID:(NSString*)clientID callback:(UserResultBlock)callback{
+/**
+ *  先从缓存中找用户,找不到就下载.立即返回 nil
+ *
+ *  @param clientID
+ *
+ *  @return
+ */
+-(User *)findUserFromCacheElseNetworkByClientID:(NSString*)clientID{
+    User *u= [self findUserFromCacheByClientID:clientID];
+    if(!u){
+        [self findUserFromNetworkByClientID:clientID callback:nil];
+    }
+    return u;
+}
+
+/**
+ *  先内存缓存,在磁盘缓存
+ *
+ *  @param clientID
+ *
+ *  @return
+ */
+-(User*)findUserFromCacheByClientID:(NSString*)clientID{
+    User *u=[self.userCache objectForKey:clientID];
+    if(u){
+        return u;
+    }else{
+        AVQuery *q=[User query];
+        q.cachePolicy=kAVCachePolicyCacheOnly;
+        [q whereKey:@"objectId" equalTo:clientID];
+        NSError *error;
+        u=[[q findObjects:&error]firstObject];
+        [self.userCache setObject:u forKey:u.objectId];
+    }
+    return u;
+}
+
+-(void)findUserByClientID:(NSString*)clientID callback:(UserResultBlock)callback {
+    //先查询内存缓存是否有用户
+    User *u= [self findUserFromCacheByClientID:clientID];
+    if(u){
+        callback(u,nil);
+        return;
+    }
+    //没有就从网络 fetch 
+    [self findUserFromNetworkByClientID:clientID callback:callback];
+}
+
+/**
+ *  从网络查询 User
+ *
+ *  @param clientID
+ *  @param callback
+ */
+-(void)findUserFromNetworkByClientID:(NSString *)clientID callback:(UserResultBlock)callback{
     AVQuery *q=[User query];
     [q whereKey:@"objectId" equalTo:clientID];
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        callback([objects firstObject],error);
+        User *u=[objects firstObject];
+        [self.userCache setObject:u forKey:u.objectId];
+        [u postUserUpdateNotification];
+        if(callback){
+            callback(u,error);
+        }
     }];
 }
 
-+(void)addFriend:(User*)user callback:(BooleanResultBlock)callback{
+-(void)addFriend:(User*)user callback:(BooleanResultBlock)callback{
     [[User currentUser]follow:user.objectId andCallback:callback];
 }
 
-+(void)removeFriend:(User*)user callback:(BooleanResultBlock)callback{
+-(void)removeFriend:(User*)user callback:(BooleanResultBlock)callback{
     [[User currentUser]unfollow:user.objectId andCallback:callback];
 }
 
-+(void)fetchFriendsWithCallback:(ArrayResultBlock)callback {
+-(void)fetchFriendsWithCallback:(ArrayResultBlock)callback {
     User *user = [User currentUser];
     AVQuery *q = [user followeeQuery];
-    q.cachePolicy = kAVCachePolicyNetworkElseCache;
+    q.cachePolicy = kAVCachePolicyNetworkElseCache; //TODO 联系人列表 先缓存在网络
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         callback([Followee followeeArrayToUserArray:objects] ,error);
     }];
@@ -94,18 +179,24 @@
 #pragma mark - Avatar
 
 //TODO 缓存头像和用户
-+(JSQMessagesAvatarImage *)avatarForClientID:(NSString *)clientID{
+-(JSQMessagesAvatarImage *)avatarForClientID:(NSString *)clientID{
     UIImage *avatar;
-    
-    if([[UserManager sharedUserManager].currentUser.clientID isEqualToString: clientID]){
-        avatar= [UIImage imageNamed:@"avatar"];
+    User *u= [self findUserFromCacheByClientID:clientID];
+    if(u.avatarPath){
+        avatar=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath];
     }else{
-        User *u= [User objectWithoutDataWithObjectId:clientID];
-        if(u.avatarPath){
-            [[ImageCache sharedImageCache]imageFromCacheForUrl:u.avatarPath];
-        }
-        return nil;
+        avatar=[UIImage new];
+        [self findUserByClientID:clientID callback:^(User *user, NSError *error) {
+            [[ImageCache sharedImageCache]findOrFetchImageFormUrl:user.avatarPath];
+        }];
     }
+    
     return [JSQMessagesAvatarImageFactory avatarImageWithImage:avatar diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+}
+
+#pragma mark - 用户更新完毕,加入到缓存中
+-(void)userUpdateNotification:(NSNotification*)noti{
+    User *u= noti.userInfo[kUpdatedUser];
+    [self.userCache setObject:u forKey:u.objectId];
 }
 @end

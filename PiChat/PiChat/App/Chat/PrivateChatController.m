@@ -28,16 +28,17 @@
 @import CoreImage;
 
 @interface PrivateChatController ()<AVIMClientDelegate,UIActionSheetDelegate,AudioRecorderDelegate,InputAttachmentViewDelegate,LocationViewerDelegate>
-//@property (strong,nonatomic) User *chatToUser;
+@property (strong,nonatomic) User *chatToUser;
 @property (strong,nonatomic) NSMutableArray *msgs;
 @property (strong,nonatomic) BubbleImgFactory *bubbleImgFactory;
 @property (strong,nonatomic) AVIMConversation *conversation;
-@property (strong,nonatomic) ConversationManager *manager;
+@property (strong,nonatomic) ConversationManager *conversationManager;
 @property (strong,nonatomic) MediaPicker *mediaPicker;
 @property (strong,nonatomic) FileUpLoader *fileUpLoader;
 @property (strong,nonatomic) AudioRecorderController *recorder;
 @property (strong,nonatomic) RecordIndocator *indocator;
 @property (strong,nonatomic) UIRefreshControl *refreshControl;
+@property (strong,nonatomic) UserManager *userManager;
 @end
 
 @implementation PrivateChatController
@@ -47,10 +48,28 @@
     self = [super init];
     if (self) {
         self.hidesBottomBarWhenPushed=YES;
-        self.currentUser=[UserManager sharedUserManager].currentUser;
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didReceiveTyperMessage:) name:kDidReceiveTypedMessageNotification object:nil];
+        //
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadingMediaNotification:) name:kUploadMediaNotification object:nil];
+        //
+        [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(updateLocationCellNotification:) name:kLocationCellNeedUpdateNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(downloadImageNotification:) name:kDownloadImageCompleteNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
     }
     return self;
 }
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+#pragma mark - Getter Setter
+-(User *)currentUser{
+    return [User currentUser];
+}
+
 -(NSMutableArray *)msgs{
     if(!_msgs){
         _msgs=[NSMutableArray array];
@@ -79,6 +98,13 @@
     return _recorder;
 }
 
+-(UserManager *)userManager{
+    if(!_userManager){
+        _userManager=[UserManager sharedUserManager];
+    }
+    return _userManager;
+}
+
 -(RecordIndocator *)indocator{
     if(!_indocator){
         _indocator=[[RecordIndocator alloc]init];
@@ -102,6 +128,7 @@
     return _refreshControl;
 }
 
+#pragma mark - Life Cycle
 -(void)viewDidLoad{
     [super viewDidLoad];
     
@@ -126,13 +153,16 @@
     self.bubbleImgFactory=[BubbleImgFactory sharedBubbleImgFactory];
     //
     self.collectionView.showsVerticalScrollIndicator=NO;
-    self.manager=[ConversationManager sharedConversationManager];
-    self.senderId=self.manager.currentUser.clientID;
-    self.senderDisplayName=self.manager.currentUser.displayName;
+    self.conversationManager=[ConversationManager sharedConversationManager];
+    self.senderId=self.conversationManager.currentUser.clientID;
+    self.senderDisplayName=self.conversationManager.currentUser.displayName;
+    //
+    self.inputToolbar.contentView.rightBarButtonItem.enabled=NO; //禁用发送按钮
     //开始对话
-    [self.manager chatToUser:self.chatToUserID callback:^(AVIMConversation *conversation, NSError *error) {
+    [self.conversationManager chatToUser:self.chatToUserID callback:^(AVIMConversation *conversation, NSError *error) {
         self.conversation=conversation;
-        [self.manager fetchConversationMessages:conversation callback:^(NSArray *objects, NSError *error) {
+        self.inputToolbar.contentView.rightBarButtonItem.enabled=YES;
+        [self.conversationManager fetchConversationMessages:conversation callback:^(NSArray *objects, NSError *error) {
             //异步解析 typed messages
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -142,11 +172,7 @@
         }];
     }];
     //
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didReceiveTyperMessage:) name:kDidReceiveTypedMessageNotification object:nil];
-    //
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadingMediaNotification:) name:kUploadMediaNotification object:nil];
-    //
-    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(updateLocationCellNotification:) name:kLocationCellNeedUpdate object:nil];
+    
 }
 
 #pragma mark - 收到新消息
@@ -174,7 +200,7 @@
 
 -(id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessage *message = [self.msgs objectAtIndex:indexPath.item];
-    return [UserManager avatarForClientID:message.senderId];
+    return [self.userManager avatarForClientID:message.senderId];
 }
 
 -(void)collectionView:(JSQMessagesCollectionView *)collectionView didDeleteMessageAtIndexPath:(NSIndexPath *)indexPath{
@@ -210,7 +236,7 @@
     }
 }
 
-#pragma mark - 
+#pragma mark JSQMessagesViewController Delegate
 
 -(void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)senderDisplayName date:(NSDate *)date{
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
@@ -224,8 +250,6 @@
     InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
     [inputView toggleAttachmentKeyBoard];
 }
-
-
 
 #pragma mark - 更新上传媒体文件进度,上传完成发送消息
 
@@ -266,6 +290,26 @@
             NSLog(@"上传失败 : %@",error);
         }
         break;
+    }
+}
+
+#pragma mark - 下载完用户头像,刷新 cell
+-(void)downloadImageNotification:(NSNotification *)noti{
+    NSURL *avatarUrl= noti.userInfo[kDownloadedImageUrl];
+    NSString *avatarPath=avatarUrl.absoluteString;
+    
+    if([avatarPath isEqualToString:self.currentUser.avatarPath] ||[avatarPath isEqualToString:self.chatToUser.avatarPath]){
+        [self.collectionView reloadData];
+    }
+}
+
+#pragma mark - 用户更新完毕,更新这个 Viewcontroller 的 User
+-(void)userUpdateNotification:(NSNotification*)noti{
+    User *u= noti.userInfo[kUpdatedUser];
+    if([u.clientID isEqualToString:self.chatToUserID]){
+        self.chatToUser=u;
+    }else if(self.currentUser.clientID){
+        self.senderDisplayName=self.currentUser.displayName;
     }
 }
 
@@ -344,7 +388,7 @@
 #pragma mark - 下拉刷新 加载更多数据 
 -(void)loadHistoryMsg:(UIRefreshControl*)refreshControl{
     JSQMessage *msg=[self.msgs firstObject];
-    [self.manager fetchMessages:self.conversation beforeTime:msg.timeStamp callback:^(NSArray *objects, NSError *error) {
+    [self.conversationManager fetchMessages:self.conversation beforeTime:msg.timeStamp callback:^(NSArray *objects, NSError *error) {
         //异步解析 typed messages
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSArray *historyMessages=[objects reverseObjectEnumerator].allObjects; //反转数组;

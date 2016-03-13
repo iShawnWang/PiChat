@@ -13,12 +13,14 @@
 #import "User.h"
 #import "UserManager.h"
 #import "PrivateChatController.h"
+#import "ImageCache.h"
 
 NSString *const kCellID=@"converstaionCell";
 
 @interface MessagesTableViewController ()
 @property (strong,nonatomic) ConversationManager *manager;
 @property (strong,nonatomic) NSMutableArray *recentConversations;
+@property (strong,nonatomic) ImageCache *imageCache;
 @end
 
 @implementation MessagesTableViewController
@@ -31,10 +33,17 @@ NSString *const kCellID=@"converstaionCell";
         self.tabBarItem.image=[UIImage imageNamed:@"menu"];
         self.hidesBottomBarWhenPushed=NO;
         self.manager=[ConversationManager sharedConversationManager];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(avatarDownloadCompleteNotification:) name:kDownloadImageCompleteNotification object:nil];
     }
     return self;
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+#pragma mark - Getter Setter
 -(NSMutableArray *)recentConversations{
     if(!_recentConversations){
         _recentConversations=[NSMutableArray array];
@@ -42,8 +51,18 @@ NSString *const kCellID=@"converstaionCell";
     return _recentConversations;
 }
 
--(void)viewDidLoad{
+-(ImageCache *)imageCache{
+    if(!_imageCache){
+        _imageCache=[ImageCache sharedImageCache];
+    }
+    return _imageCache;
+}
+
+#pragma mark - Life Cycle
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self.manager fetchReventConversations:^(NSArray *objects, NSError *error) {
+        [self.recentConversations removeAllObjects];
         [self.recentConversations addObjectsFromArray:objects];
         [self.tableView reloadData];
     }];
@@ -56,15 +75,19 @@ NSString *const kCellID=@"converstaionCell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:kCellID];
+    cell.textLabel.text=@"";
+    cell.detailTextLabel.text=@"";
     AVIMConversation *conversation= self.recentConversations[indexPath.row];
     if(conversation.transient){//群聊
         
     }else{//单聊
-        [UserManager findUserByClientID:[conversation chatToUserId] callback:^(User *user, NSError *error) {
-            cell.textLabel.text=user.displayName;
+        User *u= [[UserManager sharedUserManager]findUserFromCacheElseNetworkByClientID:[conversation chatToUserId]];
+        
+        if(u){
+            cell.textLabel.text=u.displayName;
             cell.detailTextLabel.text=@"";
-            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:user.avatarPath]];
-        }];
+            cell.imageView.image=[self.imageCache findOrFetchImageFormUrl:u.avatarPath];
+        }
     }
     return cell;
 }
@@ -79,4 +102,16 @@ NSString *const kCellID=@"converstaionCell";
         [self.navigationController pushViewController:chatVC animated:YES];
     }
 }
+
+#pragma mark - 用户更新,刷新 tableview
+-(void)userUpdateNotification:(NSNotification*)noti{
+    [self.tableView reloadData]; //TODO reloadData 还是 for 循环查找该 reload 的 indexpath ?    哪个快?
+}
+
+
+#pragma mark - 下载完用户头像,刷新 tableview
+-(void)avatarDownloadCompleteNotification:(NSNotification*)noti{
+    [self.tableView reloadData];
+}
+
 @end
