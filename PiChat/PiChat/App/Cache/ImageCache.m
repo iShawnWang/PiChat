@@ -9,6 +9,7 @@
 #import "ImageCache.h"
 #import <SDWebImageManager.h>
 #import "GlobalConstant.h"
+#import "NSNotification+DownloadImage.h"
 
 @interface ImageCache ()
 @property (strong,nonatomic) SDWebImageManager *manager;
@@ -48,15 +49,11 @@
     [self.manager downloadImageWithURL:[NSURL URLWithString:urlStr] options:SDWebImageContinueInBackground progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-        [self postDownloadImageCompleteNotification:image url:imageURL];
+        if(image && imageURL){
+            [NSNotification postDownloadImageNotification:self image:image url:imageURL];
+        }
     }];
     return [UIImage new];
-}
-
--(void)postDownloadImageCompleteNotification:(UIImage*)img url:(NSURL*)url{
-    if(img && url){
-        [[NSNotificationCenter defaultCenter]postNotificationName:kDownloadImageCompleteNotification object:self userInfo:@{kDownloadedImage:img,kDownloadedImageUrl:url}];
-    }
 }
 
 @end

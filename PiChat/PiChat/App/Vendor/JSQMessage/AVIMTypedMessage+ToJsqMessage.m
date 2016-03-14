@@ -15,6 +15,7 @@
 #import "JSQMessage+MessageID.h"
 #import "CommenUtil.h"
 #import "JSQVideoMediaItem+Thumbnail.h"
+#import "NSNotification+LocationCellUpdate.h"
 
 
 @implementation AVIMTypedMessage (ToJsqMessage)
@@ -70,7 +71,7 @@
             CLLocation *location = [[CLLocation alloc] initWithLatitude:locationMessage.location.latitude longitude:locationMessage.location.longitude];
             JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] init];
             [locationItem setLocation:location withCompletionHandler:^{
-                [[NSNotificationCenter defaultCenter]postNotificationName:kLocationCellNeedUpdateNotification object:self];
+                [NSNotification postLocationCellNeedUpdateNotification:self];
             }];
             locationItem.appliesMediaViewMaskAsOutgoing=outgoing;
             message=[[JSQMessage alloc] initWithSenderId:senderId senderDisplayName:senderDisplayName date:timestamp media:locationItem];

@@ -7,6 +7,7 @@
 //
 
 #import "ConversationManager.h"
+#import "NSNotification+ReceiveMessage.h"
 
 @interface ConversationManager  ()<AVIMClientDelegate>
 @property (copy,nonatomic) NSOperationQueue *netQueue;
@@ -241,7 +242,7 @@
 #pragma mark - AVIMClientDelegate
 
 -(void)conversation:(AVIMConversation *)conversation didReceiveTypedMessage:(AVIMTypedMessage *)message{
-    NSLog(@"%@ : %@",@"收到 message",message);
-    [[NSNotificationCenter defaultCenter]postNotificationName:kDidReceiveTypedMessageNotification object:self userInfo:@{kTypedMessage:message}];
+//    NSLog(@"%@ : %@",@"收到 message",message);
+    [NSNotification postReceiveMessageNotification:self message:message];
 }
 @end

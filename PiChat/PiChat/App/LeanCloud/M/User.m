@@ -9,6 +9,7 @@
 #import "User.h"
 #import "CommenUtil.h"
 #import "ImageCache.h"
+#import "NSNotification+UserUpdate.h"
 
 @interface User ()
 
@@ -43,13 +44,9 @@
 -(void)updateUserWithCallback:(UserResultBlock)callback{
     self.fetchWhenSave=YES;
     [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [self postUserUpdateNotification];
+        [NSNotification postUserUpdateNotification:self user:self];
         callback([User currentUser],error);
     }];
-}
-
--(void)postUserUpdateNotification{
-    [[NSNotificationCenter defaultCenter]postNotificationName:kUserUpdateNotification object:self userInfo:@{kUpdatedUser:self}];
 }
 
 @end

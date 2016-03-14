@@ -17,6 +17,4 @@
 @property (copy,nonatomic) NSString *displayName;
 //
 -(void)updateUserWithCallback:(UserResultBlock)callback;
-
--(void)postUserUpdateNotification;
 @end

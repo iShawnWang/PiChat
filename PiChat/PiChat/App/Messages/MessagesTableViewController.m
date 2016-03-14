@@ -14,6 +14,8 @@
 #import "UserManager.h"
 #import "PrivateChatController.h"
 #import "ImageCache.h"
+#import "NSNotification+UserUpdate.h"
+#import "NSNotification+DownloadImage.h"
 
 NSString *const kCellID=@"converstaionCell";
 
@@ -33,6 +35,7 @@ NSString *const kCellID=@"converstaionCell";
         self.tabBarItem.image=[UIImage imageNamed:@"menu"];
         self.hidesBottomBarWhenPushed=NO;
         self.manager=[ConversationManager sharedConversationManager];
+        
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(avatarDownloadCompleteNotification:) name:kDownloadImageCompleteNotification object:nil];
     }
@@ -107,7 +110,6 @@ NSString *const kCellID=@"converstaionCell";
 -(void)userUpdateNotification:(NSNotification*)noti{
     [self.tableView reloadData]; //TODO reloadData 还是 for 循环查找该 reload 的 indexpath ?    哪个快?
 }
-
 
 #pragma mark - 下载完用户头像,刷新 tableview
 -(void)avatarDownloadCompleteNotification:(NSNotification*)noti{

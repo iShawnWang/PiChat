@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GlobalConstant.h"
-
+#import "NSNotification+UploadMedia.h"
 @class AVFile;
 
 @interface FileUpLoader : NSObject

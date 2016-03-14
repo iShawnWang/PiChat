@@ -11,6 +11,7 @@
 #import "CommenUtil.h"
 
 @import UIKit;
+
 @interface FileUpLoader ()
 @property (strong,nonatomic) NSMutableArray *uploadingFile;
 @end
@@ -68,46 +69,15 @@
     [self.uploadingFile addObject:file];
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(succeeded){
-            [self postUploadMediaCompleteNotification:file type:type];
+            [NSNotification postUploadMediaCompleteNotification:self media:file type:type];
         }else{
-            [self postUploadMediaFailedNotification:error];
+            [NSNotification postUploadMediaFailedNotification:self error:error];
         }
         [self.uploadingFile removeObject:file];
     } progressBlock:^(NSInteger percentDone) {
-        [self postUploadMediaProgressNotification:percentDone];
+        [NSNotification postUploadMediaProgressNotification:self percentDone:percentDone];
     }];
 }
 
-/**
- *  Notify Upload Complete
- *
- *  @param media
- *  @param mediaType
- */
--(void)postUploadMediaCompleteNotification:(AVFile*)media type:(UploadedMediaType)mediaType{
-    NSDictionary *userInfo=@{kUploadState:@(UploadStateComplete),kUploadedFile:media,kUploadedMediaType:@(mediaType)};
-    [[NSNotificationCenter defaultCenter]postNotificationName:kUploadMediaNotification object:self userInfo:userInfo];
-    [self.uploadingFile removeObject:media];
-}
-
-/**
- *  Notify upload Progress
- *
- *  @param percentDone integer progress
- */
--(void)postUploadMediaProgressNotification:(NSInteger)percentDone{
-    NSDictionary *userInfo=@{kUploadState:@(UploadStateProgress),kUploadingProgress:@(percentDone/100.0)};
-    [[NSNotificationCenter defaultCenter]postNotificationName:kUploadMediaNotification object:self userInfo:userInfo];
-}
-
-/**
- *  Notify upload failed
- *
- *  @param error
- */
--(void)postUploadMediaFailedNotification:(NSError *)error{
-    NSDictionary *userInfo=@{kUploadState:@(UploadStateFailed),kUploadingError:error};
-    [[NSNotificationCenter defaultCenter]postNotificationName:kUploadMediaNotification object:self userInfo:userInfo];
-}
-
 @end
+

@@ -14,6 +14,8 @@
 #import "FileUpLoader.h"
 #import "MBProgressHUD+Addition.h"
 #import "ImageCache.h"
+#import "NSNotification+DownloadImage.h"
+
 
 @interface MeViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
@@ -90,11 +92,11 @@
 
 #pragma mark - 上传头像图片 通知
 -(void)uploadingMediaNotification:(NSNotification*)noti{
-    UploadState uploadState= [noti.userInfo[kUploadState] integerValue];
+    UploadState uploadState = noti.uploadState;
     switch (uploadState) {
         case UploadStateComplete:{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            AVFile *file=noti.userInfo[kUploadedFile];
+            AVFile *file=noti.uploadedFile;
             self.user.avatarPath=file.url;
             [self.user updateUserWithCallback:^(User *user, NSError *error) {
                 self.avatarImageView.image= [self.imageCache findOrFetchImageFormUrl:user.avatarPath];
@@ -104,14 +106,12 @@
         }
             break;
         case UploadStateProgress:{
-            NSNumber *progress= noti.userInfo[kUploadingProgress];
-            [MBProgressHUD HUDForView:self.view].progress=[progress floatValue];
+            [MBProgressHUD HUDForView:self.view].progress=noti.progress;
         }
             break;
         case UploadStateFailed:{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSError *error=noti.userInfo[kUploadingError];
-            NSLog(@"上传失败 : %@",error);
+            NSLog(@"上传失败 : %@",noti.error);
         }
             break;
     }
@@ -119,8 +119,8 @@
 
 #pragma mark - 下载头像 通知,更新此界面头像
 -(void)downloadImageNotification:(NSNotification*)noti{
-    UIImage *img= noti.userInfo[kDownloadedImage];
-    NSURL *url= noti.userInfo[kDownloadedImageUrl];
+    UIImage *img= noti.image;
+    NSURL *url= noti.imageUrl;
     if([url.absoluteString isEqualToString:self.user.avatarPath]){
         self.avatarImageView.image=img;
     }

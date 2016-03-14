@@ -23,6 +23,10 @@
 #import "RecordIndocator.h"
 #import "JSQMessage+MessageID.h"
 #import "JSQVideoMediaItem+Thumbnail.h"
+#import "NSNotification+UserUpdate.h"
+#import "NSNotification+DownloadImage.h"
+#import "NSNotification+ReceiveMessage.h"
+#import "NSNotification+LocationCellUpdate.h"
 
 
 @import CoreImage;
@@ -177,8 +181,8 @@
 
 #pragma mark - 收到新消息
 
--(void)didReceiveTyperMessage:(NSNotification*)notification{
-    AVIMTypedMessage *typedMsg= notification.userInfo[kTypedMessage];
+-(void)didReceiveTyperMessage:(NSNotification*)noti{
+    AVIMTypedMessage *typedMsg= noti.message;
     [self addTypedMessage:typedMsg];
     [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
 }
@@ -254,12 +258,12 @@
 #pragma mark - 更新上传媒体文件进度,上传完成发送消息
 
 -(void)uploadingMediaNotification:(NSNotification*)noti{
-    UploadState uploadState= [noti.userInfo[kUploadState] integerValue];
+    UploadState uploadState= noti.uploadState;
     switch (uploadState) {
         case UploadStateComplete:{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            AVFile *media=noti.userInfo[kUploadedFile];
-            UploadedMediaType mediaType= [noti.userInfo[kUploadedMediaType] integerValue];
+            AVFile *media=noti.uploadedFile;
+            UploadedMediaType mediaType= noti.mediaType;
             AVIMTypedMessage *msg;
             switch (mediaType) {
                 case UploadedMediaTypeVideo:
@@ -280,14 +284,12 @@
         }
         break;
         case UploadStateProgress:{
-            NSNumber *progress= noti.userInfo[kUploadingProgress];
-            [MBProgressHUD HUDForView:self.view].progress=[progress floatValue];
+            [MBProgressHUD HUDForView:self.view].progress=noti.progress;
         }
         break;
         case UploadStateFailed:{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSError *error=noti.userInfo[kUploadingError];
-            NSLog(@"上传失败 : %@",error);
+            NSLog(@"上传失败 : %@",noti.error);
         }
         break;
     }
@@ -295,7 +297,7 @@
 
 #pragma mark - 下载完用户头像,刷新 cell
 -(void)downloadImageNotification:(NSNotification *)noti{
-    NSURL *avatarUrl= noti.userInfo[kDownloadedImageUrl];
+    NSURL *avatarUrl= noti.imageUrl;
     NSString *avatarPath=avatarUrl.absoluteString;
     
     if([avatarPath isEqualToString:self.currentUser.avatarPath] ||[avatarPath isEqualToString:self.chatToUser.avatarPath]){
@@ -305,7 +307,7 @@
 
 #pragma mark - 用户更新完毕,更新这个 Viewcontroller 的 User
 -(void)userUpdateNotification:(NSNotification*)noti{
-    User *u= noti.userInfo[kUpdatedUser];
+    User *u= noti.user;
     if([u.clientID isEqualToString:self.chatToUserID]){
         self.chatToUser=u;
     }else if(self.currentUser.clientID){

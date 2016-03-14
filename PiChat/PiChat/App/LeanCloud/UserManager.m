@@ -15,6 +15,7 @@
 #import "ImageCache.h"
 #import "Followee.h"
 #import "PiAutoPurgeCache.h"
+#import "NSNotification+UserUpdate.h"
 
 
 @interface UserManager ()
@@ -152,7 +153,7 @@
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         User *u=[objects firstObject];
         [self.userCache setObject:u forKey:u.objectId];
-        [u postUserUpdateNotification];
+        [NSNotification postUserUpdateNotification:self user:u];
         if(callback){
             callback(u,error);
         }
@@ -196,7 +197,7 @@
 
 #pragma mark - 用户更新完毕,加入到缓存中
 -(void)userUpdateNotification:(NSNotification*)noti{
-    User *u= noti.userInfo[kUpdatedUser];
+    User *u= noti.user;
     [self.userCache setObject:u forKey:u.objectId];
 }
 @end

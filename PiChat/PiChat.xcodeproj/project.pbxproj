@@ -46,7 +46,6 @@
 		0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */; };
 		0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */; };
 		0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1B31C78B27E0001C1D8 /* ImageCache.m */; };
-		0ECB44481C95A2DA00F300A4 /* PiAutoPurgeCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECB44471C95A2DA00F300A4 /* PiAutoPurgeCache.m */; };
 		0ED19F021C91DA0F00EF7472 /* JSQAudioMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19EFF1C91DA0F00EF7472 /* JSQAudioMediaItem.m */; };
 		0ED19F031C91DA0F00EF7472 /* UIImage+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F011C91DA0F00EF7472 /* UIImage+JSQMessages.m */; };
 		0ED19F061C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F051C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m */; };
@@ -64,6 +63,13 @@
 		0EED53191C75CD82000437BD /* PiChatUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED53181C75CD82000437BD /* PiChatUITests.m */; };
 		0EF643ED1C92918B0000A4CA /* RecordIndocator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF643EC1C92918B0000A4CA /* RecordIndocator.m */; };
 		0EF669191C8DCCD600B4D2C6 /* LocationViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF669181C8DCCD600B4D2C6 /* LocationViewerController.m */; };
+		0EF757161C9706C6007AD3A1 /* NSNotification+DownloadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7570B1C9706C6007AD3A1 /* NSNotification+DownloadImage.m */; };
+		0EF757171C9706C6007AD3A1 /* NSNotification+LocationCellUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7570D1C9706C6007AD3A1 /* NSNotification+LocationCellUpdate.m */; };
+		0EF757181C9706C6007AD3A1 /* NSNotification+Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7570F1C9706C6007AD3A1 /* NSNotification+Post.m */; };
+		0EF757191C9706C6007AD3A1 /* NSNotification+ReceiveMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF757111C9706C6007AD3A1 /* NSNotification+ReceiveMessage.m */; };
+		0EF7571A1C9706C6007AD3A1 /* NSNotification+UploadMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF757131C9706C6007AD3A1 /* NSNotification+UploadMedia.m */; };
+		0EF7571B1C9706C6007AD3A1 /* NSNotification+UserUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF757151C9706C6007AD3A1 /* NSNotification+UserUpdate.m */; };
+		0EF76FB71C966B5400572897 /* PiAutoPurgeCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF76FB61C966B5400572897 /* PiAutoPurgeCache.m */; };
 		0EFDBA211C896AAE002685FE /* MBProgressHUD+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */; };
 		A1C49579061CF5790206FC28 /* libPods-PiChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F1213A3616F8FD53E22CBE /* libPods-PiChat.a */; };
 /* End PBXBuildFile section */
@@ -156,8 +162,6 @@
 		0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleImgFactory.m; sourceTree = "<group>"; };
 		0EADC1B21C78B27E0001C1D8 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
 		0EADC1B31C78B27E0001C1D8 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
-		0ECB44461C95A2DA00F300A4 /* PiAutoPurgeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PiAutoPurgeCache.h; sourceTree = "<group>"; };
-		0ECB44471C95A2DA00F300A4 /* PiAutoPurgeCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PiAutoPurgeCache.m; sourceTree = "<group>"; };
 		0ED19EFE1C91DA0F00EF7472 /* JSQAudioMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQAudioMediaItem.h; sourceTree = "<group>"; };
 		0ED19EFF1C91DA0F00EF7472 /* JSQAudioMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQAudioMediaItem.m; sourceTree = "<group>"; };
 		0ED19F001C91DA0F00EF7472 /* UIImage+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JSQMessages.h"; sourceTree = "<group>"; };
@@ -191,6 +195,20 @@
 		0EF643EC1C92918B0000A4CA /* RecordIndocator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordIndocator.m; sourceTree = "<group>"; };
 		0EF669171C8DCCD600B4D2C6 /* LocationViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewerController.h; sourceTree = "<group>"; };
 		0EF669181C8DCCD600B4D2C6 /* LocationViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewerController.m; sourceTree = "<group>"; };
+		0EF7570A1C9706C6007AD3A1 /* NSNotification+DownloadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+DownloadImage.h"; sourceTree = "<group>"; };
+		0EF7570B1C9706C6007AD3A1 /* NSNotification+DownloadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+DownloadImage.m"; sourceTree = "<group>"; };
+		0EF7570C1C9706C6007AD3A1 /* NSNotification+LocationCellUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+LocationCellUpdate.h"; sourceTree = "<group>"; };
+		0EF7570D1C9706C6007AD3A1 /* NSNotification+LocationCellUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+LocationCellUpdate.m"; sourceTree = "<group>"; };
+		0EF7570E1C9706C6007AD3A1 /* NSNotification+Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Post.h"; sourceTree = "<group>"; };
+		0EF7570F1C9706C6007AD3A1 /* NSNotification+Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Post.m"; sourceTree = "<group>"; };
+		0EF757101C9706C6007AD3A1 /* NSNotification+ReceiveMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+ReceiveMessage.h"; sourceTree = "<group>"; };
+		0EF757111C9706C6007AD3A1 /* NSNotification+ReceiveMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+ReceiveMessage.m"; sourceTree = "<group>"; };
+		0EF757121C9706C6007AD3A1 /* NSNotification+UploadMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+UploadMedia.h"; sourceTree = "<group>"; };
+		0EF757131C9706C6007AD3A1 /* NSNotification+UploadMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+UploadMedia.m"; sourceTree = "<group>"; };
+		0EF757141C9706C6007AD3A1 /* NSNotification+UserUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+UserUpdate.h"; sourceTree = "<group>"; };
+		0EF757151C9706C6007AD3A1 /* NSNotification+UserUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+UserUpdate.m"; sourceTree = "<group>"; };
+		0EF76FB51C966B5400572897 /* PiAutoPurgeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PiAutoPurgeCache.h; sourceTree = "<group>"; };
+		0EF76FB61C966B5400572897 /* PiAutoPurgeCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PiAutoPurgeCache.m; sourceTree = "<group>"; };
 		0EFDBA1F1C896AAE002685FE /* MBProgressHUD+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Addition.h"; sourceTree = "<group>"; };
 		0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Addition.m"; sourceTree = "<group>"; };
 		15C71593C91B28C6CB6A60EB /* Pods-PiChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiChat/Pods-PiChat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -320,8 +338,6 @@
 				0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */,
 				0E7939411C9463B700618BAD /* AVIMConversation+Addition.h */,
 				0E7939421C9463B700618BAD /* AVIMConversation+Addition.m */,
-				0ECB44461C95A2DA00F300A4 /* PiAutoPurgeCache.h */,
-				0ECB44471C95A2DA00F300A4 /* PiAutoPurgeCache.m */,
 			);
 			path = LeanCloud;
 			sourceTree = "<group>";
@@ -349,6 +365,9 @@
 		0E4F343D1C75F79B006A9BAA /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				0EF757091C9706C6007AD3A1 /* Notification */,
+				0EF76FB51C966B5400572897 /* PiAutoPurgeCache.h */,
+				0EF76FB61C966B5400572897 /* PiAutoPurgeCache.m */,
 				0E4F34731C7602D7006A9BAA /* RegexUtil.h */,
 				0E4F34741C7602D7006A9BAA /* RegexUtil.m */,
 				0E4F34831C763778006A9BAA /* StoryBoardHelper.h */,
@@ -521,6 +540,25 @@
 				0EED531A1C75CD82000437BD /* Info.plist */,
 			);
 			path = PiChatUITests;
+			sourceTree = "<group>";
+		};
+		0EF757091C9706C6007AD3A1 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				0EF7570A1C9706C6007AD3A1 /* NSNotification+DownloadImage.h */,
+				0EF7570B1C9706C6007AD3A1 /* NSNotification+DownloadImage.m */,
+				0EF7570C1C9706C6007AD3A1 /* NSNotification+LocationCellUpdate.h */,
+				0EF7570D1C9706C6007AD3A1 /* NSNotification+LocationCellUpdate.m */,
+				0EF7570E1C9706C6007AD3A1 /* NSNotification+Post.h */,
+				0EF7570F1C9706C6007AD3A1 /* NSNotification+Post.m */,
+				0EF757101C9706C6007AD3A1 /* NSNotification+ReceiveMessage.h */,
+				0EF757111C9706C6007AD3A1 /* NSNotification+ReceiveMessage.m */,
+				0EF757121C9706C6007AD3A1 /* NSNotification+UploadMedia.h */,
+				0EF757131C9706C6007AD3A1 /* NSNotification+UploadMedia.m */,
+				0EF757141C9706C6007AD3A1 /* NSNotification+UserUpdate.h */,
+				0EF757151C9706C6007AD3A1 /* NSNotification+UserUpdate.m */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		4A5C5C45A7D42D220493275B /* Pods */ = {
@@ -749,22 +787,27 @@
 				0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */,
 				0E391A2A1C8EBD7D000066C8 /* AudioRecorderController.m in Sources */,
 				0E4F346C1C76023F006A9BAA /* ContactTableViewController.m in Sources */,
+				0EF757161C9706C6007AD3A1 /* NSNotification+DownloadImage.m in Sources */,
+				0EF7571B1C9706C6007AD3A1 /* NSNotification+UserUpdate.m in Sources */,
 				0E7939431C9463B700618BAD /* AVIMConversation+Addition.m in Sources */,
 				0E4F34691C76022E006A9BAA /* MeViewController.m in Sources */,
 				0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */,
 				0E4F34751C7602D7006A9BAA /* RegexUtil.m in Sources */,
 				0E4F34551C75F9D6006A9BAA /* User.m in Sources */,
 				0ED19F021C91DA0F00EF7472 /* JSQAudioMediaItem.m in Sources */,
+				0EF757171C9706C6007AD3A1 /* NSNotification+LocationCellUpdate.m in Sources */,
 				0E4F346F1C760248006A9BAA /* MessagesTableViewController.m in Sources */,
 				0E4F34451C75F7C1006A9BAA /* main.m in Sources */,
 				0E391A2D1C8F170F000066C8 /* InputContentView.m in Sources */,
 				0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */,
 				0ED19F061C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m in Sources */,
+				0EF76FB71C966B5400572897 /* PiAutoPurgeCache.m in Sources */,
 				0EFDBA211C896AAE002685FE /* MBProgressHUD+Addition.m in Sources */,
+				0EF757191C9706C6007AD3A1 /* NSNotification+ReceiveMessage.m in Sources */,
+				0EF7571A1C9706C6007AD3A1 /* NSNotification+UploadMedia.m in Sources */,
 				0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */,
 				0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */,
 				0E4F344E1C75F836006A9BAA /* RegisterViewController.m in Sources */,
-				0ECB44481C95A2DA00F300A4 /* PiAutoPurgeCache.m in Sources */,
 				0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */,
 				0EF669191C8DCCD600B4D2C6 /* LocationViewerController.m in Sources */,
 				0EE2C4AA1C908C9C00A7DEE0 /* InputAttachmentView.m in Sources */,
@@ -773,6 +816,7 @@
 				0ED6EE9E1C934E0A00DCC2DD /* JSQMessage+MessageID.m in Sources */,
 				0EE2C4A61C907EE900A7DEE0 /* AGEmojiPageView.m in Sources */,
 				0E79393C1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m in Sources */,
+				0EF757181C9706C6007AD3A1 /* NSNotification+Post.m in Sources */,
 				0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */,
 				0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */,
 				0E4F345E1C76009D006A9BAA /* ChatManager.m in Sources */,
