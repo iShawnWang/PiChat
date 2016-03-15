@@ -45,10 +45,7 @@
 }
 
 -(User *)currentUser{
-    if(!_currentUser){
-        _currentUser=[User currentUser];
-    }
-    return _currentUser;
+    return [User currentUser];
 }
 
 - (AVIMConversationQuery *)conversationQuery{
