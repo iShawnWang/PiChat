@@ -36,8 +36,9 @@
 #pragma mark -
 
 +(UIImage*)textToImage:(NSString*)text size:(CGSize)size;
-#pragma mark - 
+#pragma mark - Alert
 +(void)showSettingAlertIn:(UIViewController*)vc;
++(void)showMessage :(NSString*)message in:(UIViewController*)vc;
 @end
 
 #pragma mark - NSString

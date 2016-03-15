@@ -91,6 +91,12 @@
     }]];
     [vc presentViewController:alert animated:YES completion:nil];
 }
+
++(void)showMessage :(NSString*)message in:(UIViewController*)vc{
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"出错了 ~" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"知道了 ~" style:UIAlertActionStyleCancel handler:nil]];
+    [vc presentViewController:alert animated:YES completion:nil];
+}
 @end
 
 #pragma mark - NSString

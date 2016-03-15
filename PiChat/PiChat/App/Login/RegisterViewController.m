@@ -10,6 +10,7 @@
 #import "UserManager.h"
 #import "CommenUtil.h"
 #import "ConversationManager.h"
+#import "MBProgressHUD+Addition.h"
 
 @interface RegisterViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
@@ -30,12 +31,15 @@
         [[UserManager sharedUserManager] signUpWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
             if(succeeded){
                 [[ConversationManager sharedConversationManager]setupConversationClientWithCallback:^(BOOL succeeded, NSError *error) {
+                    [self.view endEditing:YES];
                     [StoryBoardHelper switchToMainTabVC];
                 }];
+            }else{
+                [CommenUtil showMessage:[error description] in:self];
             }
         }];
     }else{
-        //错误提示
+        [MBProgressHUD showMsg:@"请输入合法的 Emial 用户名" forSeconds:1.5];
     }
 }
 
