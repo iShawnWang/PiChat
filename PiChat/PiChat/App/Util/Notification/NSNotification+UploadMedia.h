@@ -11,18 +11,19 @@
 
 static NSString *const kUploadMediaNotification=@"kUploadMediaNotification";
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, UploadState) {
     UploadStateComplete,
     UploadStateProgress,
     UploadStateFailed,
-} UploadState;
+};
 
-typedef enum : NSUInteger {
+
+typedef NS_ENUM(NSUInteger, UploadedMediaType) {
     UploadedMediaTypePhoto,
     UploadedMediaTypeVideo,
     UploadedMediaTypeAduio,
-    UploadedMediaTypeFile,
-} UploadedMediaType;
+    UploadedMediaTypeFile
+};
 
 @interface NSNotification (UploadMedia)
 @property (assign,nonatomic,readonly) UploadState uploadState;

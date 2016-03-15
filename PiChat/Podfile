@@ -9,7 +9,7 @@ target 'PiChat' do
 pod 'AVOSCloud'
 pod 'AVOSCloudIM'
 pod 'LeanCloudFeedback'
-pod 'JSQMessagesViewController'
+pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'
 pod 'MWPhotoBrowser'
 pod 'MBProgressHUD'
 pod 'Masonry'

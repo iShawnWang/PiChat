@@ -26,6 +26,7 @@
     self.isTextInput=YES;
     [self.leftBarButtonContainerView addSubview:self.audioTextSwitchBtn];
     [self.textView.superview insertSubview:self.recordBtn belowSubview:self.textView];
+    
 }
 
 -(UIButton *)audioTextSwitchBtn{
@@ -134,7 +135,6 @@
 
 #pragma mark -
 -(UIImage *)emojiKeyboardView:(AGEmojiKeyboardView *)emojiKeyboardView imageForSelectedCategory:(AGEmojiKeyboardViewCategoryImage)category{
-    //TODO text 改文字
     return [UIImage new];
 }
 

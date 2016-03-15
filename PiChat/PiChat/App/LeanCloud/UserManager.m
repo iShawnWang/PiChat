@@ -179,7 +179,6 @@
 
 #pragma mark - Avatar
 
-//TODO 缓存头像和用户
 -(JSQMessagesAvatarImage *)avatarForClientID:(NSString *)clientID{
     UIImage *avatar;
     User *u= [self findUserFromCacheByClientID:clientID];

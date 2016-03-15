@@ -23,6 +23,7 @@
 
 @implementation LocationViewerController
 
+#pragma mark - Getter Setter
 -(CLLocationManager *)manager{
     if(!_manager){
         _manager=[[CLLocationManager alloc]init];
@@ -38,6 +39,11 @@
     return _geocoder;
 }
 
+-(void)showUserLocation{
+    self.mapView.showsUserLocation=YES;
+}
+
+#pragma mark - Life Cycle
 -(void)viewDidLoad{
     [super viewDidLoad];
     
@@ -53,6 +59,27 @@
         [self addPickCancelBtn];
     }
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.manager requestWhenInUseAuthorization];
+}
+
+
+#pragma mark - Delegate
+-(void)didPickLocation{
+    if(!self.location){
+        return;
+    }
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate locationViewerController:self didPickLocation:self.location];
+}
+
+-(void)cancelPickLocation{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Private
 
 -(void)addPickCancelBtn{
     //发送位置 Btn
@@ -85,23 +112,6 @@
 
 }
 
--(void)didPickLocation{
-    if(!self.location){
-        return;
-    }
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    [self.delegate locationViewerController:self didPickLocation:self.location];
-}
-
--(void)cancelPickLocation{
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self.manager requestWhenInUseAuthorization];
-}
-
 -(void)showLocationPin{
     if(!self.location){
         @throw [NSException exceptionWithName:@"粑粑" reason:@"要显示 location 需设置 location = xxx" userInfo: nil];
@@ -119,19 +129,26 @@
         BasicPinAnnotation *pin= [self.mapView.annotations firstObject];
         
         CLPlacemark *mark= [placemarks lastObject];
-        
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        pin.subtitle= ABCreateStringWithAddressDictionary(mark.addressDictionary,NO);
-#pragma clang diagnostic pop
-        
-        NSLog(@"地理反编码%@",placemarks);
+        pin.subtitle= [self placeMarkToLocationStr:mark];
+
         [self.mapView selectAnnotation:[self.mapView.annotations firstObject] animated:YES];
     }];
 }
 
--(void)showUserLocation{
-    self.mapView.showsUserLocation=YES;
+-(NSString*)placeMarkToLocationStr:(CLPlacemark*)placemark{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    NSString *rawLocation= ABCreateStringWithAddressDictionary(placemark.addressDictionary,NO);
+    #pragma clang diagnostic pop
+    NSArray *rawLocationCompnents= [rawLocation componentsSeparatedByString:@"\n"];
+    NSMutableString *locationStr=[NSMutableString string];
+    // , 拼接地址
+    for (NSString *compnent in rawLocationCompnents) {
+        [locationStr appendString:compnent];
+        [locationStr appendString:@","];
+    }
+    return [locationStr substringToIndex:locationStr.length-1]; //去掉最后一个 ,
+    
 }
 
 #pragma mark - MKMapViewDelegate

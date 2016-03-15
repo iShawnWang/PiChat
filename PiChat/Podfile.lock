@@ -23,11 +23,22 @@ DEPENDENCIES:
   - AVOSCloud
   - AVOSCloudIM
   - GJAlertController
-  - JSQMessagesViewController
+  - JSQMessagesViewController (from `https://github.com/jessesquires/JSQMessagesViewController.git`,
+    branch `develop`)
   - LeanCloudFeedback
   - Masonry
   - MBProgressHUD
   - MWPhotoBrowser
+
+EXTERNAL SOURCES:
+  JSQMessagesViewController:
+    :branch: develop
+    :git: https://github.com/jessesquires/JSQMessagesViewController.git
+
+CHECKOUT OPTIONS:
+  JSQMessagesViewController:
+    :commit: f72235a2bfc704766e8173baf08442ead6e019fa
+    :git: https://github.com/jessesquires/JSQMessagesViewController.git
 
 SPEC CHECKSUMS:
   AVOSCloud: 957d1508104d7c8ed501df9d9b734d7a98c2e047

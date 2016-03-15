@@ -98,4 +98,8 @@
 -(NSString*)trim{
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
+
+-(NSString*)removeLineBreak{
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+}
 @end

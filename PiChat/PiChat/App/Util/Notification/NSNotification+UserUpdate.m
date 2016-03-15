@@ -9,12 +9,15 @@
 #import "NSNotification+UserUpdate.h"
 #import "NSNotification+Post.h"
 #import "User.h"
+
 static NSString *const kUpdatedUser=@"kUpdatedUser";
 
 @implementation NSNotification (UserUpdate)
 
 +(void)postUserUpdateNotification:(id)object user:(User*)user{
-    [[NSNotification notificationWithName:kUserUpdateNotification object:object userInfo:@{kUpdatedUser:user}]post];
+    if(object && user){
+        [[NSNotification notificationWithName:kUserUpdateNotification object:object userInfo:@{kUpdatedUser:user}]post];
+    }
 }
 
 -(User *)user{

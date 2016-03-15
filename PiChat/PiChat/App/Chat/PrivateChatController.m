@@ -217,6 +217,8 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
+    //可以 Custome Cell
+    //Temp Bug : 横屏 ipad 开启 App,Cell 的 width = 1016;
     return cell;
 }
 
@@ -259,6 +261,7 @@
 
 -(void)uploadingMediaNotification:(NSNotification*)noti{
     UploadState uploadState= noti.uploadState;
+    
     switch (uploadState) {
         case UploadStateComplete:{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -440,7 +443,6 @@
 
 #pragma mark - InputAttachmentViewDelegate
 -(void)inputAttachmentView:(InputAttachmentView *)v didClickInputView:(InputType)type{
-    //TODO 发送位置等信息
     switch (type) {
         case InputTypeEmoji:{
             InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
