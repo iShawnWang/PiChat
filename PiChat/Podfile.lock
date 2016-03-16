@@ -25,6 +25,7 @@ PODS:
     - AVOSCloud
   - DACircularProgress (2.3.1)
   - GJAlertController (1.0.0)
+  - IQKeyboardManager (4.0.0)
   - JSQMessagesViewController (7.2.0):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
@@ -47,6 +48,7 @@ DEPENDENCIES:
   - AVOSCloud
   - AVOSCloudIM
   - GJAlertController
+  - IQKeyboardManager
   - JSQMessagesViewController (from `https://github.com/jessesquires/JSQMessagesViewController.git`,
     branch `develop`)
   - LeanCloudFeedback
@@ -71,6 +73,7 @@ SPEC CHECKSUMS:
   AVOSCloudIM: ec08eaec4d27d732e3be93eadeb3bcf1355b5dcf
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   GJAlertController: 71a7f2072451bc37b780d78379c9ee4b6f357dd2
+  IQKeyboardManager: b91928f7927ba55a5829b4dcf4b7a6736ac9fc22
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   LeanCloudFeedback: 686305ea196931c7eae49800c384e42d78408482

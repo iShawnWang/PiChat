@@ -27,6 +27,7 @@
 #import "NSNotification+DownloadImage.h"
 #import "NSNotification+ReceiveMessage.h"
 #import "NSNotification+LocationCellUpdate.h"
+#import <IQKeyboardManager.h>
 
 
 @import CoreImage;
@@ -51,6 +52,7 @@
 {
     self = [super init];
     if (self) {
+        [[IQKeyboardManager sharedManager] disableToolbarInViewControllerClass:[PrivateChatController class]];
         self.hidesBottomBarWhenPushed=YES;
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didReceiveTyperMessage:) name:kDidReceiveTypedMessageNotification object:nil];
         //

@@ -13,6 +13,8 @@
 #import "ConversationManager.h"
 #import <AVOSCloudSNS.h>
 #import "UIColor+Addition.h"
+#import <IQKeyboardManager.h>
+#import "PrivateChatController.h"
 
 @interface AppDelegate ()
 
@@ -22,6 +24,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside=YES;
     [UIView appearance].tintColor=[UIColor colorFromHexString:@"06BEBD"];
     [LeanCloudManager setupApplication:launchOptions];
     [self setupRootController];
