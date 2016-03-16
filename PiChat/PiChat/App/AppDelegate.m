@@ -11,6 +11,8 @@
 #import "StoryBoardHelper.h"
 #import "UserManager.h"
 #import "ConversationManager.h"
+#import <AVOSCloudSNS.h>
+#import "UIColor+Addition.h"
 
 @interface AppDelegate ()
 
@@ -20,10 +22,32 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [UIView appearance].tintColor=[UIColor colorFromHexString:@"06BEBD"];
     [LeanCloudManager setupApplication:launchOptions];
     [self setupRootController];
     return YES;
 }
+
+#pragma mark - SNS
+
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    return [AVOSCloudSNS handleOpenURL:url];
+}
+
+// When Build with IOS 9 SDK
+// For application on system below ios 9
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [AVOSCloudSNS handleOpenURL:url];
+}
+
+// For application on system equals or larger ios 9
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+{
+    return [AVOSCloudSNS handleOpenURL:url];
+}
+
+#pragma mark -
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -46,6 +70,8 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
 
 #pragma mark - Private
 -(void)setupRootController{

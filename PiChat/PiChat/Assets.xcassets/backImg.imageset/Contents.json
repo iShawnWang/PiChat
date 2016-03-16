@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "backImg.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "wechatout_delete_icons@2x.png",
       "scale" : "2x"
     },
     {

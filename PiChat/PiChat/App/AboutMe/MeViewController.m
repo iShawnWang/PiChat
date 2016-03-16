@@ -30,7 +30,8 @@
     self = [super initWithCoder:coder];
     if (self) {
         self.tabBarItem.title=@"我";
-        self.tabBarItem.image=[UIImage imageNamed:@"menu"];
+        self.tabBarItem.image=[UIImage imageNamed:@"tabbar_me"];
+        self.tabBarItem.selectedImage=[UIImage imageNamed:@"tabbar_meHL"];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadingMediaNotification:) name:kUploadMediaNotification object:nil];
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadImageNotification:) name:kDownloadImageCompleteNotification object:nil];

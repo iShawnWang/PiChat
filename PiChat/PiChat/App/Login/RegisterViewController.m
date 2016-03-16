@@ -21,9 +21,6 @@
 
 @implementation RegisterViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
 - (IBAction)register:(id)sender {
     NSString *userName=[self.userNameTextField.text trim];
     NSString *pwd=[self.pwdTextField.text trim];

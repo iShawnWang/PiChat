@@ -19,7 +19,8 @@
     self = [super initWithCoder:coder];
     if (self) {
         self.tabBarItem.title=@"朋友圈";
-        self.tabBarItem.image=[UIImage imageNamed:@"menu"];
+        self.tabBarItem.image=[UIImage imageNamed:@"tabbar_discover"];
+        self.tabBarItem.selectedImage=[UIImage imageNamed:@"tabbar_discoverHL"];
     }
     return self;
 }

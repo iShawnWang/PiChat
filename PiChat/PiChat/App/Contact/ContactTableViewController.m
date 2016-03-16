@@ -25,7 +25,8 @@
     self = [super initWithCoder:coder];
     if (self) {
         self.tabBarItem.title=@"联系人";
-        self.tabBarItem.image=[UIImage imageNamed:@"menu"];
+        self.tabBarItem.image=[UIImage imageNamed:@"tabbar_discover"];
+        self.tabBarItem.selectedImage=[UIImage imageNamed:@"tabbar_discoverHL"];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(avatarUpdateNotification:) name:kDownloadImageCompleteNotification object:nil];
         

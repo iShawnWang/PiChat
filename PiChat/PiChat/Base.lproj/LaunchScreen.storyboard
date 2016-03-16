@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -19,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="App Icon" translatesAutoresizingMaskIntoConstraints="NO" id="N6y-5L-fdG">
-                                <rect key="frame" x="250" y="100" width="100" height="100"/>
+                                <rect key="frame" x="250" y="70" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="GJE-h1-Oda"/>
                                     <constraint firstAttribute="width" constant="200" id="m2A-VZ-4gm"/>
@@ -31,11 +30,29 @@
                                     </mask>
                                 </variation>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJ0-yD-nOI">
+                                <rect key="frame" x="0.0" y="180" width="600" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fBe-ds-oq6">
+                                <rect key="frame" x="0.0" y="270" width="600" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="6MK-91-x0M"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="N6y-5L-fdG" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" multiplier="0.5" id="5no-s8-Vgl"/>
-                            <constraint firstItem="N6y-5L-fdG" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="NHZ-3h-IOb"/>
+                            <constraint firstItem="fBe-ds-oq6" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="7lF-wY-zSN"/>
+                            <constraint firstItem="fBe-ds-oq6" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="8Ix-iE-giz"/>
+                            <constraint firstItem="N6y-5L-fdG" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Btz-3E-u5a"/>
+                            <constraint firstItem="jJ0-yD-nOI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Grd-kO-RGC"/>
+                            <constraint firstItem="fBe-ds-oq6" firstAttribute="top" secondItem="jJ0-yD-nOI" secondAttribute="bottom" constant="30" id="NJ2-Hn-MWP"/>
+                            <constraint firstItem="jJ0-yD-nOI" firstAttribute="top" secondItem="N6y-5L-fdG" secondAttribute="bottom" constant="10" id="RbN-9y-bZP"/>
+                            <constraint firstItem="jJ0-yD-nOI" firstAttribute="height" secondItem="fBe-ds-oq6" secondAttribute="height" id="VAL-Qp-CqI"/>
+                            <constraint firstItem="fBe-ds-oq6" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="mQP-3l-UUt"/>
+                            <constraint firstItem="jJ0-yD-nOI" firstAttribute="width" secondItem="fBe-ds-oq6" secondAttribute="width" id="uzt-Wk-zu2"/>
                         </constraints>
                     </view>
                 </viewController>

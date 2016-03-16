@@ -32,7 +32,8 @@ NSString *const kCellID=@"converstaionCell";
     self = [super initWithCoder:coder];
     if (self) {
         self.tabBarItem.title=@"消息";
-        self.tabBarItem.image=[UIImage imageNamed:@"menu"];
+        self.tabBarItem.image=[UIImage imageNamed:@"tabbar_mainframeHL"];
+        self.tabBarItem.selectedImage=[UIImage imageNamed:@"tabbar_mainframe"];
         self.hidesBottomBarWhenPushed=NO;
         self.manager=[ConversationManager sharedConversationManager];
         

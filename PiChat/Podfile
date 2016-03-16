@@ -8,6 +8,7 @@ inhibit_all_warnings!
 target 'PiChat' do
 pod 'AVOSCloud'
 pod 'AVOSCloudIM'
+pod 'LeanCloudSocial'
 pod 'LeanCloudFeedback'
 pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'
 pod 'MWPhotoBrowser'

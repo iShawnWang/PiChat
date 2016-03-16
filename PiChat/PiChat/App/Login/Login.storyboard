@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZyI-e6-41C">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6pa-S6-5fN">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -64,7 +63,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="App Icon" translatesAutoresizingMaskIntoConstraints="NO" id="wvY-fc-bTK">
-                                <rect key="frame" x="250" y="50" width="100" height="100"/>
+                                <rect key="frame" x="250" y="70" width="100" height="100"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入邮箱" textAlignment="center" minimumFontSize="17" background="InputBg" translatesAutoresizingMaskIntoConstraints="NO" id="hil-mO-7uU">
                                 <rect key="frame" x="75" y="180" width="450" height="60"/>
@@ -80,6 +79,43 @@
                                     </mask>
                                 </variation>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5TO-Fe-a6J">
+                                <rect key="frame" x="220" y="530" width="160" height="48"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PtI-km-BEd">
+                                        <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                                        <state key="normal" image="sns_weibo"/>
+                                        <connections>
+                                            <action selector="weibo:" destination="ZyI-e6-41C" eventType="touchUpInside" id="pO6-X9-srw"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E9L-Su-aVM">
+                                        <rect key="frame" x="56" y="0.0" width="48" height="48"/>
+                                        <state key="normal" image="sns_wechat"/>
+                                        <connections>
+                                            <action selector="weChat:" destination="ZyI-e6-41C" eventType="touchUpInside" id="a6d-08-o2z"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SxO-iL-Hrr">
+                                        <rect key="frame" x="112" y="0.0" width="48" height="48"/>
+                                        <state key="normal" image="sns_qq"/>
+                                        <connections>
+                                            <action selector="qq:" destination="ZyI-e6-41C" eventType="touchUpInside" id="pTn-3G-hl7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="E9L-Su-aVM" firstAttribute="top" secondItem="PtI-km-BEd" secondAttribute="top" id="2UD-sH-WBo"/>
+                                    <constraint firstAttribute="width" constant="160" id="AJJ-Ee-PHm"/>
+                                    <constraint firstItem="SxO-iL-Hrr" firstAttribute="leading" secondItem="E9L-Su-aVM" secondAttribute="trailing" constant="8" id="OWN-lV-ONa"/>
+                                    <constraint firstAttribute="height" constant="48" id="Y4N-Cg-I4q"/>
+                                    <constraint firstItem="SxO-iL-Hrr" firstAttribute="top" secondItem="E9L-Su-aVM" secondAttribute="top" id="ZQS-A9-rBZ"/>
+                                    <constraint firstItem="E9L-Su-aVM" firstAttribute="leading" secondItem="PtI-km-BEd" secondAttribute="trailing" constant="8" id="r6q-QX-eOa"/>
+                                    <constraint firstItem="PtI-km-BEd" firstAttribute="leading" secondItem="5TO-Fe-a6J" secondAttribute="leading" id="uER-bo-hGQ"/>
+                                    <constraint firstItem="PtI-km-BEd" firstAttribute="top" secondItem="5TO-Fe-a6J" secondAttribute="top" id="zt8-FR-kbt"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -90,10 +126,12 @@
                             <constraint firstItem="sl4-z4-Rq6" firstAttribute="leading" secondItem="hil-mO-7uU" secondAttribute="leading" id="9FT-V1-VtY"/>
                             <constraint firstItem="YlF-91-HXP" firstAttribute="width" secondItem="6Nn-td-fS7" secondAttribute="width" id="GQ2-MF-KKl"/>
                             <constraint firstItem="sl4-z4-Rq6" firstAttribute="trailing" secondItem="hil-mO-7uU" secondAttribute="trailing" id="Hgd-Ut-Icv"/>
+                            <constraint firstItem="5TO-Fe-a6J" firstAttribute="top" secondItem="YlF-91-HXP" secondAttribute="bottom" constant="20" id="IDx-gH-WtO"/>
                             <constraint firstItem="hil-mO-7uU" firstAttribute="centerX" secondItem="whI-DE-ix3" secondAttribute="centerX" id="WMS-pd-Kce"/>
                             <constraint firstItem="6Nn-td-fS7" firstAttribute="width" secondItem="whI-DE-ix3" secondAttribute="width" multiplier="0.75" id="Ye9-Ye-5Jo"/>
                             <constraint firstItem="6Nn-td-fS7" firstAttribute="top" secondItem="sl4-z4-Rq6" secondAttribute="bottom" constant="30" id="gtK-1O-itl"/>
-                            <constraint firstItem="hil-mO-7uU" firstAttribute="top" secondItem="wvY-fc-bTK" secondAttribute="bottom" constant="30" id="h22-gv-CbQ"/>
+                            <constraint firstItem="hil-mO-7uU" firstAttribute="top" secondItem="wvY-fc-bTK" secondAttribute="bottom" constant="10" id="h22-gv-CbQ"/>
+                            <constraint firstItem="5TO-Fe-a6J" firstAttribute="centerX" secondItem="whI-DE-ix3" secondAttribute="centerX" id="hcz-qJ-zTy"/>
                             <constraint firstItem="YlF-91-HXP" firstAttribute="top" secondItem="6Nn-td-fS7" secondAttribute="bottom" constant="30" id="oAC-fv-fcE"/>
                             <constraint firstItem="wvY-fc-bTK" firstAttribute="top" secondItem="jsa-hI-TS1" secondAttribute="bottom" constant="8" id="qLR-8q-1ll"/>
                             <constraint firstItem="sl4-z4-Rq6" firstAttribute="top" secondItem="hil-mO-7uU" secondAttribute="bottom" constant="30" id="qLb-oz-NiA"/>
@@ -107,6 +145,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="BBn-oe-e1V"/>
                     <connections>
                         <outlet property="loginBtn" destination="6Nn-td-fS7" id="Pzl-f7-Utl"/>
                         <outlet property="pwdTextField" destination="sl4-z4-Rq6" id="Uww-Ja-exr"/>
@@ -115,7 +154,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h66-qN-YI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="364" y="493"/>
+            <point key="canvasLocation" x="1176" y="493"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="54p-3X-aYk">
@@ -154,34 +193,18 @@
                                 <state key="normal" title="注册" backgroundImage="signUpBtn">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="register:" destination="1mB-DZ-bsC" eventType="touchUpInside" id="qiL-Pi-udK"/>
-                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="App Icon" translatesAutoresizingMaskIntoConstraints="NO" id="MXy-M9-33l">
                                 <rect key="frame" x="250" y="50" width="100" height="100"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PtI-km-BEd">
-                                <rect key="frame" x="232" y="452" width="48" height="48"/>
-                                <state key="normal" image="sns_weibo"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E9L-Su-aVM">
-                                <rect key="frame" x="320" y="452" width="48" height="48"/>
-                                <state key="normal" image="sns_wechat"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="La8-IG-MuB" firstAttribute="top" secondItem="ffA-Bt-4fe" secondAttribute="bottom" constant="137" id="02y-ac-4tw"/>
-                            <constraint firstItem="PtI-km-BEd" firstAttribute="top" secondItem="kii-PH-bZH" secondAttribute="bottom" constant="30" id="1P3-ku-LSU"/>
                             <constraint firstItem="La8-IG-MuB" firstAttribute="trailing" secondItem="0m0-KW-xTS" secondAttribute="trailing" id="2UG-nh-b7Y"/>
                             <constraint firstItem="La8-IG-MuB" firstAttribute="width" secondItem="AZW-Az-l16" secondAttribute="width" multiplier="0.75" id="G1A-VN-k0L"/>
-                            <constraint firstItem="PtI-km-BEd" firstAttribute="trailing" secondItem="AZW-Az-l16" secondAttribute="centerX" constant="-20" id="HvP-hx-ctf"/>
                             <constraint firstItem="La8-IG-MuB" firstAttribute="top" secondItem="MXy-M9-33l" secondAttribute="bottom" constant="30" id="I6G-QG-dm0"/>
-                            <constraint firstItem="PtI-km-BEd" firstAttribute="centerY" secondItem="AZW-Az-l16" secondAttribute="centerY" id="Jud-fW-ybk"/>
                             <constraint firstItem="kii-PH-bZH" firstAttribute="height" secondItem="0m0-KW-xTS" secondAttribute="height" id="Q2L-DX-kY4"/>
-                            <constraint firstItem="E9L-Su-aVM" firstAttribute="top" secondItem="PtI-km-BEd" secondAttribute="top" id="QVh-uf-RfD"/>
-                            <constraint firstItem="E9L-Su-aVM" firstAttribute="leading" secondItem="PtI-km-BEd" secondAttribute="trailing" constant="30" id="a9e-vh-4JV"/>
                             <constraint firstItem="0m0-KW-xTS" firstAttribute="centerX" secondItem="AZW-Az-l16" secondAttribute="centerX" id="ad4-uy-8QL"/>
                             <constraint firstItem="kii-PH-bZH" firstAttribute="centerX" secondItem="0m0-KW-xTS" secondAttribute="centerX" id="amt-Mt-jsD"/>
                             <constraint firstItem="kii-PH-bZH" firstAttribute="height" secondItem="La8-IG-MuB" secondAttribute="height" id="b9l-hN-VB9"/>
@@ -192,14 +215,11 @@
                             <constraint firstItem="0m0-KW-xTS" firstAttribute="height" secondItem="La8-IG-MuB" secondAttribute="height" id="mzo-9O-N48"/>
                             <constraint firstItem="0m0-KW-xTS" firstAttribute="centerY" secondItem="AZW-Az-l16" secondAttribute="centerY" id="qoR-Fu-RPB"/>
                             <constraint firstItem="kii-PH-bZH" firstAttribute="width" secondItem="0m0-KW-xTS" secondAttribute="width" id="u3B-AT-F1V"/>
-                            <constraint firstItem="E9L-Su-aVM" firstAttribute="leading" secondItem="AZW-Az-l16" secondAttribute="centerX" constant="20" id="vSI-ep-XUC"/>
                             <constraint firstItem="0m0-KW-xTS" firstAttribute="top" secondItem="La8-IG-MuB" secondAttribute="bottom" constant="30" id="wzI-mf-EYy"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="02y-ac-4tw"/>
-                                <exclude reference="Jud-fW-ybk"/>
-                                <exclude reference="a9e-vh-4JV"/>
                             </mask>
                         </variation>
                     </view>
@@ -211,7 +231,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UgB-3N-yXu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="989" y="493"/>
+            <point key="canvasLocation" x="1801" y="493"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="kBD-ad-gDg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6pa-S6-5fN" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uXs-34-33P">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ZyI-e6-41C" kind="relationship" relationship="rootViewController" id="RnL-2g-UCv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WcN-S4-ZIB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="364" y="493"/>
         </scene>
     </scenes>
     <resources>
@@ -219,6 +257,7 @@
         <image name="InputBg" width="41" height="19"/>
         <image name="LogInBtn" width="31" height="30"/>
         <image name="signUpBtn" width="61" height="29"/>
+        <image name="sns_qq" width="48" height="48"/>
         <image name="sns_wechat" width="48" height="48"/>
         <image name="sns_weibo" width="48" height="48"/>
     </resources>

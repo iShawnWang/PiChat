@@ -1,4 +1,25 @@
 PODS:
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
   - AVOSCloud (3.2.7)
   - AVOSCloudIM (3.2.7):
     - AVOSCloud
@@ -9,6 +30,9 @@ PODS:
   - JSQSystemSoundPlayer (2.0.1)
   - LeanCloudFeedback (0.1.1):
     - AVOSCloud
+  - LeanCloudSocial (0.0.8):
+    - AFNetworking (~> 2.0)
+    - AVOSCloud (~> 3.1)
   - Masonry (0.6.4)
   - MBProgressHUD (0.9.2)
   - MWPhotoBrowser (2.1.1):
@@ -26,6 +50,7 @@ DEPENDENCIES:
   - JSQMessagesViewController (from `https://github.com/jessesquires/JSQMessagesViewController.git`,
     branch `develop`)
   - LeanCloudFeedback
+  - LeanCloudSocial
   - Masonry
   - MBProgressHUD
   - MWPhotoBrowser
@@ -41,6 +66,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/jessesquires/JSQMessagesViewController.git
 
 SPEC CHECKSUMS:
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   AVOSCloud: 957d1508104d7c8ed501df9d9b734d7a98c2e047
   AVOSCloudIM: ec08eaec4d27d732e3be93eadeb3bcf1355b5dcf
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
@@ -48,6 +74,7 @@ SPEC CHECKSUMS:
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   LeanCloudFeedback: 686305ea196931c7eae49800c384e42d78408482
+  LeanCloudSocial: f7787dfc1559dc47263bbfd37a03c870352ad98a
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MWPhotoBrowser: ba0d0c09ffda3a7ea10093518738c502c1c7141c
