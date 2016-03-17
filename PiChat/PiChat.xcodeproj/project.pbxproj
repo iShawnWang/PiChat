@@ -17,6 +17,9 @@
 		0E391A2D1C8F170F000066C8 /* InputContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A2C1C8F170F000066C8 /* InputContentView.m */; };
 		0E391A301C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A2F1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m */; };
 		0E391A321C8F1B83000066C8 /* InputContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E391A311C8F1B83000066C8 /* InputContentView.xib */; };
+		0E3FC6A21C9A9A9500A95463 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FC6A11C9A9A9500A95463 /* MessageCell.m */; };
+		0E3FC6A61C9A9DE300A95463 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FC6A51C9A9DE300A95463 /* ContactCell.m */; };
+		0E3FC6A91C9AA03600A95463 /* ContactHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FC6A81C9AA03600A95463 /* ContactHeaderCell.m */; };
 		0E4F34411C75F79B006A9BAA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34361C75F79B006A9BAA /* AppDelegate.m */; };
 		0E4F34451C75F7C1006A9BAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34441C75F7C1006A9BAA /* main.m */; };
 		0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F344A1C75F82E006A9BAA /* LoginViewController.m */; };
@@ -110,6 +113,12 @@
 		0E391A2E1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQMessagesInputToolbar+DecorateInputView.h"; sourceTree = "<group>"; };
 		0E391A2F1C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQMessagesInputToolbar+DecorateInputView.m"; sourceTree = "<group>"; };
 		0E391A311C8F1B83000066C8 /* InputContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputContentView.xib; sourceTree = "<group>"; };
+		0E3FC6A01C9A9A9500A95463 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
+		0E3FC6A11C9A9A9500A95463 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
+		0E3FC6A41C9A9DE300A95463 /* ContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactCell.h; sourceTree = "<group>"; };
+		0E3FC6A51C9A9DE300A95463 /* ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactCell.m; sourceTree = "<group>"; };
+		0E3FC6A71C9AA03600A95463 /* ContactHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactHeaderCell.h; sourceTree = "<group>"; };
+		0E3FC6A81C9AA03600A95463 /* ContactHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactHeaderCell.m; sourceTree = "<group>"; };
 		0E4F34351C75F79B006A9BAA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0E4F34361C75F79B006A9BAA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0E4F34441C75F7C1006A9BAA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -314,6 +323,10 @@
 				0E4F346B1C76023F006A9BAA /* ContactTableViewController.m */,
 				0E0B21391C774A9A00F257E4 /* AddFriendsTableController.h */,
 				0E0B213A1C774A9B00F257E4 /* AddFriendsTableController.m */,
+				0E3FC6A41C9A9DE300A95463 /* ContactCell.h */,
+				0E3FC6A51C9A9DE300A95463 /* ContactCell.m */,
+				0E3FC6A71C9AA03600A95463 /* ContactHeaderCell.h */,
+				0E3FC6A81C9AA03600A95463 /* ContactHeaderCell.m */,
 			);
 			path = Contact;
 			sourceTree = "<group>";
@@ -351,6 +364,8 @@
 				0E4F34631C760195006A9BAA /* Messages.storyboard */,
 				0E4F346D1C760248006A9BAA /* MessagesTableViewController.h */,
 				0E4F346E1C760248006A9BAA /* MessagesTableViewController.m */,
+				0E3FC6A01C9A9A9500A95463 /* MessageCell.h */,
+				0E3FC6A11C9A9A9500A95463 /* MessageCell.m */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -807,7 +822,10 @@
 				0E391A2D1C8F170F000066C8 /* InputContentView.m in Sources */,
 				0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */,
 				0ED19F061C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m in Sources */,
+				0E3FC6A21C9A9A9500A95463 /* MessageCell.m in Sources */,
+				0E3FC6A91C9AA03600A95463 /* ContactHeaderCell.m in Sources */,
 				0EF76FB71C966B5400572897 /* PiAutoPurgeCache.m in Sources */,
+				0E3FC6A61C9A9DE300A95463 /* ContactCell.m in Sources */,
 				0EFDBA211C896AAE002685FE /* MBProgressHUD+Addition.m in Sources */,
 				0EF757191C9706C6007AD3A1 /* NSNotification+ReceiveMessage.m in Sources */,
 				0EF7571A1C9706C6007AD3A1 /* NSNotification+UploadMedia.m in Sources */,

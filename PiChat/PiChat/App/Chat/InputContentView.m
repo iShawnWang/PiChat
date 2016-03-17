@@ -122,11 +122,7 @@
 }
 
 -(void)emojiKeyBoardViewDidPressBackSpace:(AGEmojiKeyboardView *)emojiKeyBoardView{
-    //TODO 删除需要按2次才能删除表情,表情不是 attributeString, 是2个字符大小的文字 !~
-    if(self.textView.text.length>0){
-        NSRange lastStrRange=NSMakeRange(self.textView.text.length-1, 1);
-        self.textView.text=[self.textView.text stringByReplacingCharactersInRange:lastStrRange withString:@""];
-    }
+    [self.textView deleteBackward];
 }
 
 -(AGEmojiKeyboardViewCategoryImage)defaultCategoryForEmojiKeyboardView:(AGEmojiKeyboardView *)emojiKeyboardView{

@@ -10,6 +10,7 @@
 #import <AVOSCloud.h>
 #import <AVOSCloudIM.h>
 #import <LeanCloudFeedback.h>
+#import <IQKeyboardManager.h>
 
 //leancloud 官方提供的 测试账号
 #define kApplicationId @"g7gz9oazvrubrauf5xjmzp3dl12edorywm0hy8fvlt6mjb1y"
@@ -28,11 +29,11 @@
 
 +(void)showFeedBackIn:(UIViewController*)vc{
     LCUserFeedbackViewController *feedBackVC=[LCUserFeedbackViewController new];
+    [[IQKeyboardManager sharedManager]disableToolbarInViewControllerClass:[LCUserFeedbackViewController class]];
+    [IQKeyboardManager sharedManager].keyboardDistanceFromTextField=0;
     feedBackVC.contactHeaderHidden=YES;
     feedBackVC.navigationBarStyle=LCUserFeedbackNavigationBarStyleNone;
     UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:feedBackVC];
-    [vc presentViewController:nav animated:YES completion:^{
-        
-    }];
+    [vc presentViewController:nav animated:YES completion:nil];
 }
 @end

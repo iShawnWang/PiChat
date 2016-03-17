@@ -15,7 +15,10 @@
 #import "MBProgressHUD+Addition.h"
 #import "ImageCache.h"
 #import "NSNotification+DownloadImage.h"
+#import "LeanCloudManager.h"
 
+NSString *const kResuseIdLogOut=@"logOut";
+NSString *const kResuseIdFeedback=@"feedback";
 
 @interface MeViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
@@ -130,8 +133,10 @@
 #pragma mark - Table Delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell= [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell.reuseIdentifier isEqualToString:@"logOut"]) {
+    if ([cell.reuseIdentifier isEqualToString:kResuseIdLogOut]) {
         [UserManager logOut];
+    }else if([cell.reuseIdentifier isEqualToString:kResuseIdFeedback]){
+        [LeanCloudManager showFeedBackIn:self];
     }
 }
 

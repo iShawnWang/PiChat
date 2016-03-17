@@ -7,7 +7,9 @@
 //
 
 #import "AVIMConversation.h"
-
+@class AVIMTypedMessage;
 @interface AVIMConversation (Addition)
+@property (copy,nonatomic) AVIMTypedMessage *lastMessage;
+
 -(NSString*)chatToUserId;
 @end

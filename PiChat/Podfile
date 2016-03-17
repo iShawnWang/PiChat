@@ -16,6 +16,7 @@ pod 'MBProgressHUD'
 pod 'Masonry'
 pod 'GJAlertController'
 pod 'IQKeyboardManager'
+pod 'DateTools'
 end
 
 target 'PiChatTests' do

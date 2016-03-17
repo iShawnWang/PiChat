@@ -16,8 +16,9 @@
 #import "ImageCache.h"
 #import "NSNotification+UserUpdate.h"
 #import "NSNotification+DownloadImage.h"
+#import "MessageCell.h"
 
-NSString *const kCellID=@"converstaionCell";
+NSString *const kMessageCellID=@"MessageCell";
 
 @interface MessagesTableViewController ()
 @property (strong,nonatomic) ConversationManager *manager;
@@ -63,6 +64,11 @@ NSString *const kCellID=@"converstaionCell";
 }
 
 #pragma mark - Life Cycle
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    self.tableView.rowHeight=100;
+}
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.manager fetchReventConversations:^(NSArray *objects, NSError *error) {
@@ -78,20 +84,14 @@ NSString *const kCellID=@"converstaionCell";
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:kCellID];
-    cell.textLabel.text=@"";
-    cell.detailTextLabel.text=@"";
+    MessageCell *cell=[tableView dequeueReusableCellWithIdentifier:kMessageCellID];
+    
     AVIMConversation *conversation= self.recentConversations[indexPath.row];
     if(conversation.transient){//群聊
         
     }else{//单聊
         User *u= [[UserManager sharedUserManager]findUserFromCacheElseNetworkByClientID:[conversation chatToUserId]];
-        
-        if(u){
-            cell.textLabel.text=u.displayName;
-            cell.detailTextLabel.text=@"";
-            cell.imageView.image=[self.imageCache findOrFetchImageFormUrl:u.avatarPath];
-        }
+        [cell configWithUser:u conv:conversation];
     }
     return cell;
 }

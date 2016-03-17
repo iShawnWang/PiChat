@@ -18,13 +18,18 @@
 
 @implementation AddFriendsTableController
 
-
 #pragma mark - Getter Setter
 -(UserManager *)userManager{
     if(!_userManager){
         _userManager=[UserManager sharedUserManager];
     }
     return _userManager;
+}
+
+#pragma mark - LifeCycle
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    self.tableView.rowHeight=100;
 }
 
 #pragma mark - Private
@@ -43,7 +48,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *friendCell=[tableView dequeueReusableCellWithIdentifier:@"addFriendCell"];
     User *u=self.friends[indexPath.row];
-    friendCell.textLabel.text=u.username;
+    friendCell.textLabel.text=u.displayName;
     return friendCell;
 }
 

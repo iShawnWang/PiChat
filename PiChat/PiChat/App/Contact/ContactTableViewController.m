@@ -12,7 +12,12 @@
 #import "NSNotification+UserUpdate.h"
 #import "NSNotification+DownloadImage.h"
 #import "ImageCache.h"
+#import "ContactCell.h"
+#import "ContactHeaderCell.h"
 
+
+NSString *const kContactCellID=@"ContactCell";
+NSString *const kContactHeaderCellID=@"ContactHeaderCell";
 
 @interface ContactTableViewController ()
 @property (strong,nonatomic) NSMutableDictionary *sectionedContacts;
@@ -49,6 +54,11 @@
 
 #pragma mark - Life Cycle
 
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    self.tableView.sectionHeaderHeight=44;
+    self.tableView.rowHeight=100;
+}
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[UserManager sharedUserManager] fetchFriendsWithCallback:^(NSArray *objects, NSError *error) {
@@ -72,11 +82,10 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"contactCell"];
+    ContactCell *cell=[tableView dequeueReusableCellWithIdentifier:kContactCellID];
     NSArray *contacts= self.sectionedContacts.allValues[indexPath.section];
     User *u=contacts[indexPath.row];
-    cell.textLabel.text=u.displayName;
-    cell.imageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath];
+    [cell configWithUser:u];
     return cell;
 }
 
@@ -90,6 +99,12 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     return self.sectionedContacts.allKeys[section];
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    ContactHeaderCell *header= [tableView dequeueReusableCellWithIdentifier:kContactHeaderCellID];
+    header.titleLabel.text=[self tableView:tableView titleForHeaderInSection:section];
+    return header.contentView;
 }
 
 -(NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView{
