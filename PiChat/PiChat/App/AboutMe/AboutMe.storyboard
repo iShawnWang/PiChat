@@ -177,4 +177,5 @@
     <resources>
         <image name="_doggy" width="580" height="605"/>
     </resources>
+    <color key="tintColor" red="0.023529411760000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
 </document>

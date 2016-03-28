@@ -7,6 +7,7 @@
 //
 
 #import <MJRefresh/MJRefresh.h>
+#import <MJRefresh.h>
 
 @interface TextPathRefreshControl : MJRefreshHeader
 

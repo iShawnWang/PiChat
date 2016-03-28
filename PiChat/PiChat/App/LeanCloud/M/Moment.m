@@ -9,5 +9,13 @@
 #import "Moment.h"
 
 @implementation Moment
+@dynamic images,texts,postUser;
 
++(void)load{
+    [Moment registerSubclass];
+}
+
++(NSString *)parseClassName{
+    return @"Moment";
+}
 @end

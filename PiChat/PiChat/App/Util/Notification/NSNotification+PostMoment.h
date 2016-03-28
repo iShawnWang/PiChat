@@ -8,6 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSNotification (PostMoment)
+static NSString *const kPostMomentNotification=@"kDownloadImageCompleteNotification";
 
+typedef NS_ENUM(NSUInteger, PostMomentState) {
+    PostMomentStateComplete,
+    PostMomentStateProgress,
+    PostMomentStateFailed,
+};
+@class Moment;
+
+@interface NSNotification (PostMoment)
+@property (assign,nonatomic,readonly) PostMomentState postState;
+@property (assign,nonatomic,readonly) float postProgress;
+@property (strong,nonatomic,readonly) NSError *error;
+@property (strong,nonatomic,readonly) Moment *moment;
+
++(void)postPostMomentProgressNotification:(id)obj progress:(NSInteger)progress;
+
++(void)postPostMomentCompleteNotification:(id)obj moment:(Moment*)moment;
+
++(void)postPostMomentFailedNotification:(id)obj error:(NSError*)error;
 @end

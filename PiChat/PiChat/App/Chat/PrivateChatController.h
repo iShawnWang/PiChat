@@ -11,6 +11,5 @@
 @class User;
 @interface PrivateChatController : JSQMessagesViewController
 @property (copy,nonatomic) NSString *chatToUserID;
-
 @property (strong,nonatomic) User *currentUser;
 @end

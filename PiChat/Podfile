@@ -10,13 +10,14 @@ pod 'AVOSCloud'
 pod 'AVOSCloudIM'
 pod 'LeanCloudSocial'
 pod 'LeanCloudFeedback'
-pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'
-pod 'MWPhotoBrowser'
+pod 'JSQMessagesViewController'
 pod 'MBProgressHUD'
 pod 'Masonry'
 pod 'GJAlertController'
 pod 'IQKeyboardManager'
 pod 'DateTools'
+pod 'MWPhotoBrowser'
+pod 'MJRefresh'
 end
 
 target 'PiChatTests' do

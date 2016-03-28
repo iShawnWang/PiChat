@@ -7,14 +7,15 @@
 //
 
 #import "MediaViewerController.h"
-#import <MWPhotoBrowser.h>
 #import "LocationViewerController.h"
+#import <MWPhotoBrowser.h>
 
 @implementation MediaViewerController
 
-+(void)showIn:(UIViewController*)controller withImage:(UIImage*)img{
++(void)showIn:(UIViewController*)controller withImage:(UIImage*)img {
     MWPhoto *photo=[MWPhoto photoWithImage:img];
-    MWPhotoBrowser *photoBrowser=[[MWPhotoBrowser alloc]initWithPhotos:@[photo]];
+    MWPhotoBrowser *photoBrowser=[[MWPhotoBrowser alloc]initWithPhotos:@[photo] ];
+    photoBrowser.view.backgroundColor=[UIColor whiteColor];
     if(controller.navigationController){
         [controller.navigationController pushViewController:photoBrowser animated:YES];
     }
@@ -23,7 +24,7 @@
 +(void)showIn:(UIViewController*)controller withVideoUrl:(NSURL*)url{
     MWPhoto *video=[[MWPhoto alloc]initWithVideoURL:url];
     MWPhotoBrowser *photoBrowser=[[MWPhotoBrowser alloc]initWithPhotos:@[video]];
-    photoBrowser.autoPlayOnAppear=YES;
+    photoBrowser.view.backgroundColor=[UIColor whiteColor];
     if(controller.navigationController){
         [controller.navigationController pushViewController:photoBrowser animated:YES];
     }

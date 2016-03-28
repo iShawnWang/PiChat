@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface NewMomentPhotoCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIImageView *deleteImage;
 
 @end

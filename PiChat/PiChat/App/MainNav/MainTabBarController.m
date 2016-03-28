@@ -8,6 +8,7 @@
 
 #import "MainTabBarController.h"
 #import "StoryBoardHelper.h"
+#import "UIColor+Addition.h"
 
 @interface MainTabBarController ()
 
@@ -26,6 +27,7 @@
                            [StoryBoardHelper initialViewControllerFromSBName:kContactSB],
                            [StoryBoardHelper initialViewControllerFromSBName:kMomentsSB],
                            [StoryBoardHelper initialViewControllerFromSBName:kAboutMeSB]];
+    [UITabBar appearance].tintColor=[UIColor colorFromHexString:@"06BEBD"];
 }
 
 @end

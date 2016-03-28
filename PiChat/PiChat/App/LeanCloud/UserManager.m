@@ -31,6 +31,7 @@
     });
     return userManager;
 }
+
 - (instancetype)init
 {
     self = [super init];

@@ -12,6 +12,14 @@
 		0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0B21431C77651700F257E4 /* MediaViewerController.m */; };
 		0E0B214A1C77691200F257E4 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21461C77691200F257E4 /* avatar.png */; };
 		0E0B214B1C77691200F257E4 /* chatToAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21471C77691200F257E4 /* chatToAvatar.png */; };
+		0E0F0B111C9F24150095FFA1 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0F0B101C9F24150095FFA1 /* UIImage+ImageEffects.m */; };
+		0E0F0B141C9F25340095FFA1 /* Moment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0F0B131C9F25340095FFA1 /* Moment.m */; };
+		0E0FBAE81C9FDCBA005852AF /* MomentsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FBAE71C9FDCBA005852AF /* MomentsManager.m */; };
+		0E0FBAEB1C9FE5BB005852AF /* NSNotification+PostMoment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FBAEA1C9FE5BB005852AF /* NSNotification+PostMoment.m */; };
+		0E0FBAEE1C9FEADD005852AF /* MomentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FBAED1C9FEADD005852AF /* MomentCell.m */; };
+		0E0FBAF21CA05051005852AF /* MomentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E0FBAF11CA05051005852AF /* MomentCell.xib */; };
+		0E1975D01CA926D500E8EF01 /* TextPathHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1975CD1CA926D500E8EF01 /* TextPathHelper.m */; };
+		0E1975D11CA926D500E8EF01 /* TextPathRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1975CF1CA926D500E8EF01 /* TextPathRefreshControl.m */; };
 		0E391A261C8EB3F3000066C8 /* BasicPinAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A251C8EB3F3000066C8 /* BasicPinAnnotation.m */; };
 		0E391A2A1C8EBD7D000066C8 /* AudioRecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A291C8EBD7D000066C8 /* AudioRecorderController.m */; };
 		0E391A2D1C8F170F000066C8 /* InputContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E391A2C1C8F170F000066C8 /* InputContentView.m */; };
@@ -20,6 +28,9 @@
 		0E3FC6A21C9A9A9500A95463 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FC6A11C9A9A9500A95463 /* MessageCell.m */; };
 		0E3FC6A61C9A9DE300A95463 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FC6A51C9A9DE300A95463 /* ContactCell.m */; };
 		0E3FC6A91C9AA03600A95463 /* ContactHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FC6A81C9AA03600A95463 /* ContactHeaderCell.m */; };
+		0E46A7811C9B127E00CC50D3 /* NewMomentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E46A7801C9B127E00CC50D3 /* NewMomentViewController.m */; };
+		0E46A7841C9B16CA00CC50D3 /* NewMomentPhotoViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E46A7831C9B16CA00CC50D3 /* NewMomentPhotoViewerController.m */; };
+		0E46A7871C9B180100CC50D3 /* NewMomentPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E46A7861C9B180100CC50D3 /* NewMomentPhotoCell.m */; };
 		0E4F34411C75F79B006A9BAA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34361C75F79B006A9BAA /* AppDelegate.m */; };
 		0E4F34451C75F7C1006A9BAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34441C75F7C1006A9BAA /* main.m */; };
 		0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F344A1C75F82E006A9BAA /* LoginViewController.m */; };
@@ -47,8 +58,10 @@
 		0E7939431C9463B700618BAD /* AVIMConversation+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7939421C9463B700618BAD /* AVIMConversation+Addition.m */; };
 		0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */; };
 		0E8F091E1C7B0B6F0067A7EC /* FileUpLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */; };
+		0EA4EC911C9E988C009A5ECB /* GCPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA4EC901C9E988C009A5ECB /* GCPlaceholderTextView.m */; };
 		0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */; };
 		0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1B31C78B27E0001C1D8 /* ImageCache.m */; };
+		0EC4F7991C9EC818005D86DA /* MomentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F7981C9EC818005D86DA /* MomentHeaderView.m */; };
 		0ECD4C961C9967DF00C08139 /* UIColor+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD4C941C9967DF00C08139 /* UIColor+Addition.m */; };
 		0ED19F021C91DA0F00EF7472 /* JSQAudioMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19EFF1C91DA0F00EF7472 /* JSQAudioMediaItem.m */; };
 		0ED19F031C91DA0F00EF7472 /* UIImage+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F011C91DA0F00EF7472 /* UIImage+JSQMessages.m */; };
@@ -104,6 +117,21 @@
 		0E0B21431C77651700F257E4 /* MediaViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaViewerController.m; sourceTree = "<group>"; };
 		0E0B21461C77691200F257E4 /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
 		0E0B21471C77691200F257E4 /* chatToAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatToAvatar.png; sourceTree = "<group>"; };
+		0E0F0B0F1C9F24150095FFA1 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		0E0F0B101C9F24150095FFA1 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		0E0F0B121C9F25340095FFA1 /* Moment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Moment.h; sourceTree = "<group>"; };
+		0E0F0B131C9F25340095FFA1 /* Moment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Moment.m; sourceTree = "<group>"; };
+		0E0FBAE61C9FDCBA005852AF /* MomentsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentsManager.h; sourceTree = "<group>"; };
+		0E0FBAE71C9FDCBA005852AF /* MomentsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentsManager.m; sourceTree = "<group>"; };
+		0E0FBAE91C9FE5BB005852AF /* NSNotification+PostMoment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+PostMoment.h"; sourceTree = "<group>"; };
+		0E0FBAEA1C9FE5BB005852AF /* NSNotification+PostMoment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+PostMoment.m"; sourceTree = "<group>"; };
+		0E0FBAEC1C9FEADD005852AF /* MomentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentCell.h; sourceTree = "<group>"; };
+		0E0FBAED1C9FEADD005852AF /* MomentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentCell.m; sourceTree = "<group>"; };
+		0E0FBAF11CA05051005852AF /* MomentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MomentCell.xib; sourceTree = "<group>"; };
+		0E1975CC1CA926D500E8EF01 /* TextPathHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextPathHelper.h; sourceTree = "<group>"; };
+		0E1975CD1CA926D500E8EF01 /* TextPathHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextPathHelper.m; sourceTree = "<group>"; };
+		0E1975CE1CA926D500E8EF01 /* TextPathRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextPathRefreshControl.h; sourceTree = "<group>"; };
+		0E1975CF1CA926D500E8EF01 /* TextPathRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextPathRefreshControl.m; sourceTree = "<group>"; };
 		0E391A241C8EB3F3000066C8 /* BasicPinAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicPinAnnotation.h; sourceTree = "<group>"; };
 		0E391A251C8EB3F3000066C8 /* BasicPinAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicPinAnnotation.m; sourceTree = "<group>"; };
 		0E391A281C8EBD7D000066C8 /* AudioRecorderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioRecorderController.h; sourceTree = "<group>"; };
@@ -119,6 +147,12 @@
 		0E3FC6A51C9A9DE300A95463 /* ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactCell.m; sourceTree = "<group>"; };
 		0E3FC6A71C9AA03600A95463 /* ContactHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactHeaderCell.h; sourceTree = "<group>"; };
 		0E3FC6A81C9AA03600A95463 /* ContactHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactHeaderCell.m; sourceTree = "<group>"; };
+		0E46A77F1C9B127E00CC50D3 /* NewMomentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMomentViewController.h; sourceTree = "<group>"; };
+		0E46A7801C9B127E00CC50D3 /* NewMomentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMomentViewController.m; sourceTree = "<group>"; };
+		0E46A7821C9B16CA00CC50D3 /* NewMomentPhotoViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMomentPhotoViewerController.h; sourceTree = "<group>"; };
+		0E46A7831C9B16CA00CC50D3 /* NewMomentPhotoViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMomentPhotoViewerController.m; sourceTree = "<group>"; };
+		0E46A7851C9B180100CC50D3 /* NewMomentPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMomentPhotoCell.h; sourceTree = "<group>"; };
+		0E46A7861C9B180100CC50D3 /* NewMomentPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMomentPhotoCell.m; sourceTree = "<group>"; };
 		0E4F34351C75F79B006A9BAA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0E4F34361C75F79B006A9BAA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0E4F34441C75F7C1006A9BAA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -168,10 +202,14 @@
 		0E8F091A1C7AE9D10067A7EC /* MediaPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPicker.m; sourceTree = "<group>"; };
 		0E8F091C1C7B0B6F0067A7EC /* FileUpLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUpLoader.h; sourceTree = "<group>"; };
 		0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUpLoader.m; sourceTree = "<group>"; };
+		0EA4EC8F1C9E988C009A5ECB /* GCPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlaceholderTextView.h; sourceTree = "<group>"; };
+		0EA4EC901C9E988C009A5ECB /* GCPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlaceholderTextView.m; sourceTree = "<group>"; };
 		0EADC1AE1C789B950001C1D8 /* BubbleImgFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleImgFactory.h; sourceTree = "<group>"; };
 		0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleImgFactory.m; sourceTree = "<group>"; };
 		0EADC1B21C78B27E0001C1D8 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
 		0EADC1B31C78B27E0001C1D8 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
+		0EC4F7971C9EC818005D86DA /* MomentHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentHeaderView.h; sourceTree = "<group>"; };
+		0EC4F7981C9EC818005D86DA /* MomentHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentHeaderView.m; sourceTree = "<group>"; };
 		0ECD4C941C9967DF00C08139 /* UIColor+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Addition.m"; sourceTree = "<group>"; };
 		0ECD4C951C9967DF00C08139 /* UIColor+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Addition.h"; sourceTree = "<group>"; };
 		0ED19EFE1C91DA0F00EF7472 /* JSQAudioMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQAudioMediaItem.h; sourceTree = "<group>"; };
@@ -283,11 +321,23 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		0E1975CB1CA926D500E8EF01 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				0E1975CC1CA926D500E8EF01 /* TextPathHelper.h */,
+				0E1975CD1CA926D500E8EF01 /* TextPathHelper.m */,
+				0E1975CE1CA926D500E8EF01 /* TextPathRefreshControl.h */,
+				0E1975CF1CA926D500E8EF01 /* TextPathRefreshControl.m */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
 		0E4F34331C75F79B006A9BAA /* App */ = {
 			isa = PBXGroup;
 			children = (
 				0E4F34351C75F79B006A9BAA /* AppDelegate.h */,
 				0E4F34361C75F79B006A9BAA /* AppDelegate.m */,
+				0E1975CB1CA926D500E8EF01 /* Custom */,
 				0EADC1B11C78B26F0001C1D8 /* Cache */,
 				0E4F347F1C763700006A9BAA /* MainNav */,
 				0E4F34481C75F81B006A9BAA /* Login */,
@@ -376,6 +426,19 @@
 				0E4F34651C76019C006A9BAA /* Moments.storyboard */,
 				0E4F34701C76027A006A9BAA /* MomentsViewController.h */,
 				0E4F34711C76027A006A9BAA /* MomentsViewController.m */,
+				0E0FBAF11CA05051005852AF /* MomentCell.xib */,
+				0E0FBAEC1C9FEADD005852AF /* MomentCell.h */,
+				0E0FBAED1C9FEADD005852AF /* MomentCell.m */,
+				0E46A77F1C9B127E00CC50D3 /* NewMomentViewController.h */,
+				0E46A7801C9B127E00CC50D3 /* NewMomentViewController.m */,
+				0E46A7821C9B16CA00CC50D3 /* NewMomentPhotoViewerController.h */,
+				0E46A7831C9B16CA00CC50D3 /* NewMomentPhotoViewerController.m */,
+				0E46A7851C9B180100CC50D3 /* NewMomentPhotoCell.h */,
+				0E46A7861C9B180100CC50D3 /* NewMomentPhotoCell.m */,
+				0EC4F7971C9EC818005D86DA /* MomentHeaderView.h */,
+				0EC4F7981C9EC818005D86DA /* MomentHeaderView.m */,
+				0E0FBAE61C9FDCBA005852AF /* MomentsManager.h */,
+				0E0FBAE71C9FDCBA005852AF /* MomentsManager.m */,
 			);
 			path = Moments;
 			sourceTree = "<group>";
@@ -423,6 +486,8 @@
 				0E4F34541C75F9D6006A9BAA /* User.m */,
 				0ED39FF01C8B489B00894D4B /* Followee.h */,
 				0ED39FF11C8B489B00894D4B /* Followee.m */,
+				0E0F0B121C9F25340095FFA1 /* Moment.h */,
+				0E0F0B131C9F25340095FFA1 /* Moment.m */,
 			);
 			path = M;
 			sourceTree = "<group>";
@@ -435,6 +500,15 @@
 				0E4F34811C76371A006A9BAA /* MainTabBarController.m */,
 			);
 			path = MainNav;
+			sourceTree = "<group>";
+		};
+		0EA4EC8E1C9E988C009A5ECB /* GCPlaceholderTextView */ = {
+			isa = PBXGroup;
+			children = (
+				0EA4EC8F1C9E988C009A5ECB /* GCPlaceholderTextView.h */,
+				0EA4EC901C9E988C009A5ECB /* GCPlaceholderTextView.m */,
+			);
+			path = GCPlaceholderTextView;
 			sourceTree = "<group>";
 		};
 		0EADC1B11C78B26F0001C1D8 /* Cache */ = {
@@ -468,6 +542,9 @@
 		0EE2C49E1C907EE800A7DEE0 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				0E0F0B0F1C9F24150095FFA1 /* UIImage+ImageEffects.h */,
+				0E0F0B101C9F24150095FFA1 /* UIImage+ImageEffects.m */,
+				0EA4EC8E1C9E988C009A5ECB /* GCPlaceholderTextView */,
 				0ED19EFD1C91DA0F00EF7472 /* JSQMessage */,
 				0EE2C49F1C907EE800A7DEE0 /* AGEmojiKeyboard */,
 			);
@@ -577,6 +654,8 @@
 				0EF757131C9706C6007AD3A1 /* NSNotification+UploadMedia.m */,
 				0EF757141C9706C6007AD3A1 /* NSNotification+UserUpdate.h */,
 				0EF757151C9706C6007AD3A1 /* NSNotification+UserUpdate.m */,
+				0E0FBAE91C9FE5BB005852AF /* NSNotification+PostMoment.h */,
+				0E0FBAEA1C9FE5BB005852AF /* NSNotification+PostMoment.m */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -716,6 +795,7 @@
 				0EE2C4AD1C908CC600A7DEE0 /* InputAttachmentView.xib in Resources */,
 				0E4F34601C760186006A9BAA /* AboutMe.storyboard in Resources */,
 				0E4F34661C76019C006A9BAA /* Moments.storyboard in Resources */,
+				0E0FBAF21CA05051005852AF /* MomentCell.xib in Resources */,
 				0E4F34641C760195006A9BAA /* Messages.storyboard in Resources */,
 				0EED53001C75CD82000437BD /* Assets.xcassets in Resources */,
 				0E391A321C8F1B83000066C8 /* InputContentView.xib in Resources */,
@@ -793,12 +873,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EE2C4A51C907EE900A7DEE0 /* AGEmojiKeyBoardView.m in Sources */,
+				0E0F0B141C9F25340095FFA1 /* Moment.m in Sources */,
 				0ED19F031C91DA0F00EF7472 /* UIImage+JSQMessages.m in Sources */,
 				0E4F34721C76027A006A9BAA /* MomentsViewController.m in Sources */,
 				0E4F34411C75F79B006A9BAA /* AppDelegate.m in Sources */,
 				0E4F345B1C760096006A9BAA /* UserManager.m in Sources */,
+				0E0FBAEB1C9FE5BB005852AF /* NSNotification+PostMoment.m in Sources */,
 				0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */,
 				0E4F34511C75F86B006A9BAA /* LeanCloudManager.m in Sources */,
+				0E1975D11CA926D500E8EF01 /* TextPathRefreshControl.m in Sources */,
 				0E79393F1C94246E00618BAD /* UIImage+ScaleSize.m in Sources */,
 				0E0B21411C7764D500F257E4 /* PrivateChatController.m in Sources */,
 				0ED39FF21C8B489B00894D4B /* Followee.m in Sources */,
@@ -810,12 +893,15 @@
 				0EF757161C9706C6007AD3A1 /* NSNotification+DownloadImage.m in Sources */,
 				0EF7571B1C9706C6007AD3A1 /* NSNotification+UserUpdate.m in Sources */,
 				0E7939431C9463B700618BAD /* AVIMConversation+Addition.m in Sources */,
+				0E0FBAEE1C9FEADD005852AF /* MomentCell.m in Sources */,
 				0E4F34691C76022E006A9BAA /* MeViewController.m in Sources */,
+				0E46A7871C9B180100CC50D3 /* NewMomentPhotoCell.m in Sources */,
 				0ECD4C961C9967DF00C08139 /* UIColor+Addition.m in Sources */,
 				0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */,
 				0E4F34751C7602D7006A9BAA /* RegexUtil.m in Sources */,
 				0E4F34551C75F9D6006A9BAA /* User.m in Sources */,
 				0ED19F021C91DA0F00EF7472 /* JSQAudioMediaItem.m in Sources */,
+				0EC4F7991C9EC818005D86DA /* MomentHeaderView.m in Sources */,
 				0EF757171C9706C6007AD3A1 /* NSNotification+LocationCellUpdate.m in Sources */,
 				0E4F346F1C760248006A9BAA /* MessagesTableViewController.m in Sources */,
 				0E4F34451C75F7C1006A9BAA /* main.m in Sources */,
@@ -832,17 +918,23 @@
 				0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */,
 				0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */,
 				0E4F344E1C75F836006A9BAA /* RegisterViewController.m in Sources */,
+				0E46A7841C9B16CA00CC50D3 /* NewMomentPhotoViewerController.m in Sources */,
+				0E0FBAE81C9FDCBA005852AF /* MomentsManager.m in Sources */,
 				0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */,
 				0EF669191C8DCCD600B4D2C6 /* LocationViewerController.m in Sources */,
 				0EE2C4AA1C908C9C00A7DEE0 /* InputAttachmentView.m in Sources */,
 				0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */,
 				0E4F34791C76310C006A9BAA /* ConversationManager.m in Sources */,
 				0ED6EE9E1C934E0A00DCC2DD /* JSQMessage+MessageID.m in Sources */,
+				0EA4EC911C9E988C009A5ECB /* GCPlaceholderTextView.m in Sources */,
 				0EE2C4A61C907EE900A7DEE0 /* AGEmojiPageView.m in Sources */,
 				0E79393C1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m in Sources */,
 				0EF757181C9706C6007AD3A1 /* NSNotification+Post.m in Sources */,
 				0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */,
 				0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */,
+				0E0F0B111C9F24150095FFA1 /* UIImage+ImageEffects.m in Sources */,
+				0E46A7811C9B127E00CC50D3 /* NewMomentViewController.m in Sources */,
+				0E1975D01CA926D500E8EF01 /* TextPathHelper.m in Sources */,
 				0E4F345E1C76009D006A9BAA /* ChatManager.m in Sources */,
 				0E391A301C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m in Sources */,
 			);

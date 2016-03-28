@@ -18,6 +18,6 @@ static NSString *const kTypedMessage =@"kTypedMessage";
 }
 
 -(AVIMTypedMessage *)message{
-    return self.userInfo[kTypedMessage];
+    return self.userInfo[kTypedMessage] ;
 }
 @end

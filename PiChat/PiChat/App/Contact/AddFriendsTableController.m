@@ -29,7 +29,7 @@
 #pragma mark - LifeCycle
 -(void)viewDidLoad{
     [super viewDidLoad];
-    self.tableView.rowHeight=100;
+    self.tableView.rowHeight=88;
 }
 
 #pragma mark - Private

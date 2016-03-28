@@ -27,6 +27,8 @@
 #import "NSNotification+DownloadImage.h"
 #import "NSNotification+ReceiveMessage.h"
 #import "NSNotification+LocationCellUpdate.h"
+#import "TextPathRefreshControl.h"
+#import <MJRefresh.h>
 #import <IQKeyboardManager.h>
 
 
@@ -42,7 +44,6 @@
 @property (strong,nonatomic) FileUpLoader *fileUpLoader;
 @property (strong,nonatomic) AudioRecorderController *recorder;
 @property (strong,nonatomic) RecordIndocator *indocator;
-@property (strong,nonatomic) UIRefreshControl *refreshControl;
 @property (strong,nonatomic) UserManager *userManager;
 @end
 
@@ -54,6 +55,7 @@
     if (self) {
         [[IQKeyboardManager sharedManager] disableToolbarInViewControllerClass:[PrivateChatController class]];
         self.hidesBottomBarWhenPushed=YES;
+        
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didReceiveTyperMessage:) name:kDidReceiveTypedMessageNotification object:nil];
         //
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadingMediaNotification:) name:kUploadMediaNotification object:nil];
@@ -126,20 +128,12 @@
     return _indocator;
 }
 
--(UIRefreshControl *)refreshControl{
-    if(!_refreshControl){
-        _refreshControl=[[UIRefreshControl alloc]init];
-        [_refreshControl addTarget:self action:@selector(loadHistoryMsg:) forControlEvents:UIControlEventValueChanged];
-    }
-    return _refreshControl;
-}
-
 #pragma mark - Life Cycle
 -(void)viewDidLoad{
     [super viewDidLoad];
     
     //下拉刷新
-    [self.collectionView addSubview:self.refreshControl];
+    self.collectionView.mj_header=[TextPathRefreshControl headerWithRefreshingTarget:self refreshingAction:@selector(loadHistoryMsg:)];
     //自定义下面的输入 inputToolBar
     InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
     [inputView decorateView];
@@ -164,6 +158,11 @@
     self.senderDisplayName=self.conversationManager.currentUser.displayName;
     //
     self.inputToolbar.contentView.rightBarButtonItem.enabled=NO; //禁用发送按钮
+    //
+    [self.userManager findUserByClientID:self.chatToUserID callback:^(User *user, NSError *error) {
+        self.chatToUser=user;
+        [self.collectionView reloadData];
+    }];
     //开始对话
     [self.conversationManager chatToUser:self.chatToUserID callback:^(AVIMConversation *conversation, NSError *error) {
         self.conversation=conversation;
@@ -176,6 +175,7 @@
                 }];
             });
         }];
+        
     }];
     //
     
@@ -217,6 +217,7 @@
     return kJSQMessagesCollectionViewCellLabelHeightDefault;
 }
 
+// FIXME : Bug 第一次进入 此 PrivateChatController 刷新历史消息, cell 会全部消失...重新push 进这个 VC 就好了 ~
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     //可以 Custome Cell
@@ -300,14 +301,15 @@
     }
 }
 
-#pragma mark - 下载完用户头像,刷新 cell
+#pragma mark - 下载完用户头像,聊天发送的图片,刷新 collectionView
 -(void)downloadImageNotification:(NSNotification *)noti{
-    NSURL *avatarUrl= noti.imageUrl;
-    NSString *avatarPath=avatarUrl.absoluteString;
-    
-    if([avatarPath isEqualToString:self.currentUser.avatarPath] ||[avatarPath isEqualToString:self.chatToUser.avatarPath]){
-        [self.collectionView reloadData];
-    }
+//    NSURL *avatarUrl= noti.imageUrl;
+//    NSString *avatarPath=avatarUrl.absoluteString;
+//    
+//    if([avatarPath isEqualToString:self.currentUser.avatarPath] ||[avatarPath isEqualToString:self.chatToUser.avatarPath]){
+//        [self.collectionView reloadData];
+//    }
+    [self.collectionView reloadData];
 }
 
 #pragma mark - 用户更新完毕,更新这个 Viewcontroller 的 User
@@ -318,6 +320,7 @@
     }else if(self.currentUser.clientID){
         self.senderDisplayName=self.currentUser.displayName;
     }
+    [self.collectionView reloadData];
 }
 
 #pragma mark - 发送消息
@@ -395,6 +398,7 @@
 #pragma mark - 下拉刷新 加载更多数据 
 -(void)loadHistoryMsg:(UIRefreshControl*)refreshControl{
     JSQMessage *msg=[self.msgs firstObject];
+    self.automaticallyScrollsToMostRecentMessage=NO;
     [self.conversationManager fetchMessages:self.conversation beforeTime:msg.timeStamp callback:^(NSArray *objects, NSError *error) {
         //异步解析 typed messages
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -404,8 +408,11 @@
             }];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.refreshControl endRefreshing];
-                [self finishReceivingMessageAnimated:YES];
+                
+                [self.collectionView.mj_header endRefreshing];
+                [self finishReceivingMessage];
+                [self.collectionView reloadData];
+                self.automaticallyScrollsToMostRecentMessage=YES;
             });
         });
     }];

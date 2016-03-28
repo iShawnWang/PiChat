@@ -216,7 +216,7 @@
  */
 -(void)fetchMessages:(AVIMConversation*)conversation beforeTime:(int64_t)beforeTimeStamp callback:(AVIMArrayResultBlock)callback{
     [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
-        [conversation queryMessagesBeforeId:nil timestamp:beforeTimeStamp limit:20 callback:callback];
+        [conversation queryMessagesBeforeId:nil timestamp:beforeTimeStamp limit:16 callback:callback];
     }]];
 }
 
@@ -231,7 +231,7 @@
         AVIMConversationQuery *query= [self.client conversationQuery];
         [query whereKey:kAVIMKeyMember containsString:self.client.clientId];
         [query orderByDescending:@"updatedAt"];
-        query.limit=20;
+//        query.limit=20;
         [query findConversationsWithCallback:^(NSArray *objects, NSError *error) {
             [objects enumerateObjectsUsingBlock:^(AVIMConversation *conv, NSUInteger idx, BOOL * _Nonnull stop) {
                 AVIMTypedMessage *lastMsg= [[conv queryMessagesFromCacheWithLimit:1]firstObject];

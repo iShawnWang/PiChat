@@ -10,6 +10,7 @@
 #import "RegexUtil.h"
 #import "StoryBoardHelper.h"
 #import "MBProgressHUD+Addition.h"
+#import "UIColor+Addition.h"
 
 @interface CommenUtil : NSObject
 +(NSString*) uuid;

@@ -18,20 +18,19 @@
 
 @interface AppDelegate ()
 
-@end
+@end 
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside=YES;
-    [UIView appearance].tintColor=[UIColor colorFromHexString:@"06BEBD"];
     [LeanCloudManager setupApplication:launchOptions];
     [self setupRootController];
     return YES;
 }
 
-#pragma mark - SNS
+#pragma mark - LeanCloud SNS
 
 -(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
     return [AVOSCloudSNS handleOpenURL:url];
@@ -73,7 +72,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
 
 
 #pragma mark - Private

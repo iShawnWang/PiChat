@@ -51,7 +51,7 @@ static NSString *const kUploadingError=@"kUploadingError";
 }
 
 -(UploadedMediaType)mediaType{
-    return (UploadedMediaType)self.userInfo[kUploadedMediaType];
+    return [self.userInfo[kUploadedMediaType] integerValue];
 }
 
 -(NSError *)error{

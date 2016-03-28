@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class User;
 @interface MomentHeaderView : UICollectionReusableView
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
+@property (weak, nonatomic) IBOutlet UILabel *displayNameLabel;
+-(void)configWithUser:(User*)u;
++(NSInteger)calcHeightWithWidth:(NSInteger)width;
 @end

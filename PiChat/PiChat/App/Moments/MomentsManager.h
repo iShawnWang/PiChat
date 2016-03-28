@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GlobalConstant.h"
+#import "NSNotification+PostMoment.h"
 
 @interface MomentsManager : NSObject
-
+-(void)postMomentWithContent:(NSString*)content images:(NSArray*)images;
++(void)getCurrentUserMoments:(ArrayResultBlock)callback;
 @end

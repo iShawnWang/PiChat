@@ -28,6 +28,9 @@ NSString *const kResuseIdFeedback=@"feedback";
 @end
 
 @implementation MeViewController
+
+#pragma mark - Life Cycle
+
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
@@ -35,14 +38,28 @@ NSString *const kResuseIdFeedback=@"feedback";
         self.tabBarItem.title=@"我";
         self.tabBarItem.image=[UIImage imageNamed:@"tabbar_me"];
         self.tabBarItem.selectedImage=[UIImage imageNamed:@"tabbar_meHL"];
+        
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadingMediaNotification:) name:kUploadMediaNotification object:nil];
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadImageNotification:) name:kDownloadImageCompleteNotification object:nil];
     }
     return self;
 }
+
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if(!self.user){
+        self.user=[User currentUser];
+    }
+    self.userNameLabel.text=self.user.displayName;
+    if(self.user.avatarPath){
+        [self.avatarImageView setImage:[self.imageCache findOrFetchImageFormUrl:self.user.avatarPath]];
+    }
 }
 
 #pragma mark - Getter Setter
@@ -59,16 +76,7 @@ NSString *const kResuseIdFeedback=@"feedback";
     return _imageCache;
 }
 
-#pragma mark - Life Cycle
--(void)viewDidLoad{
-    if(!self.user){
-        self.user=[User currentUser];
-    }
-    self.userNameLabel.text=self.user.displayName;
-    if(self.user.avatarPath){
-        [self.avatarImageView setImage:[self.imageCache findOrFetchImageFormUrl:self.user.avatarPath]];
-    }
-}
+#pragma mark -
 
 - (IBAction)changeUserName:(id)sender {
     UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"昵称" message:@"" preferredStyle:UIAlertControllerStyleAlert];

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSNotification+DownloadImage.h"
 @class UIImage;
 
 @interface ImageCache : NSObject

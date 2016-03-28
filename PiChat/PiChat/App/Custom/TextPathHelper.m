@@ -16,7 +16,7 @@
     
     CGMutablePathRef letters = CGPathCreateMutable();
     
-    CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica-Bold"), 100.0f, NULL);
+    CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica-Bold"), 90.0f, NULL);
     NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                            (__bridge id)font, kCTFontAttributeName,
                            nil];

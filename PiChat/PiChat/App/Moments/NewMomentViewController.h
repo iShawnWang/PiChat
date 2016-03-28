@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NewMomentViewController : UITableViewController
+@interface NewMomentViewController : UIViewController
 
 @end

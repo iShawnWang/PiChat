@@ -24,14 +24,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwR-CY-LDa">
-                                            <rect key="frame" x="110" y="8" width="87" height="43"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                            <rect key="frame" x="110" y="8" width="73" height="36"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                             <color key="textColor" red="0.23529411759999999" green="0.26274509800000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDF-Th-tJj">
-                                            <rect key="frame" x="110" y="58" width="68" height="34"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                            <rect key="frame" x="110" y="65" width="54" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <color key="textColor" red="0.41176470590000003" green="0.42745098040000001" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -76,8 +76,8 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gS-TK-AHk">
-                                            <rect key="frame" x="20" y="8" width="59" height="28"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                            <rect key="frame" x="20" y="8" width="54" height="28"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <color key="textColor" red="0.23529411764705882" green="0.2627450980392157" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -169,41 +169,6 @@
             </objects>
             <point key="canvasLocation" x="1744" y="452"/>
         </scene>
-        <!--Audio Recorder Controller-->
-        <scene sceneID="jhz-qJ-2nr">
-            <objects>
-                <viewController storyboardIdentifier="AudioRecorderController" id="Ge6-sv-gls" customClass="AudioRecorderController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="83s-eG-npd"/>
-                        <viewControllerLayoutGuide type="bottom" id="3cC-Za-wEW"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="hRH-8T-XQK">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6On-ea-1AN">
-                                <rect key="frame" x="277" y="285" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="endRecord:" destination="Ge6-sv-gls" eventType="touchUpInside" id="7bd-N7-nxY"/>
-                                    <action selector="startRecord:" destination="Ge6-sv-gls" eventType="touchDown" id="ttx-iv-usQ"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="6On-ea-1AN" firstAttribute="centerY" secondItem="hRH-8T-XQK" secondAttribute="centerY" id="1yU-FN-nuo"/>
-                            <constraint firstItem="6On-ea-1AN" firstAttribute="centerX" secondItem="hRH-8T-XQK" secondAttribute="centerX" id="u6p-2b-aUc"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="btn" destination="6On-ea-1AN" id="ZN3-eb-ldR"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IZl-P8-WV7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1516" y="1141"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="VfE-6m-4k1">
             <objects>
@@ -223,4 +188,5 @@
             <point key="canvasLocation" x="442" y="452"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.023529411760000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
 </document>

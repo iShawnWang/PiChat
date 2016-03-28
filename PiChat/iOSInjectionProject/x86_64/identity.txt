@@ -1,0 +1,2 @@
+/Users/pi/Library/Developer/Xcode/DerivedData/PiChat-ednoryhkedezxpddbzxzkclijnrs/Build/Products/Debug-iphonesimulator/PiChat.app
+

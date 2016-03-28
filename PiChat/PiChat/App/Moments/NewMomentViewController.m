@@ -7,92 +7,87 @@
 //
 
 #import "NewMomentViewController.h"
+#import "NewMomentPhotoViewerController.h"
+#import "CommenUtil.h"
+#import "GCPlaceholderTextView.h"
+#import "Moment.h"
+#import "MBProgressHUD+Addition.h"
+#import "User.h"
+#import "MomentsManager.h"
 
 @interface NewMomentViewController ()
-
+@property (weak, nonatomic) IBOutlet GCPlaceholderTextView *textView;
+@property (weak, nonatomic) NewMomentPhotoViewerController *photoViewerController;
+@property (strong,nonatomic) MomentsManager *momentsManager;
 @end
 
 @implementation NewMomentViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(postMomentNotification:) name:kPostMomentNotification object:nil];
+    }
+    return self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
-#pragma mark - Table view data source
+#pragma mark - Getter Setter
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+-(MomentsManager *)momentsManager{
+    if(!_momentsManager){
+        _momentsManager=[MomentsManager new];
+    }
+    return _momentsManager;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+#pragma mark -
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    self.photoViewerController.currentState=PhotoViewerStateNormal;
+    [self.photoViewerController.collectionView reloadData];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+- (IBAction)cancel:(id)sender {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (IBAction)done:(id)sender {
+    [MBProgressHUD showProgressInView:self.view];
+    [self.momentsManager postMomentWithContent:self.textView.text images:self.photoViewerController.photoUrls];
+    //TODO 文字 图片不为空检查
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:kNewMomentPhotoViewerControllerID]){
+        self.photoViewerController=segue.destinationViewController;
+        self.photoViewerController.photoViewerType=PhotoViewerTypePick;
+        CALayer *layer= self.photoViewerController.view.layer;
+        layer.borderColor=[UIColor colorFromHexString:@"DEDEDE"].CGColor;
+        layer.borderWidth=1;
+    }
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+#pragma mark - Notification
+-(void)postMomentNotification:(NSNotification*)noti{
+    switch (noti.postState) {
+        case PostMomentStateComplete: {
+            [MBProgressHUD hide];
+            [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+            break;
+        }
+        case PostMomentStateProgress: {
+            [MBProgressHUD HUDForView:self.view].progress=noti.postProgress;
+            break;
+        }
+        case PostMomentStateFailed: {
+            [CommenUtil showMessage:[NSString stringWithFormat:@"下载失败 : %@",noti.error] in:self];
+            break;
+        }
+    }
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

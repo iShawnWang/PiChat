@@ -57,8 +57,9 @@ NSString *const kContactHeaderCellID=@"ContactHeaderCell";
 -(void)viewDidLoad{
     [super viewDidLoad];
     self.tableView.sectionHeaderHeight=44;
-    self.tableView.rowHeight=100;
+    self.tableView.rowHeight=88;
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[UserManager sharedUserManager] fetchFriendsWithCallback:^(NSArray *objects, NSError *error) {

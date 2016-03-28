@@ -7,7 +7,16 @@
 //
 
 #import "AVStatus.h"
+#import <AVOSCloud.h>
 
-@interface Moment : AVStatus
+@class User;
 
+static NSString *const kPostUser=@"postUser";
+static NSString *const kPostImages=@"images";
+static NSString *const kPostContent=@"texts";
+
+@interface Moment : AVObject<AVSubclassing>
+@property (strong,nonatomic) User *postUser;
+@property (strong,nonatomic) NSArray *images;
+@property (copy,nonatomic) NSString *texts;
 @end

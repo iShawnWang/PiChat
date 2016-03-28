@@ -9,7 +9,7 @@
 #import "ImageCache.h"
 #import <SDWebImageManager.h>
 #import "GlobalConstant.h"
-#import "NSNotification+DownloadImage.h"
+
 
 @interface ImageCache ()
 @property (strong,nonatomic) SDWebImageManager *manager;
@@ -39,6 +39,9 @@
  *  @return
  */
 -(UIImage*)findOrFetchImageFormUrl:(NSString*)urlStr{
+    if(!urlStr){
+        return nil;
+    }
     __block UIImage *img;
     SDImageCache *cache=self.manager.imageCache;
     img=[cache imageFromDiskCacheForKey:[self.manager cacheKeyForURL:[NSURL URLWithString:urlStr]]];

@@ -9,7 +9,7 @@
 #import "TextPathRefreshControl.h"
 #import "TextPathHelper.h"
 
-NSInteger const kPadding=6;
+NSInteger const kPadding=8;
 
 @interface TextPathRefreshControl ()
 @property (strong,nonatomic) CAShapeLayer *textPathLayer;
@@ -31,6 +31,7 @@ NSInteger const kPadding=6;
     self.textPathAnim.fromValue=@(0.0);
     self.textPathAnim.toValue=@(1.0);
     self.textPathAnim.duration=1.0;//Convenience
+    self.textPathAnim.removedOnCompletion=NO;
     
     self.textPathLayer.speed=0.0;//pause layer
     [self.textPathLayer addAnimation:self.textPathAnim forKey:@"PiChat"];

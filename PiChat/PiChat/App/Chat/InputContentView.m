@@ -11,7 +11,6 @@
 #import "AGEmojiKeyBoardView.h"
 #import "CommenUtil.h"
 
-
 @interface InputContentView ()<AGEmojiKeyboardViewDelegate,AGEmojiKeyboardViewDataSource>
 @property (strong,nonatomic) UIButton *audioTextSwitchBtn;
 @property (assign,nonatomic) BOOL isTextInput;

@@ -17,6 +17,7 @@
 #import "NSNotification+UserUpdate.h"
 #import "NSNotification+DownloadImage.h"
 #import "MessageCell.h"
+#import "TextPathRefreshControl.h"
 
 NSString *const kMessageCellID=@"MessageCell";
 
@@ -66,11 +67,20 @@ NSString *const kMessageCellID=@"MessageCell";
 #pragma mark - Life Cycle
 -(void)viewDidLoad{
     [super viewDidLoad];
-    self.tableView.rowHeight=100;
+    self.tableView.rowHeight=88;
+    self.tableView.mj_header=[TextPathRefreshControl headerWithRefreshingBlock:^{
+        [self.manager fetchReventConversations:^(NSArray *objects, NSError *error) {
+            [self.recentConversations removeAllObjects];
+            [self.recentConversations addObjectsFromArray:objects];
+            [self.tableView reloadData];
+            [self.tableView.mj_header endRefreshing];
+        }];
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
     [self.manager fetchReventConversations:^(NSArray *objects, NSError *error) {
         [self.recentConversations removeAllObjects];
         [self.recentConversations addObjectsFromArray:objects];
@@ -109,7 +119,7 @@ NSString *const kMessageCellID=@"MessageCell";
 
 #pragma mark - 用户更新,刷新 tableview
 -(void)userUpdateNotification:(NSNotification*)noti{
-    [self.tableView reloadData]; //TODO reloadData 还是 for 循环查找该 reload 的 indexpath ?    哪个快?
+    [self.tableView reloadData]; 
 }
 
 #pragma mark - 下载完用户头像,刷新 tableview
