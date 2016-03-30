@@ -97,7 +97,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     [self.protypeCell configWithMoment:m];
     [self.protypeCell layoutIfNeeded];
     
-    //FIXME
+    //FIXME 动态计算行高
     CGSize cellSize= [self.protypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     
     CGSize photoViewerSize= self.protypeCell.photoViewerController.collectionView.collectionViewLayout.collectionViewContentSize;

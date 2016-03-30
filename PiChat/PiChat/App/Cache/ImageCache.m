@@ -13,6 +13,7 @@
 
 @interface ImageCache ()
 @property (strong,nonatomic) SDWebImageManager *manager;
+@property (strong,nonatomic) NSMutableSet *downloadingImageUrlStrs;
 @end
 @implementation ImageCache
 +(instancetype)sharedImageCache{
@@ -31,6 +32,13 @@
     return _manager;
 }
 
+-(NSMutableSet *)downloadingImageUrlStrs{
+    if(!_downloadingImageUrlStrs){
+        _downloadingImageUrlStrs=[NSMutableSet set];
+    }
+    return _downloadingImageUrlStrs;
+}
+
 /**
  *  不会阻塞,先查询硬盘内存缓存,如果存在图片直接返回,否则开始下载,返回 [UIImage new];
  *
@@ -39,24 +47,37 @@
  *  @return
  */
 -(UIImage*)findOrFetchImageFormUrl:(NSString*)urlStr{
+    __block UIImage *img=[UIImage new];
     if(!urlStr){
-        return nil;
+        return img;
     }
-    __block UIImage *img;
+    
+    NSURL *theImgUrl=[NSURL URLWithString:urlStr];
+    
+    //先从内存缓存,然后硬盘缓存中取图片
     SDImageCache *cache=self.manager.imageCache;
-    img=[cache imageFromDiskCacheForKey:[self.manager cacheKeyForURL:[NSURL URLWithString:urlStr]]];
+    img=[cache imageFromDiskCacheForKey:[self.manager cacheKeyForURL:theImgUrl]];
     if(img){ //缓存中有图片就返回
         return img;
     }
+    
+    //防止重复下载,先看看是否已经正在下载这个图片了
+    if([self.downloadingImageUrlStrs containsObject:urlStr]){
+        return img;
+    }
+    
+    [self.downloadingImageUrlStrs addObject:urlStr];
+    
     //否则开始异步下载图片,马上返回一个空白图片 - [UIImage new]
-    [self.manager downloadImageWithURL:[NSURL URLWithString:urlStr] options:SDWebImageContinueInBackground progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [self.manager downloadImageWithURL:theImgUrl options:SDWebImageContinueInBackground progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-        if(image && imageURL){
-            [NSNotification postDownloadImageNotification:self image:image url:imageURL];
+        [self.downloadingImageUrlStrs removeObject:urlStr];
+        if(!error && finished && image && imageURL){
+            [NSNotification postDownloadImageNotification:self image:image url:theImgUrl];
         }
     }];
-    return [UIImage new];
+    return img;
 }
 
 @end

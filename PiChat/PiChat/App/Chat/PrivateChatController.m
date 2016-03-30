@@ -60,11 +60,11 @@
         //
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadingMediaNotification:) name:kUploadMediaNotification object:nil];
         //
-        [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(updateLocationCellNotification:) name:kLocationCellNeedUpdateNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocationCellNotification:) name:kLocationCellNeedUpdateNotification object:nil];
         
-        [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(downloadImageNotification:) name:kDownloadImageCompleteNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadImageNotification:) name:kDownloadImageCompleteNotification object:nil];
         
-        [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
     }
     return self;
 }
@@ -171,13 +171,17 @@
             //异步解析 typed messages
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    [self addTypedMessage:obj];
+                    [self addTypedMessage:obj toArrayHead:NO reloadData:NO];
                 }];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+                    [self finishReceivingMessage];
+                });
+                
             });
         }];
         
     }];
-    //
     
 }
 
@@ -217,7 +221,6 @@
     return kJSQMessagesCollectionViewCellLabelHeightDefault;
 }
 
-// FIXME : Bug 第一次进入 此 PrivateChatController 刷新历史消息, cell 会全部消失...重新push 进这个 VC 就好了 ~
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     //可以 Custome Cell
@@ -303,13 +306,12 @@
 
 #pragma mark - 下载完用户头像,聊天发送的图片,刷新 collectionView
 -(void)downloadImageNotification:(NSNotification *)noti{
-//    NSURL *avatarUrl= noti.imageUrl;
-//    NSString *avatarPath=avatarUrl.absoluteString;
-//    
-//    if([avatarPath isEqualToString:self.currentUser.avatarPath] ||[avatarPath isEqualToString:self.chatToUser.avatarPath]){
-//        [self.collectionView reloadData];
-//    }
-    [self.collectionView reloadData];
+    NSURL *avatarUrl= noti.imageUrl;
+    NSString *avatarPath=avatarUrl.absoluteString;
+    NSLog(@"%@",avatarUrl);
+    if([avatarPath isEqualToString:self.currentUser.avatarPath] ||[avatarPath isEqualToString:self.chatToUser.avatarPath]){
+        [self.collectionView reloadData];
+    }
 }
 
 #pragma mark - 用户更新完毕,更新这个 Viewcontroller 的 User
@@ -317,10 +319,11 @@
     User *u= noti.user;
     if([u.clientID isEqualToString:self.chatToUserID]){
         self.chatToUser=u;
+        [self.collectionView reloadData];
     }else if(self.currentUser.clientID){
         self.senderDisplayName=self.currentUser.displayName;
+        [self.collectionView reloadData];
     }
-    [self.collectionView reloadData];
 }
 
 #pragma mark - 发送消息

@@ -58,6 +58,12 @@
 
 - (IBAction)done:(id)sender {
     [MBProgressHUD showProgressInView:self.view];
+    NSString *textContent= [self.textView.text trim];
+    NSArray *imgUrls= self.photoViewerController.photoUrls;
+    if(!textContent || textContent.length == 0){
+        [MBProgressHUD showMsg:@"请输入你的现在的想法 ~" forSeconds:1.5];
+        return;
+    }
     [self.momentsManager postMomentWithContent:self.textView.text images:self.photoViewerController.photoUrls];
     //TODO 文字 图片不为空检查
 }

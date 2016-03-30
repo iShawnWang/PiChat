@@ -36,11 +36,14 @@
 #pragma mark -
 
 -(void)postMomentWithContent:(NSString*)content images:(NSArray*)images{
+    NSAssert(content!=nil, @"发送朋友圈内容不能为空");
+    NSAssert(content.length>0, @"发送朋友圈内容不能为空");
+    
     [self.momentImageFile removeAllObjects];
     [self.uploadImageFileQueue cancelAllOperations];
     
     //纯文字朋友圈
-    if(!images){
+    if(!images || images.count == 0){
         Moment *m= [self newMoment:content images:nil];
         [m saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if(error){
