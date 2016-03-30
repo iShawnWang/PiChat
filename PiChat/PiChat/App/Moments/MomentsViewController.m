@@ -15,6 +15,7 @@
 #import "MomentsManager.h"
 #import "NSNotification+UserUpdate.h"
 #import "NewMomentPhotoViewerController.h"
+@import UIKit;
 
 NSString *const kMomentCell=@"MomentCell";
 NSString *const kMomentHeaderView=@"MomentHeaderView";
@@ -22,7 +23,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 @interface MomentsViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic) NSMutableArray *moments;
-@property (strong,nonatomic) MomentCell *protypeCell; //计算高度
+@property (strong, nonatomic) IBOutlet MomentCell *momentProtypeCell;
 @end
 
 @implementation MomentsViewController
@@ -69,15 +70,6 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     return _moments;
 }
 
--(MomentCell *)protypeCell{
-    if(!_protypeCell){
-        _protypeCell=[[[NSBundle mainBundle]loadNibNamed:@"MomentCell" owner:nil options:nil] firstObject];
-    }
-    _protypeCell.frame=CGRectMake(0, 0,self.collectionView.bounds.size.width, 0);
-    
-    return _protypeCell;
-}
-
 #pragma mark - Life Cycle
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -90,20 +82,23 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 
-//TODO 解决不了...
-//动态计算行高...蛋疼死了 ~
+
+//动态计算行高...蛋疼死了 ~终于解决了
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     Moment *m=self.moments[indexPath.row];
-    [self.protypeCell configWithMoment:m];
-    [self.protypeCell layoutIfNeeded];
-    
-    //FIXME 动态计算行高
-    CGSize cellSize= [self.protypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    
-    CGSize photoViewerSize= self.protypeCell.photoViewerController.collectionView.collectionViewLayout.collectionViewContentSize;
-    
+    [self.momentProtypeCell configWithMoment:m];
+
+    [self.momentProtypeCell layoutIfNeeded];
+
+    self.momentProtypeCell.contentLabel.preferredMaxLayoutWidth=self.collectionView.bounds.size.width - self.momentProtypeCell.avatarImageView.frame.size.width-8-8;
+
+    CGSize cellSize= [self.momentProtypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+
+    CGSize photoViewerSize= self.momentProtypeCell.photoViewerController.collectionView.collectionViewLayout.collectionViewContentSize;
+
     return CGSizeMake(self.collectionView.bounds.size.width, cellSize.height+photoViewerSize.height);
 }
+
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     return CGSizeMake(self.collectionView.bounds.size.width, [MomentHeaderView calcHeightWithWidth:self.view.bounds.size.width]);

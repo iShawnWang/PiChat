@@ -23,6 +23,11 @@
 @end
 
 @implementation MomentCell
+
+-(void)awakeFromNib{
+    self.contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.contentLabel.numberOfLines = 0;
+}
 -(void)configWithMoment:(Moment*)moment {
     
     User *u=[[UserManager sharedUserManager]findUserFromCacheElseNetworkByClientID:moment.postUser.clientID];
