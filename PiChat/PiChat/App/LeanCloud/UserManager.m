@@ -62,7 +62,7 @@
     User *u= [User user];
     u.username=email;
     u.password=pwd;
-    u.avatarPath=@"http://7xqpoa.com1.z0.glb.clouddn.com/_doggy.jpg";
+    u.avatarPath=@"http://7xqpoa.com1.z0.glb.clouddn.com/_doggy.jpg"; //FIXME 默认头像测试
     u.fetchWhenSave=YES;
     
     [u signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -75,7 +75,7 @@
 -(void)logInWithUserName:(NSString*)email pwd:(NSString*)pwd callback:(BooleanResultBlock)callback{
     [User logInWithUsernameInBackground:email password:pwd block:^(AVUser *user, NSError *error) {
         [self.userCache setObject:user forKey:user.objectId];
-        callback([User currentUser],error); //currentUser 不为空 ,登录成功 Yes
+        callback([User currentUser] !=nil,error); //currentUser 不为空 ,登录成功 Yes
     }];
 }
 
@@ -88,9 +88,9 @@
 - (void)findUsersByPartname:(NSString *)partName withBlock:(AVArrayResultBlock)block {
     AVQuery *q = [User query];
     [q setCachePolicy:kAVCachePolicyNetworkOnly];
-    [q whereKey:@"username" containsString:partName];
-    [q whereKey:@"objectId" notEqualTo:[User currentUser].objectId];
-    [q orderByDescending:@"updatedAt"];
+    [q whereKey:kUsernameKey containsString:partName];
+    [q whereKey:kObjectIdKey notEqualTo:[User currentUser].objectId];
+    [q orderByDescending:kUpdatedAt];
     [q findObjectsInBackgroundWithBlock:block];
 }
 
@@ -123,7 +123,7 @@
     }else{
         AVQuery *q=[User query];
         q.cachePolicy=kAVCachePolicyCacheOnly;
-        [q whereKey:@"objectId" equalTo:clientID];
+        [q whereKey:kObjectIdKey equalTo:clientID];
         NSError *error;
         u=[[q findObjects:&error]firstObject];
         [self.userCache setObject:u forKey:u.objectId];
@@ -150,7 +150,7 @@
  */
 -(void)findUserFromNetworkByClientID:(NSString *)clientID callback:(UserResultBlock)callback{
     AVQuery *q=[User query];
-    [q whereKey:@"objectId" equalTo:clientID];
+    [q whereKey:kObjectIdKey equalTo:clientID];
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         User *u=[objects firstObject];
         [self.userCache setObject:u forKey:u.objectId];
@@ -179,16 +179,19 @@
 }
 
 #pragma mark - Avatar
+-(JSQMessagesAvatarImage *)avatarForClientID:(NSString *)clientID {
+    return [self avatarForClientID:clientID size:CGSizeZero];
+}
 
--(JSQMessagesAvatarImage *)avatarForClientID:(NSString *)clientID{
+-(JSQMessagesAvatarImage *)avatarForClientID:(NSString *)clientID size:(CGSize)size{
     UIImage *avatar;
     User *u= [self findUserFromCacheByClientID:clientID];
     if(u.avatarPath){
-        avatar=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath];
+        avatar=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
     }else{
         avatar=[UIImage new];
         [self findUserByClientID:clientID callback:^(User *user, NSError *error) {
-            [[ImageCache sharedImageCache]findOrFetchImageFormUrl:user.avatarPath];
+            [[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
         }];
     }
     

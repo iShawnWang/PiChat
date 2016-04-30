@@ -57,15 +57,14 @@
 }
 
 - (IBAction)done:(id)sender {
-    [MBProgressHUD showProgressInView:self.view];
     NSString *textContent= [self.textView.text trim];
-    NSArray *imgUrls= self.photoViewerController.photoUrls;
     if(!textContent || textContent.length == 0){
         [MBProgressHUD showMsg:@"请输入你的现在的想法 ~" forSeconds:1.5];
         return;
     }
-    [self.momentsManager postMomentWithContent:self.textView.text images:self.photoViewerController.photoUrls];
-    //TODO 文字 图片不为空检查
+    [MBProgressHUD showProgressInView:self.view];
+    NSArray *imgUrls= self.photoViewerController.photoUrls;
+    [self.momentsManager postMomentWithContent:self.textView.text images:imgUrls];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -91,7 +90,8 @@
             break;
         }
         case PostMomentStateFailed: {
-            [CommenUtil showMessage:[NSString stringWithFormat:@"下载失败 : %@",noti.error] in:self];
+            [MBProgressHUD hide];
+            [CommenUtil showMessage:[NSString stringWithFormat:@"下载失败 : %@",noti.error] inVC:self];
             break;
         }
     }

@@ -39,14 +39,13 @@
     return [self saveFileToDocument:file fileName:[file lastPathComponent]];
 }
 
-//
 +(NSString*)saveDataToCache:(NSData *)data fileName:(NSString*)fileName{
-    NSString *cachePath= [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)firstObject];
+    NSString *cachePath= [CommenUtil cacheDirectoryStr];
     return [self saveData:data toDirectory:cachePath fileName:fileName];
 }
 
 +(NSString*)saveDataToDocument:(NSData *)data fileName:(NSString*)fileName{
-    NSString *documentPath= [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject];
+    NSString *documentPath= [CommenUtil documentDirectoryStr];
     return [self saveData:data toDirectory:documentPath fileName:fileName];
 }
 
@@ -63,6 +62,17 @@
     UIImage *img= UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return img;
+}
+
++(NSString*)documentDirectoryStr{
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject];
+}
++(NSString*)cacheDirectoryStr{
+    return  NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+}
+
++(NSString*)randomFileName{
+    return [[NSProcessInfo processInfo] globallyUniqueString];
 }
 
 #pragma mark - 视频缩略图
@@ -92,7 +102,7 @@
     [vc presentViewController:alert animated:YES completion:nil];
 }
 
-+(void)showMessage :(NSString*)message in:(UIViewController*)vc{
++(void)showMessage :(NSString*)message inVC:(UIViewController*)vc{
     UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"出错了 ~" message:message preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"知道了 ~" style:UIAlertActionStyleCancel handler:nil]];
     [vc presentViewController:alert animated:YES completion:nil];
@@ -107,5 +117,13 @@
 
 -(NSString*)removeLineBreak{
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+}
+
+-(NSString *)removeFilePrefix{
+    if([self hasPrefix:@"file://"]){
+        NSRange rangeToRemove= [self rangeOfString:@"file://"];
+        return [self stringByReplacingCharactersInRange:rangeToRemove withString:@""];
+    }
+    return self;
 }
 @end

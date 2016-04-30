@@ -10,4 +10,6 @@
 
 @interface UIImage (ScaleSize)
 -(UIImage*)scaledImageToSize:(CGSize)size;
+- (UIImage*)scaledAspectFitImageToSize:(CGSize)targetSize;
+-(UIImage*)scaledAspectFillImageToSize:(CGSize)targetSize;
 @end

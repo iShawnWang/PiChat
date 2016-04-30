@@ -15,15 +15,21 @@
 #import "MomentsManager.h"
 #import "NSNotification+UserUpdate.h"
 #import "NewMomentPhotoViewerController.h"
+#import "ReplyInputView.h"
+#import <Masonry.h>
+#import "CommenUtil.h"
+#import "ModelSizeCache.h"
 @import UIKit;
 
 NSString *const kMomentCell=@"MomentCell";
 NSString *const kMomentHeaderView=@"MomentHeaderView";
 
-@interface MomentsViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+@interface MomentsViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,MomentCellDelegate,CommentsTableControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic) NSMutableArray *moments;
-@property (strong, nonatomic) IBOutlet MomentCell *momentProtypeCell;
+@property (strong, nonatomic) MomentCell *momentProtypeCell;
+@property (strong,nonatomic) ReplyInputView *replyInputView;
+@property (strong,nonatomic) ModelSizeCache *modelSizeCache;
 @end
 
 @implementation MomentsViewController
@@ -44,6 +50,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 }
 
 -(void)dealloc{
+    [self.replyInputView unobserveKeyboardDisplay];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
@@ -54,6 +61,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 -(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
@@ -63,11 +71,33 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 #pragma mark - Getter Setter
 
+-(MomentCell *)momentProtypeCell{
+    if(!_momentProtypeCell){
+        _momentProtypeCell=[[[NSBundle mainBundle]loadNibNamed:@"MomentCell" owner:nil options:nil]firstObject];
+    }
+    return _momentProtypeCell;
+}
+
 -(NSMutableArray *)moments{
     if(!_moments){
         _moments=[NSMutableArray array];
     }
     return _moments;
+}
+
+-(ReplyInputView *)replyInputView{
+    if(!_replyInputView){
+        _replyInputView=[ReplyInputView loadViewFromXib];
+        [_replyInputView observeKeyboardDisplay];
+    }
+    return _replyInputView;
+}
+
+-(ModelSizeCache *)modelSizeCache{
+    if(!_modelSizeCache){
+        _modelSizeCache=[ModelSizeCache new];
+    }
+    return _modelSizeCache;
 }
 
 #pragma mark - Life Cycle
@@ -82,28 +112,25 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 
-
-//动态计算行高...蛋疼死了 ~终于解决了
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     Moment *m=self.moments[indexPath.row];
-    [self.momentProtypeCell configWithMoment:m];
-
-    [self.momentProtypeCell layoutIfNeeded];
-
-    self.momentProtypeCell.contentLabel.preferredMaxLayoutWidth=self.collectionView.bounds.size.width - self.momentProtypeCell.avatarImageView.frame.size.width-8-8;
-
-    CGSize cellSize= [self.momentProtypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-
-    CGSize photoViewerSize= self.momentProtypeCell.photoViewerController.collectionView.collectionViewLayout.collectionViewContentSize;
-
-    return CGSizeMake(self.collectionView.bounds.size.width, cellSize.height+photoViewerSize.height);
+    
+    __weak typeof(self) weakSelf=self;
+    CGSize cellSize= [self.modelSizeCache getSizeForModel:m withView:collectionView orCalc:^CGSize(NSObject *model, UIView *collectionOrTableView) {
+        return [weakSelf.momentProtypeCell calcSizeWithMoment:(Moment*)model collectionView:(UICollectionView*)collectionOrTableView];
+    }];
+    
+    return cellSize;
 }
-
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     return CGSizeMake(self.collectionView.bounds.size.width, [MomentHeaderView calcHeightWithWidth:self.view.bounds.size.width]);
-    
-    //TODO cellHeight systemFit
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(MomentCell *cell, NSUInteger idx, BOOL * _Nonnull stop) {
+        [cell forceDismissCommentMeun];
+    }];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -114,7 +141,9 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     MomentCell *cell= [collectionView dequeueReusableCellWithReuseIdentifier:kMomentCell forIndexPath:indexPath];
     Moment *m=self.moments[indexPath.row];
-    [cell configWithMoment:m];
+    [cell configWithMoment:m collectionView:collectionView];
+    cell.delegate=self;
+    cell.commentsController.delegate=self;
     return cell;
 }
 
@@ -131,5 +160,82 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 -(void)userUpdateNotification:(NSNotification*)noti{
     [self.collectionView reloadData];
+}
+
+#pragma mark - MomentCellDelegate //每个朋友圈的右下角菜单
+-(void)momentCellDidLikeBtnClick:(MomentCell *)cell{
+    NSIndexPath *indexPath= [self.collectionView indexPathForCell:cell];
+    Moment *moment= self.moments[indexPath.item];
+    
+    [cell forceDismissCommentMeun];
+    
+    [moment addOrRemoveFavourUser:[User currentUser]];
+    
+    [moment saveInBackgroundThenFetch:^(Moment *moment, NSError *error) {
+        if(error){
+            return ;
+        }
+        self.moments[indexPath.item]=moment;
+        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+    }];
+}
+
+-(void)momentCellDidCommentBtnClick:(MomentCell *)cell{
+    [cell forceDismissCommentMeun];
+    
+    NSIndexPath *indexPath= [self.collectionView indexPathForCell:cell];
+    Moment *m= self.moments[indexPath.item];
+    
+    __weak typeof(self) weakSelf=self;
+    self.replyInputView.replyCommentCallback=^(NSString *reply,NSError *error){
+        weakSelf.replyInputView.textField.text=@"";
+        [weakSelf.replyInputView.textField resignFirstResponder];
+        [weakSelf postNewCommentForMoment:m commentContent:reply replyTo:nil andReloadCellAtIndexPath:indexPath];
+    };
+    
+    [self.replyInputView showInViewAtBottom:self.view];
+}
+
+-(void)momentEditMenuWillShowForCell:(MomentCell *)cell likeBtn:(UIButton *)likeBtn commentBtn:(UIButton *)commentBtn{
+    NSIndexPath *indexPath= [self.collectionView indexPathForCell:cell];
+    Moment *m= self.moments[indexPath.item];
+    BOOL isFavoured= [m.favourUsers containsObject:[User currentUser]];//当前用户已经赞过
+    NSString *likeBtnTitle=isFavoured ? @"取消" : @"赞";
+    [likeBtn setTitle:likeBtnTitle forState:UIControlStateNormal];
+}
+
+#pragma mark - CommentsTableControllerDelegate //点击下面的评论列表,回复某人的评论
+
+-(void)commentsTableController:(CommentsTableController *)controller didCommentClick:(Comment *)comment withCell:(UICollectionViewCell *)cell moment:(Moment *)moment{
+    __weak typeof(self) weakSelf=self;
+    NSIndexPath *indexPath= [self.collectionView indexPathForCell:cell];
+    self.replyInputView.replyCommentCallback=^(NSString *reply,NSError *error){
+        weakSelf.replyInputView.textField.text=@"";
+        [weakSelf.replyInputView.textField resignFirstResponder];
+        [weakSelf postNewCommentForMoment:moment commentContent:reply replyTo:comment.commentUser andReloadCellAtIndexPath:indexPath];
+    };
+    
+    self.replyInputView.textField.placeholder=[NSString stringWithFormat:@"回复 %@ :",comment.commentUserName];
+    [self.replyInputView showInViewAtBottom:self.view];
+}
+
+
+#pragma mark - Private
+
+/**
+ *  为某个朋友圈发送新评论
+ */
+-(void)postNewCommentForMoment:(Moment*)m commentContent:(NSString*)reply replyTo:(User*)replyTo andReloadCellAtIndexPath:(NSIndexPath*)indexPath{
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        Comment *newComment= [Comment commentWithCommentUser:[User currentUser] commentContent:reply replayTo:replyTo];
+        [newComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [m addNewComment:newComment];
+            [m saveInBackgroundThenFetch:^(Moment *moment, NSError *error) {
+                self.moments[indexPath.item]=moment;
+                [self.collectionView performSelectorOnMainThread:@selector(reloadItemsAtIndexPaths:) withObject:@[indexPath] waitUntilDone:NO];
+            }];
+        }];
+    });
 }
 @end

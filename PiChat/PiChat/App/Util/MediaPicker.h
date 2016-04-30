@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "GlobalConstant.h"
-@class UIViewController;
+#import <QBImagePickerController.h>
 
-@interface MediaPicker : NSObject
--(void)showImagePickerIn:(UIViewController *)vc withCallback:(UrlResultBlock)callback;
+@interface MediaPicker : QBImagePickerController
+-(void)showImagePickerIn:(UIViewController*)vc multipleSelectionCount:(NSInteger)count callback:(ArrayResultBlock)callback;
 
--(void)showVideoPickerIn:(UIViewController *)vc withCallback:(UrlResultBlock)callback;
+-(void)showImagePickerIn:(UIViewController *)vc multipleSelectionCount:(NSInteger)count imgUrlsCallback:(ArrayResultBlock)callback;
 
--(void)showTakePhotoPickerIn:(UIViewController *)vc withCallback:(UrlResultBlock)callback;
+-(void)showVideoPickerIn:(UIViewController*)vc callback:(UrlResultBlock)callback;
 @end

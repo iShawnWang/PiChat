@@ -7,15 +7,30 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommentsTableController.h"
 @class Moment;
 @class NewMomentPhotoViewerController;
+@class MomentCell;
+
+@protocol MomentCellDelegate <NSObject>
+-(void)momentEditMenuWillShowForCell:(MomentCell*)cell likeBtn:(UIButton*)likeBtn commentBtn:(UIButton*)commentBtn;
+-(void)momentCellDidLikeBtnClick:(MomentCell*)cell;
+-(void)momentCellDidCommentBtnClick:(MomentCell*)cell;
+
+@end
+
 @interface MomentCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *displayNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastModifyTimeLabel;
+@property (strong,nonatomic) CommentsTableController *commentsController;
+@property(nonatomic,weak) IBOutlet id<MomentCellDelegate> delegate;
 //
 @property (strong,nonatomic) NewMomentPhotoViewerController *photoViewerController;
--(void)configWithMoment:(Moment*)moment;
+-(void)configWithMoment:(Moment*)moment collectionView:(UICollectionView*)collectionView;
+-(CGSize)calcSizeWithMoment:(Moment*)moment collectionView:(UICollectionView*)collectionView;
+//
+-(void)forceDismissCommentMeun;
 @end

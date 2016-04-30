@@ -18,6 +18,6 @@
 -(void)configWithUser:(User*)u{
     self.nameLabel.text=u.displayName;
     self.detailLabel.text=@"";
-    self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath];
+    self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
 }
 @end

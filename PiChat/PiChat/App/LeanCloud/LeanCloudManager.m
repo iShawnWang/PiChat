@@ -11,6 +11,8 @@
 #import <AVOSCloudIM.h>
 #import <LeanCloudFeedback.h>
 #import <IQKeyboardManager.h>
+#import "Moment.h"
+#import "Comment.h"
 
 //leancloud 官方提供的 测试账号
 #define kApplicationId @"g7gz9oazvrubrauf5xjmzp3dl12edorywm0hy8fvlt6mjb1y"
@@ -22,18 +24,26 @@
 
 @implementation LeanCloudManager
 +(void)setupApplication:(NSDictionary*)launchOptions{
-    //    [AVOSCloud setApplicationId:kApplicationId clientKey:kClientKey];
-    [AVOSCloud setApplicationId:kMyApplicationId clientKey:kMyClientKey];
+    [Moment registerSubclass];
+    [Comment registerSubclass];
+#if DEBUG
     [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    [AVOSCloud setAllLogsEnabled:YES];
+#endif
+    [AVOSCloud setApplicationId:kMyApplicationId clientKey:kMyClientKey];
 }
 
 +(void)showFeedBackIn:(UIViewController*)vc{
     LCUserFeedbackViewController *feedBackVC=[LCUserFeedbackViewController new];
-    [[IQKeyboardManager sharedManager]disableToolbarInViewControllerClass:[LCUserFeedbackViewController class]];
-    [IQKeyboardManager sharedManager].keyboardDistanceFromTextField=0;
+    [[IQKeyboardManager sharedManager].disabledToolbarClasses addObject:[LCUserFeedbackViewController class]];
+    [[IQKeyboardManager sharedManager].disabledDistanceHandlingClasses addObject:[LCUserFeedbackViewController class]];
     feedBackVC.contactHeaderHidden=YES;
     feedBackVC.navigationBarStyle=LCUserFeedbackNavigationBarStyleNone;
     UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:feedBackVC];
-    [vc presentViewController:nav animated:YES completion:nil];
+    [vc presentViewController:nav animated:YES completion:^{
+        //自动弹出键盘
+        UITextField *inputTextField= [feedBackVC valueForKey:@"inputTextField"];
+        [inputTextField becomeFirstResponder];
+    }];
 }
 @end

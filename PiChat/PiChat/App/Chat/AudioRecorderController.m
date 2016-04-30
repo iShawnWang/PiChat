@@ -26,7 +26,7 @@
         [dic setObject:@(1) forKey:AVNumberOfChannelsKey];              //设置通道，这里采用单声道
         [dic setObject:@(8) forKey:AVLinearPCMBitDepthKey];             //每个采样点位数，分为8，16，24，32
         [dic setObject:@(YES) forKey:AVLinearPCMIsFloatKey];
-        _recorder=[[AVAudioRecorder alloc]initWithURL:[self cacheFilePathUrl] settings:dic error:nil];
+        _recorder=[[AVAudioRecorder alloc]initWithURL:[self cacheFileUrl] settings:dic error:nil];
         _recorder.meteringEnabled=YES;
         _recorder.delegate=self;
     }
@@ -35,29 +35,36 @@
 
 -(AVAudioPlayer *)player{
     if(!_player){
-        _player=[[AVAudioPlayer alloc]initWithContentsOfURL:[self cacheFilePathUrl] error:nil];
+        _player=[[AVAudioPlayer alloc]initWithContentsOfURL:[self cacheFileUrl] error:nil];
     }
     return _player;
 }
+
 -(NSTimer *)timer{
     if(!_timer){
-        _timer=[NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(updateMetersView:) userInfo:nil repeats:YES];
+        //0.02 = 60帧/ s
+        _timer=[NSTimer timerWithTimeInterval:0.02 target:self selector:@selector(updateMetersView:) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop]addTimer:_timer forMode:NSRunLoopCommonModes];
     }
     return _timer;
 }
 
--(NSURL*)cacheFilePathUrl{
-    NSString *cacheDir= [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    return [NSURL fileURLWithPath:[cacheDir stringByAppendingPathComponent:@"baba.caf"]];
+-(NSURL*)cacheFileUrl{
+    
+    NSString *cacheDir=[CommenUtil cacheDirectoryStr];
+    NSString *identifier = [CommenUtil randomFileName];
+    NSURL *cacheFile= [NSURL fileURLWithPath:[cacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",identifier]]];
+    
+    return cacheFile;
 }
 
 #pragma mark - AVAudioRecorderDelegate
 -(void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)success{
     if(success){
-        NSError *error;
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        [audioSession setCategory:AVAudioSessionCategoryPlayback error:&error];
-        [audioSession setActive:YES error:&error];
+//        NSError *error;
+//        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+//        [audioSession setCategory:AVAudioSessionCategoryPlayback error:&error];
+//        [audioSession setActive:YES error:&error];
         //测试用 录音后立即播放 ~
 //        [self.player play];
         [self.delegate audioRecorder:self didEndRecord:recorder.url];
@@ -75,7 +82,6 @@
 
 
 #pragma mark - Record
-
 - (void)startRecord {
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     NSError *error;
@@ -92,6 +98,14 @@
 - (void)endRecord {
     self.timer.fireDate=[NSDate distantFuture];
     [self.recorder stop];
+}
+
++(NSTimeInterval)durationForAudioFile:(NSURL*)audioUrl{
+    AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:audioUrl options:nil];
+    CMTime audioDuration = audioAsset.duration;
+    float audioDurationSeconds = CMTimeGetSeconds(audioDuration);
+    return audioDurationSeconds;
+
 }
 
 @end

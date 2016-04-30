@@ -40,7 +40,9 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
 - (IBAction)logIn:(id)sender {
     NSString *userName=[self.userNameTextField.text trim];
     NSString *pwd=[self.pwdTextField.text trim];
+    [self.view endEditing:YES];
     if([RegexUtil isEmail:userName]){
+        
         [[UserManager sharedUserManager] logInWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
             if(succeeded){
                 [[ConversationManager sharedConversationManager]setupConversationClientWithCallback:^(BOOL succeeded, NSError *error) {
@@ -48,7 +50,7 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
                     [StoryBoardHelper switchToMainTabVC];
                 }];
             }else{
-                [CommenUtil showMessage:[error description] in:self];
+                [CommenUtil showMessage:[error description] inVC:self];
             }
         }];
     }else{
@@ -57,8 +59,25 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
 }
 
 - (IBAction)register:(id)sender {
-    UIViewController *vc= [StoryBoardHelper inititialVC:@"RegisterViewController" fromSB:kLoginSB];
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    NSString *userName=[self.userNameTextField.text trim];
+    NSString *pwd=[self.pwdTextField.text trim];
+    [self.view endEditing:YES];
+    if([RegexUtil isEmail:userName]){
+        [[UserManager sharedUserManager] signUpWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                [[ConversationManager sharedConversationManager]setupConversationClientWithCallback:^(BOOL succeeded, NSError *error) {
+                    [self.view endEditing:YES];
+                    [StoryBoardHelper switchToMainTabVC];
+                }];
+            }else{
+                [CommenUtil showMessage:[error description] inVC:self];
+            }
+        }];
+    }else{
+        [MBProgressHUD showMsg:@"请输入合法的 Emial 用户名" forSeconds:1.5];
+    }
+
 }
 
 #pragma mark - SNS
@@ -120,7 +139,7 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
 
 -(BOOL)showLogInErrorIfNeed:(NSError*)error{
     if(error){
-        [CommenUtil showMessage:[NSString stringWithFormat:@"登录失败 : %@",error] in:self];
+        [CommenUtil showMessage:[NSString stringWithFormat:@"登录失败 : %@",error] inVC:self];
         return YES;
     }
     return NO;

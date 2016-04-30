@@ -22,6 +22,7 @@ static NSString *const kNewMomentPhotoViewerControllerID=@"NewMomentPhotoViewerC
 
 @interface NewMomentPhotoViewerController : UICollectionViewController
 @property (assign,nonatomic) PhotoViewerState currentState;
-@property (strong,nonatomic) NSMutableArray *photoUrls;
+@property (strong,nonatomic) NSMutableArray *photoUrls; //赋值 图片数组或者图片 的Url数组 其一
+@property (strong,nonatomic) NSMutableArray *photos;
 @property (assign,nonatomic) PhotoViewerType photoViewerType;
 @end

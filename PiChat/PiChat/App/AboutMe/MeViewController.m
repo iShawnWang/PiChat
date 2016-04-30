@@ -9,13 +9,13 @@
 #import "MeViewController.h"
 #import "UserManager.h"
 #import "User.h"
-#import <UIImageView+WebCache.h>
 #import "MediaPicker.h"
 #import "FileUpLoader.h"
 #import "MBProgressHUD+Addition.h"
 #import "ImageCache.h"
 #import "NSNotification+DownloadImage.h"
 #import "LeanCloudManager.h"
+#import "CommenUtil.h"
 
 NSString *const kResuseIdLogOut=@"logOut";
 NSString *const kResuseIdFeedback=@"feedback";
@@ -39,8 +39,6 @@ NSString *const kResuseIdFeedback=@"feedback";
         self.tabBarItem.image=[UIImage imageNamed:@"tabbar_me"];
         self.tabBarItem.selectedImage=[UIImage imageNamed:@"tabbar_meHL"];
         
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uploadingMediaNotification:) name:kUploadMediaNotification object:nil];
-        
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadImageNotification:) name:kDownloadImageCompleteNotification object:nil];
     }
     return self;
@@ -58,7 +56,7 @@ NSString *const kResuseIdFeedback=@"feedback";
     }
     self.userNameLabel.text=self.user.displayName;
     if(self.user.avatarPath){
-        [self.avatarImageView setImage:[self.imageCache findOrFetchImageFormUrl:self.user.avatarPath]];
+        self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:self.user.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
     }
 }
 
@@ -69,6 +67,7 @@ NSString *const kResuseIdFeedback=@"feedback";
     }
     return _avatarPicker;
 }
+
 -(ImageCache *)imageCache{
     if(!_imageCache){
         _imageCache=[ImageCache sharedImageCache];
@@ -95,46 +94,35 @@ NSString *const kResuseIdFeedback=@"feedback";
 }
 
 - (IBAction)changeAvatar:(id)sender {
-    [self.avatarPicker showImagePickerIn:self withCallback:^(NSURL *url, NSError *error) {
+    [self.avatarPicker showImagePickerIn:self multipleSelectionCount:1 callback:^(NSArray *objects, NSError *error) {
         [MBProgressHUD showProgressInView:self.view];
         //上传头像为 AVFile 然后user.avatarPath 关联到 AVFile
-        [[FileUpLoader sharedFileUpLoader]uploadFileAtUrl:url];
+        [[FileUpLoader sharedFileUpLoader]uploadImage:objects.firstObject];
+        AVFile *avatarFile= [AVFile fileWithData:UIImagePNGRepresentation(objects.firstObject)];
+        
+        //上传头像图片
+        [avatarFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            
+            if(succeeded){
+                //更新User.avatarPath
+                self.user.avatarPath=avatarFile.url;
+                self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:self.user.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+                [self.user updateUserWithCallback:^(User *user, NSError *error) {
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                }];
+            }else{
+                [CommenUtil showMessage:@"上传头像失败:%@" inVC:self];
+            }
+        } progressBlock:^(NSInteger percentDone) {
+            [MBProgressHUD HUDForView:self.view].progress=percentDone/100.0;
+        }];
     }];
 }
 
-#pragma mark - 上传头像图片 通知
--(void)uploadingMediaNotification:(NSNotification*)noti{
-    UploadState uploadState = noti.uploadState;
-    switch (uploadState) {
-        case UploadStateComplete:{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            AVFile *file=noti.uploadedFile;
-            self.user.avatarPath=file.url;
-            [self.user updateUserWithCallback:^(User *user, NSError *error) {
-                self.avatarImageView.image= [self.imageCache findOrFetchImageFormUrl:user.avatarPath];
-                self.user=[User currentUser];
-            }];
-            
-        }
-            break;
-        case UploadStateProgress:{
-            [MBProgressHUD HUDForView:self.view].progress=noti.progress;
-        }
-            break;
-        case UploadStateFailed:{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSLog(@"上传失败 : %@",noti.error);
-        }
-            break;
-    }
-}
-
-#pragma mark - 下载头像 通知,更新此界面头像
+#pragma mark - 下载完图片
 -(void)downloadImageNotification:(NSNotification*)noti{
-    UIImage *img= noti.image;
-    NSURL *url= noti.imageUrl;
-    if([url.absoluteString isEqualToString:self.user.avatarPath]){
-        self.avatarImageView.image=img;
+    if([noti.imageUrl.absoluteString isEqualToString:self.user.avatarPath]){
+        self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:self.user.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
     }
 }
 

@@ -28,6 +28,7 @@
 #import "NSNotification+ReceiveMessage.h"
 #import "NSNotification+LocationCellUpdate.h"
 #import "TextPathRefreshControl.h"
+#import "CommenUtil.h"
 #import <MJRefresh.h>
 #import <IQKeyboardManager.h>
 
@@ -53,7 +54,7 @@
 {
     self = [super init];
     if (self) {
-        [[IQKeyboardManager sharedManager] disableToolbarInViewControllerClass:[PrivateChatController class]];
+        [[IQKeyboardManager sharedManager].disabledToolbarClasses addObject:[PrivateChatController class]];
         self.hidesBottomBarWhenPushed=YES;
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didReceiveTyperMessage:) name:kDidReceiveTypedMessageNotification object:nil];
@@ -122,7 +123,7 @@
             make.centerX.equalTo(self.view);
             make.centerY.equalTo(self.view);
             make.width.equalTo(self.view).multipliedBy(0.2);
-            make.height.equalTo(self.view).multipliedBy(0.2);
+            make.height.equalTo(self.view).multipliedBy(0.15);
         }];
     }
     return _indocator;
@@ -163,7 +164,8 @@
         self.chatToUser=user;
         [self.collectionView reloadData];
     }];
-    //开始对话
+    
+    //初始化对话
     [self.conversationManager chatToUser:self.chatToUserID callback:^(AVIMConversation *conversation, NSError *error) {
         self.conversation=conversation;
         self.inputToolbar.contentView.rightBarButtonItem.enabled=YES;
@@ -173,11 +175,7 @@
                 [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     [self addTypedMessage:obj toArrayHead:NO reloadData:NO];
                 }];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
-                    [self finishReceivingMessage];
-                });
-                
+                [self performSelectorOnMainThread:@selector(finishReceivingMessage) withObject:nil waitUntilDone:NO];
             });
         }];
         
@@ -217,14 +215,42 @@
     
 }
 
--(CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath{
-    return kJSQMessagesCollectionViewCellLabelHeightDefault;
+
+-(NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if([self needShowCellTopLabelForIndexPath:indexPath]){
+        JSQMessage *msg=self.msgs[indexPath.item];
+        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:msg.date];
+    }
+    return nil;
 }
+
+-(CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if([self needShowCellTopLabelForIndexPath:indexPath]){
+        return kJSQMessagesCollectionViewCellLabelHeightDefault;
+    }
+    
+    return 0.0f;
+}
+
+-(BOOL)needShowCellTopLabelForIndexPath:(NSIndexPath*)indexPath{
+    if(indexPath.item-1>0){
+        JSQMessage *msg=self.msgs[indexPath.item];
+        JSQMessage *lastMsg=self.msgs[indexPath.item-1];
+        NSTimeInterval timeInterval= [msg.date timeIntervalSinceDate:lastMsg.date];
+        if(timeInterval>3*60){//3分钟
+            return YES;
+        }
+    }
+    return NO;
+}
+
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     //可以 Custome Cell
-    //Temp Bug : 横屏 ipad 开启 App,Cell 的 width = 1016;
+    //FIXME Temp Bug : 横屏 ipad 开启 App,Cell 的 width = 1016;
     return cell;
 }
 
@@ -251,10 +277,10 @@
 #pragma mark JSQMessagesViewController Delegate
 
 -(void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)senderDisplayName date:(NSDate *)date{
-    [JSQSystemSoundPlayer jsq_playMessageSentSound];
-    AVIMTypedMessage *msg=[AVIMTextMessage messageWithText:text attributes:nil];
-    self.inputToolbar.contentView.textView.text=@"";
-    [self sendMessage:msg];
+    if(!text && text.length==0){ //没有文字内容
+        return;
+    }
+    [self sendTextMsg:text];
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender
@@ -276,13 +302,13 @@
             AVIMTypedMessage *msg;
             switch (mediaType) {
                 case UploadedMediaTypeVideo:
-                    msg=[AVIMVideoMessage messageWithText:@"" file:media attributes:@{kVideoFormat:media.url.pathExtension}];
+                    //TODO 我们需要 videoFormat 么?
+                    msg=[AVIMVideoMessage messageWithText:nil file:media attributes:@{kVideoFormat:media.url.pathExtension}];
                     break;
                 case UploadedMediaTypeAduio:
-                    msg=[AVIMAudioMessage messageWithText:@"" file:media attributes:nil];
                     break;
                 case UploadedMediaTypePhoto:
-                    msg=[AVIMImageMessage messageWithText:@"" file:media attributes:nil];
+                    msg=[AVIMImageMessage messageWithText:nil file:media attributes:nil];
                     break;
                 case UploadedMediaTypeFile:
                     break;
@@ -298,7 +324,7 @@
         break;
         case UploadStateFailed:{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSLog(@"上传失败 : %@",noti.error);
+            [CommenUtil showMessage:[NSString stringWithFormat:@"上传失败 : %@",noti.error] inVC:self];
         }
         break;
     }
@@ -328,21 +354,21 @@
 
 #pragma mark - 发送消息
 
--(void)sendPhoto{
-    [self.mediaPicker showImagePickerIn:self withCallback:^(NSURL *url, NSError *error) {
-        [self.fileUpLoader uploadImage:[UIImage imageWithContentsOfFile:url.path]];
+-(void)showPhotoPicker{
+    [self.mediaPicker showImagePickerIn:self multipleSelectionCount:1 callback:^(NSArray *objects, NSError *error) {
+        [self.fileUpLoader uploadImage:[objects firstObject]];
         [MBProgressHUD showProgressInView:self.view];
     }];
 }
 
--(void)sendVideo{
-    [self.mediaPicker showVideoPickerIn:self withCallback:^(NSURL *url, NSError *error) {
+-(void)showVideoPicker{
+    [self.mediaPicker showVideoPickerIn:self callback:^(NSURL *url, NSError *error) {
         [self.fileUpLoader uploadVideoAtUrl:url];
         [MBProgressHUD showProgressInView:self.view];
     }];
 }
 
--(void)sendLocation{
+-(void)showLocationPicker{
     LocationViewerController *locationViewer=[[LocationViewerController alloc]init];
     locationViewer.action=LocationViewerActionPickLocation;
     locationViewer.delegate=self;
@@ -355,20 +381,42 @@
  *  @param noti
  */
 -(void)updateLocationCellNotification:(NSNotification*)noti{
-    for(int i=0;i<self.msgs.count;i++){
-        JSQMessage *msg=self.msgs[i];
-        if([msg.media isKindOfClass:[JSQLocationMediaItem class]]){
-            NSIndexPath *indexPath=[NSIndexPath indexPathForItem:i inSection:0];
+    JSQMessage *jsqMessageThatNeedUpdate= noti.jsqMessageThatNeedUpdate;
+    [self.msgs enumerateObjectsUsingBlock:^(JSQMessage *msg, NSUInteger idx, BOOL * _Nonnull stop) {
+        if(jsqMessageThatNeedUpdate == msg){
+            NSIndexPath *indexPath=[NSIndexPath indexPathForItem:idx inSection:0];
             [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
         }
-    }
+    }];
 }
+
+-(void)sendTextMsg:(NSString*)text{
+    AVIMTypedMessage *msg=[AVIMTextMessage messageWithText:text attributes:nil];
+    self.inputToolbar.contentView.textView.text=@"";
+    [self sendMessage:msg];
+}
+
+-(void)sendLocationMsg:(CLLocation*)location{
+    //发送我的位置信息
+    AVIMLocationMessage *locationMsg=[AVIMLocationMessage messageWithText:@"" latitude:location.coordinate.latitude longitude:location.coordinate.longitude attributes:nil];
+    [self sendMessage:locationMsg];
+}
+
+-(void)sendAudioMsg:(NSURL*)audioUrl{
+    AVIMAudioMessage *audioMsg=[AVIMAudioMessage messageWithText:nil attachedFilePath:[audioUrl.absoluteString removeFilePrefix] attributes:nil];
+    [self sendMessage:audioMsg];
+}
+
+
 
 -(void)sendMessage:(AVIMTypedMessage*)msg{
     [self.conversation sendMessage:msg callback:^(BOOL succeeded, NSError *error) {
         [JSQSystemSoundPlayer jsq_playMessageSentSound];
         [self addTypedMessage:msg];
     }];
+    
+    //TODO 重构用这个方法 ~! 555
+//    self.conversation sendMessage:<#(AVIMMessage *)#> options:<#(AVIMMessageSendOption)#> progressBlock:<#^(NSInteger percentDone)progressBlock#> callback:<#^(BOOL succeeded, NSError *error)callback#>
 }
 
 #pragma mark - 将 AVIMTypedMessage 转为 JSQMessage 加到聊天列表中,刷新 view
@@ -411,16 +459,14 @@
             }];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                
+//                self.automaticallyScrollsToMostRecentMessage=YES;
                 [self.collectionView.mj_header endRefreshing];
                 [self finishReceivingMessage];
-                [self.collectionView reloadData];
-                self.automaticallyScrollsToMostRecentMessage=YES;
             });
         });
     }];
     
-    //TODO SDK Bug 用上面的时间戳方法 OK
+    //SDK Bug 用上面的时间戳方法 OK
 //    [self.manager fetchMessages:self.conversation before:msg.messageID callback:^(NSArray *objects, NSError *error) {
 //        //异步解析 typed messages
 //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -437,20 +483,23 @@
 
 #pragma mark - AudioRecorderDelegate
 -(void)audioRecorder:(AudioRecorderController *)recorder didEndRecord:(NSURL *)audio{
-    if(audio){
-        [self.fileUpLoader uploadAudioAtUrl:audio];
+
+    NSTimeInterval audioDuration= [AudioRecorderController durationForAudioFile:audio];
+    
+    if(audioDuration>1.2f){
+        [self sendAudioMsg:audio];
+    }else{
+        [MBProgressHUD showMsg:@"录音太短 ~ " forSeconds:1.2];
     }
 }
 
 -(void)audioRecorder:(AudioRecorderController *)recorder updateSoundLevel:(CGFloat)level{
-    [self.indocator updateSoundLevel:level];
+    [self.indocator updateWithLevel:[self.indocator normalizedPowerLevelFromDecibels:level]];
 }
 
 #pragma mark - LocationViewerDelegate
 -(void)locationViewerController:(LocationViewerController *)viewer didPickLocation:(CLLocation *)location{
-    //发送我的位置信息
-    AVIMLocationMessage *locationMsg=[AVIMLocationMessage messageWithText:@"" latitude:location.coordinate.latitude longitude:location.coordinate.longitude attributes:nil];
-    [self sendMessage:locationMsg];
+    [self sendLocationMsg:location];
 }
 
 #pragma mark - InputAttachmentViewDelegate
@@ -462,15 +511,15 @@
         }
             break;
         case InputTypeVideo:{
-            [self sendVideo];
+            [self showVideoPicker];
         }
             break;
         case InputTypeImage:{
-            [self sendPhoto];
+            [self showPhotoPicker];
         }
             break;
         case InputTypeLocation:{
-            [self sendLocation];
+            [self showLocationPicker];
         }
             break;
     }

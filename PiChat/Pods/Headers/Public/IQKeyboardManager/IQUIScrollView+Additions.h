@@ -1,1 +1,1 @@
-../../../IQKeyboardManager/IQKeyBoardManager/Categories/IQUIScrollView+Additions.h
+../../../IQKeyboardManager/IQKeyboardManager/Categories/IQUIScrollView+Additions.h

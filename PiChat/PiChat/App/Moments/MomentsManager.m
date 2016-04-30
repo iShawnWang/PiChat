@@ -11,7 +11,7 @@
 #import <AVOSCloud.h>
 #import "User.h"
 #import "UserManager.h"
-
+#import "UIImage+ScaleSize.h"
 
 @interface MomentsManager ()
 @property (strong,nonatomic) NSMutableArray *momentImageFile;
@@ -57,19 +57,26 @@
     
     //有图片的朋友圈,先上传图片
     NSInteger uploadImageCount=images.count;
+    CGSize screenSize=CGSizeApplyAffineTransform([UIScreen mainScreen].nativeBounds.size, CGAffineTransformMakeScale(0.5, 0.5)); //屏幕像素的一半
     
     [images enumerateObjectsUsingBlock:^(NSURL *imgUrl, NSUInteger idx, BOOL * _Nonnull stop) {
         
         [self.uploadImageFileQueue addOperationWithBlock:^{
-            AVFile *image=[AVFile fileWithData:[NSData dataWithContentsOfURL:imgUrl]];
             
-            [image saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            UIImage *image= [UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl]];
+            //图片太大就缩放一下...(width = 4288, height = 2848)
+            if(image.size.width > screenSize.width || image.size.height > screenSize.height){
+                image=[image scaledAspectFitImageToSize:screenSize];
+            }
+            AVFile *imageFile=[AVFile fileWithData:UIImagePNGRepresentation(image)];
+            
+            [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if(error){
                     [NSNotification postPostMomentFailedNotification:self error:error];
                     [self.uploadImageFileQueue cancelAllOperations];
                     return ;
                 }
-                [self.momentImageFile addObject:image];
+                [self.momentImageFile addObject:imageFile];
                 //全部上传完毕
                 if(self.momentImageFile.count==uploadImageCount){
                     Moment *m= [self newMoment:content images:self.momentImageFile];
@@ -89,7 +96,8 @@
 }
 
 -(Moment*)newMoment:(NSString*)content images:(NSArray*)images{
-    Moment *m=[Moment objectWithClassName:NSStringFromClass([Moment class])];
+//    Moment *m=[Moment object];
+    Moment *m=[Moment objectWithClassName:@"Moment"];
     if(images){
         m.images =self.momentImageFile;
     }
@@ -108,10 +116,24 @@
         [friendsMomentQuery whereKey:kPostUser containedIn:friends];
     
         AVQuery *query=[AVQuery orQueryWithSubqueries:@[myMomentQuery,friendsMomentQuery]];
-        [query includeKey:@"images"];
+        [query orderByDescending:kCreatedAt];
+        [query includeKey:kPostImages];
+        [query includeKey:kFavourUsers];
+        [query includeKey:kComments];
         [query findObjectsInBackgroundWithBlock:callback];
-        //    [query includeKey:@"createUserID"];
-        //    [query includeKey:@"texts"];
+    }];
+}
+
++(void)getMomentWithID:(NSString*)momentID callback:(MomentResultBlock)callback{
+    AVQuery *momentQuery= [AVQuery queryWithClassName:NSStringFromClass([Moment class])];
+    [momentQuery whereKey:kObjectIdKey equalTo:momentID];
+    [momentQuery includeKey:kPostImages];
+    [momentQuery includeKey:kFavourUsers];
+    [momentQuery includeKey:kComments];
+    [momentQuery getFirstObjectInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+        Moment *m=object ? (Moment*)object : nil;
+        callback(m,error);
+            
     }];
 }
 @end

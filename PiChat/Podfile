@@ -6,6 +6,8 @@
 inhibit_all_warnings!
 
 target 'PiChat' do
+
+pod 'Reveal-iOS-SDK', :configurations => ['Debug']
 pod 'AVOSCloud'
 pod 'AVOSCloudIM'
 pod 'LeanCloudSocial'
@@ -18,6 +20,8 @@ pod 'IQKeyboardManager'
 pod 'DateTools'
 pod 'MWPhotoBrowser'
 pod 'MJRefresh'
+pod 'SCSiriWaveformView'
+pod 'QBImagePickerController'
 end
 
 target 'PiChatTests' do

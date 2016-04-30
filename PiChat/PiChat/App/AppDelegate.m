@@ -13,8 +13,7 @@
 #import "ConversationManager.h"
 #import <AVOSCloudSNS.h>
 #import "UIColor+Addition.h"
-#import <IQKeyboardManager.h>
-#import "PrivateChatController.h"
+#import "IQKeyboardManager+Configuration.h"
 
 @interface AppDelegate ()
 
@@ -24,7 +23,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside=YES;
+    [IQKeyboardManager setupIQKeyboardManager];
     [LeanCloudManager setupApplication:launchOptions];
     [self setupRootController];
     return YES;

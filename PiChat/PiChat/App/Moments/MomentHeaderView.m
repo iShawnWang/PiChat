@@ -12,12 +12,14 @@
 
 @implementation MomentHeaderView
 -(void)configWithUser:(User*)u{
-    self.backgroundImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath];
-    self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath];
+    UIImage *avatarImg=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+    
+    self.backgroundImageView.image=avatarImg;
+    self.avatarImageView.image=avatarImg;
     self.displayNameLabel.text=u.displayName;
 }
 
 +(NSInteger)calcHeightWithWidth:(NSInteger)width{
-    return width+42;
+    return width+44; //FIXME Header 高度计算
 }
 @end

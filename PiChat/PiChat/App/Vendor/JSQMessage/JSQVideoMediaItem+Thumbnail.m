@@ -20,6 +20,8 @@ NSString *const kCacheVideoImageView=@"cachedVideoImageView";
  *
  *  @return
  */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 - (UIView *)mediaView
 {
     if (self.fileURL == nil || !self.isReadyToPlay) {
@@ -57,6 +59,7 @@ NSString *const kCacheVideoImageView=@"cachedVideoImageView";
     }
     return [self valueForKey:kCacheVideoImageView];
 }
+#pragma clang diagnostic pop
 
 + (UIImage *)thumbnailFromVideoAtURL:(NSURL *)contentURL {
     UIImage *theImage = nil;

@@ -21,7 +21,7 @@
     if(u){
         self.nameLabel.text=u.displayName;
         self.lastMessageLabel.text=conv.lastMessage.text;
-        self.avatarImageView.image=[[ImageCache sharedImageCache] findOrFetchImageFormUrl:u.avatarPath];
+        self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
         self.dateLabel.text=[conv.lastMessageAt timeAgoSinceNow];
     }else{
         self.nameLabel.text=@"";

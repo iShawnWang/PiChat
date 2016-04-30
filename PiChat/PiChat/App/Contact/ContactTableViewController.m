@@ -30,8 +30,8 @@ NSString *const kContactHeaderCellID=@"ContactHeaderCell";
     self = [super initWithCoder:coder];
     if (self) {
         self.tabBarItem.title=@"联系人";
-        self.tabBarItem.image=[UIImage imageNamed:@"tabbar_discover"];
-        self.tabBarItem.selectedImage=[UIImage imageNamed:@"tabbar_discoverHL"];
+        self.tabBarItem.image=[UIImage imageNamed:@"tabbar_contacts"];
+        self.tabBarItem.selectedImage=[UIImage imageNamed:@"tabbar_contactsHL"];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(avatarUpdateNotification:) name:kDownloadImageCompleteNotification object:nil];
         
@@ -50,7 +50,6 @@ NSString *const kContactHeaderCellID=@"ContactHeaderCell";
     }
     return _sectionedContacts;
 }
-
 
 #pragma mark - Life Cycle
 
@@ -114,7 +113,7 @@ NSString *const kContactHeaderCellID=@"ContactHeaderCell";
 
 #pragma mark - Private
 /**
- *  模仿 iPhone 联系人界面,按用户首字母分Section
+ *  模仿系统联系人界面,按用户首字母分Section
  *
  *  @param user 
  */

@@ -327,8 +327,8 @@
         return [NSString stringWithFormat:@"<%@: audioURL=%@, isReadyToPlay=%@, appliesMediaViewMaskAsOutgoing=%@>",
                 [self class], self.audioURL, @(self.isReadyToPlay), @(self.appliesMediaViewMaskAsOutgoing)];
     } else {
-        return [NSString stringWithFormat:@"<%@: audioData=%ld bytes, isReadyToPlay=%@, appliesMediaViewMaskAsOutgoing=%@>",
-                [self class], [self.audioData length],
+        return [NSString stringWithFormat:@"<%@: audioData=%@ bytes, isReadyToPlay=%@, appliesMediaViewMaskAsOutgoing=%@>",
+                [self class], @([self.audioData length]),
                 @(self.isReadyToPlay), @(self.appliesMediaViewMaskAsOutgoing)];
     }
 }

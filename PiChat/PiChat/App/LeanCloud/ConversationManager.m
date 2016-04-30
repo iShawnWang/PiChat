@@ -230,7 +230,7 @@
     [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
         AVIMConversationQuery *query= [self.client conversationQuery];
         [query whereKey:kAVIMKeyMember containsString:self.client.clientId];
-        [query orderByDescending:@"updatedAt"];
+        [query orderByDescending:kUpdatedAt];
 //        query.limit=20;
         [query findConversationsWithCallback:^(NSArray *objects, NSError *error) {
             [objects enumerateObjectsUsingBlock:^(AVIMConversation *conv, NSUInteger idx, BOOL * _Nonnull stop) {

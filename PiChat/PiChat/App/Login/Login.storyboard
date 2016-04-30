@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6pa-S6-5fN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6pa-S6-5fN">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -18,7 +18,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ws19940415" placeholder="请输入密码" textAlignment="center" minimumFontSize="17" background="InputBg" translatesAutoresizingMaskIntoConstraints="NO" id="sl4-z4-Rq6">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入邮箱" textAlignment="center" minimumFontSize="17" background="InputBg" translatesAutoresizingMaskIntoConstraints="NO" id="hil-mO-7uU">
+                                <rect key="frame" x="75" y="180" width="450" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="KbZ-Cf-taK"/>
+                                    <constraint firstAttribute="width" constant="97" id="xvf-pv-9X4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="26"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="xvf-pv-9X4"/>
+                                    </mask>
+                                </variation>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="center" minimumFontSize="17" background="InputBg" translatesAutoresizingMaskIntoConstraints="NO" id="sl4-z4-Rq6">
                                 <rect key="frame" x="75" y="270" width="450" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="2q2-nj-3om"/>
@@ -65,20 +79,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="App Icon" translatesAutoresizingMaskIntoConstraints="NO" id="wvY-fc-bTK">
                                 <rect key="frame" x="250" y="70" width="100" height="100"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入邮箱" textAlignment="center" minimumFontSize="17" background="InputBg" translatesAutoresizingMaskIntoConstraints="NO" id="hil-mO-7uU">
-                                <rect key="frame" x="75" y="180" width="450" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="KbZ-Cf-taK"/>
-                                    <constraint firstAttribute="width" constant="97" id="xvf-pv-9X4"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="26"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="xvf-pv-9X4"/>
-                                    </mask>
-                                </variation>
-                            </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5TO-Fe-a6J">
                                 <rect key="frame" x="220" y="530" width="160" height="48"/>
                                 <subviews>
@@ -155,83 +155,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h66-qN-YI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1176" y="493"/>
-        </scene>
-        <!--Register View Controller-->
-        <scene sceneID="54p-3X-aYk">
-            <objects>
-                <viewController storyboardIdentifier="RegisterViewController" id="1mB-DZ-bsC" customClass="RegisterViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ffA-Bt-4fe"/>
-                        <viewControllerLayoutGuide type="bottom" id="Ek4-dh-91q"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="AZW-Az-l16">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入邮箱" textAlignment="center" minimumFontSize="17" background="InputBg" translatesAutoresizingMaskIntoConstraints="NO" id="La8-IG-MuB">
-                                <rect key="frame" x="75" y="180" width="450" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="T54-Hp-zwH"/>
-                                    <constraint firstAttribute="height" constant="60" id="bvn-aD-kOe"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="26"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="T54-Hp-zwH"/>
-                                    </mask>
-                                </variation>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ws19940415" placeholder="请输入密码" textAlignment="center" minimumFontSize="17" background="InputBg" translatesAutoresizingMaskIntoConstraints="NO" id="0m0-KW-xTS">
-                                <rect key="frame" x="75" y="270" width="450" height="60"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="26"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kii-PH-bZH">
-                                <rect key="frame" x="75" y="362" width="450" height="60"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="28"/>
-                                <state key="normal" title="注册" backgroundImage="signUpBtn">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="App Icon" translatesAutoresizingMaskIntoConstraints="NO" id="MXy-M9-33l">
-                                <rect key="frame" x="250" y="50" width="100" height="100"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="La8-IG-MuB" firstAttribute="top" secondItem="ffA-Bt-4fe" secondAttribute="bottom" constant="137" id="02y-ac-4tw"/>
-                            <constraint firstItem="La8-IG-MuB" firstAttribute="trailing" secondItem="0m0-KW-xTS" secondAttribute="trailing" id="2UG-nh-b7Y"/>
-                            <constraint firstItem="La8-IG-MuB" firstAttribute="width" secondItem="AZW-Az-l16" secondAttribute="width" multiplier="0.75" id="G1A-VN-k0L"/>
-                            <constraint firstItem="La8-IG-MuB" firstAttribute="top" secondItem="MXy-M9-33l" secondAttribute="bottom" constant="30" id="I6G-QG-dm0"/>
-                            <constraint firstItem="kii-PH-bZH" firstAttribute="height" secondItem="0m0-KW-xTS" secondAttribute="height" id="Q2L-DX-kY4"/>
-                            <constraint firstItem="0m0-KW-xTS" firstAttribute="centerX" secondItem="AZW-Az-l16" secondAttribute="centerX" id="ad4-uy-8QL"/>
-                            <constraint firstItem="kii-PH-bZH" firstAttribute="centerX" secondItem="0m0-KW-xTS" secondAttribute="centerX" id="amt-Mt-jsD"/>
-                            <constraint firstItem="kii-PH-bZH" firstAttribute="height" secondItem="La8-IG-MuB" secondAttribute="height" id="b9l-hN-VB9"/>
-                            <constraint firstItem="MXy-M9-33l" firstAttribute="centerX" secondItem="AZW-Az-l16" secondAttribute="centerX" id="doS-ju-TId"/>
-                            <constraint firstItem="kii-PH-bZH" firstAttribute="top" secondItem="0m0-KW-xTS" secondAttribute="bottom" constant="32" id="dpk-wa-vAJ"/>
-                            <constraint firstItem="0m0-KW-xTS" firstAttribute="height" secondItem="La8-IG-MuB" secondAttribute="height" id="ksG-Ec-I4g"/>
-                            <constraint firstItem="La8-IG-MuB" firstAttribute="leading" secondItem="0m0-KW-xTS" secondAttribute="leading" id="l2n-v9-NAa"/>
-                            <constraint firstItem="0m0-KW-xTS" firstAttribute="height" secondItem="La8-IG-MuB" secondAttribute="height" id="mzo-9O-N48"/>
-                            <constraint firstItem="0m0-KW-xTS" firstAttribute="centerY" secondItem="AZW-Az-l16" secondAttribute="centerY" id="qoR-Fu-RPB"/>
-                            <constraint firstItem="kii-PH-bZH" firstAttribute="width" secondItem="0m0-KW-xTS" secondAttribute="width" id="u3B-AT-F1V"/>
-                            <constraint firstItem="0m0-KW-xTS" firstAttribute="top" secondItem="La8-IG-MuB" secondAttribute="bottom" constant="30" id="wzI-mf-EYy"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="02y-ac-4tw"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <connections>
-                        <outlet property="pwdTextField" destination="0m0-KW-xTS" id="ceh-ji-QI6"/>
-                        <outlet property="registerBtn" destination="kii-PH-bZH" id="xuj-Ud-Xok"/>
-                        <outlet property="userNameTextField" destination="La8-IG-MuB" id="8Al-7T-2pN"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UgB-3N-yXu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1801" y="493"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kBD-ad-gDg">

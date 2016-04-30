@@ -21,4 +21,5 @@
 - (void)startRecord;
 
 - (void)endRecord;
++(NSTimeInterval)durationForAudioFile:(NSURL*)audioUrl;
 @end
