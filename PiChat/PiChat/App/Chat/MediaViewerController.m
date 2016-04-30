@@ -8,22 +8,27 @@
 
 #import "MediaViewerController.h"
 #import "LocationViewerController.h"
-#import <MWPhotoBrowser.h>
+#import "MWPhotoBrowser+UnClearMemoryCache.h"
 
 @implementation MediaViewerController
 
 +(void)showIn:(UIViewController*)controller withImage:(UIImage*)img {
     MWPhoto *photo=[MWPhoto photoWithImage:img];
-    MWPhotoBrowser *photoBrowser=[[MWPhotoBrowser alloc]initWithPhotos:@[photo] ];
-    photoBrowser.view.backgroundColor=[UIColor whiteColor];
-    if(controller.navigationController){
-        [controller.navigationController pushViewController:photoBrowser animated:YES];
-    }
+    [self showIn:controller withMWPhotos:@[photo]];
+}
+
++(void)showIn:(UIViewController *)controller withImageUrl:(NSURL*)imgUrl{
+    MWPhoto *photo=[MWPhoto photoWithURL:imgUrl];
+    [self showIn:controller withMWPhotos:@[photo]];
 }
 
 +(void)showIn:(UIViewController*)controller withVideoUrl:(NSURL*)url{
     MWPhoto *video=[[MWPhoto alloc]initWithVideoURL:url];
-    MWPhotoBrowser *photoBrowser=[[MWPhotoBrowser alloc]initWithPhotos:@[video]];
+    [self showIn:controller withMWPhotos:@[video]];
+}
+
++(void)showIn:(UIViewController*)controller withMWPhotos:(NSArray*)MWPhotos{
+    MWPhotoBrowser *photoBrowser=[[MWPhotoBrowser alloc]initWithPhotos:MWPhotos];
     photoBrowser.view.backgroundColor=[UIColor whiteColor];
     if(controller.navigationController){
         [controller.navigationController pushViewController:photoBrowser animated:YES];

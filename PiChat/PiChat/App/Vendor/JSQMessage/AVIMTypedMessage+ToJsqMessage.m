@@ -16,6 +16,7 @@
 #import "CommenUtil.h"
 #import "JSQVideoMediaItem+Thumbnail.h"
 #import "NSNotification+LocationCellUpdate.h"
+#import "JSQPhotoMediaItem+ThumbnailImageUrl.h"
 
 
 @implementation AVIMTypedMessage (ToJsqMessage)
@@ -45,10 +46,27 @@
         }
         case kAVIMMessageMediaTypeImage: {
             AVIMImageMessage *imageMessage = (AVIMImageMessage *)self;
-            NSError *error;
-            NSData *data=[imageMessage.file getData:&error];
-            UIImage *image=[UIImage imageWithData:data];
-            JSQPhotoMediaItem *photoItem=[[JSQPhotoMediaItem alloc] initWithImage:image];
+            
+            JSQPhotoMediaItem *photoItem=[[JSQPhotoMediaItem alloc]init];
+            
+            //缩略图图片显示大小
+            NSValue *mediaViewDisplaySizeValue= [photoItem valueForKey:@"mediaViewDisplaySize"];
+            CGSize mediaViewDisplaySize=[mediaViewDisplaySizeValue CGSizeValue];
+            if(CGSizeEqualToSize(mediaViewDisplaySize, CGSizeZero)){
+                //获取不到缩略图图片显示大小就默认屏幕 1/3 宽度
+                CGFloat screenWidth_3= CGRectGetWidth([UIScreen mainScreen].bounds)/3.0;
+                mediaViewDisplaySize=CGSizeMake(screenWidth_3, screenWidth_3/1.4);
+            }
+            
+            if(!photoItem.thumbnailImageUrl){
+                //类似: http://ac-RD1BgVPw.clouddn.com/epDUHFCO2uxQPAYm3CYvCnD?imageView/1/w/315/h/225/q/100
+                photoItem.thumbnailImageUrl =[imageMessage.file getThumbnailURLWithScaleToFit:NO width:mediaViewDisplaySize.width height:mediaViewDisplaySize.height];
+            }
+            if(!photoItem.originalImageUrl){
+                //类似: http://ac-RD1BgVPw.clouddn.com/epDUHFCO2uxQPAYm3CYvCnD
+                photoItem.originalImageUrl=imageMessage.file.url;
+            }
+            
             photoItem.appliesMediaViewMaskAsOutgoing=outgoing;
             message=[[JSQMessage alloc] initWithSenderId:senderId senderDisplayName:senderDisplayName date:timestamp media:photoItem];
             break;

@@ -23,14 +23,17 @@
 #import "RecordIndocator.h"
 #import "JSQMessage+MessageID.h"
 #import "JSQVideoMediaItem+Thumbnail.h"
+#import "JSQPhotoMediaItem+ThumbnailImageUrl.h"
 #import "NSNotification+UserUpdate.h"
 #import "NSNotification+DownloadImage.h"
 #import "NSNotification+ReceiveMessage.h"
 #import "NSNotification+LocationCellUpdate.h"
 #import "TextPathRefreshControl.h"
 #import "CommenUtil.h"
+#import "ImageCache.h"
 #import <MJRefresh.h>
 #import <IQKeyboardManager.h>
+#import "UICollectionView+PendingReloadData.h"
 
 
 @import CoreImage;
@@ -54,7 +57,7 @@
 {
     self = [super init];
     if (self) {
-        [[IQKeyboardManager sharedManager].disabledToolbarClasses addObject:[PrivateChatController class]];
+        
         self.hidesBottomBarWhenPushed=YES;
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didReceiveTyperMessage:) name:kDidReceiveTypedMessageNotification object:nil];
@@ -71,6 +74,7 @@
 }
 
 -(void)dealloc{
+    [self.collectionView removePendingReload];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
@@ -132,6 +136,7 @@
 #pragma mark - Life Cycle
 -(void)viewDidLoad{
     [super viewDidLoad];
+    self.automaticallyScrollsToMostRecentMessage=NO;
     
     //下拉刷新
     self.collectionView.mj_header=[TextPathRefreshControl headerWithRefreshingTarget:self refreshingAction:@selector(loadHistoryMsg:)];
@@ -162,7 +167,8 @@
     //
     [self.userManager findUserByClientID:self.chatToUserID callback:^(User *user, NSError *error) {
         self.chatToUser=user;
-        [self.collectionView reloadData];
+        
+        [self.collectionView pendingReloadData];
     }];
     
     //初始化对话
@@ -176,6 +182,7 @@
                     [self addTypedMessage:obj toArrayHead:NO reloadData:NO];
                 }];
                 [self performSelectorOnMainThread:@selector(finishReceivingMessage) withObject:nil waitUntilDone:NO];
+                [self performSelectorOnMainThread:@selector(scrollToBottomAnimated:) withObject:@(YES) waitUntilDone:NO];
             });
         }];
         
@@ -198,6 +205,10 @@
 
 -(id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessage *msg= self.msgs[indexPath.item];
+    if([msg.media isKindOfClass:[JSQPhotoMediaItem class]]){
+        JSQPhotoMediaItem *mediaItem=(JSQPhotoMediaItem*)msg.media;
+        mediaItem.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:mediaItem.thumbnailImageUrl];
+    }
     return msg;
 }
 
@@ -264,14 +275,16 @@
     JSQMessage *msg= self.msgs[indexPath.item];
     id<JSQMessageMediaData> media= msg.media;
     if([media isMemberOfClass:[JSQPhotoMediaItem class]]){
-        UIImage *img= ((JSQPhotoMediaItem*)media).image;
-        [MediaViewerController showIn:self withImage:img];
+        NSString *originalImgUrlStr= ((JSQPhotoMediaItem*)media).originalImageUrl;
+        NSURL *imgUrl= [NSURL URLWithString:originalImgUrlStr];
+        [MediaViewerController showIn:self withImageUrl:imgUrl];
     }else if([media isMemberOfClass:[JSQVideoMediaItem class]]){
         NSURL *videoUrl= ((JSQVideoMediaItem*)media).fileURL;
         [MediaViewerController showIn:self withVideoUrl:videoUrl];
     }else if([media isMemberOfClass:[JSQLocationMediaItem class]]){
         [MediaViewerController showIn:self withLocation:((JSQLocationMediaItem*)msg.media).location];
     }
+    
 }
 
 #pragma mark JSQMessagesViewController Delegate
@@ -332,12 +345,7 @@
 
 #pragma mark - 下载完用户头像,聊天发送的图片,刷新 collectionView
 -(void)downloadImageNotification:(NSNotification *)noti{
-    NSURL *avatarUrl= noti.imageUrl;
-    NSString *avatarPath=avatarUrl.absoluteString;
-    NSLog(@"%@",avatarUrl);
-    if([avatarPath isEqualToString:self.currentUser.avatarPath] ||[avatarPath isEqualToString:self.chatToUser.avatarPath]){
-        [self.collectionView reloadData];
-    }
+    [self.collectionView pendingReloadData];
 }
 
 #pragma mark - 用户更新完毕,更新这个 Viewcontroller 的 User
@@ -345,10 +353,10 @@
     User *u= noti.user;
     if([u.clientID isEqualToString:self.chatToUserID]){
         self.chatToUser=u;
-        [self.collectionView reloadData];
+        [self.collectionView pendingReloadData];
     }else if(self.currentUser.clientID){
         self.senderDisplayName=self.currentUser.displayName;
-        [self.collectionView reloadData];
+        [self.collectionView pendingReloadData];
     }
 }
 
@@ -384,6 +392,7 @@
     JSQMessage *jsqMessageThatNeedUpdate= noti.jsqMessageThatNeedUpdate;
     [self.msgs enumerateObjectsUsingBlock:^(JSQMessage *msg, NSUInteger idx, BOOL * _Nonnull stop) {
         if(jsqMessageThatNeedUpdate == msg){
+            *stop=YES;
             NSIndexPath *indexPath=[NSIndexPath indexPathForItem:idx inSection:0];
             [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
         }
@@ -459,7 +468,9 @@
             }];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-//                self.automaticallyScrollsToMostRecentMessage=YES;
+                if(historyMessages.count>0){
+                    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+                }
                 [self.collectionView.mj_header endRefreshing];
                 [self finishReceivingMessage];
             });

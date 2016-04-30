@@ -12,6 +12,7 @@
 
 @interface MediaViewerController : NSObject
 +(void)showIn:(UIViewController*)controller withImage:(UIImage*)img ;
++(void)showIn:(UIViewController *)controller withImageUrl:(NSURL*)imgUrl;
 +(void)showIn:(UIViewController*)controller withVideoUrl:(NSURL*)url;
 +(void)showIn:(UIViewController *)controller withLocation:(CLLocation *)location;
 @end

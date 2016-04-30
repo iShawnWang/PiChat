@@ -82,7 +82,7 @@
 @implementation UIImage (TransformWithConfiguration)
 -(instancetype)transformWithConfiguration:(ImageClipConfiguration *)configuration{
     
-    if(![configuration isEqual:[NSNull null]]){
+    if(configuration && ![configuration isEqual:[NSNull null]]){
         UIImage *transformedImg;
         if(!CGSizeEqualToSize(CGSizeZero, configuration.fitViewSize)){
             transformedImg= [self scaledImageToSize:configuration.fitViewSize];

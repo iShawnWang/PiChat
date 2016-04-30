@@ -35,8 +35,7 @@
 
 +(void)showFeedBackIn:(UIViewController*)vc{
     LCUserFeedbackViewController *feedBackVC=[LCUserFeedbackViewController new];
-    [[IQKeyboardManager sharedManager].disabledToolbarClasses addObject:[LCUserFeedbackViewController class]];
-    [[IQKeyboardManager sharedManager].disabledDistanceHandlingClasses addObject:[LCUserFeedbackViewController class]];
+    
     feedBackVC.contactHeaderHidden=YES;
     feedBackVC.navigationBarStyle=LCUserFeedbackNavigationBarStyleNone;
     UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:feedBackVC];

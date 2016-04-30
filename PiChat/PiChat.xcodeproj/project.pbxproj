@@ -61,6 +61,9 @@
 		0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34811C76371A006A9BAA /* MainTabBarController.m */; };
 		0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34841C763778006A9BAA /* StoryBoardHelper.m */; };
 		0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34871C763BEC006A9BAA /* CommenUtil.m */; };
+		0E5F98771CD4DCA500964BB5 /* UICollectionView+PendingReloadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F98761CD4DCA500964BB5 /* UICollectionView+PendingReloadData.m */; };
+		0E5F987A1CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F98791CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.m */; };
+		0E5F987F1CD512ED00964BB5 /* MWPhotoBrowser+UnClearMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F987E1CD512ED00964BB5 /* MWPhotoBrowser+UnClearMemoryCache.m */; };
 		0E79393C1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E79393B1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m */; };
 		0E79393F1C94246E00618BAD /* UIImage+ScaleSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E79393E1C94246E00618BAD /* UIImage+ScaleSize.m */; };
 		0E7939431C9463B700618BAD /* AVIMConversation+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7939421C9463B700618BAD /* AVIMConversation+Addition.m */; };
@@ -219,6 +222,12 @@
 		0E4F34861C763BEC006A9BAA /* CommenUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommenUtil.h; sourceTree = "<group>"; };
 		0E4F34871C763BEC006A9BAA /* CommenUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommenUtil.m; sourceTree = "<group>"; };
 		0E4F34891C763D81006A9BAA /* GlobalConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstant.h; sourceTree = "<group>"; };
+		0E5F98751CD4DCA500964BB5 /* UICollectionView+PendingReloadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+PendingReloadData.h"; sourceTree = "<group>"; };
+		0E5F98761CD4DCA500964BB5 /* UICollectionView+PendingReloadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+PendingReloadData.m"; sourceTree = "<group>"; };
+		0E5F98781CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQPhotoMediaItem+ThumbnailImageUrl.h"; sourceTree = "<group>"; };
+		0E5F98791CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQPhotoMediaItem+ThumbnailImageUrl.m"; sourceTree = "<group>"; };
+		0E5F987D1CD512ED00964BB5 /* MWPhotoBrowser+UnClearMemoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MWPhotoBrowser+UnClearMemoryCache.h"; sourceTree = "<group>"; };
+		0E5F987E1CD512ED00964BB5 /* MWPhotoBrowser+UnClearMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MWPhotoBrowser+UnClearMemoryCache.m"; sourceTree = "<group>"; };
 		0E79393A1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQVideoMediaItem+Thumbnail.h"; sourceTree = "<group>"; };
 		0E79393B1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQVideoMediaItem+Thumbnail.m"; sourceTree = "<group>"; };
 		0E79393D1C94246E00618BAD /* UIImage+ScaleSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ScaleSize.h"; sourceTree = "<group>"; };
@@ -540,6 +549,8 @@
 				0E206CB51CCE998C005FCE6A /* UIImage+ClipRoundCorner.m */,
 				0EA0AFD01CB181BE0022D68F /* IQKeyboardManager+Configuration.h */,
 				0EA0AFD11CB181BE0022D68F /* IQKeyboardManager+Configuration.m */,
+				0E5F98751CD4DCA500964BB5 /* UICollectionView+PendingReloadData.h */,
+				0E5F98761CD4DCA500964BB5 /* UICollectionView+PendingReloadData.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -573,6 +584,15 @@
 				0E4F34811C76371A006A9BAA /* MainTabBarController.m */,
 			);
 			path = MainNav;
+			sourceTree = "<group>";
+		};
+		0E5F987C1CD512C900964BB5 /* MWPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				0E5F987D1CD512ED00964BB5 /* MWPhotoBrowser+UnClearMemoryCache.h */,
+				0E5F987E1CD512ED00964BB5 /* MWPhotoBrowser+UnClearMemoryCache.m */,
+			);
+			path = MWPhotoBrowser;
 			sourceTree = "<group>";
 		};
 		0EA4EC8E1C9E988C009A5ECB /* GCPlaceholderTextView */ = {
@@ -611,6 +631,8 @@
 				0ED6EE9D1C934E0A00DCC2DD /* JSQMessage+MessageID.m */,
 				0E79393A1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.h */,
 				0E79393B1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m */,
+				0E5F98781CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.h */,
+				0E5F98791CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.m */,
 			);
 			path = JSQMessage;
 			sourceTree = "<group>";
@@ -618,6 +640,7 @@
 		0EE2C49E1C907EE800A7DEE0 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				0E5F987C1CD512C900964BB5 /* MWPhotoBrowser */,
 				0E2179581CAEDF53009DA7D6 /* TTTAttributedLabel */,
 				0E0F0B0F1C9F24150095FFA1 /* UIImage+ImageEffects.h */,
 				0E0F0B101C9F24150095FFA1 /* UIImage+ImageEffects.m */,
@@ -998,6 +1021,7 @@
 				0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */,
 				0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */,
 				0EA0AFD21CB181BE0022D68F /* IQKeyboardManager+Configuration.m in Sources */,
+				0E5F987F1CD512ED00964BB5 /* MWPhotoBrowser+UnClearMemoryCache.m in Sources */,
 				0E46A7841C9B16CA00CC50D3 /* NewMomentPhotoViewerController.m in Sources */,
 				0E0FBAE81C9FDCBA005852AF /* MomentsManager.m in Sources */,
 				0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */,
@@ -1023,6 +1047,8 @@
 				0EF84CC01CCFA6C600FCE619 /* RecordIndocator.m in Sources */,
 				0E1975D01CA926D500E8EF01 /* TextPathHelper.m in Sources */,
 				0E4F345E1C76009D006A9BAA /* ChatManager.m in Sources */,
+				0E5F987A1CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.m in Sources */,
+				0E5F98771CD4DCA500964BB5 /* UICollectionView+PendingReloadData.m in Sources */,
 				0E391A301C8F1AD2000066C8 /* JSQMessagesInputToolbar+DecorateInputView.m in Sources */,
 				0E21795B1CAEDF53009DA7D6 /* TTTAttributedLabel.m in Sources */,
 			);
