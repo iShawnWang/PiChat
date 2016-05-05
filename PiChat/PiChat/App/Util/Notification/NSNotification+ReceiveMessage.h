@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *const kDidReceiveTypedMessageNotification =@"didReceiveTypedMessageNotification";
+extern NSString *const kDidReceiveTypedMessageNotification ;
 
 @class AVIMTypedMessage;
 @interface NSNotification (ReceiveMessage)

@@ -169,6 +169,10 @@
                                                         selector:@selector(updateProgress:)
                                                         userInfo:nil
                                                          repeats:YES];
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        NSError *error;
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+        [audioSession setActive:YES error:&error];
         [_audioPlayer play];
     }
 }
@@ -220,11 +224,10 @@
 
         if (_audioData) {
             _audioPlayer = [[AVAudioPlayer alloc] initWithData:_audioData error:nil];
-            _audioPlayer.delegate = self;
         } else if (_audioURL) {
             _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:_audioURL error:nil];
-            _audioPlayer.delegate = self;
         }
+        _audioPlayer.delegate = self;
         
         // create container view for the various controls
         CGSize size = [self mediaViewDisplaySize];

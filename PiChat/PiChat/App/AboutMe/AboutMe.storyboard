@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KEl-tg-M8T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KEl-tg-M8T">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -135,7 +135,13 @@
                             <outlet property="delegate" destination="rAA-of-adu" id="kt3-JE-x3P"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="sw9-Qe-0Pr"/>
+                    <navigationItem key="navigationItem" id="sw9-Qe-0Pr">
+                        <barButtonItem key="rightBarButtonItem" image="menu" id="uTu-yM-Omh">
+                            <connections>
+                                <segue destination="ukI-aJ-eWs" kind="show" id="1fx-jC-9Pd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="avatarImageView" destination="KwD-sR-jL8" id="Nuo-9n-gmn"/>
                         <outlet property="userNameLabel" destination="6h0-a0-BTe" id="mtZ-qW-NMp"/>
@@ -154,6 +160,74 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1198" y="467"/>
+        </scene>
+        <!--Setting Table Controller-->
+        <scene sceneID="rfX-mK-mv7">
+            <objects>
+                <tableViewController id="ukI-aJ-eWs" customClass="SettingTableController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="P61-dV-jCC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClearCacheCell" id="9Iz-6O-Lyc" customClass="ClearCacheCell">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Iz-6O-Lyc" id="Byl-u2-dEk">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="缓存大小 : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MjC-cs-JCe">
+                                            <rect key="frame" x="26" y="11" width="82" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZES-gE-ves">
+                                            <rect key="frame" x="524" y="7" width="60" height="30"/>
+                                            <state key="normal" title="清除缓存"/>
+                                            <connections>
+                                                <action selector="clearCache:" destination="9Iz-6O-Lyc" eventType="touchUpInside" id="MRy-Jl-jwT"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="666 mb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izf-LC-RN7">
+                                            <rect key="frame" x="116" y="11" width="61" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="izf-LC-RN7" firstAttribute="centerY" secondItem="Byl-u2-dEk" secondAttribute="centerY" id="0Ne-TV-TpV"/>
+                                        <constraint firstItem="ZES-gE-ves" firstAttribute="centerY" secondItem="Byl-u2-dEk" secondAttribute="centerY" id="5h2-eq-01u"/>
+                                        <constraint firstItem="MjC-cs-JCe" firstAttribute="centerY" secondItem="Byl-u2-dEk" secondAttribute="centerY" id="5qE-bg-NEs"/>
+                                        <constraint firstItem="izf-LC-RN7" firstAttribute="leading" secondItem="MjC-cs-JCe" secondAttribute="trailing" constant="8" id="K9n-Y5-2Yj"/>
+                                        <constraint firstItem="MjC-cs-JCe" firstAttribute="leading" secondItem="Byl-u2-dEk" secondAttribute="leadingMargin" constant="18" id="LpE-Ce-Syq"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="ZES-gE-ves" secondAttribute="trailing" constant="8" id="w2K-wm-gFh"/>
+                                        <constraint firstItem="ZES-gE-ves" firstAttribute="centerX" secondItem="Byl-u2-dEk" secondAttribute="centerX" id="zzv-oa-gtK"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="zzv-oa-gtK"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="cacheSizeLabel" destination="izf-LC-RN7" id="anz-so-eIA"/>
+                                    <outlet property="clearCacheBtn" destination="ZES-gE-ves" id="Ecb-dE-XB5"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="ukI-aJ-eWs" id="bNv-fH-djB"/>
+                            <outlet property="delegate" destination="ukI-aJ-eWs" id="k6o-EH-oJS"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cO8-2X-tVW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1851" y="467"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="jt4-IS-JqL">
@@ -176,6 +250,7 @@
     </scenes>
     <resources>
         <image name="_doggy" width="580" height="605"/>
+        <image name="menu" width="20" height="20"/>
     </resources>
     <color key="tintColor" red="0.023529411760000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
 </document>

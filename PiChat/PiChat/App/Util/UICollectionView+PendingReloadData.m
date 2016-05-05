@@ -53,6 +53,9 @@ static char const * const kMinReloadIntervalKey = "minReloadIntervalKey";
 
 #pragma mark -
 
+/**
+ *  防止短时间(默认250ms)内多次 ReloadData 调用,导致 UICollectionview 奇怪 Bug,cell 消失,界面闪.
+ */
 -(void)pendingReloadData{
 //    NSLog(@"pendingReloadData if Need");
     NSDate *now= [NSDate date];
@@ -66,7 +69,7 @@ static char const * const kMinReloadIntervalKey = "minReloadIntervalKey";
     if(lastReloadTime==nil){
 //        NSLog(@"第一次 Reload");
         self.lastReloadTime=now;
-        [self performSelector:@selector(reloadData)];
+        [self invokeReloadData];
         return;
     }
     //有等待执行的 ReloadData() 操作,直接返回,因为一会 ReloadData()方法就执行了
@@ -76,21 +79,26 @@ static char const * const kMinReloadIntervalKey = "minReloadIntervalKey";
     }
     //短时间内多次调用 ReloadData()方法,延迟这次的方法执行
     if(timeInterval<self.minReloadInterval){
-//        NSLog(@"发送延迟 Reload");
+        
         self.hasPendingOperation=YES;
         NSTimeInterval delay=self.minReloadInterval-timeInterval;
+//        NSLog(@"发送延迟 Reload interval:%lf, delay %lf:",timeInterval,delay);
         self.lastReloadTime=[now dateByAddingTimeInterval:delay];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay/1000 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //            NSLog(@"延迟 Reload 执行完毕");
             
             self.hasPendingOperation=NO;
-            [self performSelector:@selector(reloadData) withObject:nil afterDelay:delay];
+            [self invokeReloadData];
         });
     }else{
+        //NSLog(@"这次 Reload 时间符合要求");
         //ReloadData() 方法调用的时间间隔符合要求
-//        NSLog(@"这次 Reload 时间符合要求");
         self.lastReloadTime=now;
-        [self performSelector:_cmd withObject:nil afterDelay:0];
+        [self invokeReloadData];
     }
+}
+
+-(void)invokeReloadData{
+    [self performSelector:@selector(reloadData)];
 }
 @end

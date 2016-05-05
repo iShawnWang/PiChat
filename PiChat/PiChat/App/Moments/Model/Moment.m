@@ -24,6 +24,10 @@
     return self.postUser.objectId.hash ^ self.favourUsers.hash ^ self.comments.hash ^ self.comments.hash ^ self.images.hash ^ self.texts.hash;
 }
 
+-(id)uniqueID{
+    return @([self hash]);
+}
+
 #pragma mark - Public
 
 /**

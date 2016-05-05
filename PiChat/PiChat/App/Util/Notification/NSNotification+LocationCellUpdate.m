@@ -9,6 +9,7 @@
 #import "NSNotification+LocationCellUpdate.h"
 #import "NSNotification+Post.h"
 
+NSString *const kLocationCellNeedUpdateNotification=@"kLocationCellNeedUpdateNotification";
 static NSString *const JSQMsgThatNeedUpdate=@"kJSQMsgThatNeedUpdate";
 @implementation NSNotification (LocationCellUpdate)
 +(void)postLocationCellNeedUpdateNotification:(id)object{

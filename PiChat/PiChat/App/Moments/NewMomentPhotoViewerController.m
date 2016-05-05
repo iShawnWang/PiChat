@@ -9,7 +9,6 @@
 #import "NewMomentPhotoViewerController.h"
 #import "NewMomentPhotoCell.h"
 #import "MediaPicker.h"
-#import "MediaViewerController.h"
 #import "CommenUtil.h"
 #import "ImageCache.h"
 
@@ -145,9 +144,7 @@ NSInteger const kCellBoraderWidth=1; //灰色边框宽度
             }
             [self.collectionView reloadData];
         }else{
-            
-            NSURL *imgUrl=self.photoUrls[indexPath.item];
-            [MediaViewerController showIn:self withImage:[UIImage imageWithContentsOfFile:imgUrl.path]];
+            [self.photoViewerDelegate photoViewerController:self didPhotoCellClick:cell];
         }
         
     }

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *const kPostMomentNotification=@"kDownloadImageCompleteNotification";
+extern NSString *const kPostMomentNotification;
 
 typedef NS_ENUM(NSUInteger, PostMomentState) {
     PostMomentStateComplete,

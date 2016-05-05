@@ -17,6 +17,8 @@
 -(void)momentCellDidLikeBtnClick:(MomentCell*)cell;
 -(void)momentCellDidCommentBtnClick:(MomentCell*)cell;
 
+-(void)momentCell:(MomentCell *)cell didPhotoViewController:(NewMomentPhotoViewerController*)controller photoCellClick:(UICollectionViewCell*)photoCell;
+
 @end
 
 @interface MomentCell : UICollectionViewCell

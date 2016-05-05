@@ -126,7 +126,9 @@
         [q whereKey:kObjectIdKey equalTo:clientID];
         NSError *error;
         u=[[q findObjects:&error]firstObject];
-        [self.userCache setObject:u forKey:u.objectId];
+        if(u){
+            [self.userCache setObject:u forKey:u.objectId];
+        }
     }
     return u;
 }
@@ -195,7 +197,7 @@
         }];
     }
     
-    return [JSQMessagesAvatarImageFactory avatarImageWithImage:avatar diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+    return [JSQMessagesAvatarImage avatarWithImage:avatar];
 }
 
 #pragma mark - 用户更新完毕,加入到缓存中

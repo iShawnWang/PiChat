@@ -18,7 +18,8 @@
 #import "ReplyInputView.h"
 #import <Masonry.h>
 #import "CommenUtil.h"
-#import "ModelSizeCache.h"
+#import "UICollectionView+PendingReloadData.h"
+#import "MediaViewerController.h"
 @import UIKit;
 
 NSString *const kMomentCell=@"MomentCell";
@@ -27,7 +28,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 @interface MomentsViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,MomentCellDelegate,CommentsTableControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic) NSMutableArray *moments;
-@property (strong, nonatomic) MomentCell *momentProtypeCell;
+@property (strong,nonatomic) MomentCell *momentProtypeCell;
 @property (strong,nonatomic) ReplyInputView *replyInputView;
 @property (strong,nonatomic) ModelSizeCache *modelSizeCache;
 @end
@@ -116,7 +117,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     Moment *m=self.moments[indexPath.row];
     
     __weak typeof(self) weakSelf=self;
-    CGSize cellSize= [self.modelSizeCache getSizeForModel:m withView:collectionView orCalc:^CGSize(NSObject *model, UIView *collectionOrTableView) {
+    CGSize cellSize= [self.modelSizeCache getSizeForModel:m withView:collectionView orCalc:^CGSize(id <UniqueObject> model, UIView *collectionOrTableView) {
         return [weakSelf.momentProtypeCell calcSizeWithMoment:(Moment*)model collectionView:(UICollectionView*)collectionOrTableView];
     }];
     
@@ -155,11 +156,11 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 #pragma mark - Notification
 -(void)downloadImageCompleteNotification:(NSNotification *)noti{
-    [self.collectionView reloadData];
+    [self.collectionView pendingReloadData];
 }
 
 -(void)userUpdateNotification:(NSNotification*)noti{
-    [self.collectionView reloadData];
+    [self.collectionView pendingReloadData];
 }
 
 #pragma mark - MomentCellDelegate //每个朋友圈的右下角菜单
@@ -196,6 +197,16 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     [self.replyInputView showInViewAtBottom:self.view];
 }
 
+-(void)momentCell:(MomentCell *)cell didPhotoViewController:(NewMomentPhotoViewerController *)controller photoCellClick:(UICollectionViewCell *)photoCell{
+    NSIndexPath *cellIndexPath=[self.collectionView indexPathForCell:cell];
+    Moment *m= self.moments[cellIndexPath.row];
+    
+    NSIndexPath *photoCellIndexPath= [controller.collectionView indexPathForCell:photoCell];
+    AVFile *image= m.images[photoCellIndexPath.row];
+    
+    [MediaViewerController showIn:self withImageUrl:[NSURL URLWithString:image.url]];
+}
+
 -(void)momentEditMenuWillShowForCell:(MomentCell *)cell likeBtn:(UIButton *)likeBtn commentBtn:(UIButton *)commentBtn{
     NSIndexPath *indexPath= [self.collectionView indexPathForCell:cell];
     Moment *m= self.moments[indexPath.item];
@@ -218,6 +229,8 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     self.replyInputView.textField.placeholder=[NSString stringWithFormat:@"回复 %@ :",comment.commentUserName];
     [self.replyInputView showInViewAtBottom:self.view];
 }
+
+
 
 
 #pragma mark - Private

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @import UIKit;
 
-static NSString *const kDownloadImageCompleteNotification=@"kDownloadImageCompleteNotification";
+extern NSString *const kDownloadImageCompleteNotification;
 
 @interface NSNotification (DownloadImage)
 @property (strong,nonatomic,readonly) UIImage *image;

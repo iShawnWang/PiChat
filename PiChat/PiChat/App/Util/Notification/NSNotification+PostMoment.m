@@ -10,6 +10,8 @@
 #import "NSNotification+Post.h"
 #import "Moment.h"
 
+NSString *const kPostMomentNotification=@"kDownloadImageCompleteNotification";
+
 NSString *const kPostState=@"kPostState";
 NSString *const kPostProgress=@"kPostProgress";
 NSString *const kPostError=@"kPostError";

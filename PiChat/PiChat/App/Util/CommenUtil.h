@@ -12,6 +12,7 @@
 #import "MBProgressHUD+Addition.h"
 #import "UIColor+Addition.h"
 #import "UIView+PiAdditions.h"
+#import "GlobalConstant.h"
 
 @interface CommenUtil : NSObject
 +(NSString*) uuid;
@@ -34,9 +35,15 @@
 
 +(NSString*)documentDirectoryStr;
 
++(NSString*)defaultCacheDirectoryStr;
+
 +(NSString*)cacheDirectoryStr;
 
 +(NSString*)randomFileName;
+
++(void)clearCacheDirectoryWithCallback:(VoidBlock)callback;
+
++ (BOOL)getAllocatedSize:(unsigned long long *)size ofDirectoryAtURL:(NSURL *)directoryURL error:(NSError * __autoreleasing *)error;
 
 #pragma mark - 视频缩略图
 + (UIImage *)thumbnailFromVideoAtURL:(NSURL *)contentURL ;

@@ -17,9 +17,10 @@
 #import <Masonry.h>
 #import "StoryBoardHelper.h"
 #import "TTTAttributedLabel.h"
+#import "AVFile+ImageThumbnailUrl.h"
 
 
-@interface MomentCell ()<UICollectionViewDelegateFlowLayout>
+@interface MomentCell ()<UICollectionViewDelegateFlowLayout,PhotoViewerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *likeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *commentBtn;
 @property (weak, nonatomic) IBOutlet UIView *photoViewerPlaceholderView;
@@ -40,7 +41,7 @@
     
     self.isCommentMenuShown=NO;
     self.isCommentMenuAnimating=NO;
-    self.commentMenuWidthConstraint.constant=0;
+    self.commentMenuWidthConstraint.constant=0; //隐藏右下角评论菜单
     
     [self.commentsTablePlaceHolderView addSubview:self.commentsController.view];
     [self.commentsController.view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -80,11 +81,11 @@
     if(moment.images && moment.images.count>0){
         NSMutableArray *photoUrls=[NSMutableArray array];
         [moment.images enumerateObjectsUsingBlock:^(AVFile * imageFile, NSUInteger idx, BOOL * _Nonnull stop) {
-            [photoUrls addObject:[NSURL URLWithString:imageFile.url]];
-
+            [photoUrls addObject:[NSURL URLWithString:[imageFile defaultThumbnailUrl]]];
         }];
         
         self.photoViewerController.photoUrls=photoUrls;
+        self.photoViewerController.photoViewerDelegate=self;
     }
     
     [self updateConstraintsIfNeeded];
@@ -95,6 +96,7 @@
     self.photoViewerHeightConstraint.constant=photoViewerSize.height;
     
 //    NSLog(@"%f",photoViewerSize.height);
+    //喜欢和评论的 Tableview
     CGSize commentsTableSize= self.commentsController.tableView.contentSize;
     self.commentsTableHeightConstraint.constant=commentsTableSize.height;
 
@@ -188,7 +190,12 @@
 }
 
 #pragma mark - Navigation
-
+/**
+ *  获取 Container View 里的 ViewController
+ *
+ *  @param segue
+ *  @param sender
+ */
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:kNewMomentPhotoViewerControllerID]){
         self.photoViewerController=segue.destinationViewController;
@@ -197,4 +204,11 @@
         layer.borderWidth=1;
     }
 }
+
+#pragma mark - PhotoViewerControllerDelegate
+-(void)photoViewerController:(NewMomentPhotoViewerController *)controller didPhotoCellClick:(UICollectionViewCell *)cell{
+    [self.delegate momentCell:self didPhotoViewController:controller photoCellClick:cell];
+}
+
+
 @end

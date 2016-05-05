@@ -155,6 +155,7 @@
     };
     //
     self.recorder.delegate=self;
+    
     //
     self.bubbleImgFactory=[BubbleImgFactory sharedBubbleImgFactory];
     //
@@ -163,14 +164,12 @@
     self.senderId=self.conversationManager.currentUser.clientID;
     self.senderDisplayName=self.conversationManager.currentUser.displayName;
     //
-    self.inputToolbar.contentView.rightBarButtonItem.enabled=NO; //禁用发送按钮
-    //
+    self.inputToolbar.contentView.rightBarButtonItem.enabled=NO; //禁用发送按钮,下面初始化完对话在启用
     [self.userManager findUserByClientID:self.chatToUserID callback:^(User *user, NSError *error) {
         self.chatToUser=user;
         
         [self.collectionView pendingReloadData];
     }];
-    
     //初始化对话
     [self.conversationManager chatToUser:self.chatToUserID callback:^(AVIMConversation *conversation, NSError *error) {
         self.conversation=conversation;
@@ -187,7 +186,6 @@
         }];
         
     }];
-    
 }
 
 #pragma mark - 收到新消息
@@ -302,6 +300,10 @@
     [inputView toggleAttachmentKeyBoard];
 }
 
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.inputToolbar.contentView.textView resignFirstResponder];
+}
+
 #pragma mark - 更新上传媒体文件进度,上传完成发送消息
 
 -(void)uploadingMediaNotification:(NSNotification*)noti{
@@ -327,7 +329,6 @@
                     break;
 
             }
-            
             [self sendMessage:msg];
         }
         break;
@@ -424,7 +425,7 @@
         [self addTypedMessage:msg];
     }];
     
-    //TODO 重构用这个方法 ~! 555
+    //也可以用这个方法发送媒体消息
 //    self.conversation sendMessage:<#(AVIMMessage *)#> options:<#(AVIMMessageSendOption)#> progressBlock:<#^(NSInteger percentDone)progressBlock#> callback:<#^(BOOL succeeded, NSError *error)callback#>
 }
 
@@ -434,6 +435,13 @@
     [self addTypedMessage:msgToAdd toArrayHead:NO reloadData:YES];
 }
 
+/**
+ *
+ *
+ *  @param msgToAdd
+ *  @param toArrayHead 加到消息数组最上面.添加下拉刷新的历史消息,这个参数应为 YES
+ *  @param reloadData  是否刷新数据 reloadData()
+ */
 -(void)addTypedMessage:(AVIMTypedMessage*)msgToAdd toArrayHead:(BOOL)toArrayHead reloadData:(BOOL)reloadData{
     //同步方法,阻塞,为了保证消息顺序不乱
     [msgToAdd toJsqMessageWithCallback:^(JSQMessage *msg) {
@@ -495,6 +503,10 @@
 #pragma mark - AudioRecorderDelegate
 -(void)audioRecorder:(AudioRecorderController *)recorder didEndRecord:(NSURL *)audio{
 
+    if(!audio){
+        NSLog(@"%@",@"录音失败");
+        return;
+    }
     NSTimeInterval audioDuration= [AudioRecorderController durationForAudioFile:audio];
     
     if(audioDuration>1.2f){

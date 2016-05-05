@@ -33,16 +33,9 @@
     return _recorder;
 }
 
--(AVAudioPlayer *)player{
-    if(!_player){
-        _player=[[AVAudioPlayer alloc]initWithContentsOfURL:[self cacheFileUrl] error:nil];
-    }
-    return _player;
-}
-
 -(NSTimer *)timer{
     if(!_timer){
-        //0.02 = 60帧/ s
+        //0.03 = 30帧/ s
         _timer=[NSTimer timerWithTimeInterval:0.02 target:self selector:@selector(updateMetersView:) userInfo:nil repeats:YES];
         [[NSRunLoop currentRunLoop]addTimer:_timer forMode:NSRunLoopCommonModes];
     }
@@ -61,12 +54,6 @@
 #pragma mark - AVAudioRecorderDelegate
 -(void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)success{
     if(success){
-//        NSError *error;
-//        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-//        [audioSession setCategory:AVAudioSessionCategoryPlayback error:&error];
-//        [audioSession setActive:YES error:&error];
-        //测试用 录音后立即播放 ~
-//        [self.player play];
         [self.delegate audioRecorder:self didEndRecord:recorder.url];
     }else{
         [self.delegate audioRecorder:self didEndRecord:nil];

@@ -11,6 +11,8 @@
 
 #pragma mark - 上传媒体文件通知
 
+NSString *const kUploadMediaNotification=@"kUploadMediaNotification";
+
 static NSString *const kUploadState=@"kUploadState";
 static NSString *const kUploadedMediaType=@"kUploadedMediaType";
 

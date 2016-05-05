@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class AVFile;
 
-static NSString *const kUploadMediaNotification=@"kUploadMediaNotification";
+extern NSString *const kUploadMediaNotification;
 
 typedef NS_ENUM(NSUInteger, UploadState) {
     UploadStateComplete,

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *const kUserUpdateNotification=@"kUserUpdateNotification";
+extern NSString *const kUserUpdateNotification ;
 
 @class User;
 

@@ -9,6 +9,7 @@
 #import "NSNotification+DownloadImage.h"
 #import "NSNotification+Post.h"
 
+NSString *const kDownloadImageCompleteNotification=@"kDownloadImageCompleteNotification";
 static NSString *const kDownloadedImage=@"kDownloadedImage";
 static NSString *const kDownloadedImageUrl=@"kDownloadedImageUrl";
 

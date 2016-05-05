@@ -39,11 +39,11 @@
     return _cacheLandscape;
 }
 
--(void)setOrientationSize:(CGSize)size forModel:(NSObject*)model{
+-(void)setOrientationSize:(CGSize)size forModel:(id <UniqueObject>)model{
     if(UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)){
-        [self.cachePortrait setObject:[NSValue valueWithCGSize:size] forKey:@([model hash])];
+        [self.cachePortrait setObject:[NSValue valueWithCGSize:size] forKey:[model uniqueID]];
     }else{
-        [self.cacheLandscape setObject:[NSValue valueWithCGSize:size] forKey:@([model hash])];
+        [self.cacheLandscape setObject:[NSValue valueWithCGSize:size] forKey:[model uniqueID]];
     }
 }
 
@@ -55,30 +55,30 @@
     }
 }
 
--(CGSize)getSizeForModel:(NSObject*)model withView:(UIView*)view orCalc:(CalcModelSizeBlock)block{
+-(CGSize)getSizeForModel:(id <UniqueObject>)model withView:(UIView*)view orCalc:(CalcModelSizeBlock)block{
     CGSize cacheSize=self.defaultNilCacheSize; //默认值 -1,-1
     //从缓存中读取 size
-    NSValue *cacheSizeValue=[self sizeByOrientationForKey:@([model hash])];
+    NSValue *cacheSizeValue=[self sizeByOrientationForKey:[model uniqueID]];
     
     if(cacheSizeValue){
         cacheSize= cacheSizeValue.CGSizeValue;
     }
     if(cacheSize.height>-1){
-//        NSLog(@"从缓存中读取 size");
+        NSLog(@"从缓存中读取 size");
         return cacheSize;
     }else{
     //没有就计算一下,在存入缓存中
         cacheSize=block(model,view);
         [self setOrientationSize:cacheSize forModel:model];
-//        NSLog(@"计算size");
+        NSLog(@"计算size");
         return cacheSize;
     }
 }
 
--(void)invalidateCacheForModels:(NSArray*)models{
+-(void)invalidateCacheForModels:(NSArray<UniqueObject>*)models{
     [models enumerateObjectsUsingBlock:^(id  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self.cachePortrait removeObjectForKey:@([model hash])];
-        [self.cacheLandscape removeObjectForKey:@([model hash])];
+        [self.cachePortrait removeObjectForKey:[model uniqueID]];
+        [self.cacheLandscape removeObjectForKey:[model uniqueID]];
     }];
 }
 

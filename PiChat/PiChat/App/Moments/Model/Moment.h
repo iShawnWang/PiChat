@@ -9,6 +9,7 @@
 #import <AVOSCloud.h>
 #import "Comment.h"
 #import "GlobalConstant.h"
+#import "ModelSizeCache.h"
 
 @class User;
 
@@ -18,7 +19,7 @@ static NSString *const kPostContent=@"texts";
 static NSString *const kFavourUsers=@"favourUsers";
 static NSString *const kComments=@"comments";
 
-@interface Moment : AVObject<AVSubclassing>
+@interface Moment : AVObject<AVSubclassing,UniqueObject>
 @property (strong,nonatomic) User *postUser;
 @property (copy,nonatomic) NSArray *favourUsers; //赞过的人
 @property (copy,nonatomic) NSArray *comments; //别人的评论

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class JSQMessage;
 //给 JSQLocationCell 设置位置是异步的,它会先创建 MapView 然后截取 snapShot ,需要 用Notification刷新 Cell
-static NSString *const kLocationCellNeedUpdateNotification=@"kLocationCellNeedUpdateNotification";
+extern NSString *const kLocationCellNeedUpdateNotification;
 
 @interface NSNotification (LocationCellUpdate)
 @property (strong,nonatomic,readonly) JSQMessage *jsqMessageThatNeedUpdate;

@@ -52,11 +52,11 @@
             //缩略图图片显示大小
             NSValue *mediaViewDisplaySizeValue= [photoItem valueForKey:@"mediaViewDisplaySize"];
             CGSize mediaViewDisplaySize=[mediaViewDisplaySizeValue CGSizeValue];
-            if(CGSizeEqualToSize(mediaViewDisplaySize, CGSizeZero)){
-                //获取不到缩略图图片显示大小就默认屏幕 1/3 宽度
-                CGFloat screenWidth_3= CGRectGetWidth([UIScreen mainScreen].bounds)/3.0;
-                mediaViewDisplaySize=CGSizeMake(screenWidth_3, screenWidth_3/1.4);
-            }
+//            if(CGSizeEqualToSize(mediaViewDisplaySize, CGSizeZero)){
+//                //获取不到缩略图图片显示大小就缩放为屏幕 1/3 宽度
+//                CGFloat screenWidth_3= CGRectGetWidth([UIScreen mainScreen].bounds)/3.0;
+//                mediaViewDisplaySize=CGSizeMake(screenWidth_3, screenWidth_3/1.4);
+//            }
             
             if(!photoItem.thumbnailImageUrl){
                 //类似: http://ac-RD1BgVPw.clouddn.com/epDUHFCO2uxQPAYm3CYvCnD?imageView/1/w/315/h/225/q/100

@@ -10,8 +10,6 @@
 		0E0B213B1C774A9B00F257E4 /* AddFriendsTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0B213A1C774A9B00F257E4 /* AddFriendsTableController.m */; };
 		0E0B21411C7764D500F257E4 /* PrivateChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0B21401C7764D500F257E4 /* PrivateChatController.m */; };
 		0E0B21441C77651700F257E4 /* MediaViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0B21431C77651700F257E4 /* MediaViewerController.m */; };
-		0E0B214A1C77691200F257E4 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21461C77691200F257E4 /* avatar.png */; };
-		0E0B214B1C77691200F257E4 /* chatToAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E0B21471C77691200F257E4 /* chatToAvatar.png */; };
 		0E0F0B111C9F24150095FFA1 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0F0B101C9F24150095FFA1 /* UIImage+ImageEffects.m */; };
 		0E0FBAE81C9FDCBA005852AF /* MomentsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FBAE71C9FDCBA005852AF /* MomentsManager.m */; };
 		0E0FBAEB1C9FE5BB005852AF /* NSNotification+PostMoment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FBAEA1C9FE5BB005852AF /* NSNotification+PostMoment.m */; };
@@ -74,6 +72,7 @@
 		0EA0AFD21CB181BE0022D68F /* IQKeyboardManager+Configuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA0AFD11CB181BE0022D68F /* IQKeyboardManager+Configuration.m */; };
 		0EA0AFD51CB185F90022D68F /* UIView+PiAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA0AFD31CB185F90022D68F /* UIView+PiAdditions.m */; };
 		0EA4EC911C9E988C009A5ECB /* GCPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA4EC901C9E988C009A5ECB /* GCPlaceholderTextView.m */; };
+		0EA621231CDB5AFB00DC6F86 /* AVFile+ImageThumbnailUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA621221CDB5AFB00DC6F86 /* AVFile+ImageThumbnailUrl.m */; };
 		0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */; };
 		0EADC1B41C78B27E0001C1D8 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADC1B31C78B27E0001C1D8 /* ImageCache.m */; };
 		0EC4F7991C9EC818005D86DA /* MomentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F7981C9EC818005D86DA /* MomentHeaderView.m */; };
@@ -82,6 +81,8 @@
 		0ED19F031C91DA0F00EF7472 /* UIImage+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F011C91DA0F00EF7472 /* UIImage+JSQMessages.m */; };
 		0ED19F061C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F051C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m */; };
 		0ED39FF21C8B489B00894D4B /* Followee.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED39FF11C8B489B00894D4B /* Followee.m */; };
+		0ED67A851CDA668500A21D52 /* SettingTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED67A841CDA668500A21D52 /* SettingTableController.m */; };
+		0ED67A8B1CDA793600A21D52 /* ClearCacheCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED67A8A1CDA793600A21D52 /* ClearCacheCell.m */; };
 		0ED6EE9E1C934E0A00DCC2DD /* JSQMessage+MessageID.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED6EE9D1C934E0A00DCC2DD /* JSQMessage+MessageID.m */; };
 		0EE2C4A51C907EE900A7DEE0 /* AGEmojiKeyBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A11C907EE800A7DEE0 /* AGEmojiKeyBoardView.m */; };
 		0EE2C4A61C907EE900A7DEE0 /* AGEmojiPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A31C907EE900A7DEE0 /* AGEmojiPageView.m */; };
@@ -129,8 +130,6 @@
 		0E0B21401C7764D500F257E4 /* PrivateChatController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateChatController.m; sourceTree = "<group>"; };
 		0E0B21421C77651700F257E4 /* MediaViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaViewerController.h; sourceTree = "<group>"; };
 		0E0B21431C77651700F257E4 /* MediaViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaViewerController.m; sourceTree = "<group>"; };
-		0E0B21461C77691200F257E4 /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
-		0E0B21471C77691200F257E4 /* chatToAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatToAvatar.png; sourceTree = "<group>"; };
 		0E0F0B0F1C9F24150095FFA1 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		0E0F0B101C9F24150095FFA1 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		0E0FBAE61C9FDCBA005852AF /* MomentsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentsManager.h; sourceTree = "<group>"; };
@@ -247,6 +246,8 @@
 		0EA0AFD41CB185F90022D68F /* UIView+PiAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PiAdditions.h"; sourceTree = "<group>"; };
 		0EA4EC8F1C9E988C009A5ECB /* GCPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlaceholderTextView.h; sourceTree = "<group>"; };
 		0EA4EC901C9E988C009A5ECB /* GCPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlaceholderTextView.m; sourceTree = "<group>"; };
+		0EA621211CDB5AFB00DC6F86 /* AVFile+ImageThumbnailUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVFile+ImageThumbnailUrl.h"; sourceTree = "<group>"; };
+		0EA621221CDB5AFB00DC6F86 /* AVFile+ImageThumbnailUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVFile+ImageThumbnailUrl.m"; sourceTree = "<group>"; };
 		0EADC1AE1C789B950001C1D8 /* BubbleImgFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleImgFactory.h; sourceTree = "<group>"; };
 		0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleImgFactory.m; sourceTree = "<group>"; };
 		0EADC1B21C78B27E0001C1D8 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
@@ -263,6 +264,10 @@
 		0ED19F051C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVIMTypedMessage+ToJsqMessage.m"; sourceTree = "<group>"; };
 		0ED39FF01C8B489B00894D4B /* Followee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Followee.h; sourceTree = "<group>"; };
 		0ED39FF11C8B489B00894D4B /* Followee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Followee.m; sourceTree = "<group>"; };
+		0ED67A831CDA668500A21D52 /* SettingTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableController.h; sourceTree = "<group>"; };
+		0ED67A841CDA668500A21D52 /* SettingTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableController.m; sourceTree = "<group>"; };
+		0ED67A891CDA793600A21D52 /* ClearCacheCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearCacheCell.h; sourceTree = "<group>"; };
+		0ED67A8A1CDA793600A21D52 /* ClearCacheCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearCacheCell.m; sourceTree = "<group>"; };
 		0ED6EE9C1C934E0A00DCC2DD /* JSQMessage+MessageID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQMessage+MessageID.h"; sourceTree = "<group>"; };
 		0ED6EE9D1C934E0A00DCC2DD /* JSQMessage+MessageID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQMessage+MessageID.m"; sourceTree = "<group>"; };
 		0EE2C4A01C907EE800A7DEE0 /* AGEmojiKeyBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGEmojiKeyBoardView.h; sourceTree = "<group>"; };
@@ -355,15 +360,6 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
-		0E0B21451C77691200F257E4 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				0E0B21461C77691200F257E4 /* avatar.png */,
-				0E0B21471C77691200F257E4 /* chatToAvatar.png */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		0E1975CB1CA926D500E8EF01 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,6 +429,10 @@
 				0E4F345F1C760186006A9BAA /* AboutMe.storyboard */,
 				0E4F34671C76022E006A9BAA /* MeViewController.h */,
 				0E4F34681C76022E006A9BAA /* MeViewController.m */,
+				0ED67A831CDA668500A21D52 /* SettingTableController.h */,
+				0ED67A841CDA668500A21D52 /* SettingTableController.m */,
+				0ED67A891CDA793600A21D52 /* ClearCacheCell.h */,
+				0ED67A8A1CDA793600A21D52 /* ClearCacheCell.m */,
 			);
 			path = AboutMe;
 			sourceTree = "<group>";
@@ -476,6 +476,8 @@
 				0E8F091D1C7B0B6F0067A7EC /* FileUpLoader.m */,
 				0E7939411C9463B700618BAD /* AVIMConversation+Addition.h */,
 				0E7939421C9463B700618BAD /* AVIMConversation+Addition.m */,
+				0EA621211CDB5AFB00DC6F86 /* AVFile+ImageThumbnailUrl.h */,
+				0EA621221CDB5AFB00DC6F86 /* AVFile+ImageThumbnailUrl.m */,
 			);
 			path = LeanCloud;
 			sourceTree = "<group>";
@@ -705,7 +707,6 @@
 			children = (
 				0E4F34331C75F79B006A9BAA /* App */,
 				0EED52F31C75CD82000437BD /* Supporting Files */,
-				0E0B21451C77691200F257E4 /* Resources */,
 			);
 			path = PiChat;
 			sourceTree = "<group>";
@@ -886,9 +887,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E0B214A1C77691200F257E4 /* avatar.png in Resources */,
 				0EE2C4A71C907EE900A7DEE0 /* EmojisList.plist in Resources */,
-				0E0B214B1C77691200F257E4 /* chatToAvatar.png in Resources */,
 				0E4F347E1C7636DE006A9BAA /* Login.storyboard in Resources */,
 				0EA0AFCF1CB17C420022D68F /* ReplyInputView.xib in Resources */,
 				0E4F34621C76018E006A9BAA /* Contact.storyboard in Resources */,
@@ -979,6 +978,7 @@
 				0E4F34411C75F79B006A9BAA /* AppDelegate.m in Sources */,
 				0E4F345B1C760096006A9BAA /* UserManager.m in Sources */,
 				0E0FBAEB1C9FE5BB005852AF /* NSNotification+PostMoment.m in Sources */,
+				0ED67A8B1CDA793600A21D52 /* ClearCacheCell.m in Sources */,
 				0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */,
 				0E4F34511C75F86B006A9BAA /* LeanCloudManager.m in Sources */,
 				0E1975D11CA926D500E8EF01 /* TextPathRefreshControl.m in Sources */,
@@ -991,6 +991,7 @@
 				0E4F346C1C76023F006A9BAA /* ContactTableViewController.m in Sources */,
 				0EF757161C9706C6007AD3A1 /* NSNotification+DownloadImage.m in Sources */,
 				0EA0AFD51CB185F90022D68F /* UIView+PiAdditions.m in Sources */,
+				0ED67A851CDA668500A21D52 /* SettingTableController.m in Sources */,
 				0EF7571B1C9706C6007AD3A1 /* NSNotification+UserUpdate.m in Sources */,
 				0E7939431C9463B700618BAD /* AVIMConversation+Addition.m in Sources */,
 				0E0FBAEE1C9FEADD005852AF /* MomentCell.m in Sources */,
@@ -1044,6 +1045,7 @@
 				0E8F091B1C7AE9D10067A7EC /* MediaPicker.m in Sources */,
 				0E0F0B111C9F24150095FFA1 /* UIImage+ImageEffects.m in Sources */,
 				0E46A7811C9B127E00CC50D3 /* NewMomentViewController.m in Sources */,
+				0EA621231CDB5AFB00DC6F86 /* AVFile+ImageThumbnailUrl.m in Sources */,
 				0EF84CC01CCFA6C600FCE619 /* RecordIndocator.m in Sources */,
 				0E1975D01CA926D500E8EF01 /* TextPathHelper.m in Sources */,
 				0E4F345E1C76009D006A9BAA /* ChatManager.m in Sources */,

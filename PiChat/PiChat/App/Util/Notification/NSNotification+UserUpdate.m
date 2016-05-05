@@ -10,6 +10,7 @@
 #import "NSNotification+Post.h"
 #import "User.h"
 
+NSString *const kUserUpdateNotification=@"kUserUpdateNotification";
 static NSString *const kUpdatedUser=@"kUpdatedUser";
 
 @implementation NSNotification (UserUpdate)

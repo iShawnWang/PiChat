@@ -189,7 +189,6 @@
         make.edges.equalTo(self.textView);
     }];
     
-    [self.superview layoutIfNeeded];
 }
 
 @end
