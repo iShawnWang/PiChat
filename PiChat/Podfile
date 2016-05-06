@@ -22,6 +22,7 @@ pod 'MWPhotoBrowser'
 pod 'MJRefresh'
 pod 'SCSiriWaveformView'
 pod 'QBImagePickerController'
+pod 'DGActivityIndicatorView'
 end
 
 target 'PiChatTests' do

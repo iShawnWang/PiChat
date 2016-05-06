@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6pa-S6-5fN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6pa-S6-5fN">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -45,7 +45,7 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Nn-td-fS7">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Nn-td-fS7" customClass="AnimBtn">
                                 <rect key="frame" x="75" y="360" width="450" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="pg5-pD-hRO"/>
@@ -58,7 +58,7 @@
                                     <action selector="logIn:" destination="ZyI-e6-41C" eventType="touchUpInside" id="fgS-6M-U4q"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YlF-91-HXP">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YlF-91-HXP" customClass="AnimBtn">
                                 <rect key="frame" x="75" y="450" width="450" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="1xW-Rs-GFe"/>
@@ -123,6 +123,7 @@
                             <constraint firstItem="sl4-z4-Rq6" firstAttribute="height" secondItem="hil-mO-7uU" secondAttribute="height" id="1Ul-UO-Fy2"/>
                             <constraint firstItem="hil-mO-7uU" firstAttribute="width" secondItem="whI-DE-ix3" secondAttribute="width" multiplier="0.75" id="4aI-sZ-wIS"/>
                             <constraint firstItem="sl4-z4-Rq6" firstAttribute="centerX" secondItem="6Nn-td-fS7" secondAttribute="centerX" id="5ym-fo-c1p"/>
+                            <constraint firstItem="YlF-91-HXP" firstAttribute="centerX" secondItem="6Nn-td-fS7" secondAttribute="centerX" id="645-Nz-FXm"/>
                             <constraint firstItem="sl4-z4-Rq6" firstAttribute="leading" secondItem="hil-mO-7uU" secondAttribute="leading" id="9FT-V1-VtY"/>
                             <constraint firstItem="YlF-91-HXP" firstAttribute="width" secondItem="6Nn-td-fS7" secondAttribute="width" id="GQ2-MF-KKl"/>
                             <constraint firstItem="sl4-z4-Rq6" firstAttribute="trailing" secondItem="hil-mO-7uU" secondAttribute="trailing" id="Hgd-Ut-Icv"/>
@@ -132,6 +133,7 @@
                             <constraint firstItem="6Nn-td-fS7" firstAttribute="top" secondItem="sl4-z4-Rq6" secondAttribute="bottom" constant="30" id="gtK-1O-itl"/>
                             <constraint firstItem="hil-mO-7uU" firstAttribute="top" secondItem="wvY-fc-bTK" secondAttribute="bottom" constant="10" id="h22-gv-CbQ"/>
                             <constraint firstItem="5TO-Fe-a6J" firstAttribute="centerX" secondItem="whI-DE-ix3" secondAttribute="centerX" id="hcz-qJ-zTy"/>
+                            <constraint firstItem="YlF-91-HXP" firstAttribute="width" secondItem="whI-DE-ix3" secondAttribute="width" multiplier="0.75" id="jIt-LL-HdU"/>
                             <constraint firstItem="YlF-91-HXP" firstAttribute="top" secondItem="6Nn-td-fS7" secondAttribute="bottom" constant="30" id="oAC-fv-fcE"/>
                             <constraint firstItem="wvY-fc-bTK" firstAttribute="top" secondItem="jsa-hI-TS1" secondAttribute="bottom" constant="8" id="qLR-8q-1ll"/>
                             <constraint firstItem="sl4-z4-Rq6" firstAttribute="top" secondItem="hil-mO-7uU" secondAttribute="bottom" constant="30" id="qLb-oz-NiA"/>
@@ -142,6 +144,8 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="qLR-8q-1ll"/>
+                                <exclude reference="GQ2-MF-KKl"/>
+                                <exclude reference="rW0-fV-LA5"/>
                             </mask>
                         </variation>
                     </view>
@@ -149,6 +153,7 @@
                     <connections>
                         <outlet property="loginBtn" destination="6Nn-td-fS7" id="Pzl-f7-Utl"/>
                         <outlet property="pwdTextField" destination="sl4-z4-Rq6" id="Uww-Ja-exr"/>
+                        <outlet property="registerBtn" destination="YlF-91-HXP" id="x9K-i3-gAD"/>
                         <outlet property="userNameTextField" destination="hil-mO-7uU" id="1xz-Cl-wqV"/>
                     </connections>
                 </viewController>

@@ -12,11 +12,11 @@
 #import "ConversationManager.h"
 #import "MBProgressHUD+Addition.h"
 #import <AVOSCloudSNS.h>
+#import "AnimBtn.h"
 
 
 NSString *const kWeiBoAppKey=@"2421425804";
 NSString *const kWeiBoAppSecret=@"ece99227f17c276925ed520cabf68718";
-
 
 NSString *const kQQAppKey=@"1105183951";
 NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
@@ -24,7 +24,8 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *pwdTextField;
-@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
+@property (weak, nonatomic) IBOutlet AnimBtn *loginBtn;
+@property (weak, nonatomic) IBOutlet AnimBtn *registerBtn;
 
 @end
 
@@ -41,16 +42,20 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
     NSString *userName=[self.userNameTextField.text trim];
     NSString *pwd=[self.pwdTextField.text trim];
     [self.view endEditing:YES];
+    
     if([RegexUtil isEmail:userName]){
-        
+        [self.loginBtn startAnimting:nil];
         [[UserManager sharedUserManager] logInWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
             if(succeeded){
                 [[ConversationManager sharedConversationManager]setupConversationClientWithCallback:^(BOOL succeeded, NSError *error) {
-                    [self.view endEditing:YES];
-                    [StoryBoardHelper switchToMainTabVC];
+                    [self.loginBtn stopAnimating:^{
+                        [self.view endEditing:YES];
+                        [StoryBoardHelper switchToMainTabVC];
+                    }];
                 }];
-            }else{
-                [CommenUtil showMessage:[error description] inVC:self];
+            }
+            if([self showLogInErrorIfNeed:error]){
+                return ;
             }
         }];
     }else{
@@ -64,14 +69,18 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
     NSString *pwd=[self.pwdTextField.text trim];
     [self.view endEditing:YES];
     if([RegexUtil isEmail:userName]){
+        [self.registerBtn startAnimting:nil];
         [[UserManager sharedUserManager] signUpWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
             if(succeeded){
                 [[ConversationManager sharedConversationManager]setupConversationClientWithCallback:^(BOOL succeeded, NSError *error) {
-                    [self.view endEditing:YES];
-                    [StoryBoardHelper switchToMainTabVC];
+                    [self.registerBtn stopAnimating:^{
+                        [self.view endEditing:YES];
+                        [StoryBoardHelper switchToMainTabVC];
+                    }];
                 }];
-            }else{
-                [CommenUtil showMessage:[error description] inVC:self];
+            }
+            if([self showLogInErrorIfNeed:error]){
+                return ;
             }
         }];
     }else{
@@ -139,7 +148,7 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
 
 -(BOOL)showLogInErrorIfNeed:(NSError*)error{
     if(error){
-        [CommenUtil showMessage:[NSString stringWithFormat:@"登录失败 : %@",error] inVC:self];
+        [CommenUtil showMessage:[NSString stringWithFormat:@"%@",error] inVC:self];
         return YES;
     }
     return NO;

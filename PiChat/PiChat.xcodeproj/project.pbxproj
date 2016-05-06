@@ -89,6 +89,7 @@
 		0EE2C4A71C907EE900A7DEE0 /* EmojisList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A41C907EE900A7DEE0 /* EmojisList.plist */; };
 		0EE2C4AA1C908C9C00A7DEE0 /* InputAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A91C908C9C00A7DEE0 /* InputAttachmentView.m */; };
 		0EE2C4AD1C908CC600A7DEE0 /* InputAttachmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EE2C4AC1C908CC600A7DEE0 /* InputAttachmentView.xib */; };
+		0EE7DE5C1CDBB58F00D87D21 /* AnimBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE7DE5B1CDBB58F00D87D21 /* AnimBtn.m */; };
 		0EED52FE1C75CD82000437BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED52FC1C75CD82000437BD /* Main.storyboard */; };
 		0EED53001C75CD82000437BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EED52FF1C75CD82000437BD /* Assets.xcassets */; };
 		0EED53031C75CD82000437BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED53011C75CD82000437BD /* LaunchScreen.storyboard */; };
@@ -278,6 +279,8 @@
 		0EE2C4A81C908C9C00A7DEE0 /* InputAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputAttachmentView.h; sourceTree = "<group>"; };
 		0EE2C4A91C908C9C00A7DEE0 /* InputAttachmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputAttachmentView.m; sourceTree = "<group>"; };
 		0EE2C4AC1C908CC600A7DEE0 /* InputAttachmentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputAttachmentView.xib; sourceTree = "<group>"; };
+		0EE7DE5A1CDBB58F00D87D21 /* AnimBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimBtn.h; sourceTree = "<group>"; };
+		0EE7DE5B1CDBB58F00D87D21 /* AnimBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimBtn.m; sourceTree = "<group>"; };
 		0EED52F01C75CD82000437BD /* PiChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EED52FD1C75CD82000437BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0EED52FF1C75CD82000437BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -563,6 +566,8 @@
 				0E4F34491C75F82E006A9BAA /* LoginViewController.h */,
 				0E4F344A1C75F82E006A9BAA /* LoginViewController.m */,
 				0E4F347D1C7636DE006A9BAA /* Login.storyboard */,
+				0EE7DE5A1CDBB58F00D87D21 /* AnimBtn.h */,
+				0EE7DE5B1CDBB58F00D87D21 /* AnimBtn.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -985,6 +990,7 @@
 				0E79393F1C94246E00618BAD /* UIImage+ScaleSize.m in Sources */,
 				0E0B21411C7764D500F257E4 /* PrivateChatController.m in Sources */,
 				0ED39FF21C8B489B00894D4B /* Followee.m in Sources */,
+				0EE7DE5C1CDBB58F00D87D21 /* AnimBtn.m in Sources */,
 				0E391A261C8EB3F3000066C8 /* BasicPinAnnotation.m in Sources */,
 				0EADC1B01C789B950001C1D8 /* BubbleImgFactory.m in Sources */,
 				0E391A2A1C8EBD7D000066C8 /* AudioRecorderController.m in Sources */,
