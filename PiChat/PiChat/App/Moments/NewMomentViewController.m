@@ -72,7 +72,7 @@
         self.photoViewerController=segue.destinationViewController;
         self.photoViewerController.photoViewerType=PhotoViewerTypePick;
         CALayer *layer= self.photoViewerController.view.layer;
-        layer.borderColor=[UIColor colorFromHexString:@"DEDEDE"].CGColor;
+        layer.borderColor=[UIColor lightGrayDividerColor].CGColor;
         layer.borderWidth=1;
     }
 }

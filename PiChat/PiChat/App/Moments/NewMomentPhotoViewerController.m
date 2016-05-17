@@ -11,6 +11,7 @@
 #import "MediaPicker.h"
 #import "CommenUtil.h"
 #import "ImageCache.h"
+#import "UIColor+Addition.h"
 
 
 NSString * const kNewMomentPhotoCellID = @"NewMomentPhotoCell";
@@ -35,7 +36,7 @@ NSInteger const kCellBoraderWidth=1; //灰色边框宽度
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.currentState=PhotoViewerStateNormal;
-    self.cellBorderColor=[UIColor colorFromHexString:@"DEDEDE"];
+    self.cellBorderColor=[UIColor lightGrayDividerColor];
     ((UICollectionViewFlowLayout*)self.collectionViewLayout).minimumLineSpacing=5;
 }
 

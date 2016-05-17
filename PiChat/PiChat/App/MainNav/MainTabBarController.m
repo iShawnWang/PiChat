@@ -27,7 +27,7 @@
                            [StoryBoardHelper initialViewControllerFromSBName:kContactSB],
                            [StoryBoardHelper initialViewControllerFromSBName:kMomentsSB],
                            [StoryBoardHelper initialViewControllerFromSBName:kAboutMeSB]];
-    [UITabBar appearance].tintColor=[UIColor colorFromHexString:@"06BEBD"];
+    [UITabBar appearance].tintColor=[UIColor globalTintColor];
 }
 
 @end

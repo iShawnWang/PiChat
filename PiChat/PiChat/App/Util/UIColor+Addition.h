@@ -9,11 +9,11 @@
 
 #import <UIKit/UIKit.h>
 
-static inline UIColor * UIColorWithRGBA(CGFloat r,CGFloat g, CGFloat b, CGFloat a){
+NS_INLINE UIColor * UIColorWithRGBA(CGFloat r,CGFloat g, CGFloat b, CGFloat a){
     return [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)];
 }
 
-static inline UIColor * UIClearColor(){
+NS_INLINE UIColor * UIClearColor(){
     return [UIColor clearColor];
 }
 
@@ -21,4 +21,8 @@ static inline UIColor * UIClearColor(){
 + (UIColor *)colorFromHexString:(NSString *)hexString;
 - (NSString *)hexString;
 + (UIColor *)UIColorWithR:(CGFloat)r G:(CGFloat)g B:(CGFloat)b A:(CGFloat)a;
+
+#pragma mark - 
++(UIColor*)globalTintColor;
++(UIColor*)lightGrayDividerColor;
 @end

@@ -8,6 +8,7 @@
 
 #import "UIColor+Addition.h"
 
+
 @implementation UIColor (Addition)
 
 #pragma mark - Color from Hex
@@ -53,5 +54,14 @@
              @(g),
              @(b),
              @(a)];
+}
+
+#pragma mark - 
++(UIColor *)globalTintColor{
+    return [UIColor colorFromHexString:@"06BEBD"];
+}
+
++(UIColor *)lightGrayDividerColor{
+    return [UIColor colorFromHexString:@"DEDEDE"];
 }
 @end
