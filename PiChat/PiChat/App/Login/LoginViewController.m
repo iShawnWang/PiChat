@@ -14,7 +14,6 @@
 #import <AVOSCloudSNS.h>
 #import "AnimBtn.h"
 
-
 NSString *const kWeiBoAppKey=@"2421425804";
 NSString *const kWeiBoAppSecret=@"ece99227f17c276925ed520cabf68718";
 

@@ -218,6 +218,23 @@
 
 #pragma mark - NSString
 @implementation NSString (Util)
+
+-(BOOL)isEmptyString{
+    if (self == nil || self == NULL) {
+        return YES;
+    }
+    if ([self isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    if ([self trim].length==0) {
+        return YES;
+    }
+    if ([self isEqualToString:@"(null)"] || [self isEqualToString:@"<null>"]) {
+        return YES;
+    }
+    return NO;
+}
+
 -(NSString*)trim{
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }

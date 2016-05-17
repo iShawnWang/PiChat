@@ -14,13 +14,13 @@
 #import "ImageCache.h"
 #import "ContactCell.h"
 #import "ContactHeaderCell.h"
-
-
-NSString *const kContactCellID=@"ContactCell";
-NSString *const kContactHeaderCellID=@"ContactHeaderCell";
+#import "SectionedContact.h"
+#import "NewFriendsNotifyCell.h"
+#import "GroupChatCell.h"
 
 @interface ContactTableViewController ()
-@property (strong,nonatomic) NSMutableDictionary *sectionedContacts;
+@property (strong,nonatomic) SectionedContact *sectionedContact;
+@property (assign,nonatomic) NSInteger addFriendBedgeCount;
 @end
 
 @implementation ContactTableViewController
@@ -44,94 +44,134 @@ NSString *const kContactHeaderCellID=@"ContactHeaderCell";
 }
 
 #pragma mark - Getter Setter
--(NSMutableDictionary *)sectionedContacts{
-    if(!_sectionedContacts){
-        _sectionedContacts=[NSMutableDictionary dictionary];
+-(SectionedContact *)sectionedContact{
+    if(!_sectionedContact){
+        _sectionedContact=[SectionedContact new];
     }
-    return _sectionedContacts;
+    return _sectionedContact;
 }
 
 #pragma mark - Life Cycle
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    self.tableView.sectionHeaderHeight=44;
-    self.tableView.rowHeight=88;
+    [self.tableView registerClass:[GroupChatCell class] forCellReuseIdentifier:kGroupChatCell];
+    [self.tableView registerClass:[NewFriendsNotifyCell class] forCellReuseIdentifier:kNewFriendsNotifyCell];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    //拉取好友列表
     [[UserManager sharedUserManager] fetchFriendsWithCallback:^(NSArray *objects, NSError *error) {
-        [self.sectionedContacts removeAllObjects];
+        [self.sectionedContact clearContacts];
         [objects enumerateObjectsUsingBlock:^(User *u, NSUInteger idx, BOOL * _Nonnull stop) {
-            [self addUserToSectionedContacts:u];
+            [self.sectionedContact addUser:u];
         }];
         [self.tableView reloadData];
+    }];
+    //拉取所有添加好友的信息,如果有未读的,就显示小红点, bedge
+    [[UserManager sharedUserManager]findAddFriendRequestAboutUser:[User currentUser] callback:^(NSArray *objects, NSError *error) {
+        __block NSInteger bedgeCount=0;
+        [objects enumerateObjectsUsingBlock:^(AddFriendRequest *request, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(!request.isRead){
+                bedgeCount++;
+            }
+        }];
+        if(bedgeCount>0){
+            self.addFriendBedgeCount=bedgeCount;
+        }else{
+            self.addFriendBedgeCount=0;
+        }
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     }];
 }
 
 #pragma mark - Table view data source
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.sectionedContacts.allKeys.count;
+    return [self.sectionedContact numberOfSection]+1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSMutableArray *contacts=self.sectionedContacts.allValues[section];
-    return contacts.count;
+    if(section==0){
+        return 2;
+    }else{
+        return [self.sectionedContact numberOfRowsInSection:section-1];
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section==0){
+        if(indexPath.row==0){
+            NewFriendsNotifyCell *notifyCell=[tableView dequeueReusableCellWithIdentifier:kNewFriendsNotifyCell];
+            [notifyCell configWithBedgeCount:self.addFriendBedgeCount];
+            return notifyCell;
+        }else if(indexPath.row==1){
+            return [tableView dequeueReusableCellWithIdentifier:kGroupChatCell];
+        }
+        return nil;
+    }
     ContactCell *cell=[tableView dequeueReusableCellWithIdentifier:kContactCellID];
-    NSArray *contacts= self.sectionedContacts.allValues[indexPath.section];
-    User *u=contacts[indexPath.row];
+    User *u= [self.sectionedContact userForIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section-1]];
     [cell configWithUser:u];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSArray *contacts= self.sectionedContacts.allValues[indexPath.section];
-    User *u=contacts[indexPath.row];
-    PrivateChatController *chatVC= [PrivateChatController new];
-    chatVC.chatToUserID=u.clientID;
-    [self.navigationController pushViewController:chatVC animated:YES];
+    if(indexPath.section==0){
+        if(indexPath.row==0){//新的朋友
+            [self performSegueWithIdentifier:@"NewFriendsNotifySegue" sender:self];
+        }else if(indexPath.row==1){//群组
+            [self performSegueWithIdentifier:@"GroupChatListSegue" sender:self];
+        }
+    }else{
+        User *u=[self.sectionedContact userForIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section-1]];
+        PrivateChatController *chatVC= [PrivateChatController new];
+        chatVC.chatToUserID=u.clientID;
+        [self.navigationController pushViewController:chatVC animated:YES];
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section==0){
+        return 66;
+    }else{
+        return 88;
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if(section==0){
+        return 0;
+    }else{
+        return 44;
+    }
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return self.sectionedContacts.allKeys[section];
+    if(section==0){
+        return nil;
+    }else{
+        return [self.sectionedContact titleForHeaderInSection:section-1];
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    ContactHeaderCell *header= [tableView dequeueReusableCellWithIdentifier:kContactHeaderCellID];
-    header.titleLabel.text=[self tableView:tableView titleForHeaderInSection:section];
-    return header.contentView;
+    if(section==0){
+        return nil;
+    }else{
+        ContactHeaderCell *header= [tableView dequeueReusableCellWithIdentifier:kContactHeaderCellID];
+        header.titleLabel.text=[self tableView:tableView titleForHeaderInSection:section];
+        return header.contentView;
+    }
+    
 }
 
 -(NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView{
-    return self.sectionedContacts.allKeys;
-}
-
-#pragma mark - Private
-/**
- *  模仿系统联系人界面,按用户首字母分Section
- *
- *  @param user 
- */
--(void)addUserToSectionedContacts:(User*)user{
-    __block BOOL firstLetterExistInSectionedContacts=NO;
-    NSString *userFirstLetter= [user.displayName substringToIndex:1];
-    [self.sectionedContacts enumerateKeysAndObjectsUsingBlock:^(NSString *firstLetter, NSMutableArray *contacts, BOOL * _Nonnull stop) {
-        if([userFirstLetter isEqualToString:firstLetter]){
-            [contacts addObject:user];
-            *stop=YES;
-            firstLetterExistInSectionedContacts=YES;
-        }
-    }];
-    
-    if(!firstLetterExistInSectionedContacts){
-        NSMutableArray *contacts=[NSMutableArray arrayWithObject:user];
-        [self.sectionedContacts setObject:contacts forKey:userFirstLetter];
-    }
+    NSArray *titles= [self.sectionedContact sectionIndexTitles];
+    NSMutableArray *mutableTitles= [titles mutableCopy];
+    [mutableTitles insertObject:@"" atIndex:0];
+    return mutableTitles;
 }
 
 #pragma mark - 用户信息更新

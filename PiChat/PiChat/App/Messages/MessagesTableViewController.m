@@ -100,7 +100,7 @@ NSString *const kMessageCellID=@"MessageCell";
     if(conversation.transient){//群聊
         
     }else{//单聊
-        User *u= [[UserManager sharedUserManager]findUserFromCacheElseNetworkByClientID:[conversation chatToUserId]];
+        User *u= [[UserManager sharedUserManager]findUserFromCacheElseNetworkByObjectID:[conversation chatToUserId]];
         [cell configWithUser:u conv:conversation];
     }
     return cell;

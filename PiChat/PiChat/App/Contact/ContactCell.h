@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 @class User;
 
+static NSString *const kContactCellID=@"ContactCell";
+
 @interface ContactCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

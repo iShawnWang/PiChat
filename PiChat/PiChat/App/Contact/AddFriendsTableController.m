@@ -7,34 +7,41 @@
 //
 
 #import "AddFriendsTableController.h"
-#import "UserManager.h"
 #import "CommenUtil.h"
+#import "AddFriendCell.h"
+#import "NSNotification+DownloadImage.h"
+#import "UserManager.h"
 
 @interface AddFriendsTableController ()<UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong,nonatomic) NSArray *friends;
-@property (strong,nonatomic) UserManager *userManager;
 @end
 
 @implementation AddFriendsTableController
 
-#pragma mark - Getter Setter
--(UserManager *)userManager{
-    if(!_userManager){
-        _userManager=[UserManager sharedUserManager];
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadImageCompleteNotification:) name:kDownloadImageCompleteNotification object:nil];
     }
-    return _userManager;
+    return self;
 }
+
+#pragma mark - Getter Setter
 
 #pragma mark - LifeCycle
 -(void)viewDidLoad{
     [super viewDidLoad];
+    self.tableView.tableFooterView=[UIView new];
     self.tableView.rowHeight=88;
 }
 
 #pragma mark - Private
 -(void)searchFriends:(NSString *)name{
-    [self.userManager findUsersByPartname:[name trim] withBlock:^(NSArray *objects, NSError *error) {
+    [MBProgressHUD showInView:self.view];
+    [[UserManager sharedUserManager] findUsersByPartname:[name trim] withBlock:^(NSArray *objects, NSError *error) {
+        [MBProgressHUD hide];
         self.friends=objects;
         [self.tableView reloadData];
     }];
@@ -46,16 +53,24 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *friendCell=[tableView dequeueReusableCellWithIdentifier:@"addFriendCell"];
+    AddFriendCell *friendCell=[tableView dequeueReusableCellWithIdentifier:@"addFriendCell"];
     User *u=self.friends[indexPath.row];
-    friendCell.textLabel.text=u.displayName;
+    [friendCell configWithUser:u];
     return friendCell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     User *u=self.friends[indexPath.row];
-    [self.userManager addFriend:u callback:^(BOOL succeeded, NSError *error) {
-        [MBProgressHUD showMsg:@"添加好友成功" forSeconds:1.5];
+    //判断是否已经是我的朋友了
+    [[UserManager sharedUserManager] isMyFriend:u callback:^(BOOL isMyFriend, NSError *error) {
+        if(isMyFriend){
+            [MBProgressHUD showMsg:@"已经是好友了 ~" forSeconds:1.5];
+        }else{
+            //不是就发送好友请求
+            [[UserManager sharedUserManager] postAddFriendRequestTo:u verifyMessage:@"" callBack:^(BOOL succeeded, NSError *error) {
+                [MBProgressHUD showMsg:@"发送好友请求成功" forSeconds:1.5];
+            }];
+        }
     }];
 }
 
@@ -68,4 +83,8 @@
     [self searchFriends:self.searchBar.text];
 }
 
+#pragma mark - Notification
+-(void)downloadImageCompleteNotification:(NSNotification*)noti{
+    [self.tableView reloadData];
+}
 @end

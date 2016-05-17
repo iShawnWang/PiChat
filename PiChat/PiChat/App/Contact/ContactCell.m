@@ -11,10 +11,10 @@
 #import "ImageCache.h"
 @interface ContactCell ()
 
-
 @end
 
 @implementation ContactCell
+
 -(void)configWithUser:(User*)u{
     self.nameLabel.text=u.displayName;
     self.detailLabel.text=@"";

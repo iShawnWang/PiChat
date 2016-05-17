@@ -76,6 +76,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "LeanCloudFeedback/LeanCloudFeedback/resources/feedback_warning@2x.png"
   install_resource "LeanCloudFeedback/LeanCloudFeedback/resources/LeanCloudFeedback.strings"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
+  install_resource "${BUILT_PRODUCTS_DIR}/JSBadgeView.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/MWPhotoBrowser.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QBImagePicker.bundle"
 fi
@@ -98,6 +99,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "LeanCloudFeedback/LeanCloudFeedback/resources/feedback_warning@2x.png"
   install_resource "LeanCloudFeedback/LeanCloudFeedback/resources/LeanCloudFeedback.strings"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
+  install_resource "${BUILT_PRODUCTS_DIR}/JSBadgeView.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/MWPhotoBrowser.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QBImagePicker.bundle"
 fi

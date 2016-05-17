@@ -165,7 +165,7 @@
     self.senderDisplayName=self.conversationManager.currentUser.displayName;
     //
     self.inputToolbar.contentView.rightBarButtonItem.enabled=NO; //禁用发送按钮,下面初始化完对话在启用
-    [self.userManager findUserByClientID:self.chatToUserID callback:^(User *user, NSError *error) {
+    [self.userManager findUserByObjectID:self.chatToUserID callback:^(User *user, NSError *error) {
         self.chatToUser=user;
         
         [self.collectionView pendingReloadData];
@@ -217,7 +217,7 @@
 
 -(id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessage *message = [self.msgs objectAtIndex:indexPath.item];
-    return [self.userManager avatarForClientID:message.senderId];
+    return [self.userManager avatarForObjectID:message.senderId];
 }
 
 -(void)collectionView:(JSQMessagesCollectionView *)collectionView didDeleteMessageAtIndexPath:(NSIndexPath *)indexPath{
@@ -275,6 +275,7 @@
     if([media isMemberOfClass:[JSQPhotoMediaItem class]]){
         NSString *originalImgUrlStr= ((JSQPhotoMediaItem*)media).originalImageUrl;
         NSURL *imgUrl= [NSURL URLWithString:originalImgUrlStr];
+
         [MediaViewerController showIn:self withImageUrl:imgUrl];
     }else if([media isMemberOfClass:[JSQVideoMediaItem class]]){
         NSURL *videoUrl= ((JSQVideoMediaItem*)media).fileURL;

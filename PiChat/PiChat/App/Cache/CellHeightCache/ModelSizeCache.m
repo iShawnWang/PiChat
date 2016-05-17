@@ -64,13 +64,13 @@
         cacheSize= cacheSizeValue.CGSizeValue;
     }
     if(cacheSize.height>-1){
-        NSLog(@"从缓存中读取 size");
+//        NSLog(@"从缓存中读取 size");
         return cacheSize;
     }else{
     //没有就计算一下,在存入缓存中
         cacheSize=block(model,view);
         [self setOrientationSize:cacheSize forModel:model];
-        NSLog(@"计算size");
+//        NSLog(@"计算size");
         return cacheSize;
     }
 }

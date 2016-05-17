@@ -66,7 +66,7 @@
     
     [self updateConstraintsIfNeeded];
     
-    User *u=[[UserManager sharedUserManager]findUserFromCacheElseNetworkByClientID:moment.postUser.clientID];
+    User *u=[[UserManager sharedUserManager]findUserFromCacheElseNetworkByObjectID:moment.postUser.clientID];
     
     self.displayNameLabel.text=u.displayName;
     self.avatarImageView.image = [[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];;

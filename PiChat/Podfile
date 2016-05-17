@@ -23,6 +23,7 @@ pod 'MJRefresh'
 pod 'SCSiriWaveformView'
 pod 'QBImagePickerController'
 pod 'DGActivityIndicatorView'
+pod 'JSBadgeView'
 end
 
 target 'PiChatTests' do

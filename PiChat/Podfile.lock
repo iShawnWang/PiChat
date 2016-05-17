@@ -20,14 +20,15 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AVOSCloud (3.2.8)
-  - AVOSCloudIM (3.2.8):
+  - AVOSCloud (3.2.9)
+  - AVOSCloudIM (3.2.9):
     - AVOSCloud
   - DACircularProgress (2.3.1)
   - DateTools (1.7.0)
   - DGActivityIndicatorView (2.0)
   - GJAlertController (1.0.0)
   - IQKeyboardManager (4.0.2)
+  - JSBadgeView (1.4.1)
   - JSQMessagesViewController (7.2.0):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
@@ -46,9 +47,9 @@ PODS:
   - QBImagePickerController (3.4.0)
   - Reveal-iOS-SDK (1.6.2)
   - SCSiriWaveformView (1.0.3)
-  - SDWebImage (3.7.5):
-    - SDWebImage/Core (= 3.7.5)
-  - SDWebImage/Core (3.7.5)
+  - SDWebImage (3.7.6):
+    - SDWebImage/Core (= 3.7.6)
+  - SDWebImage/Core (3.7.6)
 
 DEPENDENCIES:
   - AVOSCloud
@@ -57,6 +58,7 @@ DEPENDENCIES:
   - DGActivityIndicatorView
   - GJAlertController
   - IQKeyboardManager
+  - JSBadgeView
   - JSQMessagesViewController
   - LeanCloudFeedback
   - LeanCloudSocial
@@ -70,13 +72,14 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  AVOSCloud: b789619942a4275e615f8f0782e7475675951b95
-  AVOSCloudIM: d2f6a13d64f9676a43e4d68b822bd1be3f96fb76
+  AVOSCloud: b020009b1f2e35c271d4d019075458c879fc1d21
+  AVOSCloudIM: c70e31bfee8a0b52c8236e657414cf56bafc8796
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
   DGActivityIndicatorView: 52875b025a6ccf6a431a905285c12e2bb95eb559
   GJAlertController: 71a7f2072451bc37b780d78379c9ee4b6f357dd2
   IQKeyboardManager: 2341089c4ae25fa2fa82ce356a259fcd267dc6b6
+  JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   LeanCloudFeedback: 686305ea196931c7eae49800c384e42d78408482
@@ -88,6 +91,6 @@ SPEC CHECKSUMS:
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
-  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
 
 COCOAPODS: 0.39.0

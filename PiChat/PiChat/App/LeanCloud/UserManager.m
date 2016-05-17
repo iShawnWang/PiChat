@@ -85,6 +85,40 @@
 }
 
 #pragma mark - Friends
+
+-(void)isMyFriend:(User*)user callback:(BooleanResultBlock)callback{
+    [self fetchFriendsWithCallback:^(NSArray *friends, NSError *error) {
+        __block BOOL isMyFriend=NO;
+        [friends enumerateObjectsUsingBlock:^(User *friend, NSUInteger idx, BOOL * _Nonnull stop) {
+            if([friend.objectId isEqualToString:user.objectId]){
+                isMyFriend=YES;
+                *stop=YES;
+            }
+        }];
+        if(callback){
+            callback(isMyFriend,nil);
+        }
+    }];
+}
+
+-(void)postAddFriendRequestTo:(User*)userToAdd verifyMessage:(NSString*)verifyMsg callBack:(BooleanResultBlock)callback{
+    [[AddFriendRequest requestWithUserToAdd:userToAdd verifyMsg:verifyMsg] saveInBackgroundWithBlock:callback];
+}
+
+-(void)findAddFriendRequestAboutUser:(User*)u callback:(ArrayResultBlock)callback{
+    AVQuery *q=[AddFriendRequest query];
+    q.cachePolicy=kAVCachePolicyNetworkOnly;
+    [q whereKey:kToUserKey equalTo:u];
+    [q orderByDescending:kUpdatedAt];
+    
+    [q includeKey:kFromUserKey];
+    [q includeKey:kToUserKey];
+    [q includeKey:kIsReadKey];
+    [q includeKey:kStatusKey];
+    [q includeKey:kVerifyMessageKey];
+    [q findObjectsInBackgroundWithBlock:callback];
+}
+
 - (void)findUsersByPartname:(NSString *)partName withBlock:(AVArrayResultBlock)block {
     AVQuery *q = [User query];
     [q setCachePolicy:kAVCachePolicyNetworkOnly];
@@ -97,14 +131,14 @@
 /**
  *  先从缓存中找用户,找不到就下载.立即返回 nil
  *
- *  @param clientID
+ *  @param objectID
  *
  *  @return
  */
--(User *)findUserFromCacheElseNetworkByClientID:(NSString*)clientID{
-    User *u= [self findUserFromCacheByClientID:clientID];
+-(User *)findUserFromCacheElseNetworkByObjectID:(NSString*)objectID{
+    User *u= [self findUserFromCacheByObjectID:objectID];
     if(!u){
-        [self findUserFromNetworkByClientID:clientID callback:nil];
+        [self findUserFromNetworkByObjectID:objectID callback:nil];
     }
     return u;
 }
@@ -116,14 +150,14 @@
  *
  *  @return
  */
--(User*)findUserFromCacheByClientID:(NSString*)clientID{
-    User *u=[self.userCache objectForKey:clientID];
+-(User*)findUserFromCacheByObjectID:(NSString*)objectID{
+    User *u=[self.userCache objectForKey:objectID];
     if(u){
         return u;
     }else{
         AVQuery *q=[User query];
         q.cachePolicy=kAVCachePolicyCacheOnly;
-        [q whereKey:kObjectIdKey equalTo:clientID];
+        [q whereKey:kObjectIdKey equalTo:objectID];
         NSError *error;
         u=[[q findObjects:&error]firstObject];
         if(u){
@@ -133,15 +167,15 @@
     return u;
 }
 
--(void)findUserByClientID:(NSString*)clientID callback:(UserResultBlock)callback {
+-(void)findUserByObjectID:(NSString*)objectID callback:(UserResultBlock)callback {
     //先查询内存缓存是否有用户
-    User *u= [self findUserFromCacheByClientID:clientID];
+    User *u= [self findUserFromCacheByObjectID:objectID];
     if(u){
         callback(u,nil);
         return;
     }
     //没有就从网络 fetch 
-    [self findUserFromNetworkByClientID:clientID callback:callback];
+    [self findUserFromNetworkByObjectID:objectID callback:callback];
 }
 
 /**
@@ -150,9 +184,9 @@
  *  @param clientID
  *  @param callback
  */
--(void)findUserFromNetworkByClientID:(NSString *)clientID callback:(UserResultBlock)callback{
+-(void)findUserFromNetworkByObjectID:(NSString *)objectID callback:(UserResultBlock)callback{
     AVQuery *q=[User query];
-    [q whereKey:kObjectIdKey equalTo:clientID];
+    [q whereKey:kObjectIdKey equalTo:objectID];
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         User *u=[objects firstObject];
         [self.userCache setObject:u forKey:u.objectId];
@@ -181,18 +215,18 @@
 }
 
 #pragma mark - Avatar
--(JSQMessagesAvatarImage *)avatarForClientID:(NSString *)clientID {
-    return [self avatarForClientID:clientID size:CGSizeZero];
+-(JSQMessagesAvatarImage *)avatarForObjectID:(NSString *)objectID {
+    return [self avatarForObjectID:objectID size:CGSizeZero];
 }
 
--(JSQMessagesAvatarImage *)avatarForClientID:(NSString *)clientID size:(CGSize)size{
+-(JSQMessagesAvatarImage *)avatarForObjectID:(NSString *)objectID size:(CGSize)size{
     UIImage *avatar;
-    User *u= [self findUserFromCacheByClientID:clientID];
+    User *u= [self findUserFromCacheByObjectID:objectID];
     if(u.avatarPath){
         avatar=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
     }else{
         avatar=[UIImage new];
-        [self findUserByClientID:clientID callback:^(User *user, NSError *error) {
+        [self findUserByObjectID:objectID callback:^(User *user, NSError *error) {
             [[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
         }];
     }

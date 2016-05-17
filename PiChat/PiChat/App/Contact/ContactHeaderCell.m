@@ -9,5 +9,7 @@
 #import "ContactHeaderCell.h"
 
 @implementation ContactHeaderCell
-
+-(void)awakeFromNib{
+    self.selectionStyle=UITableViewCellSelectionStyleNone;
+}
 @end

@@ -8,6 +8,7 @@
 
 #ifndef GlobalConstant_h
 #define GlobalConstant_h
+#import "EXTScope.h" //https://github.com/jspahrsummers/libextobjc 为了使用RAC 的 @strongify 和 @weakify
 
 
 @class JSQMessage;

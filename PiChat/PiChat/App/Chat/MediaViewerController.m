@@ -12,26 +12,29 @@
 
 @implementation MediaViewerController
 
+
 +(void)showIn:(UIViewController*)controller withImage:(UIImage*)img {
     MWPhoto *photo=[MWPhoto photoWithImage:img];
-    [self showIn:controller withMWPhotos:@[photo]];
+    [self showIn:controller withPhotos:@[photo]];
 }
 
 +(void)showIn:(UIViewController *)controller withImageUrl:(NSURL*)imgUrl{
     MWPhoto *photo=[MWPhoto photoWithURL:imgUrl];
-    [self showIn:controller withMWPhotos:@[photo]];
+    [self showIn:controller withPhotos:@[photo]];
 }
 
 +(void)showIn:(UIViewController*)controller withVideoUrl:(NSURL*)url{
     MWPhoto *video=[[MWPhoto alloc]initWithVideoURL:url];
-    [self showIn:controller withMWPhotos:@[video]];
+    video.isVideo=YES;
+    [self showIn:controller withPhotos:@[video]];
 }
 
-+(void)showIn:(UIViewController*)controller withMWPhotos:(NSArray*)MWPhotos{
-    MWPhotoBrowser *photoBrowser=[[MWPhotoBrowser alloc]initWithPhotos:MWPhotos];
++(void)showIn:(UIViewController*)controller withPhotos:(NSArray*)photos{
+    MWPhotoBrowser *photoBrowser=[[MWPhotoBrowser alloc]initWithPhotos:photos];
+    
     photoBrowser.view.backgroundColor=[UIColor whiteColor];
     if(controller.navigationController){
-        [controller.navigationController pushViewController:photoBrowser animated:YES];
+        [controller.navigationController pushViewController:photoBrowser animated:YES ];
     }
 }
 

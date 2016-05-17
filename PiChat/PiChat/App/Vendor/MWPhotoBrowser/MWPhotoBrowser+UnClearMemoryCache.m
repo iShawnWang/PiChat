@@ -7,7 +7,7 @@
 //
 
 #import "MWPhotoBrowser+UnClearMemoryCache.h"
-#import <MWPhotoBrowser.h>
+
 
 
 #define SuppressUndeclaredSelectorWarning(Stuff) \

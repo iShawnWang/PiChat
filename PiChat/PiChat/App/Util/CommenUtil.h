@@ -49,8 +49,8 @@
 + (UIImage *)thumbnailFromVideoAtURL:(NSURL *)contentURL ;
 
 #pragma mark -
-
 +(UIImage*)textToImage:(NSString*)text size:(CGSize)size;
+
 #pragma mark - Alert
 +(void)showSettingAlertIn:(UIViewController*)vc;
 +(void)showMessage :(NSString*)message inVC:(UIViewController*)vc;
@@ -58,6 +58,7 @@
 
 #pragma mark - NSString
 @interface NSString (Util)
+-(BOOL)isEmptyString;
 -(NSString*)trim;
 -(NSString*)removeFilePrefix;
 @end

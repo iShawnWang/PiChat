@@ -6,7 +6,7 @@
 //  Copyright © 2016年 pi. All rights reserved.
 //
 
-#import <MWPhotoBrowser/MWPhotoBrowser.h>
+#import <MWPhotoBrowser.h>
 
 @interface MWPhotoBrowser (UnClearMemoryCache)
 
