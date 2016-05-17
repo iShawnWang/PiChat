@@ -10,6 +10,9 @@
 
 @class CLLocation;
 
+/**
+ *  媒体浏览,图片,视频,位置等.
+ */
 @interface MediaViewerController : NSObject
 +(void)showIn:(UIViewController*)controller withImage:(UIImage*)img ;
 +(void)showIn:(UIViewController *)controller withImageUrl:(NSURL*)imgUrl;

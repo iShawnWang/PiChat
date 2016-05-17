@@ -11,7 +11,7 @@
 #import <AVOSCloud.h>
 #import "User.h"
 #import "UserManager.h"
-#import "UIImage+ScaleSize.h"
+#import "UIImage+Resizing.h"
 
 @interface MomentsManager ()
 @property (strong,nonatomic) NSMutableArray *momentImageFile;
@@ -66,7 +66,7 @@
             UIImage *image= [UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl]];
             //图片太大就缩放一下...(width = 4288, height = 2848)
             if(image.size.width > screenSize.width || image.size.height > screenSize.height){
-                image=[image scaledAspectFitImageToSize:screenSize];
+                image=[image scaleToFitSize:screenSize];
             }
             AVFile *imageFile=[AVFile fileWithData:UIImagePNGRepresentation(image)];
             

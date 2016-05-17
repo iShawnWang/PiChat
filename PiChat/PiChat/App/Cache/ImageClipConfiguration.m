@@ -7,7 +7,7 @@
 //
 
 #import "ImageClipConfiguration.h"
-#import "UIImage+ScaleSize.h"
+#import "UIImage+Resizing.h"
 #import "UIImage+ClipRoundCorner.h"
 
 @implementation ImageClipConfiguration
@@ -85,7 +85,8 @@
     if(configuration && ![configuration isEqual:[NSNull null]]){
         UIImage *transformedImg;
         if(!CGSizeEqualToSize(CGSizeZero, configuration.fitViewSize)){
-            transformedImg= [self scaledImageToSize:configuration.fitViewSize];
+            
+            transformedImg= [self scaleToFitSize:configuration.fitViewSize];
         }
         if(configuration.cornerRadius>0){
             transformedImg= [self clipRoundCornerWithRadius:configuration.cornerRadius];

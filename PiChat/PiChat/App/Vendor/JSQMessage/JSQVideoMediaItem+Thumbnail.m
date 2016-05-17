@@ -8,7 +8,7 @@
 
 #import "JSQVideoMediaItem+Thumbnail.h"
 #import <objc/runtime.h>
-#import "UIImage+ScaleSize.h"
+#import "UIImage+Resizing.h"
 @import AVFoundation;
 
 NSString *const kCacheVideoImageView=@"cachedVideoImageView";
@@ -42,7 +42,7 @@ NSString *const kCacheVideoImageView=@"cachedVideoImageView";
             iconView.contentMode = UIViewContentModeCenter;
             iconView.clipsToBounds = YES;
             
-            UIImage *scaledThumbnailImg=[thumbnailImg scaledImageToSize:size];
+            UIImage *scaledThumbnailImg=[thumbnailImg scaleToFitSize:size];
             imageView = [[UIImageView alloc] initWithImage:scaledThumbnailImg];
             [imageView addSubview:iconView];
         } else {

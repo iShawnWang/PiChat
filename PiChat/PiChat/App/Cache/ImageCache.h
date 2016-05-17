@@ -12,6 +12,9 @@
 @class UIImage;
 @class ImageClipConfiguration;
 
+/**
+ *  图片缓存,基于 SDW
+ */
 @interface ImageCache : NSObject
 +(instancetype)sharedImageCache;
 

@@ -30,10 +30,10 @@ NSString *const kClearCacheCellID=@"ClearCacheCell";
         
     });
     
-    NSArray *contents= [[NSFileManager defaultManager]contentsOfDirectoryAtPath:[CommenUtil defaultCacheDirectoryStr] error:nil];
-    NSLog(@"%@",contents);
-    
-    NSLog(@"%@",[CommenUtil cacheDirectoryStr]);
+//    NSArray *contents= [[NSFileManager defaultManager]contentsOfDirectoryAtPath:[CommenUtil defaultCacheDirectoryStr] error:nil];
+//    NSLog(@"%@",contents);
+//    
+//    NSLog(@"%@",[CommenUtil cacheDirectoryStr]);
     
 }
 
@@ -46,7 +46,5 @@ NSString *const kClearCacheCellID=@"ClearCacheCell";
             [self calcCacheSizeAndReloadCell];
         }];
     }];
-    
-    
 }
 @end
