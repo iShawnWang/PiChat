@@ -10,6 +10,8 @@
 #import "TTTAttributedLabel.h"
 #import "Comment.h"
 
+
+NSString *const kCommentCell=@"CommentCell";
 @interface CommentCell ()
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *commentLabel;
 @end

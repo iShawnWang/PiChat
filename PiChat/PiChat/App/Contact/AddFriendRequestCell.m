@@ -13,6 +13,9 @@
 #import "UserManager.h"
 #import "MBProgressHUD+Addition.h"
 
+
+NSString *const kAddFriendRequestCell=@"AddFriendRequestCell";
+
 @interface AddFriendRequestCell ()
 @property (strong,nonatomic) AddFriendRequest *request;
 @end

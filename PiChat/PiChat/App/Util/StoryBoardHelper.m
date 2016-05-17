@@ -9,6 +9,13 @@
 #import "StoryBoardHelper.h"
 @import UIKit;
 
+NSString *const kMainSB=@"Main";
+NSString *const kLoginSB=@"Login";
+NSString *const kAboutMeSB=@"AboutMe";
+NSString *const kContactSB=@"Contact";
+NSString *const kMessagesSB=@"Messages";
+NSString *const kMomentsSB=@"Moments";
+
 @implementation StoryBoardHelper
 +(void)switchToMainTabVC{
     [UIApplication sharedApplication].keyWindow.rootViewController=[StoryBoardHelper mainTabViewController];

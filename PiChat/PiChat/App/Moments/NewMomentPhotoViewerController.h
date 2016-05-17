@@ -19,7 +19,8 @@ typedef NS_ENUM(NSUInteger, PhotoViewerType) {
     PhotoViewerTypePick
 };
 
-static NSString *const kNewMomentPhotoViewerControllerID=@"NewMomentPhotoViewerController";
+FOUNDATION_EXPORT NSString *const kNewMomentPhotoViewerControllerID;
+
 
 @protocol PhotoViewerControllerDelegate <NSObject>
 

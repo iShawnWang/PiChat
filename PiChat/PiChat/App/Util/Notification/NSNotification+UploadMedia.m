@@ -13,12 +13,12 @@
 
 NSString *const kUploadMediaNotification=@"kUploadMediaNotification";
 
-static NSString *const kUploadState=@"kUploadState";
-static NSString *const kUploadedMediaType=@"kUploadedMediaType";
+NSString *const kUploadState=@"kUploadState";
+NSString *const kUploadedMediaType=@"kUploadedMediaType";
 
-static NSString *const kUploadedFile=@"kUploadedFile";
-static NSString *const kUploadingProgress=@"kUploadingProgress";
-static NSString *const kUploadingError=@"kUploadingError";
+NSString *const kUploadedFile=@"kUploadedFile";
+NSString *const kUploadingProgress=@"kUploadingProgress";
+NSString *const kUploadingError=@"kUploadingError";
 
 @implementation NSNotification (UploadMedia)
 

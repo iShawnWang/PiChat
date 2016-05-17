@@ -8,6 +8,8 @@
 
 #import "ContactHeaderCell.h"
 
+NSString *const kContactHeaderCellID=@"ContactHeaderCell";
+
 @implementation ContactHeaderCell
 -(void)awakeFromNib{
     self.selectionStyle=UITableViewCellSelectionStyleNone;

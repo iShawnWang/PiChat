@@ -9,6 +9,14 @@
 #import "Moment.h"
 #import "User.h"
 
+
+NSString *const kPostUser=@"postUser";
+NSString *const kPostImages=@"images";
+NSString *const kPostContent=@"texts";
+NSString *const kFavourUsers=@"favourUsers";
+NSString *const kComments=@"comments";
+
+
 @implementation Moment
 @dynamic images,texts,postUser,favourUsers,comments;
 

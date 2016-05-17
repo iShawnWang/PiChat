@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString *const kGroupChatCell=@"GroupChatCell";
+FOUNDATION_EXPORT NSString *const kGroupChatCell;
 
 @interface GroupChatCell : UITableViewCell
 

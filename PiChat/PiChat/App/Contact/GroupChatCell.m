@@ -8,6 +8,8 @@
 
 #import "GroupChatCell.h"
 
+NSString *const kGroupChatCell=@"GroupChatCell";
+
 @implementation GroupChatCell
 
 - (instancetype)initWithCoder:(NSCoder *)coder

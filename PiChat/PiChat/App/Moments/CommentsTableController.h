@@ -11,7 +11,8 @@
 @class CommentsTableController;
 @class Comment;
 
-static NSString *const kCommentsTableController=@"CommentsTableController";
+FOUNDATION_EXPORT NSString *const kCommentsTableController;
+
 
 @protocol CommentsTableControllerDelegate <NSObject>
 

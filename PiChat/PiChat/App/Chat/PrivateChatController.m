@@ -29,7 +29,6 @@
 #import "NSNotification+ReceiveMessage.h"
 #import "NSNotification+LocationCellUpdate.h"
 #import "TextPathRefreshControl.h"
-#import "CommenUtil.h"
 #import "ImageCache.h"
 #import <MJRefresh.h>
 #import <IQKeyboardManager.h>
@@ -224,7 +223,6 @@
     
 }
 
-
 -(NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath{
     
     if([self needShowCellTopLabelForIndexPath:indexPath]){
@@ -283,7 +281,6 @@
     }else if([media isMemberOfClass:[JSQLocationMediaItem class]]){
         [MediaViewerController showIn:self withLocation:((JSQLocationMediaItem*)msg.media).location];
     }
-    
 }
 
 #pragma mark JSQMessagesViewController Delegate
@@ -318,10 +315,10 @@
             AVIMTypedMessage *msg;
             switch (mediaType) {
                 case UploadedMediaTypeVideo:
-                    //TODO 我们需要 videoFormat 么?
-                    msg=[AVIMVideoMessage messageWithText:nil file:media attributes:@{kVideoFormat:media.url.pathExtension}];
+                    msg=[AVIMVideoMessage messageWithText:nil file:media attributes:nil];
                     break;
                 case UploadedMediaTypeAduio:
+                    //
                     break;
                 case UploadedMediaTypePhoto:
                     msg=[AVIMImageMessage messageWithText:nil file:media attributes:nil];

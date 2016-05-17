@@ -13,11 +13,11 @@
 
 @class User;
 
-static NSString *const kPostUser=@"postUser";
-static NSString *const kPostImages=@"images";
-static NSString *const kPostContent=@"texts";
-static NSString *const kFavourUsers=@"favourUsers";
-static NSString *const kComments=@"comments";
+FOUNDATION_EXPORT NSString *const kPostUser;
+FOUNDATION_EXPORT NSString *const kPostImages;
+FOUNDATION_EXPORT NSString *const kPostContent;
+FOUNDATION_EXPORT NSString *const kFavourUsers;
+FOUNDATION_EXPORT NSString *const kComments;
 
 @interface Moment : AVObject<AVSubclassing,UniqueObject>
 @property (strong,nonatomic) User *postUser;

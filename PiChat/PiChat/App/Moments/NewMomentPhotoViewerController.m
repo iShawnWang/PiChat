@@ -13,9 +13,10 @@
 #import "ImageCache.h"
 
 
-static NSString * const kNewMomentPhotoCellID = @"NewMomentPhotoCell";
-static NSString * const kNewMomentAddCellID = @"NewMomentAddCell";
-static NSString * const kNewMomentDeleteCellID = @"NewMomentDeleteCell";
+NSString * const kNewMomentPhotoCellID = @"NewMomentPhotoCell";
+NSString * const kNewMomentAddCellID = @"NewMomentAddCell";
+NSString * const kNewMomentDeleteCellID = @"NewMomentDeleteCell";
+NSString *const kNewMomentPhotoViewerControllerID=@"NewMomentPhotoViewerController";
 
 NSInteger const kMaxPickAllowedCount=9 ; //最多能选9张照片
 NSInteger const kCellCountPerLine=3; //每行最多3个照片

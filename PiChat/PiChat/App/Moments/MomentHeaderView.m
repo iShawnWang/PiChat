@@ -20,6 +20,6 @@
 }
 
 +(NSInteger)calcHeightWithWidth:(NSInteger)width{
-    return width+44; //FIXME Header 高度计算
+    return width+44;
 }
 @end

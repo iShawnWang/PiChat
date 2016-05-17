@@ -63,7 +63,7 @@
     User *u= [User user];
     u.username=email;
     u.password=pwd;
-    u.avatarPath=@"http://7xqpoa.com1.z0.glb.clouddn.com/_doggy.jpg"; //FIXME 默认头像测试
+    u.avatarPath=@"http://7xqpoa.com1.z0.glb.clouddn.com/_doggy.jpg"; //默认头像测试
     u.fetchWhenSave=YES;
     
     [u signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -211,7 +211,6 @@
 -(void)fetchFriendsWithCallback:(ArrayResultBlock)callback {
     User *user = [User currentUser];
     AVQuery *q = [user followeeQuery];
-    q.cachePolicy = kAVCachePolicyNetworkElseCache; //TODO 联系人列表 先缓存在网络
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         callback([Followee followeeArrayToUserArray:objects] ,error);
     }];

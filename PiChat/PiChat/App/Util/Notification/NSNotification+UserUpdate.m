@@ -11,7 +11,7 @@
 #import "User.h"
 
 NSString *const kUserUpdateNotification=@"kUserUpdateNotification";
-static NSString *const kUpdatedUser=@"kUpdatedUser";
+NSString *const kUpdatedUser=@"kUpdatedUser";
 
 @implementation NSNotification (UserUpdate)
 

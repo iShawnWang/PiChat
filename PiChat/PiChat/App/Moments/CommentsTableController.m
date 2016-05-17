@@ -12,6 +12,7 @@
 #import "FavourUsersCell.h"
 #import "CommentCell.h"
 
+NSString *const kCommentsTableController=@"CommentsTableController";
 NSString *const kFavourUsersCell=@"FavourUsersCell";
 
 @interface CommentsTableController ()

@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class  AddFriendRequest;
-
-static NSString *const kAddFriendRequestCell=@"AddFriendRequestCell";
+FOUNDATION_EXPORT NSString *const kAddFriendRequestCell;
 
 @interface AddFriendRequestCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;

@@ -10,7 +10,7 @@
 #import "NSNotification+Post.h"
 
 NSString *const kDidReceiveTypedMessageNotification =@"didReceiveTypedMessageNotification";
-static NSString *const kTypedMessage =@"kTypedMessage";
+NSString *const kTypedMessage =@"kTypedMessage";
 @implementation NSNotification (ReceiveMessage)
 
 

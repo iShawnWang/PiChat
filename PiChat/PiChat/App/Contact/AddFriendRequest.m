@@ -8,6 +8,12 @@
 
 #import "AddFriendRequest.h"
 
+NSString *const kFromUserKey=@"fromUser";
+NSString *const kToUserKey=@"toUser";
+NSString *const kIsReadKey=@"isRead";
+NSString *const kStatusKey=@"status";
+NSString *const kVerifyMessageKey=@"verifyMessage";
+
 @implementation AddFriendRequest
 @dynamic fromUser,toUser,isRead,status,verifyMessage;
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString *const kContactHeaderCellID=@"ContactHeaderCell";
+FOUNDATION_EXPORT NSString *const kContactHeaderCellID;
 
 @interface ContactHeaderCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;

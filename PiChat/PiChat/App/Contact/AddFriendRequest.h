@@ -17,12 +17,11 @@ typedef enum : NSUInteger {
     AddFriendRequestStatusDeny
 } AddFriendRequestStatus;
 
-
-static NSString *const kFromUserKey=@"fromUser";
-static NSString *const kToUserKey=@"toUser";
-static NSString *const kIsReadKey=@"isRead";
-static NSString *const kStatusKey=@"status";
-static NSString *const kVerifyMessageKey=@"verifyMessage";
+FOUNDATION_EXPORT NSString *const kFromUserKey;
+FOUNDATION_EXPORT NSString *const kToUserKey;
+FOUNDATION_EXPORT NSString *const kIsReadKey;
+FOUNDATION_EXPORT NSString *const kStatusKey;
+FOUNDATION_EXPORT NSString *const kVerifyMessageKey;
 
 @interface AddFriendRequest : AVObject<AVSubclassing>
 @property (strong,nonatomic) User *fromUser;

@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class Comment;
-
-static NSString *const kCommentCell=@"CommentCell";
+FOUNDATION_EXPORT NSString *const kCommentCell;
 
 @interface CommentCell : UITableViewCell
 -(void)configWithComment:(Comment*)comment;

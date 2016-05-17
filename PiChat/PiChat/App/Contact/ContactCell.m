@@ -9,6 +9,9 @@
 #import "ContactCell.h"
 #import "User.h"
 #import "ImageCache.h"
+
+
+NSString *const kContactCellID=@"ContactCell";
 @interface ContactCell ()
 
 @end

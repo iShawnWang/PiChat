@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class User;
 
-static NSString *const kContactCellID=@"ContactCell";
+FOUNDATION_EXPORT NSString *const kContactCellID;
 
 @interface ContactCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;

@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *const kMainSB=@"Main";
-static NSString *const kLoginSB=@"Login";
-static NSString *const kAboutMeSB=@"AboutMe";
-static NSString *const kContactSB=@"Contact";
-static NSString *const kMessagesSB=@"Messages";
-static NSString *const kMomentsSB=@"Moments";
+FOUNDATION_EXPORT NSString *const kMainSB;
+FOUNDATION_EXPORT NSString *const kLoginSB;
+FOUNDATION_EXPORT NSString *const kAboutMeSB;
+FOUNDATION_EXPORT NSString *const kContactSB;
+FOUNDATION_EXPORT NSString *const kMessagesSB;
+FOUNDATION_EXPORT NSString *const kMomentsSB;
 
 @class UIViewController;
 @interface StoryBoardHelper : NSObject
