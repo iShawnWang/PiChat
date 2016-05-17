@@ -14,6 +14,7 @@
 #import <AVOSCloudSNS.h>
 #import "UIColor+Addition.h"
 #import "IQKeyboardManager+Configuration.h"
+#import "FabricManager.h"
 
 @interface AppDelegate ()
 
@@ -21,10 +22,10 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [IQKeyboardManager setupIQKeyboardManager];
     [LeanCloudManager setupApplication:launchOptions];
+    [FabricManager setup];
     [self setupRootController];
     return YES;
 }

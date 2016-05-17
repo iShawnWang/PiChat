@@ -16,6 +16,7 @@
 #import "Followee.h"
 #import "PiAutoPurgeCache.h"
 #import "NSNotification+UserUpdate.h"
+#import "FabricManager.h"
 
 
 @interface UserManager ()
@@ -67,6 +68,7 @@
     
     [u signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self.userCache setObject:u forKey:u.objectId];
+        [FabricManager setUserInfo];
         callback(succeeded,error);
     }];
 }
@@ -75,6 +77,7 @@
 -(void)logInWithUserName:(NSString*)email pwd:(NSString*)pwd callback:(BooleanResultBlock)callback{
     [User logInWithUsernameInBackground:email password:pwd block:^(AVUser *user, NSError *error) {
         [self.userCache setObject:user forKey:user.objectId];
+        [FabricManager setUserInfo];
         callback([User currentUser] !=nil,error); //currentUser 不为空 ,登录成功 Yes
     }];
 }

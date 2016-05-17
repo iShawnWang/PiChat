@@ -24,6 +24,8 @@ pod 'SCSiriWaveformView'
 pod 'QBImagePickerController'
 pod 'DGActivityIndicatorView'
 pod 'JSBadgeView'
+pod 'Fabric'
+pod 'Crashlytics'
 end
 
 target 'PiChatTests' do
