@@ -377,10 +377,10 @@
 			isa = PBXGroup;
 			children = (
 				0EB326611CEB877000E4F2C1 /* View */,
-				0E0B21421C77651700F257E4 /* MediaViewerController.h */,
-				0E0B21431C77651700F257E4 /* MediaViewerController.m */,
 				0E0B213F1C7764D500F257E4 /* PrivateChatController.h */,
 				0E0B21401C7764D500F257E4 /* PrivateChatController.m */,
+				0E0B21421C77651700F257E4 /* MediaViewerController.h */,
+				0E0B21431C77651700F257E4 /* MediaViewerController.m */,
 				0EADC1AE1C789B950001C1D8 /* BubbleImgFactory.h */,
 				0EADC1AF1C789B950001C1D8 /* BubbleImgFactory.m */,
 				0EF669171C8DCCD600B4D2C6 /* LocationViewerController.h */,
@@ -1383,6 +1383,7 @@
 			baseConfigurationReference = 15C71593C91B28C6CB6A60EB /* Pods-PiChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = PiChat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

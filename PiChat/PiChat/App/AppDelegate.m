@@ -73,7 +73,6 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-
 #pragma mark - Private
 -(void)setupRootController{
     self.window=[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];

@@ -19,15 +19,14 @@ NSString *const kClearCacheCellID=@"ClearCacheCell";
     self.cacheSizeLabel.text=@"";
 }
 -(void)calcCacheSizeAndReloadCell{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    executeAsyncInGlobalQueue(^{
         unsigned long long size;
         NSError *error;
         [CommenUtil getAllocatedSize:&size ofDirectoryAtURL:[NSURL URLWithString:[CommenUtil defaultCacheDirectoryStr]] error:&error];
         NSString *cacheSizeStr= [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleFile];
-        dispatch_async(dispatch_get_main_queue(), ^{
+        executeAsyncInMainQueue(^{
             self.cacheSizeLabel.text=cacheSizeStr;
         });
-        
     });
     
 //    NSArray *contents= [[NSFileManager defaultManager]contentsOfDirectoryAtPath:[CommenUtil defaultCacheDirectoryStr] error:nil];

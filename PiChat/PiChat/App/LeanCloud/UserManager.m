@@ -21,6 +21,7 @@
 
 @interface UserManager ()
 @property (strong,nonatomic) PiAutoPurgeCache *userCache;
+@property (strong,nonatomic) NSMutableSet *fetchingUserIDs;
 @end
 
 @implementation UserManager
@@ -56,6 +57,13 @@
         _userCache=[PiAutoPurgeCache new];
     }
     return _userCache;
+}
+
+-(NSMutableSet *)fetchingUserIDs{
+    if(!_fetchingUserIDs){
+        _fetchingUserIDs=[NSMutableSet set];
+    }
+    return _fetchingUserIDs;
 }
 
 #pragma mark - Register 
@@ -188,11 +196,16 @@
  *  @param callback
  */
 -(void)findUserFromNetworkByObjectID:(NSString *)objectID callback:(UserResultBlock)callback{
+    if([self.fetchingUserIDs containsObject:objectID]){
+        return;
+    }
+    [self.fetchingUserIDs addObject:objectID];
     AVQuery *q=[User query];
     [q whereKey:kObjectIdKey equalTo:objectID];
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         User *u=[objects firstObject];
         [self.userCache setObject:u forKey:u.objectId];
+        [self.fetchingUserIDs removeObject:objectID];
         [NSNotification postUserUpdateNotification:self user:u];
         if(callback){
             callback(u,error);

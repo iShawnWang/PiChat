@@ -99,6 +99,7 @@ static char const * const kMinReloadIntervalKey = "minReloadIntervalKey";
 }
 
 -(void)invokeReloadData{
-    [self performSelector:@selector(reloadData)];
+    [self.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+    [self reloadData];
 }
 @end

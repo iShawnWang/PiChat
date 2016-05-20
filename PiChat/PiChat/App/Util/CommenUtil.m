@@ -7,6 +7,7 @@
 //
 
 #import "CommenUtil.h"
+#import "GlobalConstant.h"
 @import AVFoundation;
 
 @implementation CommenUtil
@@ -91,7 +92,7 @@
 }
 
 +(void)clearCacheDirectoryWithCallback:(VoidBlock)callback{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    executeAsyncInGlobalQueue(^{
         NSError *error;
         NSFileManager *manager=[NSFileManager defaultManager];
         NSArray *contents= [manager contentsOfDirectoryAtPath:[CommenUtil cacheDirectoryStr] error:&error];
@@ -100,12 +101,11 @@
             NSError *error;
             [manager removeItemAtPath:contentPath error:&error];
         }];
-        dispatch_async(dispatch_get_main_queue(), ^{
+        executeAsyncInMainQueueIfNeed(^{
             if(callback){
                 callback();
             }
         });
-        
     });
     
 }

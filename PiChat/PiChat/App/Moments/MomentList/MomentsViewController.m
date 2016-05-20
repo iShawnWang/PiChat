@@ -239,8 +239,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
  *  为某个朋友圈发送新评论
  */
 -(void)postNewCommentForMoment:(Moment*)m commentContent:(NSString*)reply replyTo:(User*)replyTo andReloadCellAtIndexPath:(NSIndexPath*)indexPath{
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    executeAsyncInGlobalQueue(^{
         Comment *newComment= [Comment commentWithCommentUser:[User currentUser] commentContent:reply replayTo:replyTo];
         [newComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [m addNewComment:newComment];

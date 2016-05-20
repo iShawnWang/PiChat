@@ -164,26 +164,34 @@
     self.senderDisplayName=self.conversationManager.currentUser.displayName;
     //
     self.inputToolbar.contentView.rightBarButtonItem.enabled=NO; //禁用发送按钮,下面初始化完对话在启用
-    [self.userManager findUserByObjectID:self.chatToUserID callback:^(User *user, NSError *error) {
-        self.chatToUser=user;
-        
-        [self.collectionView pendingReloadData];
-    }];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+
     //初始化对话
     [self.conversationManager chatToUser:self.chatToUserID callback:^(AVIMConversation *conversation, NSError *error) {
         self.conversation=conversation;
         self.inputToolbar.contentView.rightBarButtonItem.enabled=YES;
-        [self.conversationManager fetchConversationMessages:conversation callback:^(NSArray *objects, NSError *error) {
-            //异步解析 typed messages
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    [self addTypedMessage:obj toArrayHead:NO reloadData:NO];
-                }];
-                [self performSelectorOnMainThread:@selector(finishReceivingMessage) withObject:nil waitUntilDone:NO];
-                [self performSelectorOnMainThread:@selector(scrollToBottomAnimated:) withObject:@(YES) waitUntilDone:NO];
+        [self.conversationManager fetchConversationMessages:self.conversation callback:^(NSArray *objects, NSError *error) {
+            //异步解析 typed messages 这个方法在 Global queue 中执行
+            [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self addTypedMessage:obj toArrayHead:NO reloadData:NO];
+            }];
+            
+            //获取用户数据,头像,昵称等.
+            [self.userManager findUserByObjectID:self.chatToUserID callback:^(User *user, NSError *error) {
+                self.chatToUser=user;
+                [self.collectionView pendingReloadData];
+            }];
+            
+            executeAsyncInMainQueueIfNeed(^{
+                [self finishReceivingMessage];
+                [self scrollToBottomAnimated:YES];
             });
+            
         }];
-        
     }];
 }
 
@@ -388,14 +396,20 @@
  *  @param noti
  */
 -(void)updateLocationCellNotification:(NSNotification*)noti{
-    JSQMessage *jsqMessageThatNeedUpdate= noti.jsqMessageThatNeedUpdate;
-    [self.msgs enumerateObjectsUsingBlock:^(JSQMessage *msg, NSUInteger idx, BOOL * _Nonnull stop) {
-        if(jsqMessageThatNeedUpdate == msg){
-            *stop=YES;
-            NSIndexPath *indexPath=[NSIndexPath indexPathForItem:idx inSection:0];
-            [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-        }
-    }];
+    //因为发送 notification后, 要等所有接收 notification 的方法都执行完毕后,发送通知过程才算结束,所以下面要异步执行,立即返回,不阻塞发送接收通知这个过程. 我在 Instrument 看到发送通知的方法占了100+ms.
+    executeAsyncInGlobalQueue(^{
+        JSQMessage *jsqMessageThatNeedUpdate= noti.jsqMessageThatNeedUpdate;
+        [self.msgs enumerateObjectsUsingBlock:^(JSQMessage *msg, NSUInteger idx, BOOL * _Nonnull stop) {
+            if(jsqMessageThatNeedUpdate == msg){
+                *stop=YES;
+                NSIndexPath *indexPath=[NSIndexPath indexPathForItem:idx inSection:0];
+                executeAsyncInMainQueue(^{
+                    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                });
+            }
+        }];
+    });
+    
 }
 
 -(void)sendTextMsg:(NSString*)text{
@@ -451,13 +465,9 @@
         
         if(!reloadData) return;
         
-        if([NSThread isMainThread]){
+        executeAsyncInMainQueueIfNeed(^{
             [self finishReceivingMessageAnimated:YES];
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self finishReceivingMessageAnimated:YES];
-            });
-        }
+        });
     }];
 }
 
@@ -467,18 +477,19 @@
     self.automaticallyScrollsToMostRecentMessage=NO;
     [self.conversationManager fetchMessages:self.conversation beforeTime:msg.timeStamp callback:^(NSArray *objects, NSError *error) {
         //异步解析 typed messages
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        executeAsyncInGlobalQueue(^{
             NSArray *historyMessages=[objects reverseObjectEnumerator].allObjects; //反转数组;
             [historyMessages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 [self addTypedMessage:obj toArrayHead:YES reloadData:NO];
             }];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
+            executeAsyncInMainQueueIfNeed(^{
+                
                 if(historyMessages.count>0){
                     [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
                 }
                 [self.collectionView.mj_header endRefreshing];
                 [self finishReceivingMessage];
+                self.automaticallyScrollsToMostRecentMessage=YES;
             });
         });
     }];

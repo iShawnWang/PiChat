@@ -31,7 +31,9 @@
         if(succeeded){
             self.netQueue.suspended=NO;
         }
-        callback(succeeded,error);
+        if(callback){
+            callback(succeeded,error);
+        }
     }];
     self.client.delegate=self;
 }
@@ -41,6 +43,11 @@
         _netQueue=[[NSOperationQueue alloc]init];
         _netQueue.maxConcurrentOperationCount=4;
         _netQueue.suspended=YES;
+        
+    }
+    AVIMClientStatus clientStatus=self.client.status;
+    if(clientStatus!=AVIMClientStatusOpened && clientStatus!=AVIMClientStatusOpening){
+        [self setupConversationClientWithCallback:nil];
     }
     return _netQueue;
 }
@@ -62,6 +69,7 @@
  *  @param callback
  */
 -(void)findOrCreatePrivateConversationWithClentID:(NSString*)clientID callback:(AVIMConversationResultBlock)callback{
+    
     [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
         
         NSArray *clientIDs=@[self.client.clientId,clientID];
@@ -109,9 +117,7 @@
  */
 -(void)createPrivateConversationWith2ClientIDs:(NSArray*)clientIDs callback:(AVIMConversationResultBlock)callback{
     [self.netQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
-        
         [self.client createConversationWithName:@"" clientIds:clientIDs callback:callback];
-        
     }]];
 }
 
