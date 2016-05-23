@@ -10,5 +10,14 @@
 
 @interface UIImage (ClipRoundCorner)
 -(instancetype)clipRoundCornerWithRadius:(NSInteger)radius;
+
+/**
+ *  圆角裁剪
+ *
+ *  @param radius
+ *  @param size
+ *
+ *  @return
+ */
 -(instancetype)clipRoundCornerWithRadius:(NSInteger)radius size:(CGSize)size;
 @end

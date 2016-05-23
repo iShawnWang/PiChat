@@ -9,7 +9,7 @@
 #import <JSQMessagesViewController/JSQMessages.h>
 
 /**
- *  生成聊天气泡的 factory
+ *  生成聊天气泡绿色,灰色背景图的 factory
  */
 @interface BubbleImgFactory : JSQMessagesBubbleImageFactory
 +(instancetype)sharedBubbleImgFactory;

@@ -73,6 +73,11 @@
     return NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
 }
 
+/**
+ *  默认的 cache 文件夹
+ *
+ *  @return
+ */
 +(NSString*)cacheDirectoryStr{
     NSString *cacheDir= [self defaultCacheDirectoryStr];
     NSString *bundleID=[NSBundle mainBundle].bundleIdentifier;
@@ -87,6 +92,11 @@
     return cacheDir;
 }
 
+/**
+ *  唯一的 string 类似 uuid,适合作为缓存的文件名
+ *
+ *  @return
+ */
 +(NSString*)randomFileName{
     return [[NSProcessInfo processInfo] globallyUniqueString];
 }
@@ -110,6 +120,15 @@
     
 }
 
+/**
+ *  搬运自 StackOverflow 和 Github
+ *
+ *  @param size
+ *  @param directoryURL
+ *  @param error
+ *
+ *  @return 
+ */
 + (BOOL)getAllocatedSize:(unsigned long long *)size ofDirectoryAtURL:(NSURL *)directoryURL error:(NSError * __autoreleasing *)error
 {
     NSParameterAssert(size != NULL);

@@ -11,6 +11,9 @@
 #import "NSNotification+UploadMedia.h"
 @class AVFile;
 
+/**
+ *  上传媒体文件,用 Leancloud 的文件存储.上传时和完成时会发送通知.
+ */
 @interface FileUpLoader : NSObject
 +(instancetype)sharedFileUpLoader;
 -(void)uploadImage:(UIImage*)img;

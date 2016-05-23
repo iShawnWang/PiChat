@@ -8,7 +8,6 @@
 
 #import "ConversationManager.h"
 #import "NSNotification+ReceiveMessage.h"
-#import "AVIMConversation+Addition.h"
 
 @interface ConversationManager  ()<AVIMClientDelegate>
 @property (copy,nonatomic) NSOperationQueue *netQueue;
@@ -99,7 +98,6 @@
         AVIMConversationQuery *query = [self conversationQuery];
         [query whereKey:@"m" containsAllObjectsInArray:clientIDs];
         [query whereKey:@"m" sizeEqualTo:2];
-        query.cachePolicy=kAVIMCachePolicyNetworkOnly;
         [query findConversationsWithCallback:^(NSArray *objects, NSError *error) {
             callback([objects firstObject],error);
         }];
@@ -237,7 +235,7 @@
         AVIMConversationQuery *query= [self.client conversationQuery];
         [query whereKey:kAVIMKeyMember containsString:self.client.clientId];
         [query orderByDescending:kUpdatedAt];
-//        query.limit=20;
+        query.limit=1000;
         [query findConversationsWithCallback:^(NSArray *objects, NSError *error) {
             [objects enumerateObjectsUsingBlock:^(AVIMConversation *conv, NSUInteger idx, BOOL * _Nonnull stop) {
                 AVIMTypedMessage *lastMsg= [[conv queryMessagesFromCacheWithLimit:1]firstObject];

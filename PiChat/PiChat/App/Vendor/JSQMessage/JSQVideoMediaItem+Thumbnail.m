@@ -17,6 +17,7 @@ NSString *const kCacheVideoImageView=@"cachedVideoImageView";
 
 /**
  *  在这个 Category 中, Override 了 `mediaView` 方法.
+ *  显示视频 Cell 的缩略图
  *
  *  @return
  */

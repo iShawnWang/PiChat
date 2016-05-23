@@ -11,6 +11,9 @@
 
 extern NSString *const kDownloadImageCompleteNotification;
 
+/**
+ *  ImageCache 下载完图片通知
+ */
 @interface NSNotification (DownloadImage)
 @property (strong,nonatomic,readonly) UIImage *image;
 @property (strong,nonatomic,readonly) NSURL *imageUrl;

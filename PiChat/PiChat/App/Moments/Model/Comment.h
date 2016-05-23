@@ -16,5 +16,14 @@
 @property (copy,nonatomic) NSString *replyToUserName;
 @property (copy,nonatomic) NSString* commentContent; //评论内容
 
+/**
+ *  创建一条评论
+ *
+ *  @param u
+ *  @param content
+ *  @param replayToUser 回复 XXX的评论
+ *
+ *  @return
+ */
 +(instancetype)commentWithCommentUser:(User*)u commentContent:(NSString*)content replayTo:(User*)replayToUser;
 @end

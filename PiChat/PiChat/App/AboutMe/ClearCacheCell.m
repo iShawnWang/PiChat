@@ -18,7 +18,7 @@ NSString *const kClearCacheCellID=@"ClearCacheCell";
 -(void)awakeFromNib{
     self.cacheSizeLabel.text=@"";
 }
--(void)calcCacheSizeAndReloadCell{
+-(void)calcCacheSize{
     executeAsyncInGlobalQueue(^{
         unsigned long long size;
         NSError *error;

@@ -164,7 +164,6 @@
         header.titleLabel.text=[self tableView:tableView titleForHeaderInSection:section];
         return header.contentView;
     }
-    
 }
 
 -(NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView{

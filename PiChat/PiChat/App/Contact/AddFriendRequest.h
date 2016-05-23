@@ -32,5 +32,14 @@ FOUNDATION_EXPORT NSString *const kVerifyMessageKey;
 @property (assign,nonatomic) AddFriendRequestStatus status;
 
 +(instancetype)requestWithUserToAdd:(User*)userToAdd;
+
+/**
+ *  创建对某人的添加好友请求
+ *
+ *  @param userToAdd
+ *  @param verifyMsg
+ *
+ *  @return 
+ */
 +(instancetype)requestWithUserToAdd:(User*)userToAdd verifyMsg:(NSString*)verifyMsg;
 @end

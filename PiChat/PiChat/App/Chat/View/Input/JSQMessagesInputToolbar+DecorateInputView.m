@@ -9,6 +9,14 @@
 #import "JSQMessagesInputToolbar+DecorateInputView.h"
 
 @implementation JSQMessagesInputToolbar (DecorateInputView)
+
+/**
+ *  加载我们自定义的 InputContentView
+ *
+ *  @param JSQMessagesToolbarContentView
+ *
+ *  @return 
+ */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 -(JSQMessagesToolbarContentView *)loadToolbarContentView{

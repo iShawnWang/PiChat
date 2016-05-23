@@ -12,5 +12,5 @@ FOUNDATION_EXPORT NSString *const kClearCacheCellID;
 @interface ClearCacheCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *clearCacheBtn;
 @property (weak, nonatomic) IBOutlet UILabel *cacheSizeLabel;
--(void)calcCacheSizeAndReloadCell;
+-(void)calcCacheSize;
 @end

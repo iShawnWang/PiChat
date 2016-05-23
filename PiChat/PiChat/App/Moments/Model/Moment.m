@@ -38,11 +38,7 @@ NSString *const kComments=@"comments";
 
 #pragma mark - Public
 
-/**
- *  添加赞这个朋友圈的用户,如果用户已经赞了,就取消赞
- *
- *  @param u
- */
+
 -(void)addOrRemoveFavourUser:(User *)u{
     NSMutableArray *newFavourUsers=[NSMutableArray arrayWithArray:self.favourUsers];
     if([newFavourUsers containsObject:u]){
@@ -53,11 +49,6 @@ NSString *const kComments=@"comments";
     self.favourUsers=[newFavourUsers copy];
 }
 
-/**
- *  添加对这个朋友圈的评论
- *
- *  @param comment 
- */
 -(void)addNewComment:(Comment*)comment{
     NSMutableArray *comments=[NSMutableArray arrayWithArray:self.comments];
     [comments addObject:comment];

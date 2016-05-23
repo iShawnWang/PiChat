@@ -12,39 +12,15 @@
 
 @implementation ImageClipConfiguration
 
-/**
- *  缩放图片到指定大小
- *
- *  @param fitSize
- *
- *  @return
- */
 +(instancetype)configurationWithFitViewSize:(CGSize)fitSize{
     return [ImageClipConfiguration configurationWithFitViewSize:fitSize circleImage:NO];
 }
 
-/**
- *  缩放图片到指定大小 ,并裁剪为圆形
- *
- *  @param fitSize
- *  @param isCircle
- *
- *  @return
- */
 +(instancetype)configurationWithFitViewSize:(CGSize)fitSize circleImage:(BOOL)isCircle{
     NSInteger radius=isCircle ? MAX(fitSize.width, fitSize.height) : 0;
     return [ImageClipConfiguration configurationWithFitViewSize:fitSize cornerRadius:radius isCircle:isCircle];
 }
 
-
-/**
- *  缩放图片到指定大小,添加指定大小的圆角
- *
- *  @param fitSize
- *  @param radius
- *
- *  @return
- */
 +(instancetype)configurationWithFitViewSize:(CGSize)fitSize cornerRadius:(NSInteger)radius isCircle:(BOOL)isCircle{
     ImageClipConfiguration *configuration=[ImageClipConfiguration new];
     configuration.fitViewSize=fitSize;
@@ -53,24 +29,10 @@
     return configuration;
 }
 
-/**
- *  只添加指定大小的圆角
- *
- *  @param radius
- *
- *  @return
- */
 +(instancetype)configurationWithCornerRadius:(NSInteger)radius{
     return [ImageClipConfiguration configurationWithFitViewSize:CGSizeZero cornerRadius:radius isCircle:NO];
 }
 
-/**
- *  裁剪为圆形图片,不改变大小
- *
- *  @param isCircle
- *
- *  @return
- */
 +(instancetype)configurationWithCircleImage:(BOOL)isCircle{
     return [ImageClipConfiguration configurationWithFitViewSize:CGSizeZero circleImage:isCircle];
 }

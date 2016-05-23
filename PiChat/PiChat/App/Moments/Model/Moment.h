@@ -26,7 +26,18 @@ FOUNDATION_EXPORT NSString *const kComments;
 @property (copy,nonatomic) NSArray *images;
 @property (copy,nonatomic) NSString *texts;
 
+/**
+ *  添加赞这个朋友圈的用户,如果用户已经赞了,就取消赞
+ *
+ *  @param u
+ */
 -(void)addOrRemoveFavourUser:(User *)u;
+
+/**
+ *  添加对这个朋友圈的评论
+ *
+ *  @param comment
+ */
 -(void)addNewComment:(Comment*)comment;
 -(void)saveInBackgroundThenFetch:(MomentResultBlock)callback;
 @end

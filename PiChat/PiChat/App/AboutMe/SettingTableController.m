@@ -29,7 +29,7 @@
         case 0:
             cell=(ClearCacheCell*)[tableView dequeueReusableCellWithIdentifier:kClearCacheCellID];
             ClearCacheCell *clearCacheCell=(ClearCacheCell*)cell;
-            [clearCacheCell calcCacheSizeAndReloadCell];
+            [clearCacheCell calcCacheSize];
             break;
     }
     return cell;

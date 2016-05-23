@@ -12,6 +12,9 @@ extern NSString *const kUserUpdateNotification ;
 
 @class User;
 
+/**
+ *  用户更新成功的通知
+ */
 @interface NSNotification (UserUpdate)
 @property (strong,nonatomic,readonly) User *user;
 +(void)postUserUpdateNotification:(id)object user:(User*)user;

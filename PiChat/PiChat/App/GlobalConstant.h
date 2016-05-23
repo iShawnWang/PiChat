@@ -10,7 +10,6 @@
 #define GlobalConstant_h
 #import "EXTScope.h" //https://github.com/jspahrsummers/libextobjc 为了使用RAC 的 @strongify 和 @weakify
 
-
 @class JSQMessage;
 @class UIImage;
 @class CLLocation;
@@ -81,8 +80,6 @@ NS_INLINE void executeInGlobalQueueAfter(NSTimeInterval delayInSeconds, void (^b
     dispatch_queue_t queue=dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_after(delay,queue, block);
 };
-
-
 
 #pragma mark - Leancloud
 static NSString *const kUsernameKey=@"username";

@@ -20,6 +20,10 @@ typedef enum : NSUInteger {
 @end
 
 @class CLLocation;
+
+/**
+ *  展示或者选择一个 Location
+ */
 @interface LocationViewerController : UIViewController
 @property (strong,nonatomic) CLLocation *location;
 @property (assign,nonatomic) LocationViewerAction action;

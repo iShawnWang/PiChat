@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 @class User;
+
+/**
+ *  Twitter 的 Fabric 的 Crashlytics
+ */
 @interface FabricManager : NSObject
 +(void)setup;
 +(void)setUserInfo;

@@ -10,6 +10,9 @@
 #import "GlobalConstant.h"
 #import <QBImagePickerController.h>
 
+/**
+ *  图片,视频选择器
+ */
 @interface MediaPicker : QBImagePickerController
 -(void)showImagePickerIn:(UIViewController*)vc multipleSelectionCount:(NSInteger)count callback:(ArrayResultBlock)callback;
 

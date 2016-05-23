@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 @import MapKit;
 
+
+/**
+ *  最基本的大头针... 标题和副标题..
+ */
 @interface BasicPinAnnotation : NSObject<MKAnnotation>
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;

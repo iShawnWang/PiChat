@@ -11,5 +11,10 @@
 @interface AVIMConversation (Addition)
 @property (copy,nonatomic) AVIMTypedMessage *lastMessage;
 
+/**
+ *  找到和我聊天的那个人的 objectID.仅 1v1 聊天时可以用这个方法.
+ *
+ *  @return
+ */
 -(NSString*)chatToUserId;
 @end

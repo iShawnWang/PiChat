@@ -71,7 +71,7 @@
     User *u= [User user];
     u.username=email;
     u.password=pwd;
-    u.avatarPath=@"http://7xqpoa.com1.z0.glb.clouddn.com/_doggy.jpg"; //默认头像测试
+    u.avatarPath=@"http://7xqpoa.com1.z0.glb.clouddn.com/_doggy.jpg"; //default avatar
     u.fetchWhenSave=YES;
     
     [u signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -86,7 +86,7 @@
     [User logInWithUsernameInBackground:email password:pwd block:^(AVUser *user, NSError *error) {
         [self.userCache setObject:user forKey:user.objectId];
         [FabricManager setUserInfo];
-        callback([User currentUser] !=nil,error); //currentUser 不为空 ,登录成功 Yes
+        callback([User currentUser] !=nil,error); //currentUser not null => login success
     }];
 }
 

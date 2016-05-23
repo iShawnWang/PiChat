@@ -10,7 +10,12 @@
 
 extern NSString *const kDidReceiveTypedMessageNotification ;
 
+
 @class AVIMTypedMessage;
+
+/**
+ *  收到新消息
+ */
 @interface NSNotification (ReceiveMessage)
 @property (strong,nonatomic,readonly) AVIMTypedMessage *message;
 +(void)postReceiveMessageNotification:(id)object message:(AVIMTypedMessage*)message;

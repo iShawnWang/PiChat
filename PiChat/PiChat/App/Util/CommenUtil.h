@@ -43,16 +43,47 @@
 
 +(void)clearCacheDirectoryWithCallback:(VoidBlock)callback;
 
+/**
+ *  获取某个文件夹及里面的所有文件的大小
+ *
+ *  @param size
+ *  @param directoryURL
+ *  @param error
+ *
+ *  @return
+ */
 + (BOOL)getAllocatedSize:(unsigned long long *)size ofDirectoryAtURL:(NSURL *)directoryURL error:(NSError * __autoreleasing *)error;
 
 #pragma mark - 视频缩略图
+/**
+ *  获取 Video 的某一帧作为缩略图
+ *
+ *  @param contentURL
+ *
+ *  @return
+ */
 + (UIImage *)thumbnailFromVideoAtURL:(NSURL *)contentURL ;
 
 #pragma mark -
+/**
+ *  绘制文字生成图片
+ *
+ *  @param text
+ *  @param size
+ *
+ *  @return
+ */
 +(UIImage*)textToImage:(NSString*)text size:(CGSize)size;
 
 #pragma mark - Alert
 +(void)showSettingAlertIn:(UIViewController*)vc;
+
+/**
+ *  UIAlertController
+ *
+ *  @param message
+ *  @param vc
+ */
 +(void)showMessage :(NSString*)message inVC:(UIViewController*)vc;
 @end
 
@@ -60,5 +91,11 @@
 @interface NSString (Util)
 -(BOOL)isEmptyString;
 -(NSString*)trim;
+
+/**
+ *  移除 'file://' 前缀
+ *
+ *  @return
+ */
 -(NSString*)removeFilePrefix;
 @end

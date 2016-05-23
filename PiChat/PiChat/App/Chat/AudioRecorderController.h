@@ -16,10 +16,20 @@
 -(void)audioRecorder:(AudioRecorderController *)recorder updateSoundLevel:(CGFloat)level;
 @end
 
+/**
+ *  录音管理.
+ */
 @interface AudioRecorderController : NSObject
 @property(nonatomic,weak) IBOutlet id<AudioRecorderDelegate> delegate;
 - (void)startRecord;
-
 - (void)endRecord;
+
+/**
+ *  获取音频文件的时长
+ *
+ *  @param audioUrl
+ *
+ *  @return
+ */
 +(NSTimeInterval)durationForAudioFile:(NSURL*)audioUrl;
 @end

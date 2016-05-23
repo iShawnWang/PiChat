@@ -46,7 +46,6 @@
     return _indicatorView;
 }
 
-
 -(void)startAnimting:(void (^)(void))completion{
     self.isAnimating=YES;
     [self.superview.constraints enumerateObjectsUsingBlock:^(__kindof NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

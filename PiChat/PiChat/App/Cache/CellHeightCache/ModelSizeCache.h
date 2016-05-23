@@ -25,8 +25,22 @@ typedef CGSize (^CalcModelSizeBlock)(id <UniqueObject> model,UIView *collectionO
  */
 @interface ModelSizeCache : NSObject
 
+/**
+ *  获取或者计算 Model 的行高
+ *
+ *  @param model
+ *  @param view
+ *  @param block 如果没有缓存的行高,就调用这个 block 来计算
+ *
+ *  @return 
+ */
 -(CGSize)getSizeForModel:(id <UniqueObject>)model withView:(UIView*)view orCalc:(CalcModelSizeBlock)block;
 
+/**
+ *  清除某个 Model 的行高缓存,下次获取时会重新计算
+ *
+ *  @param models
+ */
 -(void)invalidateCacheForModels:(NSArray<UniqueObject>*)models;
 
 -(void)clearCache;

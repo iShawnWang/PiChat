@@ -25,6 +25,9 @@ typedef NS_ENUM(NSUInteger, UploadedMediaType) {
     UploadedMediaTypeFile
 };
 
+/**
+ *  上传媒体文件的通知
+ */
 @interface NSNotification (UploadMedia)
 @property (assign,nonatomic,readonly) UploadState uploadState;
 @property (strong,nonatomic,readonly) AVFile *uploadedFile;

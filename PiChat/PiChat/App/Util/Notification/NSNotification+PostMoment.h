@@ -17,6 +17,9 @@ typedef NS_ENUM(NSUInteger, PostMomentState) {
 };
 @class Moment;
 
+/**
+ *  发送朋友圈通知
+ */
 @interface NSNotification (PostMoment)
 @property (assign,nonatomic,readonly) PostMomentState postState;
 @property (assign,nonatomic,readonly) float postProgress;

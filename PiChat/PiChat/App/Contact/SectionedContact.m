@@ -36,7 +36,7 @@
     
     if(!firstLetterExistInSectionedContacts){
         NSMutableArray *contacts=[NSMutableArray arrayWithObject:u];
-        [self.sectionedContact  setObject:contacts forKey:userFirstLetter];
+        [self.sectionedContact setObject:contacts forKey:userFirstLetter];
     }
 }
 

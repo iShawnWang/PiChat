@@ -14,14 +14,51 @@
 @property (assign,nonatomic) CGSize fitViewSize;
 @property (assign,nonatomic) BOOL isCircle;
 
+/**
+ *  缩放图片到指定大小
+ *
+ *  @param fitSize
+ *
+ *  @return
+ */
 +(instancetype)configurationWithFitViewSize:(CGSize)fitSize;
 
+/**
+ *  只添加指定大小的圆角
+ *
+ *  @param radius
+ *
+ *  @return
+ */
 +(instancetype)configurationWithCornerRadius:(NSInteger)radius;
 
+/**
+ *  缩放图片到指定大小 ,并裁剪为圆形
+ *
+ *  @param fitSize
+ *  @param isCircle
+ *
+ *  @return
+ */
 +(instancetype)configurationWithFitViewSize:(CGSize)fitSize circleImage:(BOOL)isCircle;
 
+/**
+ *  裁剪为圆形图片,不改变大小
+ *
+ *  @param isCircle
+ *
+ *  @return
+ */
 +(instancetype)configurationWithCircleImage:(BOOL)isCircle;
 
+/**
+ *  缩放图片到指定大小,添加指定大小的圆角
+ *
+ *  @param fitSize
+ *  @param radius
+ *
+ *  @return
+ */
 +(instancetype)configurationWithFitViewSize:(CGSize)fitSize cornerRadius:(NSInteger)radius isCircle:(BOOL)isCircle;
 @end
 
