@@ -1,5 +1,9 @@
 osx_image: xcode7.3
 language: objective-c
 xcode_workspace: ./PiChat/PiChat.xcworkspace # path to your xcodeproj folder
-xcode_scheme: PiChatTests
-xcode_sdk: iphonesimulator
+before_install:
+  - brew update
+  - brew outdated xctool || brew upgrade xctool
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  - gem install xcpretty-travis-formatter --no-rdoc --no-ri --no-document --quiet
+script: set -o pipefail && xcodebuild -workspace ./PiChat/PiChat.xcworkspace -scheme PiChat -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
