@@ -42,7 +42,7 @@ NSString *const kClearCacheCellID=@"ClearCacheCell";
         [CommenUtil clearCacheDirectoryWithCallback:^{
             [AVFile clearAllCachedFiles];
             [MBProgressHUD showMsg:@"清除成功" forSeconds:1.0];
-            [self calcCacheSizeAndReloadCell];
+            [self calcCacheSize];
         }];
     }];
 }
