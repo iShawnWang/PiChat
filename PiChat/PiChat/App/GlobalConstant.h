@@ -71,13 +71,13 @@ NS_INLINE dispatch_time_t delayTimeInSecond(NSTimeInterval second){
 
 NS_INLINE void executeInMainQueueAfter(NSTimeInterval delayInSeconds, void (^block)()){
     dispatch_time_t delay=delayTimeInSecond(delayInSeconds);
-    dispatch_queue_t queue=dispatch_get_main_queue();
+    dispatch_queue_t queue=getMainQueue();
     dispatch_after(delay,queue,block);
 };
 
 NS_INLINE void executeInGlobalQueueAfter(NSTimeInterval delayInSeconds, void (^block)()){
-    dispatch_time_t delay=dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_queue_t queue=dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_time_t delay=delayTimeInSecond(delayInSeconds);
+    dispatch_queue_t queue=getGlobalQueue();
     dispatch_after(delay,queue, block);
 };
 

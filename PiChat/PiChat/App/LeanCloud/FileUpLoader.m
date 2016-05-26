@@ -9,6 +9,7 @@
 #import "FileUpLoader.h"
 #import <AVOSCloud.h>
 #import "CommenUtil.h"
+#import "AVFile+ImageThumbnailUrl.h"
 
 @import UIKit;
 
@@ -52,7 +53,16 @@
 }
 
 -(void)uploadTypedFileAtUrl:(NSURL *)url type:(UploadedMediaType)type{
-    AVFile *file =[AVFile fileWithData:[NSData dataWithContentsOfURL:url]];
+    NSString *fileName= [url lastPathComponent]; //xxx.jpg
+    NSString *mimeType= fileName.pathExtension; //jpg
+    AVFile *file;
+    if(fileName){
+        file=[AVFile fileWithName:fileName data:[NSData dataWithContentsOfURL:url]];
+    }else{
+        file=[AVFile fileWithData:[NSData dataWithContentsOfURL:url]];
+    }
+    file.pi_mimeType=mimeType;
+    
     [self uploadAVFileAtUrl:file type:type];
 }
 
@@ -64,14 +74,20 @@
 -(void)uploadAVFileAtUrl:(AVFile*)file type:(UploadedMediaType)type{
     [self.uploadingFile addObject:file];
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if(succeeded){
-            [NSNotification postUploadMediaCompleteNotification:self media:file type:type];
-        }else{
-            [NSNotification postUploadMediaFailedNotification:self error:error];
-        }
         [self.uploadingFile removeObject:file];
+
+//        executeAsyncInMainQueueIfNeed(^{ //主线程发送通知..
+            if(succeeded){
+                [NSNotification postUploadMediaCompleteNotification:self media:file type:type];
+            }else{
+                [NSNotification postUploadMediaFailedNotification:self error:error];
+            }
+//        });
+        
     } progressBlock:^(NSInteger percentDone) {
-        [NSNotification postUploadMediaProgressNotification:self percentDone:percentDone];
+        executeAsyncInMainQueueIfNeed(^{
+            [NSNotification postUploadMediaProgressNotification:self percentDone:percentDone];
+        });
     }];
 }
 

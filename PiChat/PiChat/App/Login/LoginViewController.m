@@ -45,6 +45,10 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
     if([RegexUtil isEmail:userName]){
         [self.loginBtn startAnimting:nil];
         [[UserManager sharedUserManager] logInWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
+            if([self showLogInErrorIfNeed:error]){
+                [self.loginBtn stopAnimating:nil];
+                return ;
+            }
             if(succeeded){
                 [[ConversationManager sharedConversationManager]setupConversationClientWithCallback:^(BOOL succeeded, NSError *error) {
                     [self.loginBtn stopAnimating:^{
@@ -52,9 +56,6 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
                         [StoryBoardHelper switchToMainTabVC];
                     }];
                 }];
-            }
-            if([self showLogInErrorIfNeed:error]){
-                return ;
             }
         }];
     }else{
@@ -70,6 +71,10 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
     if([RegexUtil isEmail:userName]){
         [self.registerBtn startAnimting:nil];
         [[UserManager sharedUserManager] signUpWithUserName:userName pwd:pwd callback:^(BOOL succeeded, NSError *error) {
+            if([self showLogInErrorIfNeed:error]){
+                [self.registerBtn stopAnimating:nil];
+                return ;
+            }
             if(succeeded){
                 [[ConversationManager sharedConversationManager]setupConversationClientWithCallback:^(BOOL succeeded, NSError *error) {
                     [self.registerBtn stopAnimating:^{
@@ -78,9 +83,7 @@ NSString *const kQQAppSecret=@"GTASpW3nNCnf8Cuz";
                     }];
                 }];
             }
-            if([self showLogInErrorIfNeed:error]){
-                return ;
-            }
+            
         }];
     }else{
         [MBProgressHUD showMsg:@"请输入合法的 Emial 用户名" forSeconds:1.5];

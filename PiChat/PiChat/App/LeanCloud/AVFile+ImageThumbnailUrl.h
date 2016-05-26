@@ -8,10 +8,14 @@
 
 #import "AVFile.h"
 
+FOUNDATION_EXPORT NSString *const kPiAVFileMimeType;
 /**
  *  AVFile 存储的数据都在七牛云存储上用这个 Category 生成相应的 Url, 来获取不同大小的图片,原图,缩略图等..
  */
 @interface AVFile (ImageThumbnailUrl)
+
+@property (copy,nonatomic) NSString *pi_mimeType;
+
 /**
  *  默认大小 屏幕宽度 1/3 的缩略图
  *

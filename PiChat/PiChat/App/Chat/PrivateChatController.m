@@ -1,4 +1,4 @@
-//
+ //
 //  PrivateChatController.m
 //  PiChat
 //
@@ -143,7 +143,10 @@
     InputContentView *inputView=(InputContentView*)self.inputToolbar.contentView;
     [inputView decorateView];
     inputView.inputAttachmentView.delegate=self;
+    
+    @weakify(self);
     inputView.recordBlock=^(BOOL isRecord){
+        @strongify(self);
         if(isRecord){
             [self.recorder startRecord];
             self.indocator.hidden=NO;
@@ -175,21 +178,24 @@
         self.conversation=conversation;
         self.inputToolbar.contentView.rightBarButtonItem.enabled=YES;
         [self.conversationManager fetchConversationMessages:self.conversation callback:^(NSArray *objects, NSError *error) {
-            //异步解析 typed messages 这个方法在 Global queue 中执行
-            [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [self addTypedMessage:obj toArrayHead:NO reloadData:NO];
-            }];
+            
+            executeAsyncInGlobalQueue(^{
+                //异步解析 typed messages 这个方法在 Global queue 中执行
+                [self.msgs removeAllObjects];
+                [objects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [self addTypedMessage:obj toArrayHead:NO reloadData:NO];
+                }];
+                executeAsyncInMainQueueIfNeed(^{
+                    [self finishReceivingMessage];
+                    [self scrollToBottomAnimated:YES];
+                });
+            });
             
             //获取用户数据,头像,昵称等.
             [self.userManager findUserByObjectID:self.chatToUserID callback:^(User *user, NSError *error) {
                 self.chatToUser=user;
                 [self.collectionView pendingReloadData];
             }];
-            
-            executeAsyncInMainQueueIfNeed(^{
-                [self finishReceivingMessage];
-                [self scrollToBottomAnimated:YES];
-            });
             
         }];
     }];
@@ -372,14 +378,18 @@
 -(void)showPhotoPicker{
     [self.mediaPicker showImagePickerIn:self multipleSelectionCount:1 callback:^(NSArray *objects, NSError *error) {
         [self.fileUpLoader uploadImage:[objects firstObject]];
-        [MBProgressHUD showProgressInView:self.view];
+        executeAsyncInMainQueueIfNeed(^{
+            [MBProgressHUD showProgressInView:self.view];
+        });
     }];
 }
 
 -(void)showVideoPicker{
     [self.mediaPicker showVideoPickerIn:self callback:^(NSURL *url, NSError *error) {
         [self.fileUpLoader uploadVideoAtUrl:url];
-        [MBProgressHUD showProgressInView:self.view];
+        executeAsyncInMainQueueIfNeed(^{
+            [MBProgressHUD showProgressInView:self.view];
+        });
     }];
 }
 

@@ -17,6 +17,7 @@
 #import "JSQVideoMediaItem+Thumbnail.h"
 #import "NSNotification+LocationCellUpdate.h"
 #import "JSQPhotoMediaItem+ThumbnailImageUrl.h"
+#import "AVFile+ImageThumbnailUrl.h"
 
 
 @implementation AVIMTypedMessage (ToJsqMessage)
@@ -68,18 +69,15 @@
         }
         case kAVIMMessageMediaTypeVideo:{
             AVIMVideoMessage* videoMessage=(AVIMVideoMessage*)self;
+            NSString *mimeType= videoMessage.file.pi_mimeType;
             
-            NSString *videoPath=videoMessage.file.localPath;
-            
-            if(!videoPath){
-                NSError *error;
-                
-                videoPath=[[CommenUtil cacheDirectoryStr] stringByAppendingPathComponent:videoMessage.messageId];
-                if(![[NSFileManager defaultManager]fileExistsAtPath:videoPath]){
-                    NSData *videoData= [videoMessage.file getData:&error];
-                    //这个多次调用会缓存,但只能得到 Data ,只好我们自己存到 Cache 目录.
-                    [videoData writeToFile:videoPath atomically:YES];
-                }
+            NSError *error;
+            NSString *videoName=[NSString stringWithFormat:@"%@.%@",videoMessage.messageId,mimeType];
+            NSString  *videoPath=[[CommenUtil cacheDirectoryStr] stringByAppendingPathComponent:videoName];
+            if(![[NSFileManager defaultManager]fileExistsAtPath:videoPath]){
+                NSData *videoData= [videoMessage.file getData:&error];
+                //这个多次调用会缓存,但只能得到 Data ,只好我们自己存到 Cache 目录.
+                [videoData writeToFile:videoPath atomically:YES];
             }
             
             NSURL *videoURL= [NSURL fileURLWithPath:videoPath];

@@ -81,7 +81,7 @@
 +(NSString*)cacheDirectoryStr{
     NSString *cacheDir= [self defaultCacheDirectoryStr];
     NSString *bundleID=[NSBundle mainBundle].bundleIdentifier;
-    bundleID=[bundleID stringByAppendingString:@".TmpFiles"];
+    bundleID=[bundleID stringByAppendingString:@".TmpFiles"]; //在沙盒下创建\Library\Caches\BigPi.PiChat.TmpFiles 文件夹
     cacheDir=[cacheDir stringByAppendingPathComponent:bundleID];
     NSFileManager *fileManager= [NSFileManager defaultManager];
     

@@ -99,7 +99,9 @@ static char const * const kMinReloadIntervalKey = "minReloadIntervalKey";
 }
 
 -(void)invokeReloadData{
-    [self.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
-    [self reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+        [self reloadData];
+    });
 }
 @end
