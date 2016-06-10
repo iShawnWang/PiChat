@@ -11,7 +11,7 @@
 #import <AVOSCloud.h>
 #import "UserManager.h"
 #import <AVOSCloudIM.h>
-#import "JSQAudioMediaItem.h"
+//#import "JSQAudioMediaItem.h"
 #import "JSQMessage+MessageID.h"
 #import "CommenUtil.h"
 #import "JSQVideoMediaItem+Thumbnail.h"

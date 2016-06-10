@@ -9,6 +9,7 @@
 #import "NewFriendsNotifyTableController.h"
 #import "UserManager.h"
 #import "AddFriendRequestCell.h"
+#import "NSNotification+DownloadImage.h"
 
 @interface NewFriendsNotifyTableController ()
 @property (strong,nonatomic) NSMutableArray *newFriendsNotifies;
@@ -18,6 +19,11 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     self.tableView.rowHeight=76;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadImageCompleteNotification:) name:kDownloadImageCompleteNotification object:nil];
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -49,6 +55,11 @@
     AddFriendRequest *request= self.newFriendsNotifies[indexPath.row];
     [requestCell configWithAddRequest:request];
     return requestCell;
+}
+
+#pragma mark - 
+-(void)downloadImageCompleteNotification:(NSNotification *)noti{
+    [self.tableView reloadData];
 }
 
 @end

@@ -35,7 +35,7 @@
 		0E4399CF1CE3444600822217 /* GroupChatListTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4399CE1CE3444600822217 /* GroupChatListTableController.m */; };
 		0E4399D31CE3468100822217 /* AddFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4399D21CE3468100822217 /* AddFriendRequest.m */; };
 		0E4399DA1CE3543900822217 /* AddFriendRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4399D91CE3543900822217 /* AddFriendRequestCell.m */; };
-		0E4399E11CE39B3400822217 /* UIView+Bedge.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4399E01CE39B3400822217 /* UIView+Bedge.m */; };
+		0E4399E11CE39B3400822217 /* UIView+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4399E01CE39B3400822217 /* UIView+Badge.m */; };
 		0E4F34411C75F79B006A9BAA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34361C75F79B006A9BAA /* AppDelegate.m */; };
 		0E4F34451C75F7C1006A9BAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34441C75F7C1006A9BAA /* main.m */; };
 		0E4F344B1C75F82E006A9BAA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F344A1C75F82E006A9BAA /* LoginViewController.m */; };
@@ -90,7 +90,6 @@
 		0ECD4C961C9967DF00C08139 /* UIColor+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD4C941C9967DF00C08139 /* UIColor+Addition.m */; };
 		0ED020D51CEB383F003DF7D6 /* IQKeyboardManager+Configuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED020D41CEB383F003DF7D6 /* IQKeyboardManager+Configuration.m */; };
 		0ED020DC1CEB38B9003DF7D6 /* FabricManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED020DB1CEB38B9003DF7D6 /* FabricManager.m */; };
-		0ED19F021C91DA0F00EF7472 /* JSQAudioMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19EFF1C91DA0F00EF7472 /* JSQAudioMediaItem.m */; };
 		0ED19F031C91DA0F00EF7472 /* UIImage+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F011C91DA0F00EF7472 /* UIImage+JSQMessages.m */; };
 		0ED19F061C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED19F051C91DB3700EF7472 /* AVIMTypedMessage+ToJsqMessage.m */; };
 		0ED39FF21C8B489B00894D4B /* Followee.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED39FF11C8B489B00894D4B /* Followee.m */; };
@@ -192,8 +191,8 @@
 		0E4399D21CE3468100822217 /* AddFriendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendRequest.m; sourceTree = "<group>"; };
 		0E4399D81CE3543900822217 /* AddFriendRequestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendRequestCell.h; sourceTree = "<group>"; };
 		0E4399D91CE3543900822217 /* AddFriendRequestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendRequestCell.m; sourceTree = "<group>"; };
-		0E4399DF1CE39B3400822217 /* UIView+Bedge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Bedge.h"; sourceTree = "<group>"; };
-		0E4399E01CE39B3400822217 /* UIView+Bedge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Bedge.m"; sourceTree = "<group>"; };
+		0E4399DF1CE39B3400822217 /* UIView+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Badge.h"; sourceTree = "<group>"; };
+		0E4399E01CE39B3400822217 /* UIView+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Badge.m"; sourceTree = "<group>"; };
 		0E4F34351C75F79B006A9BAA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0E4F34361C75F79B006A9BAA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0E4F34441C75F7C1006A9BAA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -594,8 +593,8 @@
 				0EDCA9C71CF74FF000E6F008 /* NSObject+MethodSwizzling.m */,
 				0E5F98751CD4DCA500964BB5 /* UICollectionView+PendingReloadData.h */,
 				0E5F98761CD4DCA500964BB5 /* UICollectionView+PendingReloadData.m */,
-				0E4399DF1CE39B3400822217 /* UIView+Bedge.h */,
-				0E4399E01CE39B3400822217 /* UIView+Bedge.m */,
+				0E4399DF1CE39B3400822217 /* UIView+Badge.h */,
+				0E4399E01CE39B3400822217 /* UIView+Badge.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1196,14 +1195,13 @@
 				0E4399D31CE3468100822217 /* AddFriendRequest.m in Sources */,
 				0E4F34751C7602D7006A9BAA /* RegexUtil.m in Sources */,
 				0E4F34551C75F9D6006A9BAA /* User.m in Sources */,
-				0ED19F021C91DA0F00EF7472 /* JSQAudioMediaItem.m in Sources */,
 				0E4399C91CE33B2B00822217 /* GroupChatCell.m in Sources */,
 				0E4399C31CE3297200822217 /* SectionedContact.m in Sources */,
 				0EF757171C9706C6007AD3A1 /* NSNotification+LocationCellUpdate.m in Sources */,
 				0EB326861CEB881800E4F2C1 /* CommentsTableController.m in Sources */,
 				0EB326971CEB882A00E4F2C1 /* NewMomentViewController.m in Sources */,
 				0E4F346F1C760248006A9BAA /* MessagesTableViewController.m in Sources */,
-				0E4399E11CE39B3400822217 /* UIView+Bedge.m in Sources */,
+				0E4399E11CE39B3400822217 /* UIView+Badge.m in Sources */,
 				0E206CB91CCE9FE7005FCE6A /* ImageClipConfiguration.m in Sources */,
 				0E4F34451C75F7C1006A9BAA /* main.m in Sources */,
 				0EB326871CEB881800E4F2C1 /* FavourUsersCell.m in Sources */,

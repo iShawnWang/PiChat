@@ -17,4 +17,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
 -(void)configWithUser:(User*)u conv:(AVIMConversation*)conv;
+-(void)removeBadgeForCell;
 @end

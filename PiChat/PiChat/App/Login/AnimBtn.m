@@ -74,8 +74,10 @@
         [self layoutIfNeeded];
         
     } completion:^(BOOL finished) {
-        self.indicatorView.hidden=NO;
-        [self.indicatorView startAnimating];
+        if(self.isAnimating){
+            self.indicatorView.hidden=NO;
+            [self.indicatorView startAnimating];
+        }
         self.originalTitle=[self titleForState:UIControlStateNormal];
         [self setTitle:@"" forState:UIControlStateNormal];
         if(completion){

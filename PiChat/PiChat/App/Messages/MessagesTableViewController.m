@@ -18,6 +18,7 @@
 #import "NSNotification+DownloadImage.h"
 #import "MessageCell.h"
 #import "TextPathRefreshControl.h"
+#import "NSNotification+ReceiveMessage.h"
 
 NSString *const kMessageCellID=@"MessageCell";
 
@@ -40,6 +41,7 @@ NSString *const kMessageCellID=@"MessageCell";
         self.manager=[ConversationManager sharedConversationManager];
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveMessageNotification:) name:kDidReceiveTypedMessageNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(avatarDownloadCompleteNotification:) name:kDownloadImageCompleteNotification object:nil];
     }
     return self;
@@ -113,7 +115,9 @@ NSString *const kMessageCellID=@"MessageCell";
         
     }else{
         chatVC.chatToUserID=[conversation chatToUserId];
+        MessageCell *cell =[self.tableView cellForRowAtIndexPath:indexPath];
         [self.navigationController pushViewController:chatVC animated:YES];
+        [cell removeBadgeForCell];
     }
 }
 
@@ -125,6 +129,19 @@ NSString *const kMessageCellID=@"MessageCell";
 #pragma mark - 下载完用户头像,刷新 tableview
 -(void)avatarDownloadCompleteNotification:(NSNotification*)noti{
     [self.tableView reloadData];
+}
+
+#pragma mark - 
+-(void)receiveMessageNotification:(NSNotification*)noti{
+    [self.recentConversations enumerateObjectsUsingBlock:^(AVIMConversation *conv, NSUInteger idx, BOOL * _Nonnull stop) {
+        if([conv.conversationId isEqualToString:noti.message.conversationId]){
+            *stop=YES;
+            conv.lastMessage=noti.message;
+            conv.unReadCount=conv.unReadCount+1; //显示 bedge 红点...
+            NSIndexPath *indexPath= [NSIndexPath indexPathForRow:idx inSection:0];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
+    }];
 }
 
 @end

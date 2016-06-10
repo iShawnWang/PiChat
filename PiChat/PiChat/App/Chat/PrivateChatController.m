@@ -205,6 +205,9 @@
 
 -(void)didReceiveTyperMessage:(NSNotification*)noti{
     AVIMTypedMessage *typedMsg= noti.message;
+    if(![self.conversation.conversationId isEqualToString:typedMsg.conversationId]){
+        return; //不是我这个会话的消息
+    }
     [self addTypedMessage:typedMsg];
     [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
 }

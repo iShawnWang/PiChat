@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 
 static char const * const kLastMessageKey = "kLastMessageKey";
+static char const * const kUnReadCountKey = "kUnReadCountKey";
 @implementation AVIMConversation (Addition)
 
 
@@ -20,6 +21,15 @@ static char const * const kLastMessageKey = "kLastMessageKey";
 
 -(void)setLastMessage:(AVIMTypedMessage *)lastMessage{
     objc_setAssociatedObject(self, kLastMessageKey, lastMessage, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(NSInteger)unReadCount{
+    NSNumber *count=objc_getAssociatedObject(self, kUnReadCountKey);
+    return count ? [count integerValue] : 0;
+}
+
+-(void)setUnReadCount:(NSInteger)unReadCount{
+    objc_setAssociatedObject(self, kUnReadCountKey, @(unReadCount), OBJC_ASSOCIATION_ASSIGN);
 }
 
 -(NSString*)chatToUserId{

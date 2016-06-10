@@ -7,7 +7,7 @@
 //
 
 #import "NewFriendsNotifyCell.h"
-#import "UIView+Bedge.h"
+#import "UIView+Badge.h"
 
 @implementation NewFriendsNotifyCell
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -34,9 +34,9 @@
 
 -(void)configWithBedgeCount:(NSInteger)count{
     if(count>0){
-        [self.imageView showBedgeWithCount:count];
+        [self.imageView showBadgeWithCount:count];
     }else{
-        [self.imageView removeBedge];
+        [self.imageView removeBadge];
     }
 }
 @end
