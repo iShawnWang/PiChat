@@ -8,10 +8,16 @@ inhibit_all_warnings!
 target 'PiChat' do
 
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
+
+# Leancloud
 pod 'AVOSCloud'
 pod 'AVOSCloudIM'
 pod 'LeanCloudSocial'
 pod 'LeanCloudFeedback'
+#twitter 的 Fabric 的 Crashlytics
+pod 'Fabric'
+pod 'Crashlytics'
+#
 pod 'JSQMessagesViewController'
 pod 'MBProgressHUD'
 pod 'Masonry'
@@ -24,8 +30,7 @@ pod 'SCSiriWaveformView'
 pod 'QBImagePickerController'
 pod 'DGActivityIndicatorView'
 pod 'JSBadgeView'
-pod 'Fabric'
-pod 'Crashlytics'
+pod 'RealReachability'
 end
 
 target 'PiChatTests' do

@@ -19,6 +19,9 @@
 #import "MessageCell.h"
 #import "TextPathRefreshControl.h"
 #import "NSNotification+ReceiveMessage.h"
+#import <Masonry.h>
+#import "ReachAbilityView.h"
+#import "Reachability.h"
 
 NSString *const kMessageCellID=@"MessageCell";
 
@@ -26,6 +29,7 @@ NSString *const kMessageCellID=@"MessageCell";
 @property (strong,nonatomic) ConversationManager *manager;
 @property (strong,nonatomic) NSMutableArray *recentConversations;
 @property (strong,nonatomic) ImageCache *imageCache;
+@property (strong,nonatomic) ReachAbilityView *reachAbilityView;
 @end
 
 @implementation MessagesTableViewController
@@ -43,6 +47,10 @@ NSString *const kMessageCellID=@"MessageCell";
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveMessageNotification:) name:kDidReceiveTypedMessageNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(avatarDownloadCompleteNotification:) name:kDownloadImageCompleteNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(networkChanged:)
+                                                     name:kRealReachabilityChangedNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -66,10 +74,18 @@ NSString *const kMessageCellID=@"MessageCell";
     return _imageCache;
 }
 
+-(ReachAbilityView *)reachAbilityView{
+    if(!_reachAbilityView){
+        _reachAbilityView=[ReachAbilityView loadViewFroNib];
+    }
+    return _reachAbilityView;
+}
+
 #pragma mark - Life Cycle
 -(void)viewDidLoad{
     [super viewDidLoad];
     self.tableView.rowHeight=88;
+    
     self.tableView.mj_header=[TextPathRefreshControl headerWithRefreshingBlock:^{
         [self.manager fetchReventConversations:^(NSArray *objects, NSError *error) {
             [self.recentConversations removeAllObjects];
@@ -142,6 +158,27 @@ NSString *const kMessageCellID=@"MessageCell";
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
     }];
+}
+
+#pragma mark - 网络状态改变
+- (void)networkChanged:(NSNotification *)notification
+{
+    RealReachability *reachability = (RealReachability *)notification.object;
+    ReachabilityStatus status = [reachability currentReachabilityStatus];
+    switch (status) {
+        case RealStatusUnknown: {
+            break;
+        }
+        case RealStatusNotReachable: {
+            [self.reachAbilityView showUnReachableInTableView:self.tableView];
+            break;
+        }
+        case RealStatusViaWWAN:
+        case RealStatusViaWiFi:{
+            [self.reachAbilityView hideForTableView:self.tableView];
+            break;
+        }
+    }
 }
 
 @end

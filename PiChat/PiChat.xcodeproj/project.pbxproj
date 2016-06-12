@@ -55,8 +55,11 @@
 		0E4F34821C76371A006A9BAA /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34811C76371A006A9BAA /* MainTabBarController.m */; };
 		0E4F34851C763778006A9BAA /* StoryBoardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34841C763778006A9BAA /* StoryBoardHelper.m */; };
 		0E4F34881C763BEC006A9BAA /* CommenUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F34871C763BEC006A9BAA /* CommenUtil.m */; };
+		0E5E42631D0C19EB0091B7A0 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5E42621D0C19EB0091B7A0 /* Reachability.m */; };
 		0E5F98771CD4DCA500964BB5 /* UICollectionView+PendingReloadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F98761CD4DCA500964BB5 /* UICollectionView+PendingReloadData.m */; };
 		0E5F987A1CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F98791CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.m */; };
+		0E765E921D0C43CB0037F0AB /* ReachAbilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E765E911D0C43CB0037F0AB /* ReachAbilityView.m */; };
+		0E765E941D0C4C440037F0AB /* ReachAbilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E765E931D0C4C440037F0AB /* ReachAbilityView.xib */; };
 		0E79393C1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E79393B1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m */; };
 		0E7939431C9463B700618BAD /* AVIMConversation+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7939421C9463B700618BAD /* AVIMConversation+Addition.m */; };
 		0E85DCCA1CEB21FB00FE86AD /* AddFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E85DCC91CEB21FB00FE86AD /* AddFriendCell.m */; };
@@ -226,10 +229,15 @@
 		0E4F34861C763BEC006A9BAA /* CommenUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommenUtil.h; sourceTree = "<group>"; };
 		0E4F34871C763BEC006A9BAA /* CommenUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommenUtil.m; sourceTree = "<group>"; };
 		0E4F34891C763D81006A9BAA /* GlobalConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstant.h; sourceTree = "<group>"; };
+		0E5E42611D0C19EB0091B7A0 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		0E5E42621D0C19EB0091B7A0 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		0E5F98751CD4DCA500964BB5 /* UICollectionView+PendingReloadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+PendingReloadData.h"; sourceTree = "<group>"; };
 		0E5F98761CD4DCA500964BB5 /* UICollectionView+PendingReloadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+PendingReloadData.m"; sourceTree = "<group>"; };
 		0E5F98781CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQPhotoMediaItem+ThumbnailImageUrl.h"; sourceTree = "<group>"; };
 		0E5F98791CD4F97500964BB5 /* JSQPhotoMediaItem+ThumbnailImageUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQPhotoMediaItem+ThumbnailImageUrl.m"; sourceTree = "<group>"; };
+		0E765E901D0C43CB0037F0AB /* ReachAbilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachAbilityView.h; sourceTree = "<group>"; };
+		0E765E911D0C43CB0037F0AB /* ReachAbilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachAbilityView.m; sourceTree = "<group>"; };
+		0E765E931D0C4C440037F0AB /* ReachAbilityView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReachAbilityView.xib; sourceTree = "<group>"; };
 		0E79393A1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQVideoMediaItem+Thumbnail.h"; sourceTree = "<group>"; };
 		0E79393B1C941D6F00618BAD /* JSQVideoMediaItem+Thumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQVideoMediaItem+Thumbnail.m"; sourceTree = "<group>"; };
 		0E7939411C9463B700618BAD /* AVIMConversation+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVIMConversation+Addition.h"; sourceTree = "<group>"; };
@@ -552,6 +560,9 @@
 				0E4F346E1C760248006A9BAA /* MessagesTableViewController.m */,
 				0E3FC6A01C9A9A9500A95463 /* MessageCell.h */,
 				0E3FC6A11C9A9A9500A95463 /* MessageCell.m */,
+				0E765E901D0C43CB0037F0AB /* ReachAbilityView.h */,
+				0E765E911D0C43CB0037F0AB /* ReachAbilityView.m */,
+				0E765E931D0C4C440037F0AB /* ReachAbilityView.xib */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -630,6 +641,15 @@
 				0E4F34811C76371A006A9BAA /* MainTabBarController.m */,
 			);
 			path = MainNav;
+			sourceTree = "<group>";
+		};
+		0E5E42641D0C19F00091B7A0 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				0E5E42611D0C19EB0091B7A0 /* Reachability.h */,
+				0E5E42621D0C19EB0091B7A0 /* Reachability.m */,
+			);
+			name = Reachability;
 			sourceTree = "<group>";
 		};
 		0E86175B1CEA2F8B0000A191 /* libextobjc */ = {
@@ -831,6 +851,7 @@
 				0EA4EC8E1C9E988C009A5ECB /* GCPlaceholderTextView */,
 				0ED19EFD1C91DA0F00EF7472 /* JSQMessage */,
 				0EE2C49F1C907EE800A7DEE0 /* AGEmojiKeyboard */,
+				0E5E42641D0C19F00091B7A0 /* Reachability */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1056,6 +1077,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EE2C4A71C907EE900A7DEE0 /* EmojisList.plist in Resources */,
+				0E765E941D0C4C440037F0AB /* ReachAbilityView.xib in Resources */,
 				0E4F347E1C7636DE006A9BAA /* Login.storyboard in Resources */,
 				0EB3268D1CEB881800E4F2C1 /* ReplyInputView.xib in Resources */,
 				0E4F34621C76018E006A9BAA /* Contact.storyboard in Resources */,
@@ -1154,6 +1176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E0D75311CEAF21500A9E18A /* MWPhotoBrowser+UnClearMemoryCache.m in Sources */,
+				0E765E921D0C43CB0037F0AB /* ReachAbilityView.m in Sources */,
 				0EE2C4A51C907EE900A7DEE0 /* AGEmojiKeyBoardView.m in Sources */,
 				0ED19F031C91DA0F00EF7472 /* UIImage+JSQMessages.m in Sources */,
 				0E4F34411C75F79B006A9BAA /* AppDelegate.m in Sources */,
@@ -1226,6 +1249,7 @@
 				0E4F34791C76310C006A9BAA /* ConversationManager.m in Sources */,
 				0ED6EE9E1C934E0A00DCC2DD /* JSQMessage+MessageID.m in Sources */,
 				0E2151A91CD11854001CF7BC /* PiAutoPurgeCache.m in Sources */,
+				0E5E42631D0C19EB0091B7A0 /* Reachability.m in Sources */,
 				0E2151AF1CD11DEB001CF7BC /* ModelSizeCache.m in Sources */,
 				0EA4EC911C9E988C009A5ECB /* GCPlaceholderTextView.m in Sources */,
 				0E234B921CAFE98100E8354D /* Comment.m in Sources */,
