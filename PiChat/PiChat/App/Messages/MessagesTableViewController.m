@@ -21,7 +21,7 @@
 #import "NSNotification+ReceiveMessage.h"
 #import <Masonry.h>
 #import "ReachAbilityView.h"
-#import "Reachability.h"
+#import "PiReachability.h"
 
 NSString *const kMessageCellID=@"MessageCell";
 

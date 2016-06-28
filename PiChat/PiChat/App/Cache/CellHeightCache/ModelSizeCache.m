@@ -8,78 +8,94 @@
 
 #import "ModelSizeCache.h"
 
+const CGSize NilCacheSize ={-1,-1};
+
 @interface ModelSizeCache ()
-@property (assign,nonatomic) CGSize defaultNilCacheSize;
-@property (strong,nonatomic) PiAutoPurgeCache *cacheLandscape;
-@property (strong,nonatomic) PiAutoPurgeCache *cachePortrait;
+@property (strong,nonatomic) NSCache *cacheLandscape;
+@property (strong,nonatomic) NSCache *cachePortrait;
 @end
 
 @implementation ModelSizeCache
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.defaultNilCacheSize=CGSizeMake(-1, -1); //size 默认被初始化为 0,0 这里我们设置默认为 -1,-1
-    }
-    return self;
-}
-
--(PiAutoPurgeCache *)cachePortrait{
+-(NSCache *)cachePortrait{
     if(!_cachePortrait){
-        _cachePortrait=[PiAutoPurgeCache new];
+        _cachePortrait=[NSCache new];
     }
     return _cachePortrait;
 }
 
--(PiAutoPurgeCache *)cacheLandscape{
+-(NSCache *)cacheLandscape{
     if(!_cacheLandscape){
-        _cacheLandscape=[PiAutoPurgeCache new];
+        _cacheLandscape=[NSCache new];
     }
     return _cacheLandscape;
 }
 
--(void)setOrientationSize:(CGSize)size forModel:(id <UniqueObject>)model{
-    if(UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)){
-        [self.cachePortrait setObject:[NSValue valueWithCGSize:size] forKey:[model uniqueID]];
+-(void)setOrientationSize:(CGSize)size forModel:(id)model{
+    if(UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)){
+        [self.cacheLandscape setObject:[NSValue valueWithCGSize:size] forKey:@([model hash])];
     }else{
-        [self.cacheLandscape setObject:[NSValue valueWithCGSize:size] forKey:[model uniqueID]];
+        
+        [self.cachePortrait setObject:[NSValue valueWithCGSize:size] forKey:@([model hash])];
     }
 }
 
 -(NSValue*)sizeByOrientationForKey:(id)key{
-    if(UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)){
-        return [self.cachePortrait objectForKey:key];
-    }else{
+    if(UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)){
         return [self.cacheLandscape objectForKey:key];
+    }else{
+        return [self.cachePortrait objectForKey:key];
     }
 }
 
--(CGSize)getSizeForModel:(id <UniqueObject>)model withView:(UIView*)view orCalc:(CalcModelSizeBlock)block{
-    CGSize cacheSize=self.defaultNilCacheSize; //默认值 -1,-1
+-(CGFloat)getHeightForModel:(id)model withTableView:(UITableView *)tableView orCalc:(CalcModelHeightBlock)block{
+    //先从缓存中取
+    CGSize modelSize= [self getCacheSizeForModel:model];
+    //没有就计算一下
+    if( CGSizeEqualToSize(modelSize, NilCacheSize)){
+        modelSize.height= block(model,tableView);
+        
+        //计算完成存入缓存中
+        [self setOrientationSize:modelSize forModel:model];
+//        NSLog(@"计算行高 :%@",@(modelHeight));
+    }
+    return modelSize.height;
+}
+
+-(CGSize)getSizeForModel:(id)model withCollectionView:(UICollectionView *)collectionView orCalc:(CalcModelSizeBlock)block{
+    //先从缓存中取
+    CGSize modelSize= [self getCacheSizeForModel:model];
+    //没有就计算一下
+    if( CGSizeEqualToSize(modelSize, NilCacheSize)){
+        modelSize= block(model,collectionView);
+        
+        //计算完成存入缓存中
+        [self setOrientationSize:modelSize forModel:model];
+//        NSLog(@"计算行高 :%@",NSStringFromCGSize(modelSize));
+    }
+    return modelSize;
+}
+
+-(CGSize)getCacheSizeForModel:(id)model{
+    CGSize cacheSize=NilCacheSize;
     //从缓存中读取 size
-    NSValue *cacheSizeValue=[self sizeByOrientationForKey:[model uniqueID]];
-    
+    NSValue *cacheSizeValue=[self sizeByOrientationForKey:@([model hash])];
     if(cacheSizeValue){
+//        NSLog(@"从缓存中读取行高 :%@",cacheSizeValue);
         cacheSize= cacheSizeValue.CGSizeValue;
     }
-    if(cacheSize.height>-1){
-//        NSLog(@"从缓存中读取 size");
-        return cacheSize;
-    }else{
-    //没有就计算一下,在存入缓存中
-        cacheSize=block(model,view);
-        [self setOrientationSize:cacheSize forModel:model];
-//        NSLog(@"计算size");
-        return cacheSize;
-    }
+    return cacheSize;
 }
 
--(void)invalidateCacheForModels:(NSArray<UniqueObject>*)models{
+-(void)invalidateCacheForModels:(NSArray*)models{
     [models enumerateObjectsUsingBlock:^(id  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self.cachePortrait removeObjectForKey:[model uniqueID]];
-        [self.cacheLandscape removeObjectForKey:[model uniqueID]];
+        [self invalidateCacheForModel:model];
     }];
+}
+
+-(void)invalidateCacheForModel:(id)model{
+    [self.cachePortrait removeObjectForKey:@([model hash])];
+    [self.cacheLandscape removeObjectForKey:@([model hash])];
 }
 
 -(void)clearCache{

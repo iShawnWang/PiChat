@@ -31,6 +31,8 @@ pod 'QBImagePickerController'
 pod 'DGActivityIndicatorView'
 pod 'JSBadgeView'
 pod 'RealReachability'
+#
+pod 'YapDatabase'
 end
 
 target 'PiChatTests' do

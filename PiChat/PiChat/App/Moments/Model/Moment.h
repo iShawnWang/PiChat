@@ -19,7 +19,7 @@ FOUNDATION_EXPORT NSString *const kPostContent;
 FOUNDATION_EXPORT NSString *const kFavourUsers;
 FOUNDATION_EXPORT NSString *const kComments;
 
-@interface Moment : AVObject<AVSubclassing,UniqueObject>
+@interface Moment : AVObject<AVSubclassing>
 @property (strong,nonatomic) User *postUser;
 @property (copy,nonatomic) NSArray *favourUsers; //赞过的人
 @property (copy,nonatomic) NSArray *comments; //别人的评论

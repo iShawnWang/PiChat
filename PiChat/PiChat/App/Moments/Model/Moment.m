@@ -9,7 +9,6 @@
 #import "Moment.h"
 #import "User.h"
 
-
 NSString *const kPostUser=@"postUser";
 NSString *const kPostImages=@"images";
 NSString *const kPostContent=@"texts";
@@ -30,10 +29,6 @@ NSString *const kComments=@"comments";
 
 -(NSUInteger)hash{
     return self.postUser.objectId.hash ^ self.favourUsers.hash ^ self.comments.hash ^ self.comments.hash ^ self.images.hash ^ self.texts.hash;
-}
-
--(id)uniqueID{
-    return @([self hash]);
 }
 
 #pragma mark - Public

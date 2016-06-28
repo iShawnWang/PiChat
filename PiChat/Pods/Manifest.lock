@@ -20,10 +20,18 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AVOSCloud (3.3.1)
-  - AVOSCloudIM (3.3.1):
+  - AVOSCloud (3.3.3)
+  - AVOSCloudIM (3.3.3):
     - AVOSCloud
-  - Crashlytics (3.7.1):
+  - CocoaLumberjack (2.3.0):
+    - CocoaLumberjack/Default (= 2.3.0)
+    - CocoaLumberjack/Extensions (= 2.3.0)
+  - CocoaLumberjack/Core (2.3.0)
+  - CocoaLumberjack/Default (2.3.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.3.0):
+    - CocoaLumberjack/Default
+  - Crashlytics (3.7.2):
     - Fabric (~> 1.6.3)
   - DACircularProgress (2.3.1)
   - DateTools (1.7.0)
@@ -42,12 +50,13 @@ PODS:
     - AVOSCloud (~> 3.1)
   - Masonry (1.0.1)
   - MBProgressHUD (0.9.2)
-  - MJRefresh (3.1.1)
+  - MJRefresh (3.1.9)
   - MWPhotoBrowser (2.1.2):
     - DACircularProgress (~> 2.3)
     - MBProgressHUD (~> 0.9)
     - SDWebImage (!= 3.7.2, ~> 3.7)
   - QBImagePickerController (3.4.0)
+  - Reachability (3.2)
   - RealReachability (1.1.7):
     - RealReachability/Connection (= 1.1.7)
     - RealReachability/Ping (= 1.1.7)
@@ -58,6 +67,56 @@ PODS:
   - SDWebImage (3.8.1):
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
+  - YapDatabase (2.9.1):
+    - YapDatabase/Standard (= 2.9.1)
+  - YapDatabase/Standard (2.9.1):
+    - YapDatabase/Standard/Core (= 2.9.1)
+    - YapDatabase/Standard/Extensions (= 2.9.1)
+  - YapDatabase/Standard/Core (2.9.1):
+    - CocoaLumberjack (~> 2)
+  - YapDatabase/Standard/Extensions (2.9.1):
+    - YapDatabase/Standard/Core
+    - YapDatabase/Standard/Extensions/ActionManager (= 2.9.1)
+    - YapDatabase/Standard/Extensions/CloudKit (= 2.9.1)
+    - YapDatabase/Standard/Extensions/ConnectionProxy (= 2.9.1)
+    - YapDatabase/Standard/Extensions/CrossProcessNotification (= 2.9.1)
+    - YapDatabase/Standard/Extensions/FilteredViews (= 2.9.1)
+    - YapDatabase/Standard/Extensions/FullTextSearch (= 2.9.1)
+    - YapDatabase/Standard/Extensions/Hooks (= 2.9.1)
+    - YapDatabase/Standard/Extensions/Relationships (= 2.9.1)
+    - YapDatabase/Standard/Extensions/RTreeIndex (= 2.9.1)
+    - YapDatabase/Standard/Extensions/SearchResults (= 2.9.1)
+    - YapDatabase/Standard/Extensions/SecondaryIndex (= 2.9.1)
+    - YapDatabase/Standard/Extensions/Views (= 2.9.1)
+  - YapDatabase/Standard/Extensions/ActionManager (2.9.1):
+    - Reachability (~> 3)
+    - YapDatabase/Standard/Core
+    - YapDatabase/Standard/Extensions/Views
+  - YapDatabase/Standard/Extensions/CloudKit (2.9.1):
+    - YapDatabase/Standard/Core
+  - YapDatabase/Standard/Extensions/ConnectionProxy (2.9.1):
+    - YapDatabase/Standard/Core
+  - YapDatabase/Standard/Extensions/CrossProcessNotification (2.9.1):
+    - YapDatabase/Standard/Core
+  - YapDatabase/Standard/Extensions/FilteredViews (2.9.1):
+    - YapDatabase/Standard/Core
+    - YapDatabase/Standard/Extensions/Views
+  - YapDatabase/Standard/Extensions/FullTextSearch (2.9.1):
+    - YapDatabase/Standard/Core
+  - YapDatabase/Standard/Extensions/Hooks (2.9.1):
+    - YapDatabase/Standard/Core
+  - YapDatabase/Standard/Extensions/Relationships (2.9.1):
+    - YapDatabase/Standard/Core
+  - YapDatabase/Standard/Extensions/RTreeIndex (2.9.1):
+    - YapDatabase/Standard/Core
+  - YapDatabase/Standard/Extensions/SearchResults (2.9.1):
+    - YapDatabase/Standard/Core
+    - YapDatabase/Standard/Extensions/FullTextSearch
+    - YapDatabase/Standard/Extensions/Views
+  - YapDatabase/Standard/Extensions/SecondaryIndex (2.9.1):
+    - YapDatabase/Standard/Core
+  - YapDatabase/Standard/Extensions/Views (2.9.1):
+    - YapDatabase/Standard/Core
 
 DEPENDENCIES:
   - AVOSCloud
@@ -80,12 +139,14 @@ DEPENDENCIES:
   - RealReachability
   - Reveal-iOS-SDK
   - SCSiriWaveformView
+  - YapDatabase
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  AVOSCloud: ce999e21da976f78c4eda53243699b634891d42d
-  AVOSCloudIM: 434871a41fabcea46778437b2e744fbfc8d1227c
-  Crashlytics: 3cdd4c9655be68032a0cf0379e0fb5ef6af22cad
+  AVOSCloud: dcd8a24c219971400146fe09638d218cfc8bb7f1
+  AVOSCloudIM: 51887791f822cf5d14485b8c584ba606dcf6083e
+  CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
+  Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
   DGActivityIndicatorView: 52875b025a6ccf6a431a905285c12e2bb95eb559
@@ -99,12 +160,14 @@ SPEC CHECKSUMS:
   LeanCloudSocial: f7787dfc1559dc47263bbfd37a03c870352ad98a
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  MJRefresh: 70a47c5543b567cdaf70ead5a6e99ce820652eb9
+  MJRefresh: c5f1f1653e5a1b932c90f78074f2bc86f3f9bd5e
   MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   RealReachability: 8b6644c6b3145f7552ed83bffb52c49b0f3b55e3
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  YapDatabase: 713d4018cfacbd6e77dd430710ca84730e450980
 
 COCOAPODS: 0.39.0

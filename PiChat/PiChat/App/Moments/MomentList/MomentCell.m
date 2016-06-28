@@ -36,6 +36,10 @@
 @end
 
 @implementation MomentCell
+-(void)prepareForReuse{
+    self.photoViewerHeightConstraint.constant=0;
+    self.commentsTableHeightConstraint.constant=0;
+}
 
 -(void)awakeFromNib{
     
@@ -88,9 +92,6 @@
         self.photoViewerController.photoViewerDelegate=self;
     }
     
-    [self updateConstraintsIfNeeded];
-    [self layoutIfNeeded];
-    
     //图片 Collectionview size
     CGSize photoViewerSize= self.photoViewerController.collectionView.collectionViewLayout.collectionViewContentSize;
     self.photoViewerHeightConstraint.constant=photoViewerSize.height;
@@ -123,7 +124,7 @@
 //    CGFloat commentsTableHeight=self.commentsTableHeightConstraint.constant;
 //    CGFloat photoViewerHeight=self.photoViewerHeightConstraint.constant;
     
-    CGSize finalSize= CGSizeMake(collectionViewWidth, cellSize.height);
+    CGSize finalSize= CGSizeMake(collectionViewWidth, cellSize.height+1);
     
     return finalSize;
 }
@@ -209,6 +210,4 @@
 -(void)photoViewerController:(NewMomentPhotoViewerController *)controller didPhotoCellClick:(UICollectionViewCell *)cell{
     [self.delegate momentCell:self didPhotoViewController:controller photoCellClick:cell];
 }
-
-
 @end

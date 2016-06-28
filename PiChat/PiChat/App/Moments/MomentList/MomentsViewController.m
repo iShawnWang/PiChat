@@ -20,6 +20,7 @@
 #import "CommenUtil.h"
 #import "UICollectionView+PendingReloadData.h"
 #import "MediaViewerController.h"
+#import "DBManager.h"
 @import UIKit;
 
 NSString *const kMomentCell=@"MomentCell";
@@ -28,7 +29,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 @interface MomentsViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,MomentCellDelegate,CommentsTableControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic) NSMutableArray *moments;
-@property (strong,nonatomic) MomentCell *momentProtypeCell;
+@property (strong,nonatomic) MomentCell *momentPrototypeCell;
 @property (strong,nonatomic) ReplyInputView *replyInputView;
 @property (strong,nonatomic) ModelSizeCache *modelSizeCache;
 @end
@@ -58,6 +59,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 -(void)viewDidLoad{
     [super viewDidLoad];
     [self.collectionView registerNib:[UINib nibWithNibName:@"MomentCell" bundle:nil] forCellWithReuseIdentifier:kMomentCell];
+    [DBManager sharedDBManager];
 }
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
@@ -72,11 +74,11 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 #pragma mark - Getter Setter
 
--(MomentCell *)momentProtypeCell{
-    if(!_momentProtypeCell){
-        _momentProtypeCell=[[[NSBundle mainBundle]loadNibNamed:@"MomentCell" owner:nil options:nil]firstObject];
+-(MomentCell *)momentPrototypeCell{
+    if(!_momentPrototypeCell){
+        _momentPrototypeCell=[[[NSBundle mainBundle]loadNibNamed:@"MomentCell" owner:nil options:nil]firstObject];
     }
-    return _momentProtypeCell;
+    return _momentPrototypeCell;
 }
 
 -(NSMutableArray *)moments{
@@ -116,9 +118,10 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     Moment *m=self.moments[indexPath.row];
     
+    //根据 Model 缓存行高
     __weak typeof(self) weakSelf=self;
-    CGSize cellSize= [self.modelSizeCache getSizeForModel:m withView:collectionView orCalc:^CGSize(id <UniqueObject> model, UIView *collectionOrTableView) {
-        return [weakSelf.momentProtypeCell calcSizeWithMoment:(Moment*)model collectionView:(UICollectionView*)collectionOrTableView];
+    CGSize cellSize= [self.modelSizeCache getSizeForModel:m withCollectionView:collectionView orCalc:^CGSize(id model, UICollectionView *collectionView) {
+        return [weakSelf.momentPrototypeCell calcSizeWithMoment:(Moment*)model collectionView:(UICollectionView*)collectionView];
     }];
     
     return cellSize;
@@ -145,6 +148,8 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     [cell configWithMoment:m collectionView:collectionView];
     cell.delegate=self;
     cell.commentsController.delegate=self;
+    //    在下面的 willDisplayCell 方法中为 Cell 设置 Model 会报错...!
+    //http://southpeak.github.io/blog/2015/12/20/perfect-smooth-scrolling-in-uitableviews/
     return cell;
 }
 
@@ -229,8 +234,6 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     self.replyInputView.textField.placeholder=[NSString stringWithFormat:@"回复 %@ :",comment.commentUserName];
     [self.replyInputView showInViewAtBottom:self.view];
 }
-
-
 
 
 #pragma mark - Private
