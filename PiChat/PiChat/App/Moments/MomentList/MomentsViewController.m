@@ -32,6 +32,9 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 @property (strong,nonatomic) MomentCell *momentPrototypeCell;
 @property (strong,nonatomic) ReplyInputView *replyInputView;
 @property (strong,nonatomic) ModelSizeCache *modelSizeCache;
+@property (strong,nonatomic) DBManager *dbManager;
+@property (strong,nonatomic) YapDatabaseConnection *readConnection;
+@property (strong,nonatomic) YapDatabaseViewMappings *mapping;
 @end
 
 @implementation MomentsViewController
@@ -47,6 +50,10 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadImageCompleteNotification:) name:kDownloadImageCompleteNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(yapDatabaseModified:)
+                                                     name:YapDatabaseModifiedNotification
+                                                   object:self.readConnection.database];
     }
     return self;
 }
@@ -58,8 +65,8 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+    [self.readConnection beginLongLivedReadTransaction];
     [self.collectionView registerNib:[UINib nibWithNibName:@"MomentCell" bundle:nil] forCellWithReuseIdentifier:kMomentCell];
-    [DBManager sharedDBManager];
 }
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
@@ -103,21 +110,53 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     return _modelSizeCache;
 }
 
+-(DBManager *)dbManager{
+    if(!_dbManager){
+        _dbManager=[DBManager sharedDBManager];
+    }
+    return _dbManager;
+}
+
+-(YapDatabaseConnection *)readConnection{
+    if(!_readConnection){
+        _readConnection=[self.dbManager.db newConnection];
+    }
+    return _readConnection;
+}
+
+-(YapDatabaseViewMappings *)mapping{
+    if(!_mapping){
+         _mapping=[YapDatabaseViewMappings mappingsWithGroups:@[@"Moment"] view:[YapDatabaseView viewNameForModel:[Moment class]]];
+        [self.readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
+            [_mapping updateWithTransaction:transaction];
+        }];
+    }
+    return _mapping;
+}
+
 #pragma mark - Life Cycle
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MomentsManager getCurrentUserMoments:^(NSArray *objects, NSError *error) {
         self.moments =[objects mutableCopy];
-        [self.collectionView reloadData];
+        [[self.dbManager.db newConnection]asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
+            [self.moments enumerateObjectsUsingBlock:^(Moment *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [transaction setObjectAutomatic:obj];
+            }];
+        }];
     }];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    Moment *m=self.moments[indexPath.row];
     
+    __block Moment *m;
+    [self.readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
+        YapDatabaseViewTransaction *viewTransaction= [transaction viewTransactionForModel:[Moment class]];
+        m=[viewTransaction objectAtIndexPath:indexPath withMappings:self.mapping];
+    }];
     //根据 Model 缓存行高
     __weak typeof(self) weakSelf=self;
     CGSize cellSize= [self.modelSizeCache getSizeForModel:m withCollectionView:collectionView orCalc:^CGSize(id model, UICollectionView *collectionView) {
@@ -139,12 +178,17 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.moments.count;
+    return [self.mapping numberOfItemsInSection:0];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     MomentCell *cell= [collectionView dequeueReusableCellWithReuseIdentifier:kMomentCell forIndexPath:indexPath];
-    Moment *m=self.moments[indexPath.row];
+    
+    __block Moment *m;
+    [self.readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
+        YapDatabaseViewTransaction *viewTransaction= [transaction viewTransactionForModel:[Moment class]];
+        m=[viewTransaction objectAtIndexPath:indexPath withMappings:self.mapping];
+    }];
     [cell configWithMoment:m collectionView:collectionView];
     cell.delegate=self;
     cell.commentsController.delegate=self;
@@ -252,5 +296,73 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
             }];
         }];
     });
+}
+
+#pragma mark - DB
+-(void)yapDatabaseModified:(NSNotification*)noti{
+    // Jump to the most recent commit.
+    // End & Re-Begin the long-lived transaction atomically.
+    // Also grab all the notifications for all the commits that I jump.
+    // If the UI is a bit backed up, I may jump multiple commits.
+    
+    NSArray *notifications = [self.readConnection beginLongLivedReadTransaction];
+    
+    // Process the notification(s),
+    // and get the change-set(s) as applies to my view and mappings configuration.
+    
+    NSArray *sectionChanges = nil;
+    NSArray *rowChanges = nil;
+    
+    [[self.readConnection ext:[YapDatabaseView viewNameForModel:[Moment class]]]
+                                            getSectionChanges:&sectionChanges
+                                                  rowChanges:&rowChanges
+                                            forNotifications:notifications
+                                                withMappings:self.mapping];
+    
+    // No need to update mappings.
+    // The above method did it automatically.
+    
+    if ([sectionChanges count] == 0 & [rowChanges count] == 0)
+    {
+        // Nothing has changed that affects our tableView
+        return;
+    }
+    
+    // Familiar with NSFetchedResultsController?
+    // Then this should look pretty familiar
+    
+    [self.collectionView performBatchUpdates:^{
+        
+        for (YapDatabaseViewRowChange *rowChange in rowChanges)
+        {
+            switch (rowChange.type)
+            {
+                case YapDatabaseViewChangeDelete :
+                {
+                    [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
+                    break;
+                }
+                case YapDatabaseViewChangeInsert :
+                {
+                    [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
+                    break;
+                }
+                case YapDatabaseViewChangeMove :
+                {
+                    [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
+                    [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
+                    break;
+                }
+                case YapDatabaseViewChangeUpdate :
+                {
+                    [self.collectionView reloadItemsAtIndexPaths:@[rowChange.indexPath]];
+                    break;
+                }
+            }
+        }
+    } completion:^(BOOL finished) {
+        
+    }];
+    
 }
 @end

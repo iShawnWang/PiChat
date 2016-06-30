@@ -18,6 +18,7 @@
 
 -(void)awakeFromNib{
     self.selectionStyle=UITableViewCellSelectionStyleNone;
+    self.favourUsersAttributeLabel.text=@"";
 }
 
 -(void)configCellWithFavourUsers:(NSArray*)favourUsers tableView:(UITableView*)tableView{
@@ -32,6 +33,9 @@
             [favourUsersStr appendString:u.displayName];
             [favourUsersStr appendString:@","];
         }];
+        if(favourUsersStr.length<1){
+            return;
+        }
         [favourUsersStr deleteCharactersInRange:NSMakeRange(favourUsersStr.length-1, 1)];
         
         favourUsersAttributeStr=[[NSMutableAttributedString alloc] initWithString:favourUsersStr];

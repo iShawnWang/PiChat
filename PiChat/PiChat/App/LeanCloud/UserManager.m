@@ -13,7 +13,6 @@
 #import <JSQMessagesAvatarImageFactory.h>
 #import <JSQMessagesCollectionViewFlowLayout.h>
 #import "ImageCache.h"
-#import "Followee.h"
 #import "PiAutoPurgeCache.h"
 #import "NSNotification+UserUpdate.h"
 #import "FabricManager.h"
@@ -155,7 +154,7 @@
 }
 
 /**
- *  先内存缓存,在磁盘缓存
+ *  先内存缓存//在磁盘缓存
  *
  *  @param clientID
  *
@@ -163,18 +162,19 @@
  */
 -(User*)findUserFromCacheByObjectID:(NSString*)objectID{
     User *u=[self.userCache objectForKey:objectID];
-    if(u){
-        return u;
-    }else{
-        AVQuery *q=[User query];
-        q.cachePolicy=kAVCachePolicyCacheOnly;
-        [q whereKey:kObjectIdKey equalTo:objectID];
-        NSError *error;
-        u=[[q findObjects:&error]firstObject];
-        if(u){
-            [self.userCache setObject:u forKey:u.objectId];
-        }
-    }
+//    if(u){
+//        return u;
+//    }else{
+//        AVQuery *q=[User query];
+//        q.cachePolicy=kAVCachePolicyCacheOnly;
+////        [q whereKey:kObjectIdKey equalTo:objectID];
+//        NSError *error;
+//        u=(User*)[q getObjectWithId:objectID error:&error];
+////        u=(User*)[q getFirstObject:&error];
+//        if(u){
+//            [self.userCache setObject:u forKey:u.objectId];
+//        }
+//    }
     return u;
 }
 
@@ -225,7 +225,7 @@
     User *user = [User currentUser];
     AVQuery *q = [user followeeQuery];
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        callback([Followee followeeArrayToUserArray:objects] ,error);
+        callback(objects ,error);
     }];
 }
 

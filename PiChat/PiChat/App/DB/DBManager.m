@@ -7,11 +7,10 @@
 //
 
 #import "DBManager.h"
-#import <YapDatabase.h>
 #import "CommenUtil.h"
 
 @interface DBManager ()
-@property (strong,nonatomic) YapDatabase *db;
+
 @end
 
 @implementation DBManager
@@ -32,5 +31,9 @@
         _DBmanager=[DBManager new];
     });
     return _DBmanager;
+}
+
++(void)registerView:(YapDatabaseView*)view withName:(NSString*)name{
+    [[DBManager sharedDBManager].db registerExtension:view withName:name];
 }
 @end

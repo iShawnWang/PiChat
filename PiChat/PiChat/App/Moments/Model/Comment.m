@@ -8,6 +8,8 @@
 
 #import "Comment.h"
 
+NSString *const kCommentCodingKey = @"kCommentCodingKey";
+
 @implementation Comment
 @dynamic commentUser,commentContent,replyToUser,commentUserName,replyToUserName;
 
@@ -36,5 +38,16 @@
 
 -(NSUInteger)hash{
     return  self.commentUser.objectId.hash ^ self.replyToUser.objectId.hash ^ self.commentContent.hash;
+}
+
+#pragma mark - NSCoding
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    NSDictionary *objDict= [self dictionaryForObject];
+    [aCoder encodeObject:objDict forKey:kCommentCodingKey];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder{
+    NSDictionary *objDict= [coder decodeObjectForKey:kCommentCodingKey];
+    return (Comment*)[AVObject objectWithDictionary:objDict];
 }
 @end

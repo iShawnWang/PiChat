@@ -11,6 +11,8 @@
 #import "ImageCache.h"
 #import "NSNotification+UserUpdate.h"
 
+NSString *const kUserCodingKey = @"kUserCodingKey";
+
 @interface User ()
 
 @end
@@ -49,4 +51,14 @@
     }];
 }
 
+#pragma mark - NSCoding
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    NSDictionary *objDict= [self dictionaryForObject];
+    [aCoder encodeObject:objDict forKey:kUserCodingKey];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder{
+    NSDictionary *objDict= [coder decodeObjectForKey:kUserCodingKey];
+    return (User*)[AVObject objectWithDictionary:objDict];
+}
 @end

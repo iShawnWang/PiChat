@@ -31,7 +31,7 @@
 ![](./Img/关于.png)
 
 ---
-- 朋友圈计算 UICollectionview Cell Size,还有小 Bug
+- 朋友圈计算 UICollectionview Cell Size (使用 Autolayout),还有小 Bug
 - 准备加入 [yapstudios/YapDatabase](https://github.com/yapstudios/YapDatabase) 来缓存网络数据
 
 ---

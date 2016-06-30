@@ -9,7 +9,7 @@
 #import <AVOSCloud.h>
 #import "User.h"
 
-@interface Comment : AVObject<AVSubclassing>
+@interface Comment : AVObject<AVSubclassing,NSCoding>
 @property (strong,nonatomic) User *commentUser; //评论用户
 @property (strong,nonatomic) User *replyToUser; //关联用户
 @property (copy,nonatomic) NSString *commentUserName;

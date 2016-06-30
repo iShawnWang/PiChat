@@ -96,8 +96,7 @@
 }
 
 -(Moment*)newMoment:(NSString*)content images:(NSArray*)images{
-//    Moment *m=[Moment object];
-    Moment *m=[Moment objectWithClassName:@"Moment"];
+    Moment *m=[Moment object];
     if(images){
         m.images =self.momentImageFile;
     }
@@ -120,7 +119,17 @@
         [query includeKey:kPostImages];
         [query includeKey:kFavourUsers];
         [query includeKey:kComments];
-        [query findObjectsInBackgroundWithBlock:callback];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            [objects enumerateObjectsUsingBlock:^(Moment *m, NSUInteger idx, BOOL * _Nonnull stop) {
+                [AVObject fetchAll:m.favourUsers];
+                [AVObject fetchAll:m.comments];
+                [m.postUser fetch];
+            }];
+            
+            //上面再请求一次 moment 的favourUsers,comments 数据的操作效率很低,但 Leancloud 只支持一层的请求数据 ,
+            //https://forum.leancloud.cn/t/app-leancloud/1888
+            callback(objects,error);
+        }];
     }];
 }
 
