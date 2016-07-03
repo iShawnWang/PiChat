@@ -101,6 +101,7 @@
 		0ED67A8B1CDA793600A21D52 /* ClearCacheCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED67A8A1CDA793600A21D52 /* ClearCacheCell.m */; };
 		0ED6EE9E1C934E0A00DCC2DD /* JSQMessage+MessageID.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED6EE9D1C934E0A00DCC2DD /* JSQMessage+MessageID.m */; };
 		0EDCA9C81CF74FF000E6F008 /* NSObject+MethodSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDCA9C71CF74FF000E6F008 /* NSObject+MethodSwizzling.m */; };
+		0EE111881D29550500F1280B /* UIImage+GaussianBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE111871D29550500F1280B /* UIImage+GaussianBlur.m */; };
 		0EE2C4A51C907EE900A7DEE0 /* AGEmojiKeyBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A11C907EE800A7DEE0 /* AGEmojiKeyBoardView.m */; };
 		0EE2C4A61C907EE900A7DEE0 /* AGEmojiPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A31C907EE900A7DEE0 /* AGEmojiPageView.m */; };
 		0EE2C4A71C907EE900A7DEE0 /* EmojisList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EE2C4A41C907EE900A7DEE0 /* EmojisList.plist */; };
@@ -321,6 +322,8 @@
 		0ED6EE9D1C934E0A00DCC2DD /* JSQMessage+MessageID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSQMessage+MessageID.m"; sourceTree = "<group>"; };
 		0EDCA9C61CF74FF000E6F008 /* NSObject+MethodSwizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MethodSwizzling.h"; sourceTree = "<group>"; };
 		0EDCA9C71CF74FF000E6F008 /* NSObject+MethodSwizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MethodSwizzling.m"; sourceTree = "<group>"; };
+		0EE111861D29550500F1280B /* UIImage+GaussianBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GaussianBlur.h"; sourceTree = "<group>"; };
+		0EE111871D29550500F1280B /* UIImage+GaussianBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GaussianBlur.m"; sourceTree = "<group>"; };
 		0EE2C4A01C907EE800A7DEE0 /* AGEmojiKeyBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGEmojiKeyBoardView.h; sourceTree = "<group>"; };
 		0EE2C4A11C907EE800A7DEE0 /* AGEmojiKeyBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGEmojiKeyBoardView.m; sourceTree = "<group>"; };
 		0EE2C4A21C907EE900A7DEE0 /* AGEmojiPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGEmojiPageView.h; sourceTree = "<group>"; };
@@ -596,6 +599,8 @@
 				0EFDBA201C896AAE002685FE /* MBProgressHUD+Addition.m */,
 				0E206CB41CCE998C005FCE6A /* UIImage+ClipRoundCorner.h */,
 				0E206CB51CCE998C005FCE6A /* UIImage+ClipRoundCorner.m */,
+				0EE111861D29550500F1280B /* UIImage+GaussianBlur.h */,
+				0EE111871D29550500F1280B /* UIImage+GaussianBlur.m */,
 				0EDCA9C61CF74FF000E6F008 /* NSObject+MethodSwizzling.h */,
 				0EDCA9C71CF74FF000E6F008 /* NSObject+MethodSwizzling.m */,
 				0E5F98751CD4DCA500964BB5 /* UICollectionView+PendingReloadData.h */,
@@ -1257,6 +1262,7 @@
 				0E2151A91CD11854001CF7BC /* PiAutoPurgeCache.m in Sources */,
 				0E5E42631D0C19EB0091B7A0 /* PiReachability.m in Sources */,
 				0E2151AF1CD11DEB001CF7BC /* ModelSizeCache.m in Sources */,
+				0EE111881D29550500F1280B /* UIImage+GaussianBlur.m in Sources */,
 				0EA4EC911C9E988C009A5ECB /* GCPlaceholderTextView.m in Sources */,
 				0E234B921CAFE98100E8354D /* Comment.m in Sources */,
 				0EB326711CEB877000E4F2C1 /* JSQMessagesInputToolbar+DecorateInputView.m in Sources */,

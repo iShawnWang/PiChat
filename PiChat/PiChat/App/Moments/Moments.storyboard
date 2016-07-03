@@ -21,7 +21,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Iz9-YE-Ete">
-                                <rect key="frame" x="0.0" y="72" width="600" height="520"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="528"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="MHj-q8-D7c">
                                     <size key="itemSize" width="0.0" height="0.0"/>
@@ -40,7 +40,7 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dv0-hT-puL">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dv0-hT-puL">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="168"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="Dv0-hT-puL" secondAttribute="height" multiplier="1:1" id="7ae-LK-snB"/>
@@ -96,7 +96,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Iz9-YE-Ete" secondAttribute="trailing" id="7iO-Qj-UFg"/>
-                            <constraint firstItem="Iz9-YE-Ete" firstAttribute="top" secondItem="tAU-3D-5Gq" secondAttribute="bottom" constant="8" symbolic="YES" id="7wY-qX-ell"/>
+                            <constraint firstItem="Iz9-YE-Ete" firstAttribute="top" secondItem="tAU-3D-5Gq" secondAttribute="bottom" id="7wY-qX-ell"/>
                             <constraint firstItem="Tyg-ka-k9i" firstAttribute="top" secondItem="Iz9-YE-Ete" secondAttribute="bottom" constant="8" symbolic="YES" id="IY6-Fk-sdv"/>
                             <constraint firstItem="Iz9-YE-Ete" firstAttribute="leading" secondItem="Jbu-CC-g9A" secondAttribute="leading" id="c7O-sq-nJQ"/>
                         </constraints>

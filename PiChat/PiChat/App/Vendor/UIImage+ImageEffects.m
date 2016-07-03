@@ -101,6 +101,8 @@
 
 @implementation UIImage (ImageEffects)
 
+#pragma mark -
+
 
 - (UIImage *)applyLightEffect
 {
