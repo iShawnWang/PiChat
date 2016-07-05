@@ -68,7 +68,6 @@ const CGSize NilCacheSize ={-1,-1};
     //没有就计算一下
     if( CGSizeEqualToSize(modelSize, NilCacheSize)){
         modelSize= block(model,collectionView);
-        
         //计算完成存入缓存中
         [self setOrientationSize:modelSize forModel:model];
 //        NSLog(@"计算行高 :%@",NSStringFromCGSize(modelSize));

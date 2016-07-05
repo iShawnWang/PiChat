@@ -26,6 +26,7 @@ NSInteger const kCellBoraderWidth=1; //灰色边框宽度
 @interface NewMomentPhotoViewerController ()<UICollectionViewDelegateFlowLayout>
 @property (strong,nonatomic) UIColor *cellBorderColor;
 @property (strong,nonatomic) MediaPicker *mediaPicker;
+@property (strong,nonatomic) UICollectionViewFlowLayout *flowLayout;
 @end
 
 @implementation NewMomentPhotoViewerController
@@ -37,7 +38,16 @@ NSInteger const kCellBoraderWidth=1; //灰色边框宽度
     [super viewDidLoad];
     self.currentState=PhotoViewerStateNormal;
     self.cellBorderColor=[UIColor lightGrayDividerColor];
-    ((UICollectionViewFlowLayout*)self.collectionViewLayout).minimumLineSpacing=5;
+    self.flowLayout= (UICollectionViewFlowLayout*)self.collectionViewLayout;
+    self.flowLayout.minimumLineSpacing=0;
+    self.flowLayout.minimumInteritemSpacing=0;
+    self.flowLayout.sectionInset=UIEdgeInsetsZero;
+    
+    //minimunLineSpacing :
+    //同一行的 cell 之间是 2 * minimunLineSpacing
+    //同一列的 cell 之间是 minimunLineSpacing
+    //cell 和边界的距离是 0
+    // 坑 !!!
 }
 
 #pragma mark - Getter Setter
@@ -60,8 +70,7 @@ NSInteger const kCellBoraderWidth=1; //灰色边框宽度
     return _mediaPicker;
 }
 
-#pragma mark <UICollectionViewDataSource>
-
+#pragma mark UICollectionViewDataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 1;
 }
@@ -95,6 +104,8 @@ NSInteger const kCellBoraderWidth=1; //灰色边框宽度
             img=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:imgUrl.absoluteString]; //网络 url
         }
         photoCell.imageView.image=img;
+        photoCell.imageView.layer.borderWidth=kCellBoraderWidth;
+        photoCell.imageView.layer.borderColor=self.cellBorderColor.CGColor;
         photoCell.deleteImage.hidden=(self.currentState==PhotoViewerStateNormal);
         
     }else if(indexPath.item==photoCount){
@@ -112,8 +123,6 @@ NSInteger const kCellBoraderWidth=1; //灰色边框宽度
             cell.hidden=NO;
         }
     }
-    cell.contentView.layer.borderColor=self.cellBorderColor.CGColor;
-    cell.contentView.layer.borderWidth=kCellBoraderWidth;
     return cell;
 }
 
@@ -121,7 +130,6 @@ NSInteger const kCellBoraderWidth=1; //灰色边框宽度
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell= [collectionView cellForItemAtIndexPath:indexPath];
-    
     
     if([cell.reuseIdentifier isEqualToString:kNewMomentAddCellID]){
 
@@ -154,10 +162,7 @@ NSInteger const kCellBoraderWidth=1; //灰色边框宽度
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    UICollectionViewFlowLayout *flowLayout=(UICollectionViewFlowLayout*)collectionViewLayout;
-    NSInteger itemSize= (self.view.width-kCellCountPerLine*flowLayout.minimumLineSpacing)/kCellCountPerLine;
-    return CGSizeMake(itemSize-2, itemSize-2);
+    CGFloat itemSize= CGRectGetWidth(collectionView.bounds)/kCellCountPerLine;
+    return CGSizeMake(itemSize, itemSize);
 }
-
-
 @end

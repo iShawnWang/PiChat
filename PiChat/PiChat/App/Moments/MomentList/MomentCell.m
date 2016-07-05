@@ -19,6 +19,24 @@
 #import "TTTAttributedLabel.h"
 #import "AVFile+ImageThumbnailUrl.h"
 
+const NSInteger NameLabelTopPadding =8;
+const NSInteger NameLabelHeight=22;
+const NSInteger NameLabelRgithPadding =8;
+
+const NSInteger AvatarImageViewSize =66;
+const NSInteger AvatarImageViewLeftPadding =8;
+const NSInteger AvatarImageViewRightPadding =8;
+
+const NSInteger ContentLabelTopPadding =12;
+
+const NSInteger PhotoViewerPlaceholderViewTopPadding =8;
+
+const NSInteger MenuViewTopPadding =8;
+const NSInteger MenuViewHeight =30;
+
+const NSInteger SeparateLineHeight =1;
+const NSInteger SeparateLineTopPadding =8;
+const NSInteger SeparateLineBottomPadding =8;
 
 @interface MomentCell ()<UICollectionViewDelegateFlowLayout,PhotoViewerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *likeBtn;
@@ -31,7 +49,6 @@
 
 //
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *photoViewerHeightConstraint;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *commentsTableHeightConstraint;
 @end
 
@@ -57,18 +74,20 @@
         make.edges.equalTo(self.photoViewerPlaceholderView);
     }];
     
+    //神奇的解决办法 ~ 666
+    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self);
+    }];
+    
     self.photoViewerHeightConstraint.constant=0;
     self.commentsTableHeightConstraint.constant=0;
-    
 }
 
 -(void)configWithMoment:(Moment*)moment collectionView:(UICollectionView*)collectionView{
     
     self.photoViewerController.photoUrls=nil;
     
-    self.frame=CGRectMake(self.frame.origin.x, self.frame.origin.y, collectionView.bounds.size.width, self.frame.size.height);
-    
-    [self updateConstraintsIfNeeded];
+    self.bounds=CGRectMake(0, 0, CGRectGetWidth(collectionView.bounds), CGRectGetHeight(self.bounds));
     
     User *u=[[UserManager sharedUserManager]findUserFromCacheElseNetworkByObjectID:moment.postUser.clientID];
     
@@ -77,7 +96,11 @@
     self.contentLabel.text=moment.texts;
     self.lastModifyTimeLabel.text=[NSDate timeAgoSinceDate:moment.createdAt];
     
+    NSInteger commentsImageViewerControllerWidth=CGRectGetWidth(collectionView.bounds)-AvatarImageViewLeftPadding-AvatarImageViewSize-AvatarImageViewRightPadding-NameLabelRgithPadding;
+    CGRect commentsImageViewerControllerBounds=CGRectMake(0, 0, commentsImageViewerControllerWidth, MAXFLOAT);
     //Comments
+    self.commentsController.view.bounds=commentsImageViewerControllerBounds;
+    [self.commentsController.view layoutIfNeeded];
     self.commentsController.moment=moment;
     self.commentsController.superCell=self;
     
@@ -87,51 +110,48 @@
         [moment.images enumerateObjectsUsingBlock:^(AVFile * imageFile, NSUInteger idx, BOOL * _Nonnull stop) {
             [photoUrls addObject:[NSURL URLWithString:[imageFile defaultThumbnailUrl]]];
         }];
-        
+        self.photoViewerController.view.bounds=commentsImageViewerControllerBounds;
+        [self.commentsController.view layoutIfNeeded];
         self.photoViewerController.photoUrls=photoUrls;
         self.photoViewerController.photoViewerDelegate=self;
     }
-    
+
     //图片 Collectionview size
-    CGSize photoViewerSize= self.photoViewerController.collectionView.collectionViewLayout.collectionViewContentSize;
-    self.photoViewerHeightConstraint.constant=photoViewerSize.height;
+    CGFloat photoViewerHeight= self.photoViewerController.collectionViewLayout.collectionViewContentSize.height;
+    self.photoViewerHeightConstraint.constant=photoViewerHeight;
     
-//    NSLog(@"%f",photoViewerSize.height);
     //喜欢和评论的 Tableview
     CGSize commentsTableSize= self.commentsController.tableView.contentSize;
     self.commentsTableHeightConstraint.constant=commentsTableSize.height;
-
-    [self updateConstraintsIfNeeded];
-    [self layoutIfNeeded];
+    
 }
 
-
-// 迷之动态计算 cell 高度 已经解决 666 ~
 -(CGSize)calcSizeWithMoment:(Moment*)moment collectionView:(UICollectionView*)collectionView{
     
     [self configWithMoment:moment collectionView:collectionView];
     
     NSInteger collectionViewWidth=CGRectGetWidth(collectionView.bounds);
-    //Label 自适应
-    CGFloat labelMaxWidth=collectionViewWidth - self.avatarImageView.frame.size.width-8-8;
-    self.contentLabel.preferredMaxLayoutWidth=labelMaxWidth;
+    CGFloat labelMaxWidth=collectionViewWidth - AvatarImageViewLeftPadding -AvatarImageViewSize -AvatarImageViewRightPadding -NameLabelRgithPadding;
+    CGRect contentTextRect= [moment.texts boundingRectWithSize:CGSizeMake(labelMaxWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.contentLabel.font} context:nil];
     
-    [self updateConstraintsIfNeeded];
-    [self layoutIfNeeded];
+    CGFloat cellHeight=NameLabelTopPadding+NameLabelHeight+ContentLabelTopPadding+ CGRectGetHeight(contentTextRect) +PhotoViewerPlaceholderViewTopPadding+self.photoViewerHeightConstraint.constant +MenuViewTopPadding+MenuViewHeight+ self.commentsTableHeightConstraint.constant+SeparateLineTopPadding+SeparateLineHeight+SeparateLineBottomPadding;
+
+    CGSize finalSize=CGSizeMake(collectionViewWidth, cellHeight);
+    return finalSize;
+    
+#if 0
+    //Label 自适应
+    CGFloat labelMaxWidth=collectionViewWidth - self.avatarImageView.frame.size.width-8-8-8;
+    self.contentLabel.preferredMaxLayoutWidth=labelMaxWidth;
+    self.displayNameLabel.preferredMaxLayoutWidth=labelMaxWidth;
     
     CGSize cellSize= [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    
-//    CGFloat commentsTableHeight=self.commentsTableHeightConstraint.constant;
-//    CGFloat photoViewerHeight=self.photoViewerHeightConstraint.constant;
-    
     CGSize finalSize= CGSizeMake(collectionViewWidth, cellSize.height+1);
+#endif
     
-    return finalSize;
 }
 
-
 #pragma mark - Getter Setter
-
 -(NewMomentPhotoViewerController *)photoViewerController{
     if(!_photoViewerController){
         _photoViewerController=(NewMomentPhotoViewerController*)[StoryBoardHelper inititialVC:kNewMomentPhotoViewerControllerID fromSB:kMomentsSB];
@@ -147,7 +167,6 @@
 }
 
 #pragma mark - Comment Menu
-
 - (IBAction)likeBtnClick:(id)sender {
     [self.delegate momentCellDidLikeBtnClick:self];
 }
@@ -174,11 +193,13 @@
  *  @param force 不管是否正在进行动画,dismiss Menu
  */
 -(void)showCommentMenu:(BOOL)show force:(BOOL) force{
-    if(!force){
-        if(self.isCommentMenuAnimating) return;
+    if(!force && self.isCommentMenuAnimating){
+        return;
     }
     if(show){
+        if([self.delegate respondsToSelector:@selector(momentEditMenuWillShowForCell:likeBtn:commentBtn:)]){
         [self.delegate momentEditMenuWillShowForCell:self likeBtn:self.likeBtn commentBtn:self.commentBtn];
+        }
     }
     [UIView animateWithDuration:0.225 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.isCommentMenuAnimating=YES;

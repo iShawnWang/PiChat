@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 @class NewMomentPhotoViewerController;
 
-
 //Normal :正常的浏览图片, Delete :可以点击图片来删除它.(编辑模式)
 typedef NS_ENUM(NSUInteger, PhotoViewerState) {
     PhotoViewerStateNormal,

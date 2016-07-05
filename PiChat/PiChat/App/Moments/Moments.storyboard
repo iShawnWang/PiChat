@@ -197,7 +197,7 @@
         <scene sceneID="LbD-xr-Kry">
             <objects>
                 <tableViewController storyboardIdentifier="CommentsTableController" id="FNI-6n-AGk" customClass="CommentsTableController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="QQc-8a-qK5">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="QQc-8a-qK5">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -206,10 +206,10 @@
                                 <rect key="frame" x="0.0" y="28" width="400" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RgE-cm-Vgs" id="3zk-ZL-Vo7">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0i-38-WHv" customClass="TTTAttributedLabel">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0i-38-WHv" customClass="TTTAttributedLabel">
                                             <rect key="frame" x="30" y="8" width="362" height="27"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -252,11 +252,11 @@
                                 <rect key="frame" x="0.0" y="72" width="400" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UM0-i9-qGd" id="I9Y-4g-Cs2">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="666" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zur-8N-HrK" customClass="TTTAttributedLabel">
-                                            <rect key="frame" x="18" y="10" width="364" height="23"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="666" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zur-8N-HrK" customClass="TTTAttributedLabel">
+                                            <rect key="frame" x="8" y="10" width="384" height="23"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -264,9 +264,9 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="zur-8N-HrK" firstAttribute="top" secondItem="I9Y-4g-Cs2" secondAttribute="topMargin" constant="2" id="78L-cE-2Ds"/>
-                                        <constraint firstItem="zur-8N-HrK" firstAttribute="leading" secondItem="I9Y-4g-Cs2" secondAttribute="leadingMargin" constant="10" id="89q-5E-eAr"/>
+                                        <constraint firstItem="zur-8N-HrK" firstAttribute="leading" secondItem="I9Y-4g-Cs2" secondAttribute="leadingMargin" id="89q-5E-eAr"/>
                                         <constraint firstItem="zur-8N-HrK" firstAttribute="centerY" secondItem="I9Y-4g-Cs2" secondAttribute="centerY" id="XEP-fe-pAu"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="zur-8N-HrK" secondAttribute="trailing" constant="10" id="XMZ-nW-h0i"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="zur-8N-HrK" secondAttribute="trailing" id="XMZ-nW-h0i"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="zur-8N-HrK" secondAttribute="bottom" constant="2" id="l38-Qv-bxC"/>
                                     </constraints>
                                     <variation key="default">
@@ -315,7 +315,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DUt-jC-sG8">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DUt-jC-sG8">
                                             <rect key="frame" x="8" y="8" width="64" height="64"/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AlbumRedDelete" translatesAutoresizingMaskIntoConstraints="NO" id="JPP-Sg-ZjL">

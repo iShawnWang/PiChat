@@ -113,7 +113,7 @@
         
         AVQuery *friendsMomentQuery= [AVQuery queryWithClassName:NSStringFromClass([Moment class])];
         [friendsMomentQuery whereKey:kPostUser containedIn:friends];
-    
+        
         AVQuery *query=[AVQuery orQueryWithSubqueries:@[myMomentQuery,friendsMomentQuery]];
         [query orderByDescending:kCreatedAt];
         [query includeKey:kPostImages];

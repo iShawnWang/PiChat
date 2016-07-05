@@ -178,7 +178,8 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return [self.mapping numberOfItemsInSection:0];
+    NSInteger count=[self.mapping numberOfItemsInSection:0];
+    return count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{

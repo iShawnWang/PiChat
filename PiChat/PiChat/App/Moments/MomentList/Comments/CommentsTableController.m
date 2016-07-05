@@ -26,6 +26,11 @@ NSString *const kFavourUsersCell=@"FavourUsersCell";
     [self.tableView reloadData];
 }
 
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    self.tableView.rowHeight=33;
+}
+
 #pragma mark - Table view data source
 
 /**
@@ -84,10 +89,6 @@ NSString *const kFavourUsersCell=@"FavourUsersCell";
     if(self.delegate){
         [self.delegate commentsTableController:self didCommentClick:self.moment.comments[indexPath.row] withCell:self.superCell moment:self.moment];
     }
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
 }
 
 @end
