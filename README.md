@@ -31,8 +31,10 @@
 ![](./Img/关于.png)
 
 ---
-- 朋友圈计算 UICollectionview Cell Size (使用 Autolayout),还有小 Bug
-- 准备加入 [yapstudios/YapDatabase](https://github.com/yapstudios/YapDatabase) 来缓存网络数据
+- [x] 朋友圈计算 UICollectionview Cell Size (使用 Autolayout),还有小 Bug
+- [x] 准备加入 [yapstudios/YapDatabase](https://github.com/yapstudios/YapDatabase) 来缓存网络数据
+- [ ] [FastImageCache](https://github.com/path/FastImageCache)做图片缓存感觉不错...
+- [ ] YYText 源码根本看不懂,全是 Core Text :(
 
 ---
 ## 使用的第三方库:
