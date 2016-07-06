@@ -20,8 +20,8 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AVOSCloud (3.3.3)
-  - AVOSCloudIM (3.3.3):
+  - AVOSCloud (3.3.5)
+  - AVOSCloudIM (3.3.5):
     - AVOSCloud
   - CocoaLumberjack (2.3.0):
     - CocoaLumberjack/Default (= 2.3.0)
@@ -37,8 +37,9 @@ PODS:
   - DateTools (1.7.0)
   - DGActivityIndicatorView (2.0)
   - Fabric (1.6.7)
+  - FastImageCache (1.5.1)
   - GJAlertController (1.0.0)
-  - IQKeyboardManager (4.0.3)
+  - IQKeyboardManager (4.0.4)
   - JSBadgeView (1.4.1)
   - JSQMessagesViewController (7.3.3):
     - JSQSystemSoundPlayer (~> 2.0.1)
@@ -50,7 +51,7 @@ PODS:
     - AVOSCloud (~> 3.1)
   - Masonry (1.0.1)
   - MBProgressHUD (0.9.2)
-  - MJRefresh (3.1.9)
+  - MJRefresh (3.1.10)
   - MWPhotoBrowser (2.1.2):
     - DACircularProgress (~> 2.3)
     - MBProgressHUD (~> 0.9)
@@ -125,6 +126,7 @@ DEPENDENCIES:
   - DateTools
   - DGActivityIndicatorView
   - Fabric
+  - FastImageCache
   - GJAlertController
   - IQKeyboardManager
   - JSBadgeView
@@ -143,16 +145,17 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  AVOSCloud: dcd8a24c219971400146fe09638d218cfc8bb7f1
-  AVOSCloudIM: 51887791f822cf5d14485b8c584ba606dcf6083e
+  AVOSCloud: 1fe170768bee7e05bc3ea86e38d5bddb105cb957
+  AVOSCloudIM: dc307c48e951fcd861f4ae6db6d807e7b40639c8
   CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
   Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
   DGActivityIndicatorView: 52875b025a6ccf6a431a905285c12e2bb95eb559
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
+  FastImageCache: 2e7a6f677b15336eb3d1a4092a494676256c891d
   GJAlertController: 71a7f2072451bc37b780d78379c9ee4b6f357dd2
-  IQKeyboardManager: be9695ffc5a52077deb4847608f338771022d6d1
+  IQKeyboardManager: 4a6f83b540283c2645aaeba2bd8dc0f09b5c77f8
   JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5
   JSQMessagesViewController: 0ee3f80237268192a3e8337fd0d787f1a1bf5a7a
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
@@ -160,7 +163,7 @@ SPEC CHECKSUMS:
   LeanCloudSocial: f7787dfc1559dc47263bbfd37a03c870352ad98a
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  MJRefresh: c5f1f1653e5a1b932c90f78074f2bc86f3f9bd5e
+  MJRefresh: bb72948c985914b0b5cecac573a2c69a8915fb02
   MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96

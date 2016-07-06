@@ -31,6 +31,7 @@ pod 'QBImagePickerController'
 pod 'DGActivityIndicatorView'
 pod 'JSBadgeView'
 pod 'RealReachability'
+pod 'FastImageCache's
 #
 pod 'YapDatabase'
 end
