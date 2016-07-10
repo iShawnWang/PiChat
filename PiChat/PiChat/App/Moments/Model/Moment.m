@@ -21,6 +21,11 @@ NSString *const kMomentCodingKey = @"kMomentCodingKey";
 @implementation Moment
 @dynamic images,texts,postUser,favourUsers,comments;
 
+#pragma mark - ModelSizeCacheProtocol
+-(NSString *)modelID{
+    return self.objectId;
+}
+
 #pragma mark - DB
 +(void)initialize{
     [self setupViews];
@@ -49,47 +54,45 @@ NSString *const kMomentCodingKey = @"kMomentCodingKey";
 }
 
 +(NSString *)parseClassName{
-    return @"Moment";
-}
-
--(NSUInteger)hash{
-    return self.postUser.objectId.hash ^ self.favourUsers.hash ^ self.comments.hash ^ self.comments.hash ^ self.images.hash ^ self.texts.hash;
+    return NSStringFromClass([self class]);
 }
 
 #pragma mark - Public
 
 -(void)addOrRemoveFavourUser:(User *)u{
-    NSMutableArray *newFavourUsers=[NSMutableArray arrayWithArray:self.favourUsers];
-    if([newFavourUsers containsObject:u]){
-        [newFavourUsers removeObject:u];
+    
+    if([self.favourUsers containsObject:u]){
+        [self removeObject:u forKey:kFavourUsers];
     }else{
-        [newFavourUsers addObject:u];
+        [self addUniqueObject:u forKey:kFavourUsers];
     }
-    self.favourUsers=[newFavourUsers copy];
 }
 
 -(void)addNewComment:(Comment*)comment{
-    NSMutableArray *comments=[NSMutableArray arrayWithArray:self.comments];
-    [comments addObject:comment];
-    self.comments=[comments copy];
+    [self addUniqueObject:comment forKey:kComments];
 }
 
--(void)saveInBackgroundThenFetch:(MomentResultBlock)callback{
+-(void)saveOrUpdateInBackground:(BooleanResultBlock)callback{
     [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if(error){
-            callback(nil,error);
+        if(!succeeded){
+            callback(NO,error);
             return ;
         }
-        AVQuery *momentQuery= [AVQuery queryWithClassName:NSStringFromClass([Moment class])];
-        [momentQuery whereKey:kObjectIdKey equalTo:self.objectId];
-        [momentQuery includeKey:kPostImages];
-        [momentQuery includeKey:kFavourUsers];
-        [momentQuery includeKey:kComments];
-        [momentQuery getFirstObjectInBackgroundWithBlock:^(AVObject *object, NSError *error) {
-            Moment *m=object ? (Moment*)object : nil;
-            callback(m,error);
+        [[[DBManager sharedDBManager].db newConnection]asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
+            [transaction setObjectAutomatic:self];
+        } completionBlock:^{
+            callback(YES,nil);
         }];
     }];
+}
+
++(instancetype)momentFromDBWithConnection:(YapDatabaseConnection*)connection indexPath:(NSIndexPath*)indexPath mapping:(YapDatabaseViewMappings*)mapping{
+    __block Moment *m;
+    [connection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
+        YapDatabaseViewTransaction *viewTransaction= [transaction viewTransactionForModel:[Moment class]];
+        m=[viewTransaction objectAtIndexPath:indexPath withMappings:mapping];
+    }];
+    return m;
 }
 
 #pragma mark - NSCoding
@@ -97,7 +100,7 @@ NSString *const kMomentCodingKey = @"kMomentCodingKey";
     NSDictionary *objDict= [self dictionaryForObject];
     NSMutableArray *favourUsersEncodedArray=[NSMutableArray arrayWithCapacity:self.favourUsers.count ];
     NSMutableArray *commentsEncodedArray=[NSMutableArray arrayWithCapacity:self.comments.count ];
-    //Leancloud 真残疾...
+    //FIXME Leancloud 真残疾...
     [self.favourUsers enumerateObjectsUsingBlock:^(AVObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [favourUsersEncodedArray addObject: [obj dictionaryForObject]];
     }];
@@ -115,4 +118,19 @@ NSString *const kMomentCodingKey = @"kMomentCodingKey";
     return (Moment*)[AVObject objectWithDictionary:objDict];
 }
 
+#pragma mark - FICEntity
+//-(NSURL *)sourceImageURLWithFormatName:(NSString *)formatName{
+//    //只能返回一张图片的 URl,
+//    //但我这个朋友圈模型类,有最多9张图片,没整...
+//    //官方 issues 建议一个 Entity 对应一张图片,
+//    //我想到的办法是
+//    //0.创建 MomentPhoto Entity 在放到朋友圈模型类中...  ,Github issues 里也是这个结论.
+//    //1.换一个第三方库
+//    //2.改 FIC 的源码让他支持返回多个 Image, 或者 Image 数组....目前修改的代码,然后给原仓库提交的 issue 和 PR
+//    //https://github.com/path/FastImageCache/issues/16
+//}
+//
+//-(FICEntityImageDrawingBlock)drawingBlockForImage:(UIImage *)image withFormatName:(NSString *)formatName{
+//    
+//}
 @end

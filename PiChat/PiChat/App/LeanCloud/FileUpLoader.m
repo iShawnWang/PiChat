@@ -76,13 +76,13 @@
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [self.uploadingFile removeObject:file];
 
-//        executeAsyncInMainQueueIfNeed(^{ //主线程发送通知..
+        executeAsyncInMainQueueIfNeed(^{ //主线程发送通知..
             if(succeeded){
                 [NSNotification postUploadMediaCompleteNotification:self media:file type:type];
             }else{
                 [NSNotification postUploadMediaFailedNotification:self error:error];
             }
-//        });
+        });
         
     } progressBlock:^(NSInteger percentDone) {
         executeAsyncInMainQueueIfNeed(^{

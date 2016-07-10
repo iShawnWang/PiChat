@@ -83,8 +83,8 @@
     NSString *bundleID=[NSBundle mainBundle].bundleIdentifier;
     bundleID=[bundleID stringByAppendingString:@".TmpFiles"]; //在沙盒下创建\Library\Caches\BigPi.PiChat.TmpFiles 文件夹
     cacheDir=[cacheDir stringByAppendingPathComponent:bundleID];
-    NSFileManager *fileManager= [NSFileManager defaultManager];
     
+    NSFileManager *fileManager= [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:cacheDir isDirectory:NULL]){
         NSError *error;
         [fileManager createDirectoryAtPath:cacheDir withIntermediateDirectories:YES attributes:nil error:&error];
@@ -103,102 +103,46 @@
 
 +(void)clearCacheDirectoryWithCallback:(VoidBlock)callback{
     executeAsyncInGlobalQueue(^{
-        NSError *error;
-        NSFileManager *manager=[NSFileManager defaultManager];
-        NSArray *contents= [manager contentsOfDirectoryAtPath:[CommenUtil cacheDirectoryStr] error:&error];
-        
-        [contents enumerateObjectsUsingBlock:^(NSString *contentPath, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *cacheDir=[CommenUtil defaultCacheDirectoryStr];
+        NSDirectoryEnumerator *enumerator= [[NSFileManager defaultManager]enumeratorAtPath:cacheDir];
+        for (NSString *filepath in enumerator) {
             NSError *error;
-            [manager removeItemAtPath:contentPath error:&error];
-        }];
+            [[NSFileManager defaultManager]removeItemAtPath:[cacheDir stringByAppendingPathComponent:filepath] error:&error];
+            if(error){
+                DDLogError(@"%@",error);
+            }
+        }
         executeAsyncInMainQueueIfNeed(^{
             if(callback){
                 callback();
             }
         });
     });
-    
 }
 
-/**
- *  搬运自 StackOverflow 和 Github
- *
- *  @param size
- *  @param directoryURL
- *  @param error
- *
- *  @return 
- */
-+ (BOOL)getAllocatedSize:(unsigned long long *)size ofDirectoryAtURL:(NSURL *)directoryURL error:(NSError * __autoreleasing *)error
-{
-    NSParameterAssert(size != NULL);
-    NSParameterAssert(directoryURL != nil);
-    
-    // We'll sum up content size here:
-    unsigned long long accumulatedSize = 0;
-    
-    // prefetching some properties during traversal will speed up things a bit.
-    NSArray *prefetchedProperties = @[
-                                      NSURLIsRegularFileKey,
-                                      NSURLFileAllocatedSizeKey,
-                                      NSURLTotalFileAllocatedSizeKey,
-                                      ];
-    
-    // The error handler simply signals errors to outside code.
-    __block BOOL errorDidOccur = NO;
-    BOOL (^errorHandler)(NSURL *, NSError *) = ^(NSURL *url, NSError *localError) {
-        if (error != NULL)
-            *error = localError;
-        errorDidOccur = YES;
-        return NO;
-    };
-    
-    // We have to enumerate all directory contents, including subdirectories.
-    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:directoryURL
-                                                             includingPropertiesForKeys:prefetchedProperties
-                                                                                options:(NSDirectoryEnumerationOptions)0
-                                                                           errorHandler:errorHandler];
-    
-    // Start the traversal:
-    for (NSURL *contentItemURL in enumerator) {
++ (void)asynCalculateDirectorySizeWithPath:(NSString*)directoryPath completionBlock:(CalcDirectorySizeBlock)completionBlock {
+    executeAsyncInGlobalQueue(^{
+        NSURL *diskCacheURL = [NSURL fileURLWithPath:directoryPath isDirectory:YES];
+        NSUInteger fileCount = 0;
+        NSUInteger totalSize = 0;
+        NSFileManager *fileManager= [NSFileManager defaultManager];
+        NSDirectoryEnumerator *fileEnumerator = [fileManager enumeratorAtURL:diskCacheURL
+                                                  includingPropertiesForKeys:@[NSFileSize]
+                                                                     options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                                errorHandler:NULL];
         
-        // Bail out on errors from the errorHandler.
-        if (errorDidOccur)
-            return NO;
-        
-        // Get the type of this item, making sure we only sum up sizes of regular files.
-        NSNumber *isRegularFile;
-        if (! [contentItemURL getResourceValue:&isRegularFile forKey:NSURLIsRegularFileKey error:error])
-            return NO;
-        if (! [isRegularFile boolValue])
-            continue; // Ignore anything except regular files.
-        
-        // To get the file's size we first try the most comprehensive value in terms of what the file may use on disk.
-        // This includes metadata, compression (on file system level) and block size.
-        NSNumber *fileSize;
-        if (! [contentItemURL getResourceValue:&fileSize forKey:NSURLTotalFileAllocatedSizeKey error:error])
-            return NO;
-        
-        // In case the value is unavailable we use the fallback value (excluding meta data and compression)
-        // This value should always be available.
-        if (fileSize == nil) {
-            if (! [contentItemURL getResourceValue:&fileSize forKey:NSURLFileAllocatedSizeKey error:error])
-                return NO;
-            
-            NSAssert(fileSize != nil, @"huh? NSURLFileAllocatedSizeKey should always return a value");
+        for (NSURL *fileURL in fileEnumerator) {
+            NSNumber *fileSize;
+            [fileURL getResourceValue:&fileSize forKey:NSURLFileSizeKey error:NULL];
+            totalSize += [fileSize unsignedIntegerValue];
+            fileCount += 1;
         }
-        
-        // We're good, add up the value.
-        accumulatedSize += [fileSize unsignedLongLongValue];
-    }
-    
-//    // Bail out on errors from the errorHandler.
-//    if (errorDidOccur)
-//        return NO;
-    
-    // We finally got it.
-    *size = accumulatedSize;
-    return YES;
+        if (completionBlock) {
+            executeAsyncInMainQueueIfNeed(^{
+                completionBlock(fileCount, totalSize);
+            });
+        }
+    });
 }
 
 #pragma mark - 视频缩略图

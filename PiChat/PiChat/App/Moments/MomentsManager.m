@@ -45,7 +45,7 @@
     //纯文字朋友圈
     if(!images || images.count == 0){
         Moment *m= [self newMoment:content images:nil];
-        [m saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [m saveOrUpdateInBackground:^(BOOL succeeded, NSError *error) {
             if(error){
                 [NSNotification postPostMomentFailedNotification:self error:error];
             }else{
@@ -64,7 +64,7 @@
         [self.uploadImageFileQueue addOperationWithBlock:^{
             
             UIImage *image= [UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl]];
-            //图片太大就缩放一下...(width = 4288, height = 2848)
+            //图片太大就缩放一下... 屏幕像素的一半
             if(image.size.width > screenSize.width || image.size.height > screenSize.height){
                 image=[image scaleToFitSize:screenSize];
             }
@@ -80,10 +80,9 @@
                 //全部上传完毕
                 if(self.momentImageFile.count==uploadImageCount){
                     Moment *m= [self newMoment:content images:self.momentImageFile];
-                    NSError *error;
-                    [m save:&error];
-                    
-                    [NSNotification postPostMomentCompleteNotification:self moment:m];
+                    [m saveOrUpdateInBackground:^(BOOL succeeded, NSError *error) {
+                        [NSNotification postPostMomentCompleteNotification:self moment:m];
+                    }];
                 }
             } progressBlock:^(NSInteger percentDone) {
                 [NSNotification postPostMomentProgressNotification:self progress:percentDone];
@@ -97,6 +96,7 @@
 
 -(Moment*)newMoment:(NSString*)content images:(NSArray*)images{
     Moment *m=[Moment object];
+    [m addUniqueObjectsFromArray:images forKey:kPostImages];
     if(images){
         m.images =self.momentImageFile;
     }
@@ -107,6 +107,9 @@
 
 +(void)getCurrentUserMoments:(ArrayResultBlock)callback{
     [[UserManager sharedUserManager]fetchFriendsWithCallback:^(NSArray *friends, NSError *error) {
+        if(!friends){
+            return ;
+        }
         //查找我发送的或者我的好友发送的朋友圈
         AVQuery *myMomentQuery= [AVQuery queryWithClassName:NSStringFromClass([Moment class])];
         [myMomentQuery whereKey:kPostUser equalTo:[User currentUser]];
@@ -119,15 +122,16 @@
         [query includeKey:kPostImages];
         [query includeKey:kFavourUsers];
         [query includeKey:kComments];
+        [query includeKey:kPostUser];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            [objects enumerateObjectsUsingBlock:^(Moment *m, NSUInteger idx, BOOL * _Nonnull stop) {
-                [AVObject fetchAll:m.favourUsers];
-                [AVObject fetchAll:m.comments];
-                [m.postUser fetch];
-            }];
-            
+//            [objects enumerateObjectsUsingBlock:^(Moment *m, NSUInteger idx, BOOL * _Nonnull stop) {
+//                [AVObject fetchAll:m.favourUsers];
+//                [AVObject fetchAll:m.comments];
+//                [m.postUser fetch];
+//            }];
             //上面再请求一次 moment 的favourUsers,comments 数据的操作效率很低,但 Leancloud 只支持一层的请求数据 ,
-            //https://forum.leancloud.cn/t/app-leancloud/1888
+//            https://forum.leancloud.cn/t/app-leancloud/1888
+            //现在这个问题解决了,Leancloud 支持了 666 ,感人 :)
             callback(objects,error);
         }];
     }];
@@ -140,9 +144,7 @@
     [momentQuery includeKey:kFavourUsers];
     [momentQuery includeKey:kComments];
     [momentQuery getFirstObjectInBackgroundWithBlock:^(AVObject *object, NSError *error) {
-        Moment *m=object ? (Moment*)object : nil;
-        callback(m,error);
-            
+        callback((Moment*)object,error);
     }];
 }
 @end

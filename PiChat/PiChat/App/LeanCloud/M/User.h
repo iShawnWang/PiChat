@@ -13,8 +13,8 @@
 @interface User:AVUser<AVSubclassing,NSCoding>
 //chat
 @property (copy,nonatomic) NSString *clientID; //唯一的 uuid,作为 Leancloud 聊天的唯一 ID
-@property (copy,nonatomic) NSString *avatarPath;
 @property (copy,nonatomic) NSString *displayName;
+@property (copy,nonatomic) NSString *avatarPath;
 //
 -(void)updateUserWithCallback:(UserResultBlock)callback;
 @end

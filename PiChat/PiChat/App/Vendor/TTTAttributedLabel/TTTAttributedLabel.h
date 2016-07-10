@@ -77,7 +77,7 @@ extern NSString * const kTTTBackgroundCornerRadiusAttributeName;
 @property (nonatomic, copy) IBInspectable id text;
 @end
 
-IB_DESIGNABLE
+
 
 /**
  `TTTAttributedLabel` is a drop-in replacement for `UILabel` that supports `NSAttributedString`, as well as automatically-detected and manually-added links to URLs, addresses, phone numbers, and dates.

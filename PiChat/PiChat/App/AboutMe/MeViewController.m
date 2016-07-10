@@ -12,10 +12,10 @@
 #import "MediaPicker.h"
 #import "FileUpLoader.h"
 #import "MBProgressHUD+Addition.h"
-#import "ImageCache.h"
 #import "NSNotification+DownloadImage.h"
 #import "LeanCloudManager.h"
 #import "CommenUtil.h"
+#import "ImageCacheManager.h"
 
 NSString *const kResuseIdLogOut=@"logOut";
 NSString *const kResuseIdFeedback=@"feedback";
@@ -24,7 +24,6 @@ NSString *const kResuseIdFeedback=@"feedback";
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (strong,nonatomic) MediaPicker *avatarPicker;
-@property (strong,nonatomic) ImageCache *imageCache;
 @end
 
 @implementation MeViewController
@@ -56,7 +55,11 @@ NSString *const kResuseIdFeedback=@"feedback";
     }
     self.userNameLabel.text=self.user.displayName;
     if(self.user.avatarPath){
-        self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:self.user.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:self.user withFormatName:kUserAvatarOriginalFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+            if(entity==self.user){
+                self.avatarImageView.image=image;
+            }
+        }];
     }
 }
 
@@ -66,13 +69,6 @@ NSString *const kResuseIdFeedback=@"feedback";
         _avatarPicker=[[MediaPicker alloc]init];
     }
     return _avatarPicker;
-}
-
--(ImageCache *)imageCache{
-    if(!_imageCache){
-        _imageCache=[ImageCache sharedImageCache];
-    }
-    return _imageCache;
 }
 
 #pragma mark -
@@ -106,7 +102,12 @@ NSString *const kResuseIdFeedback=@"feedback";
             if(succeeded){
                 //更新User.avatarPath
                 self.user.avatarPath=avatarFile.url;
-                self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:self.user.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+                
+                [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:self.user withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+                    if(entity==self.user){
+                        self.avatarImageView.image=image;
+                    }
+                }];
                 [self.user updateUserWithCallback:^(User *user, NSError *error) {
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }];
@@ -122,7 +123,11 @@ NSString *const kResuseIdFeedback=@"feedback";
 #pragma mark - 下载完图片
 -(void)downloadImageNotification:(NSNotification*)noti{
     if([noti.imageUrl.absoluteString isEqualToString:self.user.avatarPath]){
-        self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:self.user.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:self.user withFormatName:kUserAvatarOriginalFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+            if(entity==self.user){
+                self.avatarImageView.image=image;
+            }
+        }];
     }
 }
 

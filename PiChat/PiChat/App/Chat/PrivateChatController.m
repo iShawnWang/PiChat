@@ -29,7 +29,8 @@
 #import "NSNotification+ReceiveMessage.h"
 #import "NSNotification+LocationCellUpdate.h"
 #import "TextPathRefreshControl.h"
-#import "ImageCache.h"
+#import "ImageCacheManager.h"
+#import "JSQMessage+FICEntity.h"
 #import <MJRefresh.h>
 #import <IQKeyboardManager.h>
 #import "UICollectionView+PendingReloadData.h"
@@ -220,8 +221,10 @@
 -(id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessage *msg= self.msgs[indexPath.item];
     if([msg.media isKindOfClass:[JSQPhotoMediaItem class]]){
-        JSQPhotoMediaItem *mediaItem=(JSQPhotoMediaItem*)msg.media;
-        mediaItem.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:mediaItem.thumbnailImageUrl];
+        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:msg withFormatName:kJSQMessagePhotoItemFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+            JSQPhotoMediaItem *mediaItem=(JSQPhotoMediaItem*)msg.media;
+            mediaItem.image=image;
+        }];
     }
     return msg;
 }

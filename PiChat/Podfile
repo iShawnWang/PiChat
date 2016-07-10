@@ -31,7 +31,7 @@ pod 'QBImagePickerController'
 pod 'DGActivityIndicatorView'
 pod 'JSBadgeView'
 pod 'RealReachability'
-pod 'FastImageCache's
+#pod 'FastImageCache', :git => `https://github.com/iShawnWang/FastImageCache.git`
 #
 pod 'YapDatabase'
 end

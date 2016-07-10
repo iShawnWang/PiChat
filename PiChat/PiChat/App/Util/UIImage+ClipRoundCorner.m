@@ -24,4 +24,9 @@
 -(instancetype)clipRoundCornerWithRadius:(NSInteger)radius{
     return [self clipRoundCornerWithRadius:radius size:self.size];
 }
+
+-(instancetype)clipToCircleImage{
+    NSInteger radius=MAX(self.size.width, self.size.height);
+    return [self clipRoundCornerWithRadius:radius];
+}
 @end

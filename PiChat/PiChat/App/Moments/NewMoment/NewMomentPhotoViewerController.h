@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class NewMomentPhotoViewerController;
+@class AVFile;
 
 //Normal :正常的浏览图片, Delete :可以点击图片来删除它.(编辑模式)
 typedef NS_ENUM(NSUInteger, PhotoViewerState) {
@@ -15,7 +16,7 @@ typedef NS_ENUM(NSUInteger, PhotoViewerState) {
     PhotoViewerStateDelete
 };
 
-//View: 浏览图片,Pick :显示添加或者删除图片的按钮.
+//View: 浏览AVFile 图片,Pick :显示添加或者删除图片的按钮.
 typedef NS_ENUM(NSUInteger, PhotoViewerType) {
     PhotoViewerTypeView,
     PhotoViewerTypePick
@@ -36,10 +37,17 @@ FOUNDATION_EXPORT NSString *const kNewMomentPhotoViewerControllerID;
 @property (assign,nonatomic) PhotoViewerState currentState;
 
 /**
- *  赋值 图片数组或者图片 的Url数组 其一
+ *  本地图片的 url 数组,
+ *  和下面的 NSMutableArray<AVFile*> *avFilePhotos 赋值一个即可
  */
-@property (strong,nonatomic) NSMutableArray *photoUrls;
-@property (strong,nonatomic) NSMutableArray *photos;
+@property (strong,nonatomic) NSMutableArray<NSURL*> *photoUrls;
+
+/**
+ *  AVFile 的数组,内部会根据 AVFile 的 url 下载图片,然后显示.
+ *  和上面的 NSMutableArray<NSURL*> *photoUrls 赋值一个即可
+ */
+@property (strong,nonatomic) NSArray<AVFile*> *avFilePhotos;
+
 @property (assign,nonatomic) PhotoViewerType photoViewerType;
 @property(nonatomic,weak) IBOutlet id<PhotoViewerControllerDelegate> photoViewerDelegate;
 @end

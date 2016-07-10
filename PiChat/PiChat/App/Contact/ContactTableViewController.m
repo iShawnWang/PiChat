@@ -11,7 +11,6 @@
 #import "PrivateChatController.h"
 #import "NSNotification+UserUpdate.h"
 #import "NSNotification+DownloadImage.h"
-#import "ImageCache.h"
 #import "ContactCell.h"
 #import "ContactHeaderCell.h"
 #import "SectionedContact.h"

@@ -8,10 +8,10 @@
 
 #import "MessageCell.h"
 #import "User.h"
-#import "ImageCache.h"
 #import <DateTools.h>
 #import "AVIMConversation+Addition.h"
 #import "UIView+Badge.h"
+#import "ImageCacheManager.h"
 
 @interface MessageCell ()
 
@@ -23,18 +23,23 @@
 }
 
 -(void)configWithUser:(User*)u conv:(AVIMConversation*)conv{
+    self.nameLabel.text=@"";
+    self.lastMessageLabel.text=@"";
+    self.dateLabel.text=@"";
     if(u){
         self.nameLabel.text=u.displayName;
         self.lastMessageLabel.text=conv.lastMessage.text ? : @"";
-        self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+
+        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+            if(entity==u){
+                self.avatarImageView.image=image;
+            }
+        }];
+        
         self.dateLabel.text=[conv.lastMessageAt timeAgoSinceNow];
         if(conv.unReadCount>0){
             [self.avatarImageView showBadgeWithCount:conv.unReadCount];
         }
-    }else{
-        self.nameLabel.text=@"";
-        self.lastMessageLabel.text=@"";
-        self.dateLabel.text=@"";
     }
 }
 

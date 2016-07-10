@@ -11,13 +11,13 @@
 #import <AVOSCloud.h>
 #import "UserManager.h"
 #import <AVOSCloudIM.h>
-//#import "JSQAudioMediaItem.h"
 #import "JSQMessage+MessageID.h"
 #import "CommenUtil.h"
 #import "JSQVideoMediaItem+Thumbnail.h"
 #import "NSNotification+LocationCellUpdate.h"
 #import "JSQPhotoMediaItem+ThumbnailImageUrl.h"
 #import "AVFile+ImageThumbnailUrl.h"
+#import "ImageCacheManager.h"
 
 
 @implementation AVIMTypedMessage (ToJsqMessage)

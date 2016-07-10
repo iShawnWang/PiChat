@@ -8,7 +8,6 @@
 
 #import "MomentCell.h"
 #import "Moment.h"
-#import "ImageCache.h"
 #import "User.h"
 #import "UserManager.h"
 #import <DateTools.h>
@@ -18,6 +17,7 @@
 #import "StoryBoardHelper.h"
 #import "TTTAttributedLabel.h"
 #import "AVFile+ImageThumbnailUrl.h"
+#import "ImageCacheManager.h"
 
 const NSInteger NameLabelTopPadding =8;
 const NSInteger NameLabelHeight=22;
@@ -85,14 +85,21 @@ const NSInteger SeparateLineBottomPadding =8;
 
 -(void)configWithMoment:(Moment*)moment collectionView:(UICollectionView*)collectionView{
     
-    self.photoViewerController.photoUrls=nil;
+    self.photoViewerController.avFilePhotos=nil;
     
     self.bounds=CGRectMake(0, 0, CGRectGetWidth(collectionView.bounds), CGRectGetHeight(self.bounds));
     
     User *u=[[UserManager sharedUserManager]findUserFromCacheElseNetworkByObjectID:moment.postUser.clientID];
     
     self.displayNameLabel.text=u.displayName;
-    self.avatarImageView.image = [[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];;
+    if(u.avatarPath){
+        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+            if(entity==u){
+                self.avatarImageView.image=image;
+            }
+        }];
+    }
+    
     self.contentLabel.text=moment.texts;
     self.lastModifyTimeLabel.text=[NSDate timeAgoSinceDate:moment.createdAt];
     
@@ -106,13 +113,11 @@ const NSInteger SeparateLineBottomPadding =8;
     
     //Images Viewer
     if(moment.images && moment.images.count>0){
-        NSMutableArray *photoUrls=[NSMutableArray array];
-        [moment.images enumerateObjectsUsingBlock:^(AVFile * imageFile, NSUInteger idx, BOOL * _Nonnull stop) {
-            [photoUrls addObject:[NSURL URLWithString:[imageFile defaultThumbnailUrl]]];
-        }];
+        
         self.photoViewerController.view.bounds=commentsImageViewerControllerBounds;
-        [self.commentsController.view layoutIfNeeded];
-        self.photoViewerController.photoUrls=photoUrls;
+        
+        self.photoViewerController.avFilePhotos=moment.images;
+        [self.photoViewerController.view layoutIfNeeded];
         self.photoViewerController.photoViewerDelegate=self;
     }
 

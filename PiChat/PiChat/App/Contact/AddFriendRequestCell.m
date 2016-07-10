@@ -8,10 +8,10 @@
 
 #import "AddFriendRequestCell.h"
 #import "AddFriendRequest.h"
-#import "ImageCache.h"
 #import "User.h"
 #import "UserManager.h"
 #import "MBProgressHUD+Addition.h"
+#import "ImageCacheManager.h"
 
 
 NSString *const kAddFriendRequestCell=@"AddFriendRequestCell";
@@ -69,7 +69,11 @@ NSString *const kAddFriendRequestCell=@"AddFriendRequestCell";
 }
 
 -(void)configWithFromUser:(User*)fromUser{
-    self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:fromUser.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+    [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:fromUser withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+        if(entity==fromUser){
+            self.avatarImageView.image=image;
+        }
+    }];
     self.displayNameLabel.text=fromUser.displayName;
 }
 

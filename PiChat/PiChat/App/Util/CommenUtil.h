@@ -44,7 +44,7 @@
 +(void)clearCacheDirectoryWithCallback:(VoidBlock)callback;
 
 /**
- *  获取某个文件夹及里面的所有文件的大小
+ *  异步获取某个文件夹及里面的所有文件的大小
  *
  *  @param size
  *  @param directoryURL
@@ -52,7 +52,7 @@
  *
  *  @return
  */
-+ (BOOL)getAllocatedSize:(unsigned long long *)size ofDirectoryAtURL:(NSURL *)directoryURL error:(NSError * __autoreleasing *)error;
++ (void)asynCalculateDirectorySizeWithPath:(NSString*)directoryPath completionBlock:(CalcDirectorySizeBlock)completionBlock;
 
 #pragma mark - 视频缩略图
 /**

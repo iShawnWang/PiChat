@@ -8,29 +8,23 @@
 
 #import "MomentHeaderView.h"
 #import "User.h"
-#import "ImageCache.h"
 #import "GlobalConstant.h"
-#import "UIImage+GaussianBlur.h"
+#import "ImageCacheManager.h"
 
 @implementation MomentHeaderView
 -(void)configWithUser:(User*)u{
-    __block UIImage *avatarImg=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
-    executeAsyncInGlobalQueue(^{
-        if(!avatarImg){
-            return ;
+    
+    [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+        if(entity==u){
+            self.avatarImageView.image=image;
         }
-        NSData *imgData = [[NSData alloc] initWithData:UIImageJPEGRepresentation((avatarImg), 0.5)];
-        if(imgData.length < 1){
-            //图片为空
-            return ;
+    }];
+    [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarBlurFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+        if(entity==u){
+            self.backgroundImageView.image=image;
         }
-        avatarImg=[UIImage imageWithData:UIImageJPEGRepresentation(avatarImg, 1.0)]; //remove alpha channel
-        avatarImg=[avatarImg vImageBlurWithNumber:0.2];
-        executeAsyncInMainQueue(^{
-            self.backgroundImageView.image=avatarImg;
-        });
-    });
-    self.avatarImageView.image=avatarImg;
+    }];
+    
     self.displayNameLabel.text=u.displayName;
 }
 

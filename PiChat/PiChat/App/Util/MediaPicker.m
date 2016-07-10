@@ -49,10 +49,16 @@
     return _images;
 }
 
+-(void)clearSelectHistory{
+    //clear last select history
+    [self.images removeAllObjects];
+    [self.selectedAssets removeAllObjects];
+}
 #pragma mark - Public
 
 -(void)showImagePickerIn:(UIViewController*)vc multipleSelectionCount:(NSInteger)count callback:(ArrayResultBlock)callback{
-    [self.images removeAllObjects];
+    [self clearSelectHistory];
+    
     self.needImageUrl=NO;
     self.pickImageCallback=callback;
     self.allowsMultipleSelection= count>1;
@@ -68,7 +74,8 @@
 }
 
 -(void)showVideoPickerIn:(UIViewController*)vc callback:(UrlResultBlock)callback{
-    [self.images removeAllObjects];
+    [self clearSelectHistory];
+    
     self.allowsMultipleSelection=NO;
     self.maximumNumberOfSelection=1;
     self.pickVideoCallback=callback;

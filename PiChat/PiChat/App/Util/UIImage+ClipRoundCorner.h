@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImage (ClipRoundCorner)
+-(instancetype)clipToCircleImage;
 -(instancetype)clipRoundCornerWithRadius:(NSInteger)radius;
 
 /**

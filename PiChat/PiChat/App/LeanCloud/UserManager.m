@@ -12,10 +12,10 @@
 #import "StoryBoardHelper.h"
 #import <JSQMessagesAvatarImageFactory.h>
 #import <JSQMessagesCollectionViewFlowLayout.h>
-#import "ImageCache.h"
 #import "PiAutoPurgeCache.h"
 #import "NSNotification+UserUpdate.h"
 #import "FabricManager.h"
+#import "ImageCacheManager.h"
 
 
 @interface UserManager ()
@@ -154,7 +154,7 @@
 }
 
 /**
- *  先内存缓存//在磁盘缓存
+ *  内存缓存
  *
  *  @param clientID
  *
@@ -223,7 +223,11 @@
 
 -(void)fetchFriendsWithCallback:(ArrayResultBlock)callback {
     User *user = [User currentUser];
+    if(!user){
+        return;
+    }
     AVQuery *q = [user followeeQuery];
+    q.cachePolicy=kAVCachePolicyCacheThenNetwork;
     [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         callback(objects ,error);
     }];
@@ -235,15 +239,17 @@
 }
 
 -(JSQMessagesAvatarImage *)avatarForObjectID:(NSString *)objectID size:(CGSize)size{
-    UIImage *avatar;
+    __block UIImage *avatar;
     User *u= [self findUserFromCacheByObjectID:objectID];
     if(u.avatarPath){
-        avatar=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+            if(entity==u){
+                avatar=image;
+            }
+        }];
     }else{
         avatar=[UIImage new];
-        [self findUserByObjectID:objectID callback:^(User *user, NSError *error) {
-            [[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
-        }];
+        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarBlurFormatName completionBlock:nil];
     }
     
     return [JSQMessagesAvatarImage avatarWithImage:avatar];

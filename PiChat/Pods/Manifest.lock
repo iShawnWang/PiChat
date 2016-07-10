@@ -37,7 +37,6 @@ PODS:
   - DateTools (1.7.0)
   - DGActivityIndicatorView (2.0)
   - Fabric (1.6.7)
-  - FastImageCache (1.5.1)
   - GJAlertController (1.0.0)
   - IQKeyboardManager (4.0.4)
   - JSBadgeView (1.4.1)
@@ -126,7 +125,6 @@ DEPENDENCIES:
   - DateTools
   - DGActivityIndicatorView
   - Fabric
-  - FastImageCache
   - GJAlertController
   - IQKeyboardManager
   - JSBadgeView
@@ -153,7 +151,6 @@ SPEC CHECKSUMS:
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
   DGActivityIndicatorView: 52875b025a6ccf6a431a905285c12e2bb95eb559
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
-  FastImageCache: 2e7a6f677b15336eb3d1a4092a494676256c891d
   GJAlertController: 71a7f2072451bc37b780d78379c9ee4b6f357dd2
   IQKeyboardManager: 4a6f83b540283c2645aaeba2bd8dc0f09b5c77f8
   JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5

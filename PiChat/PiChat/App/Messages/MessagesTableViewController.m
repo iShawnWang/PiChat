@@ -13,7 +13,6 @@
 #import "User.h"
 #import "UserManager.h"
 #import "PrivateChatController.h"
-#import "ImageCache.h"
 #import "NSNotification+UserUpdate.h"
 #import "NSNotification+DownloadImage.h"
 #import "MessageCell.h"
@@ -28,7 +27,6 @@ NSString *const kMessageCellID=@"MessageCell";
 @interface MessagesTableViewController ()
 @property (strong,nonatomic) ConversationManager *manager;
 @property (strong,nonatomic) NSMutableArray *recentConversations;
-@property (strong,nonatomic) ImageCache *imageCache;
 @property (strong,nonatomic) ReachAbilityView *reachAbilityView;
 @end
 
@@ -65,13 +63,6 @@ NSString *const kMessageCellID=@"MessageCell";
         _recentConversations=[NSMutableArray array];
     }
     return _recentConversations;
-}
-
--(ImageCache *)imageCache{
-    if(!_imageCache){
-        _imageCache=[ImageCache sharedImageCache];
-    }
-    return _imageCache;
 }
 
 -(ReachAbilityView *)reachAbilityView{

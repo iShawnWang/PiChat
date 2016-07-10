@@ -9,7 +9,6 @@
 #import "MomentsViewController.h"
 #import "MomentCell.h"
 #import "MomentHeaderView.h"
-#import "ImageCache.h"
 #import "User.h"
 #import "Moment.h"
 #import "MomentsManager.h"
@@ -21,6 +20,7 @@
 #import "UICollectionView+PendingReloadData.h"
 #import "MediaViewerController.h"
 #import "DBManager.h"
+#import "NSNotification+DownloadImage.h"
 @import UIKit;
 
 NSString *const kMomentCell=@"MomentCell";
@@ -28,7 +28,6 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 @interface MomentsViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,MomentCellDelegate,CommentsTableControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (strong,nonatomic) NSMutableArray *moments;
 @property (strong,nonatomic) MomentCell *momentPrototypeCell;
 @property (strong,nonatomic) ReplyInputView *replyInputView;
 @property (strong,nonatomic) ModelSizeCache *modelSizeCache;
@@ -50,10 +49,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadImageCompleteNotification:) name:kDownloadImageCompleteNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userUpdateNotification:) name:kUserUpdateNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(yapDatabaseModified:)
-                                                     name:YapDatabaseModifiedNotification
-                                                   object:self.readConnection.database];
+        
     }
     return self;
 }
@@ -66,7 +62,26 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 -(void)viewDidLoad{
     [super viewDidLoad];
     [self.readConnection beginLongLivedReadTransaction];
+    [self.readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
+        [self.mapping updateWithTransaction:transaction];
+    }];
     [self.collectionView registerNib:[UINib nibWithNibName:@"MomentCell" bundle:nil] forCellWithReuseIdentifier:kMomentCell];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(yapDatabaseModified:)
+                                                 name:YapDatabaseModifiedNotification
+                                               object:self.readConnection.database];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MomentsManager getCurrentUserMoments:^(NSArray *objects, NSError *error) {
+        [[self.dbManager.db newConnection]asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
+            [objects enumerateObjectsUsingBlock:^(Moment *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [transaction setObjectAutomatic:obj];
+            }];
+        }];
+    }];
 }
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
@@ -86,13 +101,6 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
         _momentPrototypeCell=[[[NSBundle mainBundle]loadNibNamed:@"MomentCell" owner:nil options:nil]firstObject];
     }
     return _momentPrototypeCell;
-}
-
--(NSMutableArray *)moments{
-    if(!_moments){
-        _moments=[NSMutableArray array];
-    }
-    return _moments;
 }
 
 -(ReplyInputView *)replyInputView{
@@ -127,25 +135,8 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 -(YapDatabaseViewMappings *)mapping{
     if(!_mapping){
          _mapping=[YapDatabaseViewMappings mappingsWithGroups:@[@"Moment"] view:[YapDatabaseView viewNameForModel:[Moment class]]];
-        [self.readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
-            [_mapping updateWithTransaction:transaction];
-        }];
     }
     return _mapping;
-}
-
-#pragma mark - Life Cycle
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [MomentsManager getCurrentUserMoments:^(NSArray *objects, NSError *error) {
-        self.moments =[objects mutableCopy];
-        [[self.dbManager.db newConnection]asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction * _Nonnull transaction) {
-            [self.moments enumerateObjectsUsingBlock:^(Moment *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [transaction setObjectAutomatic:obj];
-            }];
-        }];
-    }];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -167,7 +158,8 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-    return CGSizeMake(self.collectionView.bounds.size.width, [MomentHeaderView calcHeightWithWidth:self.view.bounds.size.width]);
+    NSInteger collectionViewWidth= CGRectGetWidth(self.collectionView.bounds);
+    return CGSizeMake(collectionViewWidth, [MomentHeaderView calcHeightWithWidth:collectionViewWidth]);
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -177,19 +169,22 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 }
 
 #pragma mark - UICollectionViewDataSource
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    NSInteger section= [self.mapping numberOfSections];
+    return section;
+}
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    NSInteger count=[self.mapping numberOfItemsInSection:0];
+    NSInteger count=[self.mapping numberOfItemsInSection:section];
     return count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     MomentCell *cell= [collectionView dequeueReusableCellWithReuseIdentifier:kMomentCell forIndexPath:indexPath];
     
-    __block Moment *m;
-    [self.readConnection readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
-        YapDatabaseViewTransaction *viewTransaction= [transaction viewTransactionForModel:[Moment class]];
-        m=[viewTransaction objectAtIndexPath:indexPath withMappings:self.mapping];
-    }];
+    Moment *m= [Moment momentFromDBWithConnection:self.readConnection indexPath:indexPath mapping:self.mapping];
+
     [cell configWithMoment:m collectionView:collectionView];
     cell.delegate=self;
     cell.commentsController.delegate=self;
@@ -216,18 +211,16 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 #pragma mark - MomentCellDelegate //每个朋友圈的右下角菜单
 -(void)momentCellDidLikeBtnClick:(MomentCell *)cell{
     NSIndexPath *indexPath= [self.collectionView indexPathForCell:cell];
-    Moment *moment= self.moments[indexPath.item];
+    Moment *moment= [Moment momentFromDBWithConnection:self.readConnection indexPath:indexPath mapping:self.mapping];
     
     [cell forceDismissCommentMeun];
-    
+    [self.modelSizeCache invalidateCacheForModel:moment];
     [moment addOrRemoveFavourUser:[User currentUser]];
-    
-    [moment saveInBackgroundThenFetch:^(Moment *moment, NSError *error) {
-        if(error){
-            return ;
-        }
-        self.moments[indexPath.item]=moment;
-        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+    [moment saveOrUpdateInBackground:^(BOOL succeeded, NSError *error) {
+        //no more reload,when we modify YapDatabase,YapDatabaseModifiedNotification will be post
+        //so the `yapDatabaseModified:` method will be called,and reload will be fired
+        //make my life easier ,like Core Data ,LOL
+        //[self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
     }];
 }
 
@@ -235,13 +228,13 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     [cell forceDismissCommentMeun];
     
     NSIndexPath *indexPath= [self.collectionView indexPathForCell:cell];
-    Moment *m= self.moments[indexPath.item];
+    Moment *m= [Moment momentFromDBWithConnection:self.readConnection indexPath:indexPath mapping:self.mapping];
     
     __weak typeof(self) weakSelf=self;
     self.replyInputView.replyCommentCallback=^(NSString *reply,NSError *error){
         weakSelf.replyInputView.textField.text=@"";
         [weakSelf.replyInputView.textField resignFirstResponder];
-        [weakSelf postNewCommentForMoment:m commentContent:reply replyTo:nil andReloadCellAtIndexPath:indexPath];
+        [weakSelf postNewCommentForMoment:m commentContent:reply replyTo:nil];
     };
     
     [self.replyInputView showInViewAtBottom:self.view];
@@ -249,7 +242,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 -(void)momentCell:(MomentCell *)cell didPhotoViewController:(NewMomentPhotoViewerController *)controller photoCellClick:(UICollectionViewCell *)photoCell{
     NSIndexPath *cellIndexPath=[self.collectionView indexPathForCell:cell];
-    Moment *m= self.moments[cellIndexPath.row];
+    Moment *m= [Moment momentFromDBWithConnection:self.readConnection indexPath:cellIndexPath mapping:self.mapping];
     
     NSIndexPath *photoCellIndexPath= [controller.collectionView indexPathForCell:photoCell];
     AVFile *image= m.images[photoCellIndexPath.row];
@@ -259,7 +252,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 -(void)momentEditMenuWillShowForCell:(MomentCell *)cell likeBtn:(UIButton *)likeBtn commentBtn:(UIButton *)commentBtn{
     NSIndexPath *indexPath= [self.collectionView indexPathForCell:cell];
-    Moment *m= self.moments[indexPath.item];
+    Moment *m= [Moment momentFromDBWithConnection:self.readConnection indexPath:indexPath mapping:self.mapping];
     BOOL isFavoured= [m.favourUsers containsObject:[User currentUser]];//当前用户已经赞过
     NSString *likeBtnTitle=isFavoured ? @"取消" : @"赞";
     [likeBtn setTitle:likeBtnTitle forState:UIControlStateNormal];
@@ -269,11 +262,10 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
 -(void)commentsTableController:(CommentsTableController *)controller didCommentClick:(Comment *)comment withCell:(UICollectionViewCell *)cell moment:(Moment *)moment{
     __weak typeof(self) weakSelf=self;
-    NSIndexPath *indexPath= [self.collectionView indexPathForCell:cell];
     self.replyInputView.replyCommentCallback=^(NSString *reply,NSError *error){
         weakSelf.replyInputView.textField.text=@"";
         [weakSelf.replyInputView.textField resignFirstResponder];
-        [weakSelf postNewCommentForMoment:moment commentContent:reply replyTo:comment.commentUser andReloadCellAtIndexPath:indexPath];
+        [weakSelf postNewCommentForMoment:moment commentContent:reply replyTo:comment.commentUser];
     };
     
     self.replyInputView.textField.placeholder=[NSString stringWithFormat:@"回复 %@ :",comment.commentUserName];
@@ -286,14 +278,15 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 /**
  *  为某个朋友圈发送新评论
  */
--(void)postNewCommentForMoment:(Moment*)m commentContent:(NSString*)reply replyTo:(User*)replyTo andReloadCellAtIndexPath:(NSIndexPath*)indexPath{
+-(void)postNewCommentForMoment:(Moment*)m commentContent:(NSString*)reply replyTo:(User*)replyTo{
+    
+    [self.modelSizeCache invalidateCacheForModel:m];
     executeAsyncInGlobalQueue(^{
         Comment *newComment= [Comment commentWithCommentUser:[User currentUser] commentContent:reply replayTo:replyTo];
         [newComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [m addNewComment:newComment];
-            [m saveInBackgroundThenFetch:^(Moment *moment, NSError *error) {
-                self.moments[indexPath.item]=moment;
-                [self.collectionView performSelectorOnMainThread:@selector(reloadItemsAtIndexPaths:) withObject:@[indexPath] waitUntilDone:NO];
+            [m saveOrUpdateInBackground:^(BOOL succeeded, NSError *error) {
+                
             }];
         }];
     });
@@ -329,41 +322,6 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
         return;
     }
     
-    // Familiar with NSFetchedResultsController?
-    // Then this should look pretty familiar
-    
-    [self.collectionView performBatchUpdates:^{
-        
-        for (YapDatabaseViewRowChange *rowChange in rowChanges)
-        {
-            switch (rowChange.type)
-            {
-                case YapDatabaseViewChangeDelete :
-                {
-                    [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
-                    break;
-                }
-                case YapDatabaseViewChangeInsert :
-                {
-                    [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
-                    break;
-                }
-                case YapDatabaseViewChangeMove :
-                {
-                    [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
-                    [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
-                    break;
-                }
-                case YapDatabaseViewChangeUpdate :
-                {
-                    [self.collectionView reloadItemsAtIndexPaths:@[rowChange.indexPath]];
-                    break;
-                }
-            }
-        }
-    } completion:^(BOOL finished) {
-        
-    }];
-    
+    [self.collectionView reloadData];
 }
 @end

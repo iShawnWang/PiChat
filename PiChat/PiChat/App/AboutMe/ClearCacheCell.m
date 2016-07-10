@@ -18,32 +18,21 @@ NSString *const kClearCacheCellID=@"ClearCacheCell";
 -(void)awakeFromNib{
     self.cacheSizeLabel.text=@"";
 }
--(void)calcCacheSize{
-    executeAsyncInGlobalQueue(^{
-        unsigned long long size;
-        NSError *error;
-        [CommenUtil getAllocatedSize:&size ofDirectoryAtURL:[NSURL URLWithString:[CommenUtil defaultCacheDirectoryStr]] error:&error];
-        NSString *cacheSizeStr= [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleFile];
+-(void)updateCacheSize{
+    [CommenUtil asynCalculateDirectorySizeWithPath:[CommenUtil defaultCacheDirectoryStr] completionBlock:^(NSUInteger fileCount, NSUInteger totalSize) {
+        NSString *cacheSizeStr= [NSByteCountFormatter stringFromByteCount:totalSize countStyle:NSByteCountFormatterCountStyleBinary];
+        if([cacheSizeStr containsString:@"Zero"]){
+            cacheSizeStr= @"0 KB";
+        }
         executeAsyncInMainQueue(^{
             self.cacheSizeLabel.text=cacheSizeStr;
         });
-    });
-    
-//    NSArray *contents= [[NSFileManager defaultManager]contentsOfDirectoryAtPath:[CommenUtil defaultCacheDirectoryStr] error:nil];
-//    NSLog(@"%@",contents);
-//    
-//    NSLog(@"%@",[CommenUtil cacheDirectoryStr]);
-    
+    }];
 }
 
 - (IBAction)clearCache:(id)sender {
-    //清除 SDW leancloud ,我自己的 Cache 目录下的缓存文件.没有清除 Cache 目录下所有文件
-    [[SDImageCache sharedImageCache]clearDiskOnCompletion:^{
-        [CommenUtil clearCacheDirectoryWithCallback:^{
-            [AVFile clearAllCachedFiles];
-            [MBProgressHUD showMsg:@"清除成功" forSeconds:1.0];
-            [self calcCacheSize];
-        }];
+    [CommenUtil clearCacheDirectoryWithCallback:^{
+        [self updateCacheSize];
     }];
 }
 @end

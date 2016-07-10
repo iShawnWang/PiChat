@@ -16,6 +16,7 @@
 #import "IQKeyboardManager+Configuration.h"
 #import "FabricManager.h"
 #import "PiReachability.h"
+#import "ImageCacheManager.h"
 
 @interface AppDelegate ()
 
@@ -28,6 +29,7 @@
     [LeanCloudManager setupApplication:launchOptions];
     [FabricManager setup];
     [self setupRootController];
+    [[ImageCacheManager sharedImageCacheManager]setupImageCache];
     return YES;
 }
 

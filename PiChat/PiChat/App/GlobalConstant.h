@@ -9,6 +9,8 @@
 #ifndef GlobalConstant_h
 #define GlobalConstant_h
 #import "EXTScope.h" //https://github.com/jspahrsummers/libextobjc 为了使用RAC 的 @strongify 和 @weakify
+#import "FICUtilities.h"
+#import "LogManager.h"
 
 @class JSQMessage;
 @class UIImage;
@@ -17,14 +19,18 @@
 @class AVFile;
 @class Moment;
 
+#define kBundleID @"BigPi.PiChat"
+
 typedef void(^JsqMsgBlock)(JSQMessage* msg);
 typedef void (^VoidBlock)();
 typedef void (^BooleanResultBlock)(BOOL succeeded, NSError *error);
 typedef void (^IntegerResultBlock)(NSInteger number, NSError *error);
+typedef void (^DataResultBlock)(NSData *data, NSError *error);
 typedef void (^ArrayResultBlock)(NSArray *objects, NSError *error);
 typedef void (^DictionaryResultBlock)(NSDictionary * dict, NSError *error);
 typedef void (^SetResultBlock)(NSSet *objs, NSError *error);
 typedef void (^ImageResultBlock)(UIImage *image, NSError *error);
+typedef void (^ImageAndUrlResultBlock)(UIImage *image,NSURL *url, NSError *error);
 typedef void (^UrlResultBlock)(NSURL *url, NSError *error);
 typedef void (^StringResultBlock)(NSString *string, NSError *error);
 typedef void (^IdResultBlock)(id object, NSError *error);
@@ -32,6 +38,7 @@ typedef void (^LocationResultBlock)(CLLocation *location, NSError *error);
 typedef void (^UserResultBlock)(User *user, NSError *error);
 typedef void (^FileResultBlock)(AVFile * file, NSError *error);
 typedef void (^MomentResultBlock)(Moment * moment, NSError *error);
+typedef void (^CalcDirectorySizeBlock)(NSUInteger fileCount, NSUInteger totalSize);
 
 #pragma mark GCD 封装
 #pragma mark - Get Queue
@@ -86,5 +93,12 @@ static NSString *const kUsernameKey=@"username";
 static NSString *const kObjectIdKey=@"objectId";
 static NSString *const kUpdatedAt=@"updatedAt";
 static NSString *const kCreatedAt=@"createdAt";
+
+#pragma mark - 
+
+NS_INLINE NSString * MD5HashFromString(NSString* str){
+    CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString(str);
+    return FICStringWithUUIDBytes(UUIDBytes);
+}
 
 #endif /* GlobalConstant_h */

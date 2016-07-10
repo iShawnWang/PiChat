@@ -8,10 +8,10 @@
 
 #import "User.h"
 #import "CommenUtil.h"
-#import "ImageCache.h"
 #import "NSNotification+UserUpdate.h"
 
 NSString *const kUserCodingKey = @"kUserCodingKey";
+NSString *const kAvatarPathKey = @"kAvatarPathKey";
 
 @interface User ()
 
@@ -61,4 +61,5 @@ NSString *const kUserCodingKey = @"kUserCodingKey";
     NSDictionary *objDict= [coder decodeObjectForKey:kUserCodingKey];
     return (User*)[AVObject objectWithDictionary:objDict];
 }
+
 @end

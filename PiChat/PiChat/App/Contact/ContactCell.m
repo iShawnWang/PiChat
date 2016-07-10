@@ -8,7 +8,7 @@
 
 #import "ContactCell.h"
 #import "User.h"
-#import "ImageCache.h"
+#import "ImageCacheManager.h"
 
 
 NSString *const kContactCellID=@"ContactCell";
@@ -21,6 +21,12 @@ NSString *const kContactCellID=@"ContactCell";
 -(void)configWithUser:(User*)u{
     self.nameLabel.text=u.displayName;
     self.detailLabel.text=@"";
-    self.avatarImageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:u.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+    
+    [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+        if(entity==u){
+            self.avatarImageView.image=image;
+        }
+    }];
+    
 }
 @end

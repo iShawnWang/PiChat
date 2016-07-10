@@ -9,27 +9,34 @@
 #import "AddFriendCell.h"
 #import "User.h"
 #import "UserManager.h"
-#import "ImageCache.h"
 #import "CommenUtil.h"
+#import "ImageCacheManager.h"
 
 
 @interface AddFriendCell ()
-@property (strong,nonatomic) User *user;
 @end
 
 @implementation AddFriendCell
--(void)configWithUser:(User*)user{
-    self.textLabel.text=user.displayName;
+-(void)configWithUser:(User*)u{
+    self.textLabel.text=u.displayName;
     self.detailTextLabel.text=@"";
-    if([user.avatarPath isEmptyString]){
-        [[UserManager sharedUserManager] findUserByObjectID:user.objectId callback:^(User *user, NSError *error) {
-            if (![user.objectId isEqualToString:self.user.objectId]) {
+    if([u.avatarPath isEmptyString]){
+        [[UserManager sharedUserManager] findUserByObjectID:u.objectId callback:^(User *user, NSError *error) {
+            if (![u.objectId isEqualToString:user.objectId]) {
                 return ;
             }
-            self.imageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:user.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+            [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:user withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+                if(entity==u){
+                    self.imageView.image=image;
+                }
+            }];
         }];
     }else{
-        self.imageView.image=[[ImageCache sharedImageCache]findOrFetchImageFormUrl:user.avatarPath withImageClipConfig:[ImageClipConfiguration configurationWithCircleImage:YES]];
+        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+            if(entity==u){
+                self.imageView.image=image;
+            }
+        }];
     }
 }
 @end

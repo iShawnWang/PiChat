@@ -47,11 +47,6 @@
 
 #pragma mark -
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    self.photoViewerController.currentState=PhotoViewerStateNormal;
-    [self.photoViewerController.collectionView reloadData];
-}
-
 - (IBAction)cancel:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
