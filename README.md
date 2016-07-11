@@ -6,8 +6,6 @@
 
 **一个即时聊天 App 基于 LeanCloud.**
 
-由于包含第三方库的 Pod,App 源码较大
-
 ---
 可以注册账号,也可以使用 App 的2个测试账号
 
@@ -31,10 +29,11 @@
 ![](./Img/关于.png)
 
 ---
+
 - [x] 朋友圈计算 UICollectionview Cell Size (使用 Autolayout),还有小 Bug
 - [x] 准备加入 [yapstudios/YapDatabase](https://github.com/yapstudios/YapDatabase) 来缓存网络数据
-- [ ] [FastImageCache](https://github.com/path/FastImageCache)做图片缓存感觉不错...
-- [ ] YYText 源码根本看不懂,全是 Core Text :(
+- [x] [FastImageCache](https://github.com/path/FastImageCache)做图片缓存感觉不错...
+- [ ] YYText 源码根本看不懂,全是 Core Text ,感觉它的 Demo 好流畅... 
 
 ---
 ## 使用的第三方库:
@@ -70,4 +69,9 @@
 - pod 'RealReachability'
 #
 - pod 'YapDatabase'   //本地缓存
+- pod 'FastImageCache' //图片缓存
 - pod 'Reveal-iOS-SDK', :configurations => ['Debug']
+
+---
+#License
+[GNU GPLv3](./LICENSE)
