@@ -86,9 +86,21 @@ FICImageFormatStyle const kStyle= FICImageFormatStyle32BitBGRA;
 
 }
 
-- (BOOL)retrieveImageForEntity:(id <FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageCacheCompletionBlock)completionBlock {
+- (BOOL)imageExistsForEntity:(id <FICEntity>)entity withFormatName:(NSString *)formatName {
+    return [self.imageCache imageExistsForEntity:entity withFormatName:formatName];
+}
+
+-(BOOL)retrieveImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageCacheCompletionBlock)completionBlock{
+    return [self retrieveImageForEntity:entity withFormatName:formatName sync:NO completionBlock:completionBlock];
+}
+
+-(BOOL)syncRetrieveImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageCacheCompletionBlock)completionBlock{
+   return [self retrieveImageForEntity:entity withFormatName:formatName sync:YES completionBlock:completionBlock];
+}
+
+- (BOOL)retrieveImageForEntity:(id <FICEntity>)entity withFormatName:(NSString *)formatName sync:(BOOL)sync completionBlock:(FICImageCacheCompletionBlock)completionBlock {
     //缓存中没有图片,就让 FastImageCache 的代理去下载,然后发送下载完成的通知
-    if(![self.imageCache imageExistsForEntity:entity withFormatName:formatName]){
+    if(![self imageExistsForEntity:entity withFormatName:formatName]){
         //立即回调一个空图片,
         completionBlock(entity,formatName,[self.blankImage copy]);
         //
@@ -97,8 +109,12 @@ FICImageFormatStyle const kStyle= FICImageFormatStyle32BitBGRA;
         }];
         return NO;
     }else{
-        //缓存中有图片,同步返回图片.
-        return [self.imageCache asynchronouslyRetrieveImageForEntity:entity withFormatName:formatName completionBlock:completionBlock];
+        //缓存中有图片,返回图片.
+        if(sync){
+            return [self.imageCache retrieveImageForEntity:entity withFormatName:formatName completionBlock:completionBlock];
+        }else{
+            return [self.imageCache asynchronouslyRetrieveImageForEntity:entity withFormatName:formatName completionBlock:completionBlock];
+        }
     }
 }
 

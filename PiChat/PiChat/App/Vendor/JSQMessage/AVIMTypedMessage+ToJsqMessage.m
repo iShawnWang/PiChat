@@ -19,7 +19,6 @@
 #import "AVFile+ImageThumbnailUrl.h"
 #import "ImageCacheManager.h"
 
-
 @implementation AVIMTypedMessage (ToJsqMessage)
 
 /**
@@ -111,6 +110,13 @@
     
     message.timeStamp=self.sendTimestamp;
     message.messageID=self.messageId;
+    
+    //下面的代码最好放在 case kAVIMMessageMediaTypeImage 里, 但不得不放在这里,因为我要使用 messageID
+    if([message.media isKindOfClass:[JSQPhotoMediaItem class]]){
+        [[ImageCacheManager sharedImageCacheManager]syncRetrieveImageForEntity:message withFormatName:kJSQMessagePhotoItemFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+            ((JSQPhotoMediaItem*)message.media).image=image;
+        }];
+    }
     callback(message);
 }
 @end

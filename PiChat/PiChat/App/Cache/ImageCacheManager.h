@@ -17,5 +17,22 @@
 +(instancetype)sharedImageCacheManager;
 -(void)setupImageCache;
 
-- (BOOL)retrieveImageForEntity:(id <FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageCacheCompletionBlock)completionBlock ;
+
+- (BOOL)imageExistsForEntity:(id <FICEntity>)entity withFormatName:(NSString *)formatName ;
+
+-(BOOL)retrieveImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageCacheCompletionBlock)completionBlock;
+
+-(BOOL)syncRetrieveImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageCacheCompletionBlock)completionBlock;
+
+/**
+ *
+ *
+ *  @param entity
+ *  @param formatName
+ *  @param sync            同步获取
+ *  @param completionBlock
+ *
+ *  @return 缓存中有图片
+ */
+- (BOOL)retrieveImageForEntity:(id <FICEntity>)entity withFormatName:(NSString *)formatName sync:(BOOL)sync completionBlock:(FICImageCacheCompletionBlock)completionBlock;
 @end

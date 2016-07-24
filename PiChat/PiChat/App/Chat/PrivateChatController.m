@@ -220,12 +220,6 @@
 
 -(id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath{
     JSQMessage *msg= self.msgs[indexPath.item];
-    if([msg.media isKindOfClass:[JSQPhotoMediaItem class]]){
-        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:msg withFormatName:kJSQMessagePhotoItemFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-            JSQPhotoMediaItem *mediaItem=(JSQPhotoMediaItem*)msg.media;
-            mediaItem.image=image;
-        }];
-    }
     return msg;
 }
 

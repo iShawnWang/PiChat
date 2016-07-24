@@ -241,15 +241,21 @@
 -(JSQMessagesAvatarImage *)avatarForObjectID:(NSString *)objectID size:(CGSize)size{
     __block UIImage *avatar;
     User *u= [self findUserFromCacheByObjectID:objectID];
+    
     if(u.avatarPath){
-        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-            if(entity==u){
+        if([[ImageCacheManager sharedImageCacheManager]imageExistsForEntity:u withFormatName:kUserAvatarRoundFormatName]){
+            [[ImageCacheManager sharedImageCacheManager]syncRetrieveImageForEntity:u withFormatName:kUserAvatarRoundFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
                 avatar=image;
-            }
-        }];
+            }];
+        }else{
+            avatar=[UIImage new];
+        }
     }else{
         avatar=[UIImage new];
-        [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarBlurFormatName completionBlock:nil];
+        if(u){
+            [[ImageCacheManager sharedImageCacheManager]retrieveImageForEntity:u withFormatName:kUserAvatarBlurFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+            }];
+        }
     }
     
     return [JSQMessagesAvatarImage avatarWithImage:avatar];
