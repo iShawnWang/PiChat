@@ -1,6 +1,6 @@
 # PiChat
 
-[![Build Status](https://travis-ci.org/Big-Pi/PiChat.svg?branch=master)](https://travis-ci.org/Big-Pi/PiChat)
+[![Build Status](https://travis-ci.org/iShawnWang/PiChat.svg?branch=master)](https://travis-ci.org/Big-Pi/PiChat)
 
 **A Realtime Chat App with LeanCloud as Back-end**
 
