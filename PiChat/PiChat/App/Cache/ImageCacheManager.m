@@ -9,6 +9,7 @@
 #import "ImageCacheManager.h"
 #import "GlobalConstant.h"
 #import <SDWebImageManager.h>
+#import <SDWebImageDownloader.h>
 #import "Moment.h"
 #import "FICImageTable.h"
 #import "NSNotification+DownloadImage.h"
@@ -22,6 +23,7 @@ FICImageFormatStyle const kStyle= FICImageFormatStyle32BitBGRA;
 @interface ImageCacheManager ()<FICImageCacheDelegate>
 @property (strong,nonatomic) FICImageCache *imageCache;
 @property (strong,nonatomic) SDWebImageManager *downloadManager;
+@property (strong,nonatomic) NSMutableArray *downloadingOperations;
 @property (strong,nonatomic) UIImage *blankImage;
 @end
 
@@ -41,6 +43,12 @@ FICImageFormatStyle const kStyle= FICImageFormatStyle32BitBGRA;
         _downloadManager=[SDWebImageManager sharedManager];
     }
     return _downloadManager;
+}
+-(NSMutableArray *)downloadingOperations{
+    if(!_downloadingOperations){
+        _downloadingOperations=[NSMutableArray array];
+    }
+    return _downloadingOperations;
 }
 
 -(UIImage *)blankImage{
@@ -130,24 +138,34 @@ FICImageFormatStyle const kStyle= FICImageFormatStyle32BitBGRA;
 //    FICImageFormat *format= [self.imageCache formatWithName:formatName];
 //    NSString *family= format.family;
     
-    [[SDWebImageDownloader sharedDownloader]downloadImageWithURL:[entity FIC_sourceImageURLWithFormatName:formatName] options:SDWebImageDownloaderContinueInBackground progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    //这里使用 SDWebImage 下载图片,而不是使用 AFN, 因为 SDWebimage 会防止同一个 url 重复下载多次
+    //比如聊天界面,会多次下载同一个人的头像图片,
+    //内部会判断这个 url 是否正在下载中,如果是就保存这个请求 progress,completed 的 回调 block 到数组中
+    //然后等这个 url 的图片下载完成后,执行所有下载请求的所有回调 block.
+    id<SDWebImageOperation> downloadOperation=[[SDWebImageDownloader sharedDownloader]downloadImageWithURL:[entity FIC_sourceImageURLWithFormatName:formatName] options:SDWebImageDownloaderContinueInBackground progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
     } completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
         if(!finished){
             return ;
         }
+        [self.downloadingOperations removeObject:downloadOperation];
         if(error || !image){
             DDLogError(@"SDW下载图片 : %@",error);
             return ;
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
+        executeAsyncInMainQueue(^{
             completionBlock(image);
         });
     }];
+    
+    [self.downloadingOperations addObject:downloadOperation];
 }
 
 -(void)imageCache:(FICImageCache *)imageCache cancelImageLoadingForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName{
-    // SDW 下载模块没有取消的功能... 
+    [self.downloadingOperations enumerateObjectsUsingBlock:^(id<SDWebImageOperation> operation, NSUInteger idx, BOOL * _Nonnull stop) {
+        [operation cancel];
+    }];
+    [self.downloadingOperations removeAllObjects];
 }
 
 -(void)imageCache:(FICImageCache *)imageCache errorDidOccurWithMessage:(NSString *)errorMessage{
