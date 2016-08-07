@@ -13,7 +13,6 @@
 #import "Moment.h"
 #import "MomentsManager.h"
 #import "NSNotification+UserUpdate.h"
-#import "NewMomentPhotoViewerController.h"
 #import "ReplyInputView.h"
 #import <Masonry.h>
 #import "CommenUtil.h"
@@ -21,12 +20,13 @@
 #import "MediaViewerController.h"
 #import "DBManager.h"
 #import "NSNotification+DownloadImage.h"
+#import "UIView+PiAdditions.h"
 @import UIKit;
 
 NSString *const kMomentCell=@"MomentCell";
 NSString *const kMomentHeaderView=@"MomentHeaderView";
 
-@interface MomentsViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,MomentCellDelegate,CommentsTableControllerDelegate>
+@interface MomentsViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,MomentCellDelegate,CommentsViewDelegate,MomentPhotosViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic) MomentCell *momentPrototypeCell;
 @property (strong,nonatomic) ReplyInputView *replyInputView;
@@ -187,7 +187,9 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
 
     [cell configWithMoment:m collectionView:collectionView];
     cell.delegate=self;
-    cell.commentsController.delegate=self;
+    cell.commentsView.delegate=self;
+    cell.photosView.delegate=self;
+//    cell.commentsController.delegate=self;
     //    在下面的 willDisplayCell 方法中为 Cell 设置 Model 会报错...!
     //http://southpeak.github.io/blog/2015/12/20/perfect-smooth-scrolling-in-uitableviews/
     return cell;
@@ -219,7 +221,7 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     [moment saveOrUpdateInBackground:^(BOOL succeeded, NSError *error) {
         //no more reload,when we modify YapDatabase,YapDatabaseModifiedNotification will be post
         //so the `yapDatabaseModified:` method will be called,and reload will be fired
-        //make my life easier ,like Core Data ,LOL
+        //make my life easier ,like Core Data ,LOL ~
         //[self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
     }];
 }
@@ -234,20 +236,10 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     self.replyInputView.replyCommentCallback=^(NSString *reply,NSError *error){
         weakSelf.replyInputView.textField.text=@"";
         [weakSelf.replyInputView.textField resignFirstResponder];
-        [weakSelf postNewCommentForMoment:m commentContent:reply replyTo:nil];
+        [MomentsManager postNewCommentForMoment:m commentContent:reply replyTo:nil];
     };
     
     [self.replyInputView showInViewAtBottom:self.view];
-}
-
--(void)momentCell:(MomentCell *)cell didPhotoViewController:(NewMomentPhotoViewerController *)controller photoCellClick:(UICollectionViewCell *)photoCell{
-    NSIndexPath *cellIndexPath=[self.collectionView indexPathForCell:cell];
-    Moment *m= [Moment momentFromDBWithConnection:self.readConnection indexPath:cellIndexPath mapping:self.mapping];
-    
-    NSIndexPath *photoCellIndexPath= [controller.collectionView indexPathForCell:photoCell];
-    AVFile *image= m.images[photoCellIndexPath.row];
-    
-    [MediaViewerController showIn:self withImageUrl:[NSURL URLWithString:image.url]];
 }
 
 -(void)momentEditMenuWillShowForCell:(MomentCell *)cell likeBtn:(UIButton *)likeBtn commentBtn:(UIButton *)commentBtn{
@@ -258,38 +250,30 @@ NSString *const kMomentHeaderView=@"MomentHeaderView";
     [likeBtn setTitle:likeBtnTitle forState:UIControlStateNormal];
 }
 
-#pragma mark - CommentsTableControllerDelegate //点击下面的评论列表,回复某人的评论
-
--(void)commentsTableController:(CommentsTableController *)controller didCommentClick:(Comment *)comment withCell:(UICollectionViewCell *)cell moment:(Moment *)moment{
-    __weak typeof(self) weakSelf=self;
+#pragma mark - CommentsViewDelegate //点击下面的评论列表,回复某人的评论
+-(void)commentsView:(CommentsView *)commentsView didCommentClick:(Comment *)comment withMoment:(Moment *)moment{
+    @weakify(self)
     self.replyInputView.replyCommentCallback=^(NSString *reply,NSError *error){
-        weakSelf.replyInputView.textField.text=@"";
-        [weakSelf.replyInputView.textField resignFirstResponder];
-        [weakSelf postNewCommentForMoment:moment commentContent:reply replyTo:comment.commentUser];
+        @strongify(self)
+        self.replyInputView.textField.text=@"";
+        [self.replyInputView.textField resignFirstResponder];
+        [MomentsManager postNewCommentForMoment:moment commentContent:reply replyTo:comment.commentUser];
     };
     
     self.replyInputView.textField.placeholder=[NSString stringWithFormat:@"回复 %@ :",comment.commentUserName];
     [self.replyInputView showInViewAtBottom:self.view];
 }
 
-
-#pragma mark - Private
-
-/**
- *  为某个朋友圈发送新评论
- */
--(void)postNewCommentForMoment:(Moment*)m commentContent:(NSString*)reply replyTo:(User*)replyTo{
+#pragma mark - MomentPhotosViewDelegate //点击朋友圈图片,查看大图
+-(void)momentPhotosView:(MomentPhotosView *)photosView didPhotoClickAtIndex:(NSUInteger)index{
     
-    [self.modelSizeCache invalidateCacheForModel:m];
-    executeAsyncInGlobalQueue(^{
-        Comment *newComment= [Comment commentWithCommentUser:[User currentUser] commentContent:reply replayTo:replyTo];
-        [newComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [m addNewComment:newComment];
-            [m saveOrUpdateInBackground:^(BOOL succeeded, NSError *error) {
-                
-            }];
-        }];
-    });
+    UICollectionViewCell * cellForPhotosView=(UICollectionViewCell*)[photosView findSuperViewWithClass:[UICollectionViewCell class]];
+    NSIndexPath *cellIndexPath=[self.collectionView indexPathForCell:cellForPhotosView];
+    Moment *m= [Moment momentFromDBWithConnection:self.readConnection indexPath:cellIndexPath mapping:self.mapping];
+    
+    AVFile *image= m.images[index];
+    
+    [MediaViewerController showIn:self withImageUrl:[NSURL URLWithString:image.url]];
 }
 
 #pragma mark - DB

@@ -40,4 +40,21 @@ CG_INLINE CGFloat RadianToDegrees( CGFloat radian ) {
 @property (assign,nonatomic) float boundHeight;
 @property (assign,nonatomic) float centerX;
 @property (assign,nonatomic) float centerY;
+
+/**
+ *  寻找当前 View 的父 Cell
+ *  可能有点奇怪,但是很好用,方便的方法 ~
+ *
+ *  @return
+ */
+- (UITableView*)tableViewForCell;
+
+/**
+ *  寻找最近的父类
+ *
+ *  @param superViewClass
+ *
+ *  @return
+ */
+- (UIView *)findSuperViewWithClass:(Class)superViewClass ;
 @end

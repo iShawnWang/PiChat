@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04588312189C9252EAB3540F /* libPods-PiChatUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E75667CE04FFD0BEAD6F4B34 /* libPods-PiChatUITests.a */; };
 		0E18384A1D449C6F00E9F1B5 /* AboutMe.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E1837411D449C6E00E9F1B5 /* AboutMe.storyboard */; };
 		0E18384B1D449C6F00E9F1B5 /* ClearCacheCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1837431D449C6E00E9F1B5 /* ClearCacheCell.m */; };
 		0E18384C1D449C6F00E9F1B5 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1837451D449C6E00E9F1B5 /* MeViewController.m */; };
@@ -82,9 +83,6 @@
 		0E1838921D449C6F00E9F1B5 /* ReachAbilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E1837DF1D449C6F00E9F1B5 /* ReachAbilityView.xib */; };
 		0E1838931D449C6F00E9F1B5 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1837E31D449C6F00E9F1B5 /* Comment.m */; };
 		0E1838941D449C6F00E9F1B5 /* Moment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1837E51D449C6F00E9F1B5 /* Moment.m */; };
-		0E1838951D449C6F00E9F1B5 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1837E91D449C6F00E9F1B5 /* CommentCell.m */; };
-		0E1838961D449C6F00E9F1B5 /* CommentsTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1837EB1D449C6F00E9F1B5 /* CommentsTableController.m */; };
-		0E1838971D449C6F00E9F1B5 /* FavourUsersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1837ED1D449C6F00E9F1B5 /* FavourUsersCell.m */; };
 		0E1838981D449C6F00E9F1B5 /* MomentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1837EF1D449C6F00E9F1B5 /* MomentCell.m */; };
 		0E1838991D449C6F00E9F1B5 /* MomentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E1837F01D449C6F00E9F1B5 /* MomentCell.xib */; };
 		0E18389A1D449C6F00E9F1B5 /* MomentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1837F21D449C6F00E9F1B5 /* MomentHeaderView.m */; };
@@ -129,7 +127,13 @@
 		0EED53031C75CD82000437BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EED53011C75CD82000437BD /* LaunchScreen.storyboard */; };
 		0EED530E1C75CD82000437BD /* PiChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED530D1C75CD82000437BD /* PiChatTests.m */; };
 		0EED53191C75CD82000437BD /* PiChatUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED53181C75CD82000437BD /* PiChatUITests.m */; };
-		A1C49579061CF5790206FC28 /* libPods-PiChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F1213A3616F8FD53E22CBE /* libPods-PiChat.a */; };
+		0EFF49491D55DDAC00870AD8 /* CommentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF49481D55DDAC00870AD8 /* CommentsView.m */; };
+		0EFF494C1D55DF5200870AD8 /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF494B1D55DF5200870AD8 /* NSString+Size.m */; };
+		0EFF494F1D55F90900870AD8 /* FavourUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF494E1D55F90900870AD8 /* FavourUserView.m */; };
+		0EFF49511D55F91700870AD8 /* FavourUserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EFF49501D55F91700870AD8 /* FavourUserView.xib */; };
+		0EFF49541D56098F00870AD8 /* MomentPhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF49531D56098F00870AD8 /* MomentPhotosView.m */; };
+		A26605CB39FABA429A04C240 /* libPods-PiChatTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B63F1D889643247D90F55790 /* libPods-PiChatTests.a */; };
+		CBE314D75BC206A2808FD86F /* libPods-PiChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFE6DDB20C5E07D942566A4 /* libPods-PiChat.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,12 +298,6 @@
 		0E1837E31D449C6F00E9F1B5 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		0E1837E41D449C6F00E9F1B5 /* Moment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Moment.h; sourceTree = "<group>"; };
 		0E1837E51D449C6F00E9F1B5 /* Moment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Moment.m; sourceTree = "<group>"; };
-		0E1837E81D449C6F00E9F1B5 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
-		0E1837E91D449C6F00E9F1B5 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
-		0E1837EA1D449C6F00E9F1B5 /* CommentsTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableController.h; sourceTree = "<group>"; };
-		0E1837EB1D449C6F00E9F1B5 /* CommentsTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableController.m; sourceTree = "<group>"; };
-		0E1837EC1D449C6F00E9F1B5 /* FavourUsersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavourUsersCell.h; sourceTree = "<group>"; };
-		0E1837ED1D449C6F00E9F1B5 /* FavourUsersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavourUsersCell.m; sourceTree = "<group>"; };
 		0E1837EE1D449C6F00E9F1B5 /* MomentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentCell.h; sourceTree = "<group>"; };
 		0E1837EF1D449C6F00E9F1B5 /* MomentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentCell.m; sourceTree = "<group>"; };
 		0E1837F01D449C6F00E9F1B5 /* MomentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MomentCell.xib; sourceTree = "<group>"; };
@@ -390,9 +388,24 @@
 		0EED53141C75CD82000437BD /* PiChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PiChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EED53181C75CD82000437BD /* PiChatUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PiChatUITests.m; sourceTree = "<group>"; };
 		0EED531A1C75CD82000437BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		15C71593C91B28C6CB6A60EB /* Pods-PiChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiChat/Pods-PiChat.debug.xcconfig"; sourceTree = "<group>"; };
-		661C3153225C7E070CA78B40 /* Pods-PiChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-PiChat/Pods-PiChat.release.xcconfig"; sourceTree = "<group>"; };
-		B8F1213A3616F8FD53E22CBE /* libPods-PiChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PiChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0EFF49471D55DDAC00870AD8 /* CommentsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsView.h; sourceTree = "<group>"; };
+		0EFF49481D55DDAC00870AD8 /* CommentsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsView.m; sourceTree = "<group>"; };
+		0EFF494A1D55DF5200870AD8 /* NSString+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Size.h"; sourceTree = "<group>"; };
+		0EFF494B1D55DF5200870AD8 /* NSString+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Size.m"; sourceTree = "<group>"; };
+		0EFF494D1D55F90900870AD8 /* FavourUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavourUserView.h; sourceTree = "<group>"; };
+		0EFF494E1D55F90900870AD8 /* FavourUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavourUserView.m; sourceTree = "<group>"; };
+		0EFF49501D55F91700870AD8 /* FavourUserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavourUserView.xib; sourceTree = "<group>"; };
+		0EFF49521D56098F00870AD8 /* MomentPhotosView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentPhotosView.h; sourceTree = "<group>"; };
+		0EFF49531D56098F00870AD8 /* MomentPhotosView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentPhotosView.m; sourceTree = "<group>"; };
+		1E9487E817FA212F639B5802 /* Pods-PiChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChatTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PiChatTests/Pods-PiChatTests.release.xcconfig"; sourceTree = "<group>"; };
+		80F284979CD91B20F38D5EB0 /* Pods-PiChatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChatUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PiChatUITests/Pods-PiChatUITests.release.xcconfig"; sourceTree = "<group>"; };
+		868F16CA805E07800C97DF44 /* Pods-PiChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChatTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiChatTests/Pods-PiChatTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A4943D7E0755EA3BCDDD4D93 /* Pods-PiChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-PiChat/Pods-PiChat.release.xcconfig"; sourceTree = "<group>"; };
+		B63F1D889643247D90F55790 /* libPods-PiChatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PiChatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCF9F93E60AAA19676E840E3 /* Pods-PiChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChatUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiChatUITests/Pods-PiChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		E75667CE04FFD0BEAD6F4B34 /* libPods-PiChatUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PiChatUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEC3A7E31F98F0383F740ADC /* Pods-PiChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PiChat/Pods-PiChat.debug.xcconfig"; sourceTree = "<group>"; };
+		FAFE6DDB20C5E07D942566A4 /* libPods-PiChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PiChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,7 +413,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1C49579061CF5790206FC28 /* libPods-PiChat.a in Frameworks */,
+				CBE314D75BC206A2808FD86F /* libPods-PiChat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +421,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A26605CB39FABA429A04C240 /* libPods-PiChatTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +429,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04588312189C9252EAB3540F /* libPods-PiChatUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,6 +617,8 @@
 				0E1837AA1D449C6F00E9F1B5 /* StoryBoardHelper.m */,
 				0E1837AB1D449C6F00E9F1B5 /* UICollectionView+PendingReloadData.h */,
 				0E1837AC1D449C6F00E9F1B5 /* UICollectionView+PendingReloadData.m */,
+				0EFF494A1D55DF5200870AD8 /* NSString+Size.h */,
+				0EFF494B1D55DF5200870AD8 /* NSString+Size.m */,
 				0E1837AD1D449C6F00E9F1B5 /* UIColor+Addition.h */,
 				0E1837AE1D449C6F00E9F1B5 /* UIColor+Addition.m */,
 				0E1837AF1D449C6F00E9F1B5 /* UIImage+ClipRoundCorner.h */,
@@ -776,12 +793,13 @@
 		0E1837E71D449C6F00E9F1B5 /* Comments */ = {
 			isa = PBXGroup;
 			children = (
-				0E1837E81D449C6F00E9F1B5 /* CommentCell.h */,
-				0E1837E91D449C6F00E9F1B5 /* CommentCell.m */,
-				0E1837EA1D449C6F00E9F1B5 /* CommentsTableController.h */,
-				0E1837EB1D449C6F00E9F1B5 /* CommentsTableController.m */,
-				0E1837EC1D449C6F00E9F1B5 /* FavourUsersCell.h */,
-				0E1837ED1D449C6F00E9F1B5 /* FavourUsersCell.m */,
+				0EFF49471D55DDAC00870AD8 /* CommentsView.h */,
+				0EFF49481D55DDAC00870AD8 /* CommentsView.m */,
+				0EFF494D1D55F90900870AD8 /* FavourUserView.h */,
+				0EFF494E1D55F90900870AD8 /* FavourUserView.m */,
+				0EFF49501D55F91700870AD8 /* FavourUserView.xib */,
+				0EFF49521D56098F00870AD8 /* MomentPhotosView.h */,
+				0EFF49531D56098F00870AD8 /* MomentPhotosView.m */,
 			);
 			path = Comments;
 			sourceTree = "<group>";
@@ -952,8 +970,8 @@
 				0EED530C1C75CD82000437BD /* PiChatTests */,
 				0EED53171C75CD82000437BD /* PiChatUITests */,
 				0EED52F11C75CD82000437BD /* Products */,
-				4A5C5C45A7D42D220493275B /* Pods */,
-				76ED5FC3DD5F7C9419AED170 /* Frameworks */,
+				BAE6CF78786627C57BC3B57D /* Pods */,
+				6ED989173CBF67D3A594EABB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1005,21 +1023,27 @@
 			path = PiChatUITests;
 			sourceTree = "<group>";
 		};
-		4A5C5C45A7D42D220493275B /* Pods */ = {
+		6ED989173CBF67D3A594EABB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				15C71593C91B28C6CB6A60EB /* Pods-PiChat.debug.xcconfig */,
-				661C3153225C7E070CA78B40 /* Pods-PiChat.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		76ED5FC3DD5F7C9419AED170 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				B8F1213A3616F8FD53E22CBE /* libPods-PiChat.a */,
+				FAFE6DDB20C5E07D942566A4 /* libPods-PiChat.a */,
+				B63F1D889643247D90F55790 /* libPods-PiChatTests.a */,
+				E75667CE04FFD0BEAD6F4B34 /* libPods-PiChatUITests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BAE6CF78786627C57BC3B57D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EEC3A7E31F98F0383F740ADC /* Pods-PiChat.debug.xcconfig */,
+				A4943D7E0755EA3BCDDD4D93 /* Pods-PiChat.release.xcconfig */,
+				868F16CA805E07800C97DF44 /* Pods-PiChatTests.debug.xcconfig */,
+				1E9487E817FA212F639B5802 /* Pods-PiChatTests.release.xcconfig */,
+				DCF9F93E60AAA19676E840E3 /* Pods-PiChatUITests.debug.xcconfig */,
+				80F284979CD91B20F38D5EB0 /* Pods-PiChatUITests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1029,13 +1053,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0EED531D1C75CD82000437BD /* Build configuration list for PBXNativeTarget "PiChat" */;
 			buildPhases = (
-				289DC4D20CBB3F4D5A541AB5 /* Check Pods Manifest.lock */,
+				E6552BF8B6C04BB45F138E2B /* [CP] Check Pods Manifest.lock */,
 				0EED52EC1C75CD82000437BD /* Sources */,
 				0EED52ED1C75CD82000437BD /* Frameworks */,
 				0EED52EE1C75CD82000437BD /* Resources */,
-				97981C19DBE6E76B06C13E24 /* Embed Pods Frameworks */,
-				FC1D59A4E35F4A6945FB0C0E /* Copy Pods Resources */,
 				0ED020D11CEB3763003DF7D6 /* ShellScript */,
+				A9BA759C4C3EB146DB326A6C /* [CP] Embed Pods Frameworks */,
+				E09E33F43D40ADDCC6B4844A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1050,9 +1074,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0EED53201C75CD82000437BD /* Build configuration list for PBXNativeTarget "PiChatTests" */;
 			buildPhases = (
+				386A27505E2082B8830EBDF1 /* [CP] Check Pods Manifest.lock */,
 				0EED53051C75CD82000437BD /* Sources */,
 				0EED53061C75CD82000437BD /* Frameworks */,
 				0EED53071C75CD82000437BD /* Resources */,
+				A7D00822ADCBD120D77593E0 /* [CP] Embed Pods Frameworks */,
+				8B5623B86FA2FF989E4F5A41 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1068,9 +1095,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0EED53231C75CD82000437BD /* Build configuration list for PBXNativeTarget "PiChatUITests" */;
 			buildPhases = (
+				5FA6B7F8135299C0557C3E8E /* [CP] Check Pods Manifest.lock */,
 				0EED53101C75CD82000437BD /* Sources */,
 				0EED53111C75CD82000437BD /* Frameworks */,
 				0EED53121C75CD82000437BD /* Resources */,
+				2D48A22E410DAE43F4F8F3C5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1144,6 +1173,7 @@
 				0E1838561D449C6F00E9F1B5 /* InputContentView.xib in Resources */,
 				0EED53031C75CD82000437BD /* LaunchScreen.storyboard in Resources */,
 				0E1838A61D449C6F00E9F1B5 /* EmojisList.plist in Resources */,
+				0EFF49511D55F91700870AD8 /* FavourUserView.xib in Resources */,
 				0E1838921D449C6F00E9F1B5 /* ReachAbilityView.xib in Resources */,
 				0EED53001C75CD82000437BD /* Assets.xcassets in Resources */,
 			);
@@ -1179,14 +1209,29 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" cf3541ca6cb5ee7b883ba86b839cbf1cb67fca3e 83ee0119339a9f8d8e6bc6a1a7ed33cbadfcea0a70ef4c2320488937d646dae2";
 		};
-		289DC4D20CBB3F4D5A541AB5 /* Check Pods Manifest.lock */ = {
+		2D48A22E410DAE43F4F8F3C5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PiChatUITests/Pods-PiChatUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		386A27505E2082B8830EBDF1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1194,14 +1239,59 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		97981C19DBE6E76B06C13E24 /* Embed Pods Frameworks */ = {
+		5FA6B7F8135299C0557C3E8E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8B5623B86FA2FF989E4F5A41 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PiChatTests/Pods-PiChatTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A7D00822ADCBD120D77593E0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PiChatTests/Pods-PiChatTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A9BA759C4C3EB146DB326A6C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1209,19 +1299,34 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PiChat/Pods-PiChat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FC1D59A4E35F4A6945FB0C0E /* Copy Pods Resources */ = {
+		E09E33F43D40ADDCC6B4844A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PiChat/Pods-PiChat-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6552BF8B6C04BB45F138E2B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1235,8 +1340,10 @@
 				0E18384C1D449C6F00E9F1B5 /* MeViewController.m in Sources */,
 				0E18384F1D449C6F00E9F1B5 /* ModelSizeCache.m in Sources */,
 				0E1838B41D449C6F00E9F1B5 /* JSQMessage+MessageID.m in Sources */,
+				0EFF494C1D55DF5200870AD8 /* NSString+Size.m in Sources */,
 				0E1838AF1D449C6F00E9F1B5 /* IQKeyboardManager+Configuration.m in Sources */,
 				0E1838911D449C6F00E9F1B5 /* ReachAbilityView.m in Sources */,
+				0EFF49541D56098F00870AD8 /* MomentPhotosView.m in Sources */,
 				0E1838B91D449C6F00E9F1B5 /* MWPhotoBrowser+UnClearMemoryCache.m in Sources */,
 				0E18387B1D449C6F00E9F1B5 /* UICollectionView+PendingReloadData.m in Sources */,
 				0E1838A51D449C6F00E9F1B5 /* AGEmojiPageView.m in Sources */,
@@ -1256,6 +1363,7 @@
 				0E1838761D449C6F00E9F1B5 /* NSNotification+UploadMedia.m in Sources */,
 				0E1838651D449C6F00E9F1B5 /* ContactHeaderCell.m in Sources */,
 				0E1838781D449C6F00E9F1B5 /* NSObject+MethodSwizzling.m in Sources */,
+				0EFF494F1D55F90900870AD8 /* FavourUserView.m in Sources */,
 				0E1838AD1D449C6F00E9F1B5 /* FICUtilities.m in Sources */,
 				0E1838B61D449C6F00E9F1B5 /* JSQVideoMediaItem+Thumbnail.m in Sources */,
 				0E18388E1D449C6F00E9F1B5 /* MessageCell.m in Sources */,
@@ -1267,12 +1375,12 @@
 				0E1838BC1D449C6F00E9F1B5 /* PiReachability.m in Sources */,
 				0E18386C1D449C6F00E9F1B5 /* DBManager.m in Sources */,
 				0E1838601D449C6F00E9F1B5 /* AddFriendRequest.m in Sources */,
-				0E1838951D449C6F00E9F1B5 /* CommentCell.m in Sources */,
 				0E18385B1D449C6F00E9F1B5 /* LocationViewerController.m in Sources */,
 				0E1838881D449C6F00E9F1B5 /* User.m in Sources */,
 				0E1838891D449C6F00E9F1B5 /* UserManager.m in Sources */,
 				0E1838A11D449C6F00E9F1B5 /* NewMomentPhotoViewerController.m in Sources */,
 				0E1838B71D449C6F00E9F1B5 /* UIImage+JSQMessages.m in Sources */,
+				0EFF49491D55DDAC00870AD8 /* CommentsView.m in Sources */,
 				0E18384D1D449C6F00E9F1B5 /* SettingTableController.m in Sources */,
 				0E18387D1D449C6F00E9F1B5 /* UIImage+ClipRoundCorner.m in Sources */,
 				0E1838681D449C6F00E9F1B5 /* GroupChatListTableController.m in Sources */,
@@ -1282,7 +1390,6 @@
 				0E18384B1D449C6F00E9F1B5 /* ClearCacheCell.m in Sources */,
 				0E1838B51D449C6F00E9F1B5 /* JSQPhotoMediaItem+ThumbnailImageUrl.m in Sources */,
 				0E1838A81D449C6F00E9F1B5 /* FICImageCache.m in Sources */,
-				0E1838971D449C6F00E9F1B5 /* FavourUsersCell.m in Sources */,
 				0E18385A1D449C6F00E9F1B5 /* BasicPinAnnotation.m in Sources */,
 				0E1838871D449C6F00E9F1B5 /* LeanCloudManager.m in Sources */,
 				0E1838BB1D449C6F00E9F1B5 /* UIImage+Resizing.m in Sources */,
@@ -1327,7 +1434,6 @@
 				0E1838511D449C6F00E9F1B5 /* PiAutoPurgeCache.m in Sources */,
 				0E1838AB1D449C6F00E9F1B5 /* FICImageTableChunk.m in Sources */,
 				0E18386F1D449C6F00E9F1B5 /* MBProgressHUD+Addition.m in Sources */,
-				0E1838961D449C6F00E9F1B5 /* CommentsTableController.m in Sources */,
 				0E1838A41D449C6F00E9F1B5 /* AGEmojiKeyBoardView.m in Sources */,
 				0E18385E1D449C6F00E9F1B5 /* TextPathRefreshControl.m in Sources */,
 				0E1838841D449C6F00E9F1B5 /* User+FICEntity.m in Sources */,
@@ -1467,7 +1573,7 @@
 		};
 		0EED531E1C75CD82000437BD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 15C71593C91B28C6CB6A60EB /* Pods-PiChat.debug.xcconfig */;
+			baseConfigurationReference = EEC3A7E31F98F0383F740ADC /* Pods-PiChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1539,7 +1645,7 @@
 		};
 		0EED531F1C75CD82000437BD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 661C3153225C7E070CA78B40 /* Pods-PiChat.release.xcconfig */;
+			baseConfigurationReference = A4943D7E0755EA3BCDDD4D93 /* Pods-PiChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PiChat/Info.plist;
@@ -1608,6 +1714,7 @@
 		};
 		0EED53211C75CD82000437BD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 868F16CA805E07800C97DF44 /* Pods-PiChatTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PiChatTests/Info.plist;
@@ -1620,6 +1727,7 @@
 		};
 		0EED53221C75CD82000437BD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1E9487E817FA212F639B5802 /* Pods-PiChatTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PiChatTests/Info.plist;
@@ -1632,6 +1740,7 @@
 		};
 		0EED53241C75CD82000437BD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DCF9F93E60AAA19676E840E3 /* Pods-PiChatUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = PiChatUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1644,6 +1753,7 @@
 		};
 		0EED53251C75CD82000437BD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80F284979CD91B20F38D5EB0 /* Pods-PiChatUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = PiChatUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

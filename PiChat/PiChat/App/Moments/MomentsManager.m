@@ -94,6 +94,23 @@
     
 }
 
+/**
+ *  为某个朋友圈发送新评论
+ */
++(void)postNewCommentForMoment:(Moment*)m commentContent:(NSString*)reply replyTo:(User*)replyTo{
+    
+    executeAsyncInGlobalQueue(^{
+        Comment *newComment= [Comment commentWithCommentUser:[User currentUser] commentContent:reply replayTo:replyTo];
+        [newComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [m addNewComment:newComment];
+            [m saveOrUpdateInBackground:^(BOOL succeeded, NSError *error) {
+                
+            }];
+        }];
+    });
+}
+
+
 -(Moment*)newMoment:(NSString*)content images:(NSArray*)images{
     Moment *m=[Moment object];
     [m addUniqueObjectsFromArray:images forKey:kPostImages];

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CommentsTableController.h"
+#import "CommentsView.h"
+#import "MomentPhotosView.h"
 @class Moment;
 @class NewMomentPhotoViewerController;
 @class MomentCell;
@@ -17,8 +18,6 @@
 -(void)momentCellDidLikeBtnClick:(MomentCell*)cell;
 -(void)momentCellDidCommentBtnClick:(MomentCell*)cell;
 
--(void)momentCell:(MomentCell *)cell didPhotoViewController:(NewMomentPhotoViewerController*)controller photoCellClick:(UICollectionViewCell*)photoCell;
-
 @end
 
 @interface MomentCell : UICollectionViewCell
@@ -27,10 +26,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *displayNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastModifyTimeLabel;
-@property (strong,nonatomic) CommentsTableController *commentsController;
+@property (strong,nonatomic) CommentsView *commentsView;
+@property (strong,nonatomic) MomentPhotosView *photosView;
 @property(nonatomic,weak) IBOutlet id<MomentCellDelegate> delegate;
 //
-@property (strong,nonatomic) NewMomentPhotoViewerController *photoViewerController;
 -(void)configWithMoment:(Moment*)moment collectionView:(UICollectionView*)collectionView;
 -(CGSize)calcSizeWithMoment:(Moment*)moment collectionView:(UICollectionView*)collectionView;
 //

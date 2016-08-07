@@ -76,4 +76,24 @@
 -(void)setCenterY:(float)centerY{
     self.center=CGPointMake(self.center.x, centerY);
 }
+
+-(UITableView*)tableViewForCell{
+    return (UITableView*)[self findSuperViewWithClass:[UITableView class]];;
+}
+
+- (UIView *)findSuperViewWithClass:(Class)superViewClass {
+    
+    UIView *superView = self.superview;
+    UIView *foundSuperView = nil;
+    
+    while (nil != superView && nil == foundSuperView) {
+        if ([superView isKindOfClass:superViewClass]) {
+            foundSuperView = superView;
+        } else {
+            superView = superView.superview;
+        }
+    }
+    return foundSuperView;
+}
+
 @end

@@ -20,6 +20,11 @@
 -(void)postMomentWithContent:(NSString*)content images:(NSArray*)images;
 
 /**
+ *  为某个朋友圈发送新评论
+ */
++(void)postNewCommentForMoment:(Moment*)m commentContent:(NSString*)reply replyTo:(User*)replyTo;
+
+/**
  *  获取某条朋友圈
  *
  *  @param momentID

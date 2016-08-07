@@ -18,6 +18,8 @@
 #import "TTTAttributedLabel.h"
 #import "AVFile+ImageThumbnailUrl.h"
 #import "ImageCacheManager.h"
+#import "MediaViewerController.h"
+#import "MomentPhotosView.h"
 
 const NSInteger NameLabelTopPadding =8;
 const NSInteger NameLabelHeight=22;
@@ -38,7 +40,8 @@ const NSInteger SeparateLineHeight =1;
 const NSInteger SeparateLineTopPadding =8;
 const NSInteger SeparateLineBottomPadding =8;
 
-@interface MomentCell ()<UICollectionViewDelegateFlowLayout,PhotoViewerControllerDelegate>
+@interface MomentCell ()<UICollectionViewDelegateFlowLayout,MomentPhotosViewDelegate>
+@property (strong,nonatomic) Moment *moment;
 @property (weak, nonatomic) IBOutlet UIButton *likeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *commentBtn;
 @property (weak, nonatomic) IBOutlet UIView *photoViewerPlaceholderView;
@@ -58,19 +61,34 @@ const NSInteger SeparateLineBottomPadding =8;
     self.commentsTableHeightConstraint.constant=0;
 }
 
+-(CommentsView *)commentsView{
+    if(!_commentsView){
+        _commentsView=[CommentsView new];
+    }
+    return _commentsView;
+}
+
+-(MomentPhotosView *)photosView{
+    if(!_photosView){
+        _photosView=[MomentPhotosView new];
+        _photosView.delegate=self;
+    }
+    return _photosView;
+}
+
 -(void)awakeFromNib{
     
     self.isCommentMenuShown=NO;
     self.isCommentMenuAnimating=NO;
     self.commentMenuWidthConstraint.constant=0; //隐藏右下角评论菜单
     
-    [self.commentsTablePlaceHolderView addSubview:self.commentsController.view];
-    [self.commentsController.view mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.commentsTablePlaceHolderView addSubview:self.commentsView];
+    [self.commentsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.commentsTablePlaceHolderView);
     }];
     
-    [self.photoViewerPlaceholderView addSubview:self.photoViewerController.view];
-    [self.photoViewerController.view mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.photoViewerPlaceholderView addSubview:self.photosView];
+    [self.photosView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.photoViewerPlaceholderView);
     }];
     
@@ -84,8 +102,7 @@ const NSInteger SeparateLineBottomPadding =8;
 }
 
 -(void)configWithMoment:(Moment*)moment collectionView:(UICollectionView*)collectionView{
-    
-    self.photoViewerController.avFilePhotos=nil;
+    self.moment=moment;
     
     self.bounds=CGRectMake(0, 0, CGRectGetWidth(collectionView.bounds), CGRectGetHeight(self.bounds));
     
@@ -104,30 +121,19 @@ const NSInteger SeparateLineBottomPadding =8;
     self.lastModifyTimeLabel.text=[NSDate timeAgoSinceDate:moment.createdAt];
     
     NSInteger commentsImageViewerControllerWidth=CGRectGetWidth(collectionView.bounds)-AvatarImageViewLeftPadding-AvatarImageViewSize-AvatarImageViewRightPadding-NameLabelRgithPadding;
-    CGRect commentsImageViewerControllerBounds=CGRectMake(0, 0, commentsImageViewerControllerWidth, MAXFLOAT);
+
     //Comments
-    self.commentsController.view.bounds=commentsImageViewerControllerBounds;
-    [self.commentsController.view layoutIfNeeded];
-    self.commentsController.moment=moment;
-    self.commentsController.superCell=self;
+    CGFloat commentsViewHeight= [self.commentsView configWithComments:moment width:commentsImageViewerControllerWidth];
     
     //Images Viewer
-    if(moment.images && moment.images.count>0){
-        
-        self.photoViewerController.view.bounds=commentsImageViewerControllerBounds;
-        
-        self.photoViewerController.avFilePhotos=moment.images;
-        [self.photoViewerController.view layoutIfNeeded];
-        self.photoViewerController.photoViewerDelegate=self;
-    }
+    CGFloat photosViewHeight=[self.photosView configWithAVFilePhotos:moment.images width:commentsImageViewerControllerWidth];
+
 
     //图片 Collectionview size
-    CGFloat photoViewerHeight= self.photoViewerController.collectionViewLayout.collectionViewContentSize.height;
-    self.photoViewerHeightConstraint.constant=photoViewerHeight;
+    self.photoViewerHeightConstraint.constant=photosViewHeight;
     
     //喜欢和评论的 Tableview
-    CGSize commentsTableSize= self.commentsController.tableView.contentSize;
-    self.commentsTableHeightConstraint.constant=commentsTableSize.height;
+    self.commentsTableHeightConstraint.constant=commentsViewHeight;
     
 }
 
@@ -157,19 +163,6 @@ const NSInteger SeparateLineBottomPadding =8;
 }
 
 #pragma mark - Getter Setter
--(NewMomentPhotoViewerController *)photoViewerController{
-    if(!_photoViewerController){
-        _photoViewerController=(NewMomentPhotoViewerController*)[StoryBoardHelper inititialVC:kNewMomentPhotoViewerControllerID fromSB:kMomentsSB];
-    }
-    return _photoViewerController;
-}
-
--(CommentsTableController *)commentsController{
-    if(!_commentsController){
-        _commentsController=(CommentsTableController*)[StoryBoardHelper inititialVC:kCommentsTableController fromSB:kMomentsSB];
-    }
-    return _commentsController;
-}
 
 #pragma mark - Comment Menu
 - (IBAction)likeBtnClick:(id)sender {
@@ -216,24 +209,7 @@ const NSInteger SeparateLineBottomPadding =8;
     }];
 }
 
-#pragma mark - Navigation
-/**
- *  获取 Container View 里的 ViewController
- *
- *  @param segue
- *  @param sender
- */
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([segue.identifier isEqualToString:kNewMomentPhotoViewerControllerID]){
-        self.photoViewerController=segue.destinationViewController;
-        CALayer *layer= self.photoViewerController.view.layer;
-        layer.borderColor=[UIColor lightGrayDividerColor].CGColor;
-        layer.borderWidth=1;
-    }
-}
 
-#pragma mark - PhotoViewerControllerDelegate
--(void)photoViewerController:(NewMomentPhotoViewerController *)controller didPhotoCellClick:(UICollectionViewCell *)cell{
-    [self.delegate momentCell:self didPhotoViewController:controller photoCellClick:cell];
-}
+
+
 @end
