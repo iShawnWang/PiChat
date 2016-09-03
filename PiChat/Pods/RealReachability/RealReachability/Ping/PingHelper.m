@@ -34,7 +34,7 @@ NSString *const kPingResultNotification = @"kPingResultNotification";
     if ((self = [super init]))
     {
         _isPinging = NO;
-        
+        _timeout = 2.0f;
         _completionBlocks = [NSMutableArray array];
     }
     return self;
@@ -65,7 +65,7 @@ NSString *const kPingResultNotification = @"kPingResultNotification";
 
 - (void)pingWithBlock:(void (^)(BOOL isSuccess))completion
 {
-    NSLog(@"pingWithBlock");
+    //NSLog(@"pingWithBlock");
     if (completion)
     {
         // copy the block, then added to the blocks array.
@@ -106,7 +106,7 @@ NSString *const kPingResultNotification = @"kPingResultNotification";
 
 - (void)startPing
 {
-    NSLog(@"startPing");
+    //NSLog(@"startPing");
     [self clearPingFoundation];
     
     self.isPinging = YES;
@@ -115,7 +115,7 @@ NSString *const kPingResultNotification = @"kPingResultNotification";
     self.pingFoundation.delegate = self;
     [self.pingFoundation start];
     
-    [self performSelector:@selector(pingTimeOut) withObject:nil afterDelay:2.0f];
+    [self performSelector:@selector(pingTimeOut) withObject:nil afterDelay:self.timeout];
 }
 
 - (void)setHost:(NSString *)host
